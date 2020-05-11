@@ -11,8 +11,8 @@
 	</page_setting>
 	<category_index>0</category_index>
 	<zoom>0.8</zoom>
-	<x>310</x>
-	<y>0</y>
+	<x>264</x>
+	<y>19</y>
 	<default_color>
 		<r>128</r>
 		<g>128</g>
@@ -41,11 +41,11 @@
 		<suspend_validator>false</suspend_validator>
 		<export_setting>
 			<export_ddl_setting>
-				<output_path></output_path>
-				<encoding></encoding>
-				<line_feed></line_feed>
+				<output_path>WebContent\database\semi.sql</output_path>
+				<encoding>UTF-8</encoding>
+				<line_feed>CR+LF</line_feed>
 				<is_open_after_saved>true</is_open_after_saved>
-				<environment_id>null</environment_id>
+				<environment_id>0</environment_id>
 				<category_id>null</category_id>
 				<ddl_target>
 					<create_comment>true</create_comment>
@@ -64,9 +64,9 @@
 					<drop_view>true</drop_view>
 					<inline_column_comment>true</inline_column_comment>
 					<inline_table_comment>true</inline_table_comment>
-					<comment_value_description>true</comment_value_description>
+					<comment_value_description>false</comment_value_description>
 					<comment_value_logical_name>false</comment_value_logical_name>
-					<comment_value_logical_name_description>false</comment_value_logical_name_description>
+					<comment_value_logical_name_description>true</comment_value_logical_name_description>
 					<comment_replace_line_feed>false</comment_replace_line_feed>
 					<comment_replace_string></comment_replace_string>
 				</ddl_target>
@@ -135,7 +135,7 @@
 			</connections>
 			<display>false</display>
 			<creation_date>2020-05-10 11:32:25</creation_date>
-			<updated_date>2020-05-11 18:04:03</updated_date>
+			<updated_date>2020-05-11 19:08:59</updated_date>
 			<model_property>
 				<name>프로젝트명</name>
 				<value></value>
@@ -170,7 +170,7 @@
 	<dictionary>
 		<word>
 			<id>0</id>
-			<length>null</length>
+			<length>13</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -180,9 +180,9 @@
 			<args></args>
 			<char_semantics>false</char_semantics>
 			<description></description>
-			<logical_name>ACCOUNT</logical_name>
+			<logical_name>계좌번호</logical_name>
 			<physical_name>ACCOUNT</physical_name>
-			<type></type>
+			<type>decimal(p)</type>
 		</word>
 		<word>
 			<id>1</id>
@@ -586,7 +586,7 @@
 		</word>
 		<word>
 			<id>26</id>
-			<length>null</length>
+			<length>50</length>
 			<decimal>null</decimal>
 			<array>false</array>
 			<array_dimension>null</array_dimension>
@@ -598,7 +598,7 @@
 			<description></description>
 			<logical_name>이메일</logical_name>
 			<physical_name>M_EMAIL</physical_name>
-			<type></type>
+			<type>varchar(n)</type>
 		</word>
 		<word>
 			<id>27</id>
@@ -1208,7 +1208,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type></type>
+					<type>decimal(p)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -2027,7 +2027,7 @@
 			<connections>
 				<relation>
 					<id>7</id>
-					<source>2</source>
+					<source>0</source>
 					<target>7</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -2049,6 +2049,28 @@
 				</relation>
 				<relation>
 					<id>8</id>
+					<source>2</source>
+					<target>7</target>
+						<source_xp>-1</source_xp>
+						<source_yp>-1</source_yp>
+						<target_xp>-1</target_xp>
+						<target_yp>-1</target_yp>
+						<color>
+							<r>0</r>
+							<g>0</g>
+							<b>0</b>
+						</color>
+					<child_cardinality>1..n</child_cardinality>
+					<parent_cardinality>1</parent_cardinality>
+					<reference_for_pk>true</reference_for_pk>
+					<name></name>
+					<on_delete_action>RESTRICT</on_delete_action>
+					<on_update_action>RESTRICT</on_update_action>
+					<referenced_column>null</referenced_column>
+					<referenced_complex_unique_key>null</referenced_complex_unique_key>
+				</relation>
+				<relation>
+					<id>9</id>
 					<source>6</source>
 					<target>7</target>
 						<source_xp>-1</source_xp>
@@ -2061,28 +2083,6 @@
 							<b>0</b>
 						</color>
 					<child_cardinality>1</child_cardinality>
-					<parent_cardinality>1</parent_cardinality>
-					<reference_for_pk>true</reference_for_pk>
-					<name></name>
-					<on_delete_action>RESTRICT</on_delete_action>
-					<on_update_action>RESTRICT</on_update_action>
-					<referenced_column>null</referenced_column>
-					<referenced_complex_unique_key>null</referenced_complex_unique_key>
-				</relation>
-				<relation>
-					<id>9</id>
-					<source>0</source>
-					<target>7</target>
-						<source_xp>-1</source_xp>
-						<source_yp>-1</source_yp>
-						<target_xp>-1</target_xp>
-						<target_yp>-1</target_yp>
-						<color>
-							<r>0</r>
-							<g>0</g>
-							<b>0</b>
-						</color>
-					<child_cardinality>1..n</child_cardinality>
 					<parent_cardinality>1</parent_cardinality>
 					<reference_for_pk>true</reference_for_pk>
 					<name></name>
@@ -2399,7 +2399,7 @@
 				<normal_column>
 					<id>30</id>
 					<referenced_column>0</referenced_column>
-					<relation>9</relation>
+					<relation>7</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2433,7 +2433,7 @@
 				<normal_column>
 					<id>31</id>
 					<referenced_column>18</referenced_column>
-					<relation>8</relation>
+					<relation>9</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2467,7 +2467,7 @@
 				<normal_column>
 					<id>32</id>
 					<referenced_column>6</referenced_column>
-					<relation>7</relation>
+					<relation>8</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2589,7 +2589,7 @@
 			<connections>
 				<relation>
 					<id>10</id>
-					<source>14</source>
+					<source>7</source>
 					<target>8</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -2611,7 +2611,7 @@
 				</relation>
 				<relation>
 					<id>11</id>
-					<source>7</source>
+					<source>14</source>
 					<target>8</target>
 						<source_xp>-1</source_xp>
 						<source_yp>-1</source_yp>
@@ -2642,7 +2642,7 @@
 				<normal_column>
 					<id>35</id>
 					<referenced_column>57</referenced_column>
-					<relation>10</relation>
+					<relation>11</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -2676,7 +2676,7 @@
 				<normal_column>
 					<id>36</id>
 					<referenced_column>21</referenced_column>
-					<relation>11</relation>
+					<relation>10</relation>
 					<description></description>
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
@@ -3039,7 +3039,7 @@
 			</color>
 			<connections>
 			</connections>
-			<physical_name>ADMIN</physical_name>
+			<physical_name>administrator</physical_name>
 			<logical_name>관리자</logical_name>
 			<description></description>
 			<constraint></constraint>
@@ -3661,7 +3661,7 @@
 			</color>
 			<connections>
 			</connections>
-			<physical_name>MEMBER</physical_name>
+			<physical_name>MEMBERS</physical_name>
 			<logical_name>회원</logical_name>
 			<description></description>
 			<constraint></constraint>
@@ -3741,7 +3741,7 @@
 					<unique_key_name></unique_key_name>
 					<logical_name></logical_name>
 					<physical_name></physical_name>
-					<type></type>
+					<type>varchar(n)</type>
 					<constraint></constraint>
 					<default_value></default_value>
 					<auto_increment>false</auto_increment>
@@ -4041,6 +4041,21 @@
 			<decimal_size>0</decimal_size>
 		</sequence>
 		<sequence>
+			<name>SEQ_MEMBERS_M_NUM</name>
+			<schema></schema>
+			<increment>1</increment>
+			<min_value></min_value>
+			<max_value></max_value>
+			<start>1</start>
+			<cache></cache>
+			<nocache>false</nocache>
+			<cycle>false</cycle>
+			<order>false</order>
+			<description></description>
+			<data_type></data_type>
+			<decimal_size>0</decimal_size>
+		</sequence>
+		<sequence>
 			<name>SEQ_MEMBER_M_NUM</name>
 			<schema></schema>
 			<increment>1</increment>
@@ -4184,6 +4199,12 @@
 			<name>TRI_CATEGORY_C_NUM</name>
 			<schema></schema>
 			<sql>BEFORE INSERT ON CATEGORY&#x0D;&#x0A;FOR EACH ROW&#x0D;&#x0A;BEGIN&#x0D;&#x0A;&#x09;SELECT SEQ_CATEGORY_C_NUM.nextval&#x0D;&#x0A;&#x09;INTO :new.C_NUM&#x0D;&#x0A;&#x09;FROM dual;&#x0D;&#x0A;END</sql>
+			<description></description>
+		</trigger>
+		<trigger>
+			<name>TRI_MEMBERS_M_NUM</name>
+			<schema></schema>
+			<sql>BEFORE INSERT ON MEMBERS&#x0D;&#x0A;FOR EACH ROW&#x0D;&#x0A;BEGIN&#x0D;&#x0A;&#x09;SELECT SEQ_MEMBERS_M_NUM.nextval&#x0D;&#x0A;&#x09;INTO :new.M_NUM&#x0D;&#x0A;&#x09;FROM dual;&#x0D;&#x0A;END</sql>
 			<description></description>
 		</trigger>
 		<trigger>
