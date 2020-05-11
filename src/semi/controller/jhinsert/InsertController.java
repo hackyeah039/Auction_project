@@ -1,7 +1,17 @@
 package semi.controller.jhinsert;
 
-import com.sun.net.httpserver.HttpServer;
+import java.io.IOException;
 
-public class InsertController extends HttpServer{
-	
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/join/insert.jiho")
+public class InsertController extends HttpServlet{
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+	}
 }
