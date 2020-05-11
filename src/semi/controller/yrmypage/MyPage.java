@@ -2,5 +2,5 @@ package semi.controller.yrmypage;
 
 public class MyPage {
 	//mypage
-	//jihoÅ×½ºÆ®Áß...
+	//ì§€í˜¸í•œê¸€
 }
