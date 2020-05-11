@@ -2,8 +2,17 @@ package semi.controller.yrmypage;
 
 public class MyPage {
 	//mypage
-	//지호한글
-	//장욱이형 바보 멍청이
-	//ㅇㅈ
-	//지호테스트노트북
+	//吏��샇�븳湲�
+	//�옣�슧�씠�삎 諛붾낫 硫띿껌�씠
+	//�뀋�뀍
+	//吏��샇�뀒�뒪�듃�끂�듃遺�
+	dd
+	d
+	d
+	dd
+	d
+	dd
+	d
+	d
+	
 }
