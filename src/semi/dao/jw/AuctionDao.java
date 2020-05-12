@@ -13,8 +13,8 @@ public class AuctionDao {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs= null;
-		//String sql="select a_enddate from auction where a_num=?";
-		String sql="select to_char(hiredate,'YYYY-MM-DD HH24:MI:SS') date1 from emp where empno=?";
+		String sql="select to_char(a_enddate,'MM DD, YYYY HH24:MI:SS' )from auction where a_num=?";
+		//String sql="select to_char(hiredate,'YYYY-MM-DD HH24:MI:SS') date1 from emp where empno=?";
 		try{
 			con= JDBCUtil.getConn();
 			pstmt=con.prepareStatement(sql);

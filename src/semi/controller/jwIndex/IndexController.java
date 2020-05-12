@@ -15,7 +15,11 @@ public class IndexController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		//detailView에서 경매상품에 대한 num를 req.getparameter()로 받아오기
-		AuctionDao dao = new AuctionDao();
 		
+		AuctionDao dao = new AuctionDao();
+		String a=dao.enddate(15);
+		System.out.println(a);
+		req.setAttribute("a", a);
+		req.getRequestDispatcher("index.jsp").forward(req, resp);
 	}
 }
