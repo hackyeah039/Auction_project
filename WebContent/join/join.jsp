@@ -24,25 +24,35 @@
 		}
 	}
 	var xhrid=null;
-	function idck() {
+	function idck() { //아이디 중복검사
 		var id=document.getElementById("id").value;
-		xhr=new XMLHttpRequest();
-		xhr.onreadystatechange=idckok;
-		xhr.open('post','/join.idck.jh',true);
-		xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-		xhr.send('id=${'+id+'}');
+		xhrid=new XMLHttpRequest();
+		xhrid.onreadystatechange=idckok;
+		xhrid.open('post','${cp}/join/idck.jh',true);
+		xhrid.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+		console.log(id);
+		xhrid.send('id='+id);
 	}
 	function idckok() {
+		var idckmsg=document.getElementById("idckmsg");
+		var id=document.getElementById("id").value;
 		if(xhrid.readyState==4 && xhrid.status==200){
-			var msg=xhr.responseText;
-		}
+			var msg=xhrid.responseText;
+			var json=JSON.parse(msg);
+			console.log(json.msg);
+			if(json.msg=='error'){
+				idckmsg.innerHTML="사용중인 아이디 입니다.";
+			}else{
+				idckmsg.innerHTML="";
+			}
+		}		
 	}
 
 </script>
 <h1>회원가입</h1>
 <div>
 <form method="post" action="${cp }join/insert.jh">
-	<table border="1">
+	<table border="1" >
 		<tr>
 			<th>* 이름 : </th>
 			<td><input type="text" name="name" id="name" onkeyup="nameck()">
@@ -72,7 +82,8 @@
 		</tr>
 		<tr>
 			<th>* 연락처 : </th>
-			<td><input type="text" name="phone" value="숫자만 입력해주세요."><span>테스트용 메세지</span></td>
+			<td><input type="text" name="phone" placeholder="숫자만입력" width="500">
+			<span>테스트용 메세지</span></td>
 		</tr>
 	</table>
 	<br>

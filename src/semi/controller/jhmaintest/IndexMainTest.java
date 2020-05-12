@@ -12,7 +12,7 @@ public class IndexMainTest extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String contentPath=req.getContextPath();
-		req.setAttribute("cp", contentPath);
+		req.getServletContext().setAttribute("cp", contentPath);
 		resp.sendRedirect(contentPath+"/indextest.jsp");
 	}
 }
