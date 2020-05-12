@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel = "stylesheet" type="text/css" href="/jquery.datetimepicker.css"/>
-<script src="/jquery.js"></script>
-<script src="/jquery.datetimepicker.full.min.js"></script>
-<script type="text/javascript">
+<link rel = "stylesheet" type="text/css" href="jquery.datetimepicker.min.css"/>
+<script src="jquery.js"></script>
+<script src="jquery.datetimepicker.full.js"></script>
+<script>
 $('#datetimepicker').datetimepicker();
 </script>
 <title>InsertAuction.jsp</title>
@@ -135,9 +135,11 @@ $('#datetimepicker').datetimepicker();
 		경매기간
 	</td>
 	<td>
-		<input id=datetimepicker type="text">
+		<input id="datetimepicker" type="text">
 		~
-		<input id=datetimepicker type="text">		
+		<!-- 
+		<input id="datetimepicker" name="date1" type="text">		
+		 -->
 	</td>
 </tr>
 </table>
@@ -173,7 +175,4 @@ $('#datetimepicker').datetimepicker();
 <input type="submit" value="등록" style="width: 100px;height: 50px">
 </form>
 </body>
-<script type="text/javascript">
-
-</script>
 </html>
