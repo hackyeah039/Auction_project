@@ -5,6 +5,7 @@
 	th {text-align: left;}
 </style>
 <script>
+	/*이름 유효성 검사*/
 	function nameck() { /*이름 유효성 검사*/
 		var name=document.getElementById("name").value;
 		var nameckmsg=document.getElementById("nameckmsg");
@@ -23,8 +24,9 @@
 			nameckmsg.innerHTML="";
 		}
 	}
+	//아이디 중복검사
 	var xhrid=null;
-	function idck() { //아이디 중복검사
+	function idck() { 
 		var id=document.getElementById("id").value;
 		xhrid=new XMLHttpRequest();
 		xhrid.onreadystatechange=idckok;
@@ -36,16 +38,36 @@
 	function idckok() {
 		var idckmsg=document.getElementById("idckmsg");
 		var id=document.getElementById("id").value;
+		var id_alphanumber = /^[A-Za-z0-9]*$/ ;  
 		if(xhrid.readyState==4 && xhrid.status==200){
 			var msg=xhrid.responseText;
 			var json=JSON.parse(msg);
 			console.log(json.msg);
 			if(json.msg=='error'){
 				idckmsg.innerHTML="사용중인 아이디 입니다.";
+				return;
+			}else if(!(id.length>=5)){
+				idckmsg.innerHTML="아이디는 5자 이상으로 입력해주세요.";
+				return;
+			}else if(!(id.length<=10)){
+				idckmsg.innerHTML="아이디는 10자리 이하로 입력해주세요.";
+				return;
+			}else if(!(id_alphanumber.test(id))){
+				idckmsg.innerHTML="아이디는 영문+숫자로 입력해주세요.";
+				return;
 			}else{
 				idckmsg.innerHTML="";
 			}
 		}		
+	}
+	/*비밀번호 확인*/
+	function pwdck() {
+		var pwd=document.getElementById("pwd").value;
+		var pwdckmsg=document.getElementById("pwdckmsg");
+		console.log(pwd);
+		if(pwd.length<8){
+			pwdckmsg.innerHTML="비밀번호는 8자리 이상 입력해주세요.";
+		}
 	}
 
 </script>
@@ -65,7 +87,8 @@
 		</tr>
 		<tr>
 			<th>* 비밀번호 : </th>
-			<td><input type="password" name="pwd"><span>테스트용 메세지</span></td>
+			<td><input type="password" name="pwd" id="pwd" onkeyup="pwdck()">
+			<span id="pwdckmsg" style="color:red"></span></td>
 		</tr>
 		<tr>
 			<th>* 비밀번호 확인 : </th>
