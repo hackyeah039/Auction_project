@@ -6,7 +6,7 @@
 </style>
 <script>
 	/*이름 유효성 검사*/
-	function nameck() { /*이름 유효성 검사*/
+	function nameck() { 
 		var name=document.getElementById("name").value;
 		var nameckmsg=document.getElementById("nameckmsg");
 		var nameck= /[a-z0-9]|[ []{}()<>?|`~!@#$%^&*-_+=,.;:\"'\]/g;
@@ -53,21 +53,54 @@
 				idckmsg.innerHTML="아이디는 10자리 이하로 입력해주세요.";
 				return;
 			}else if(!(id_alphanumber.test(id))){
-				idckmsg.innerHTML="아이디는 영문+숫자로 입력해주세요.";
+				idckmsg.innerHTML="아이디는 영문과 숫자만 입력해주세요.";
 				return;
 			}else{
 				idckmsg.innerHTML="";
 			}
 		}		
 	}
-	/*비밀번호 확인*/
-	function pwdck() {
-		var pwd=document.getElementById("pwd").value;
+	/*비밀번호 유효성검사*/
+	function pwdCk(pwd) {
+		var pwd=pwd.value;
 		var pwdckmsg=document.getElementById("pwdckmsg");
-		console.log(pwd);
-		if(pwd.length<8){
-			pwdckmsg.innerHTML="비밀번호는 8자리 이상 입력해주세요.";
+		var pwd_alphanumber = /^[A-Za-z0-9]*$/ ; 
+		if(!(pwd.length>=8 && pwd.length<=25)){
+			pwdckmsg.innerHTML="비밀번호는 8~25자리 사이로 입력해주세요.";
+			return;
+		}else if(!(pwd_alphanumber.test(pwd))){
+			pwdckmsg.innerHTML="비밀번호는 영문과 숫자만 입력해주세요.";
+			return;
+		}else{
+			pwdckmsg.innerHTML="";
 		}
+	}
+	/*비밀번호 확인하기*/
+	function pwdDubleCk() {
+		var pwd=document.getElementById("pwd").value;
+		var pwdck=document.getElementById("pwdck").value;
+		var pwdckmsg2=document.getElementById("pwdckmsg2");
+		
+		if(!(pwd==pwdck)){
+			pwdckmsg2.innerHTML="입력한 비밀번호와 다릅니다.";
+			return;
+		}else{
+			pwdckmsg2.innerHTML="";
+		}
+	}
+	/*이메일 중복검사*/
+	var xhremail=null;
+	function emailCk() {
+		var email=document.getElementById("email").value;
+		xhremail=new XMLHttpRequest();
+		xhremail.onreadystatechange=emailckOk;
+		xhremail.open('post','${cp}/join/idck.jh',true);
+		xhremail.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+		xhremail.send('email='+email);
+	}
+	function emailckOk() {
+		var emailckmsg=document.getElementById("emailckmsg");
+		var email=document.getElementById("email").value;
 	}
 
 </script>
@@ -87,17 +120,18 @@
 		</tr>
 		<tr>
 			<th>* 비밀번호 : </th>
-			<td><input type="password" name="pwd" id="pwd" onkeyup="pwdck()">
+			<td><input type="password" name="pwd" id="pwd" onkeyup="pwdCk(this)">
 			<span id="pwdckmsg" style="color:red"></span></td>
 		</tr>
 		<tr>
 			<th>* 비밀번호 확인 : </th>
-			<td><input type="password" name="pwdck"><span>테스트용 메세지</span></td>
+			<td><input type="password" name="pwdck" id="pwdck" onkeyup="pwdDubleCk()">
+			<span id="pwdckmsg2" style="color:red"></span></td>
 		</tr>
 		<tr>
 			<th>* 이메일 : </th>
-			<td><input type="text" name="email1">@<input type="text" name="email2">
-			<span>테스트용 메세지</span></td>
+			<td><input type="text" name="email" id="email" onkeyup="emailCk()">
+			<span id="emailckmsg" style="color:red"></span></td>
 		</tr>
 		<tr>
 			<th>* 주소 : </th>

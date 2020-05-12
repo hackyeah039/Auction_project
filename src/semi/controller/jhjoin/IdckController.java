@@ -19,13 +19,13 @@ public class IdckController extends HttpServlet{//아이디 중복검사 컨트�
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		String id=req.getParameter("id");
-		System.out.println("id:"+id);
+		String email=req.getParameter("email");
 		MembersDao dao=new MembersDao();
 		resp.setContentType("text/plain;charset=utf-8");
 		JSONObject json=new JSONObject();
 		int n=dao.idCk(id);
-		System.out.println("n:"+n);
-		if(n>0 || id.equals("admin")) {
+		int j=dao.emailCk(email);
+		if(n>0 || id.equals("admin") || j>0) {
 			json.put("msg", "error");
 		}else {
 			json.put("msg", "ok");
