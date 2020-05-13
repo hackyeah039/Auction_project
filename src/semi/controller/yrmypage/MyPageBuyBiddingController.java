@@ -3,27 +3,31 @@ package semi.controller.yrmypage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import semi.dao.yr.AuctionDao;
-import semi.vo.yr.AuctionVo;
 import semi.vo.yr.BiddingVo;
 
-@WebServlet("/mypage/buyManagement.do")
-public class MyPageBuyMangementController extends HttpServlet {
+@WebServlet("/mypage/buyerBidding.do")
+public class MyPageBuyBiddingController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		//아이디 가져오기
+		String id = "gogo";
 		
-		HttpSession session = req.getSession();
+		//경로
+		req.getServletContext().setAttribute("cp", req.getContextPath());
+
 		
-		String id = (String)session.getAttribute("id"); 
+//		HttpSession session = req.getSession();
+//		
+//		String id = (String)session.getAttribute("id"); 
 		
 		AuctionDao auctiondao = new AuctionDao();
 		
@@ -49,7 +53,7 @@ public class MyPageBuyMangementController extends HttpServlet {
         req.setAttribute("getBidRankList", getBidRankList);
         req.setAttribute("BiddingInfoList", BiddingInfoList);
         req.setAttribute("header", "header.jsp");
-        req.setAttribute("content", "mypage/mypageBuyBidding.jsp");
+        req.setAttribute("content", "/mypage/mypageBuyBidding.jsp");
         req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 }

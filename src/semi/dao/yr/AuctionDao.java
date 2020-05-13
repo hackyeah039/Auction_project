@@ -39,6 +39,8 @@ public class AuctionDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return -1;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 
@@ -63,7 +65,8 @@ public class AuctionDao {
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				do {
-					bidlist.add(rs.getInt("a_num"));
+					int a = rs.getInt("a_num");
+					bidlist.add(a);
 				} while (rs.next());
 				return bidlist;
 			} else {
@@ -73,6 +76,8 @@ public class AuctionDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 
@@ -110,6 +115,8 @@ public class AuctionDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 
@@ -152,6 +159,8 @@ public class AuctionDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	
@@ -261,6 +270,43 @@ public class AuctionDao {
 		}
 	}
 	
-	
+	//판매자 번호 가져오기
+	public int getSelnum(String id) {
 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+
+		try {
+			con = ConnectionPool.getCon();
+			String sql = "select m_num from members where m_id = ? ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				// 회원번호 출력
+				int mnum = rs.getInt("m_num");
+				String sql2 = "select sel_num from seller where m_num = ? ";
+				pstmt2 = con.prepareStatement(sql);
+				pstmt2.setInt(1, mnum);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return rs.getInt("sel_num");
+				}else {
+					return -1;					
+				}
+			} else {
+				return -1;
+			}
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	
 }
