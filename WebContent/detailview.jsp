@@ -74,7 +74,7 @@
 
 <c:choose>
 	<c:when test="${endPage<paging }">
-		<a href="history.do?pageNum=${endPage+1 }">[next]</a>
+		<a href="history.do?pageNum=${endPage+1 }&a_num=<%=a_num%>">[next]</a>
 	</c:when>
 	<c:otherwise>
 		이후

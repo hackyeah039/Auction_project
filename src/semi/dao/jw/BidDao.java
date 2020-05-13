@@ -58,7 +58,7 @@ public class BidDao {
 				 		pstmt=con.prepareStatement(sql);
 			 			pstmt.setInt(1, a_num);
 			 			pstmt.setInt(2, startrow);
-			 			pstmt.setInt(3, endrow+field);
+			 			pstmt.setInt(3, endrow);
 	/*		}else { // 검색어값이 있을 때 
 				
 				 sql="select * from "
