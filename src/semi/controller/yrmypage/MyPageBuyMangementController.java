@@ -2,6 +2,8 @@ package semi.controller.yrmypage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,8 +19,8 @@ import semi.vo.yr.BiddingVo;
 @WebServlet("/mypage/buyManagement.do")
 public class MyPageBuyMangementController extends HttpServlet {
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		HttpSession session = req.getSession();
 		
 		String id = (String)session.getAttribute("id"); 
@@ -29,20 +31,25 @@ public class MyPageBuyMangementController extends HttpServlet {
 		ArrayList<Integer> bidlist =  auctiondao.bidinglist(id);
 	
 		//입찰한 경매리스트 현재가격 얻어오기
-		ArrayList<Integer> currPriceList = auctiondao.getCurrPrice(bidlist);
+		HashMap<Integer, Integer> currPriceList = auctiondao.getCurrPrice(bidlist);
 		
 		//입찰등록한 수
-		ArrayList<Integer> getBidCountList = auctiondao.getBidCount(id);
+		HashMap<Integer, Integer> getBidCountList = auctiondao.getBidCount(id);
 		
 		//입찰 순위
-		ArrayList<Integer> getBidRankList = auctiondao.getBidRank(bidlist, id);
-		
+		HashMap<Integer, Integer> getBidRankList = auctiondao.getBidRank(bidlist, id);
+	
 		//경매상품 정보
-		ArrayList<BiddingVo> BiddingInfoList = auctiondao.getBiddingInfo(bidlist);
+		HashMap<Integer, BiddingVo> BiddingInfoList = auctiondao.getBiddingInfo(bidlist);
 		
-		for (BiddingVo bidvo : BiddingInfoList) {
-			System.out.println(bidvo);
-		}
-		
+
+        req.setAttribute("bidlist", bidlist);		
+        req.setAttribute("currPriceList", currPriceList);		
+        req.setAttribute("getBidCountList", getBidCountList);
+        req.setAttribute("getBidRankList", getBidRankList);
+        req.setAttribute("BiddingInfoList", BiddingInfoList);
+        req.setAttribute("header", "header.jsp");
+        req.setAttribute("content", "mypage/mypageBuyBidding.jsp");
+        req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 }

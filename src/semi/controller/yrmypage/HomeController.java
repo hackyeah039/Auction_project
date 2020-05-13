@@ -18,6 +18,8 @@ public class HomeController extends HttpServlet {
 		HttpSession session = req.getSession();
 		session.setAttribute("id", id);
 		
+		
+		//경로
 		req.getServletContext().setAttribute("cp", req.getContextPath());
 		
 		req.setAttribute("header",  "header.jsp");

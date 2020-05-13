@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" type="text/css" href="../css/MyPageCss.css">
 <div id = "simpleList">
 	<table border = 1>
@@ -31,6 +32,12 @@
 	<table border = 1> 
 		<tr>
 			<th>no</th><th>물품번호</th><th>물품명</th><th>현재가</th><th>입찰</th><th>조회</th><th>마감일</th><th>판매자</th><th>입찰순위</th>
+		</tr>
+		
+		<tr>
+			<c:if test="${bidlist == null }">
+				안됑
+			</c:if>
 		</tr>
 		
 	</table>

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import semi.db.yr.ConnectionPool;
 import semi.vo.yr.AuctionVo;
@@ -49,9 +50,6 @@ public class AuctionDao {
 		ArrayList<Integer> bidlist = new ArrayList<Integer>();
 		int mnum = getMnum(id);
 
-		// 회원번호 출력
-		System.out.println("회원 번호" + mnum);
-
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -80,9 +78,9 @@ public class AuctionDao {
 
 	// 현재가격
 	// select max(bid_price) from bid where a_num = ?;
-	public ArrayList<Integer> getCurrPrice(ArrayList<Integer> anumlist) {
+	public HashMap<Integer, Integer> getCurrPrice(ArrayList<Integer> anumlist) {
 
-		ArrayList<Integer> currPriceList = new ArrayList<Integer>();
+		HashMap<Integer, Integer> currPriceList = new HashMap<Integer, Integer>();
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -98,7 +96,7 @@ public class AuctionDao {
 				rs = pstmt.executeQuery();
 				if (rs.next()) {
 					do {
-						currPriceList.add(rs.getInt("currprice"));
+						currPriceList.put(anum,rs.getInt("currprice"));
 					} while (rs.next());
 
 				} else {
@@ -120,9 +118,9 @@ public class AuctionDao {
 	// where bid.a_num = auction.a_num and m_num = 1 and bidstatus = 1 group by
 	// auction.a_num
 
-	public ArrayList<Integer> getBidCount(String id) {
+	public HashMap<Integer, Integer> getBidCount(String id) {
 
-		ArrayList<Integer> bidCountList = new ArrayList<Integer>();
+		HashMap<Integer, Integer> bidCountList = new HashMap<Integer, Integer>();
 		int mnum = getMnum(id);
 
 		Connection con = null;
@@ -132,14 +130,17 @@ public class AuctionDao {
 		try {
 
 			con = ConnectionPool.getCon();
-			String sql = "select count(bid.a_num) count, auction.a_num from bid, auction "
+			String sql = "select count(bid.a_num) count, auction.a_num a_num from bid, auction "
 					+ " where bid.a_num = auction.a_num and m_num = ? and bidstatus = 1 group by auction.a_num";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				do {
-					bidCountList.add(rs.getInt("count"));
+					int anum = rs.getInt("a_num");
+					int count = rs.getInt("count");
+
+					bidCountList.put(anum,count);
 				} while (rs.next());
 
 			} else {
@@ -155,9 +156,9 @@ public class AuctionDao {
 	}
 	
 	//입찰 순위
-	public ArrayList<Integer> getBidRank(ArrayList<Integer> anumlist, String id){
+	public HashMap<Integer, Integer> getBidRank(ArrayList<Integer> anumlist, String id){
 		
-		ArrayList<Integer> bidRankList = new ArrayList<Integer>();
+		HashMap<Integer, Integer> bidRankList = new HashMap<Integer, Integer>();
 		int mnum = getMnum(id);
 
 		Connection con = null;
@@ -179,7 +180,7 @@ public class AuctionDao {
 				rs = pstmt.executeQuery();
 				if (rs.next()) {
 					do {
-						bidRankList.add(rs.getInt("rnm"));
+						bidRankList.put(anum,rs.getInt("rnm"));
 					} while (rs.next());
 
 				} else {
@@ -198,9 +199,9 @@ public class AuctionDao {
 		}
 	}
 	
-	//물품명, 조회,마감일
-	public ArrayList<BiddingVo> getBiddingInfo(ArrayList<Integer> anumlist){
-		ArrayList<BiddingVo> biddingInfoList = new ArrayList<BiddingVo>();
+	//물품명, 조회,마감일 BiddingVo
+	public HashMap<Integer, BiddingVo>  getBiddingInfo(ArrayList<Integer> anumlist){
+		HashMap<Integer, BiddingVo> biddingInfoList = new HashMap<Integer, BiddingVo>();
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -212,9 +213,12 @@ public class AuctionDao {
 			for (int anum : anumlist) {
 				con = ConnectionPool.getCon();
 				String sql = "select * from auction where a_num = ?";
+				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, anum);
 				rs = pstmt.executeQuery();
+				
+
 				if (rs.next()) {
 					do {
 						String title =rs.getString("a_title");
@@ -236,7 +240,7 @@ public class AuctionDao {
 							return null;
 						}
 						
-						biddingInfoList.add(new BiddingVo(title, check, endDate,mId));
+						biddingInfoList.put(anum,new BiddingVo(title, check, endDate,mId));
 						
 					} while (rs.next());
 
