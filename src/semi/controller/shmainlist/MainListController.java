@@ -34,6 +34,7 @@ public class MainListController extends HttpServlet{
 			pw.println("<a_regdate>" + vo.getA_regdate() + "</a_regdate>");
 			pw.println("<a_startdate>" + vo.getA_startdate() + "</a_startdate>");
 			pw.println("<a_enddate>" + vo.getA_enddate() + "</a_enddate>");
+			System.out.println(vo.getA_enddate());
 			pw.println("<a_check>" + vo.getA_check() + "</a_check>");
 			pw.println("<c_num>" + vo.getC_num() + "</c_num>");
 			pw.println("<a_jjim>" + vo.getA_jjim() + "</a_jjim>");
@@ -42,7 +43,6 @@ public class MainListController extends HttpServlet{
 			pw.println("<a_startbid>" + vo.getA_startbid() + "</a_startbid>");
 			pw.println("<a_bidunit>" + vo.getA_bidunit() + "</a_bidunit>");
 			pw.println("</data>");
-			
 		}
 		pw.println("</result>");
 	}

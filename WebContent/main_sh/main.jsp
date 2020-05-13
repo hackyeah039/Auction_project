@@ -42,25 +42,24 @@
 					var id=data[i].getElementsByTagName("id")[0].firstChild.nodeValue;
 					var a_check=data[i].getElementsByTagName("a_check")[0].firstChild.nodeValue;
 					var endDate=data[i].getElementsByTagName("a_enddate")[0].firstChild.nodeValue;
-					console.log(endDate);
 					var div=document.createElement("div");
 					let timeDiv=document.createElement("div");
 					div.innerHTML="제목 : " + title + "<br>" +
 									"가격 : " + price + "<br>"+
 									"작성자 : " + id + "<br>"+
 									"조회 : " + a_check + "<br>";
-					var endDate=data[i].getElementsByTagName("a_enddate")[0].firstChild.nodeValue;		
+					let arr=endDate.split('-');
+					let endTime=new Date(arr[0],arr[1],arr[2]);
+					console.log(endDate);
 					setInterval(function() {
-						let time=new Date();
-						var ts1=endDate.getDate();
-						var ts2=time.getTime();
-						var d=parseInt(time.getDate());
-						var h=parseInt(time.getHours());
-						var m=parseInt(time.getMinutes());
-						var s=parseInt(time.getSeconds());
-						
-						nowTime=ts2 + "일" + time.getHours() + "시" + time.getMinutes() +
-						 "분" + time.getSeconds() + "초";
+						var time=new Date();
+						var month=(endTime.getMonth()-time.getMonth())-1;
+						var d=endTime.getDate()-time.getDate();
+						var h=24-time.getHours();
+						var m=60-time.getMinutes();
+						var s=60-time.getSeconds();
+						nowTime="마감시간 : " + month + "개월"+ d + "일" + h + "시간" +
+						m + "분" + s + "초";
 						timeDiv.innerHTML=nowTime;
 					}, 1000)
 					div.className="auc";
