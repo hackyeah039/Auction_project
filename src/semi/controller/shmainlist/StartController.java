@@ -15,6 +15,6 @@ public class StartController extends HttpServlet{
 		String contextPath=req.getContextPath();
 		ServletContext application=req.getServletContext();
 		application.setAttribute("cp", contextPath);
-		resp.sendRedirect(req.getContextPath()+"/mainlist.do");
+		resp.sendRedirect(req.getContextPath()+"/main_sh/main.jsp");
 	}
 }

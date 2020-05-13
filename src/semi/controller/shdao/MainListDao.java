@@ -32,17 +32,62 @@ public class MainListDao {
 				int a_check=rs.getInt("a_check");
 				int c_num=rs.getInt("c_num");
 				int a_jjim=rs.getInt("a_jjim");
-				int s_num=rs.getInt("s_num");
 				int sel_number=rs.getInt("sel_number");
 				int bidstatus=rs.getInt("bidstatus");
 				int a_startbid=rs.getInt("a_startbid");
 				int a_bidunit=rs.getInt("a_bidunit");
-				
-				SHAuctionVo vo=new SHAuctionVo(a_num, a_title, a_content, a_condition, a_regdate,
-						a_startdate, a_enddate, a_check, c_num, a_jjim, s_num, sel_number, bidstatus, a_startbid, a_bidunit);
+				SHAuctionVo vo=new SHAuctionVo(
+						a_num, a_title, a_content,
+						a_condition, a_regdate, a_startdate,
+						a_enddate, a_check, c_num, a_jjim,
+						sel_number, bidstatus, a_startbid, a_bidunit);
 				list.add(vo);
 			}
 			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	public int getPrice(int num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int price=0;
+		try {
+			String sql="select NVL(max(BID_PRICE),0) price FROM BID WHERE A_NUM=?";
+			con=JDBCUtil.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				price=rs.getInt("price");
+			}
+			return price;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return 0;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	public String getId(int num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String id="";
+		try {
+			String sql="select m_id from members where m_num=?";
+			con=JDBCUtil.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				id=rs.getString("m_id");
+			}
+			return id;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return null;

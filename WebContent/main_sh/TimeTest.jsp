@@ -7,31 +7,27 @@
 <title>TimeTest.jsp</title>
 <script type="text/javascript">
 setInterval(getTime, 1000);
+setInterval(getTime2, 1000);
+setInterval(getTime3, 1000);
 	function getTime() {
 		var time=new Date();
 		var ss=time.getHours() + "시" + time.getMinutes() +
 		 "분" + time.getSeconds() + "초";
 		document.getElementById("time1").innerHTML=ss;
-		document.getElementById("time2").innerHTML=ss;
-		document.getElementById("time3").innerHTML=ss;
-		document.getElementById("time4").innerHTML=ss;
-		document.getElementById("time5").innerHTML=ss;
-		document.getElementById("time6").innerHTML=ss;
-		document.getElementById("time7").innerHTML=ss;
-		document.getElementById("time8").innerHTML=ss;
-		document.getElementById("time9").innerHTML=ss;
-		document.getElementById("time10").innerHTML=ss;
-		document.getElementById("time11").innerHTML=ss;
-		document.getElementById("time12").innerHTML=ss;
-		document.getElementById("time13").innerHTML=ss;
-		document.getElementById("time14").innerHTML=ss;
-		document.getElementById("time15").innerHTML=ss;
-		document.getElementById("time16").innerHTML=ss;
-		document.getElementById("time17").innerHTML=ss;
-		document.getElementById("time18").innerHTML=ss;
-		document.getElementById("time19").innerHTML=ss;
-		document.getElementById("time20").innerHTML=ss;
 	}
+	function getTime2() {
+		var time=new Date();
+		var ss=time.getHours()+1 + "시" + time.getMinutes() +
+		 "분" + time.getSeconds() + "초";
+		document.getElementById("time2").innerHTML=ss;
+	}
+	function getTime3() {
+		var time=new Date();
+		var ss=time.getHours()+2 + "시" + time.getMinutes() +
+		 "분" + time.getSeconds() + "초";
+		document.getElementById("time3").innerHTML=ss;
+	}
+	
 </script>
 </head>
 <body>
