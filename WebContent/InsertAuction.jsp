@@ -49,6 +49,7 @@
 		});
 	}
  	//0513 나중에 일자 클릭시 로직으로 비교할것 이전날짜클릭 못하도록
+ 	/*
  	function checkdate() {
 	 	let date1 = $('#startdate').val();	
  		let date2 = $('#enddate').val();
@@ -63,6 +64,7 @@
  			$('#enddate').val("");
  		}
 	}
+ 	*/
 
  </script>
 </head>
@@ -188,15 +190,28 @@
 	<td>
 		<input id="startdate" name="a_startdate" type="text">
 		-
-		<input id="enddate" name="a_enddate" type="text" onchange="checkdate()">
-		
+		<input id="enddate" name="a_enddate" type="text">
+		<!-- 달력 수정 필요 -->
 		<!-- jQuery 사용하여 캘린더 호출0513  -->
 		<script type="text/javascript">
 		$(document).ready(function() {
-		    $('#startdate').datetimepicker();
-		});
-		$(document).ready(function() {
-		    $('#enddate').datetimepicker();
+			$('#startdate').datetimepicker({
+				'format': 'd/m/Y H:i',
+				'minDate': 0,
+				'minDateTime': new Date()
+			});
+			$('#enddate').datetimepicker({
+				'format': 'd/m/Y H:i',
+			    //'minDate': 0,
+			    'closeOnDateSelect' : true,
+			    'validateOnBlur' : true,
+			    'minDateTime': new Date(),
+			    onSelect: function(selectedDate) {
+					var nextDay = new Date(selectedDate);
+					nextDay.setDate(nextDay.getDate() + 1);
+				  $('#startdate').datepicker("option","minDate", nextDay);
+				}
+			});
 		});
 		</script>
 	</td>
