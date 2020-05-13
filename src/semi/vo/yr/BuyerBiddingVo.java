@@ -2,14 +2,14 @@ package semi.vo.yr;
 
 import java.sql.Date;
 
-public class BiddingVo {
+public class BuyerBiddingVo {
 	private String a_title;
 	private int a_check; //조회수
 	private Date a_enddate;
 	private String sel_Id;
 	
 	
-	public BiddingVo(String a_title, int a_check, Date a_enddate, String sel_Id) {
+	public BuyerBiddingVo(String a_title, int a_check, Date a_enddate, String sel_Id) {
 		super();
 		this.a_title = a_title;
 		this.a_check = a_check;

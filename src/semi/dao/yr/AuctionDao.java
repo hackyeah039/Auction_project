@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 import semi.db.yr.ConnectionPool;
 import semi.vo.yr.AuctionVo;
-import semi.vo.yr.BiddingVo;
+import semi.vo.yr.BuyerBiddingVo;
 
 public class AuctionDao {
 
@@ -39,7 +39,7 @@ public class AuctionDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return -1;
-		}finally {
+		} finally {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
@@ -47,7 +47,7 @@ public class AuctionDao {
 	// 입찰중 리스트
 	// select distinct bid.a_num from bid, auction where bid.a_num = auction.a_num
 	// and m_num = 1 and bidstatus = 1;
-	public ArrayList<Integer> bidinglist(String id) {
+	public ArrayList<Integer> buyerBidinglist(String id) {
 
 		ArrayList<Integer> bidlist = new ArrayList<Integer>();
 		int mnum = getMnum(id);
@@ -76,7 +76,7 @@ public class AuctionDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
-		}finally {
+		} finally {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
@@ -101,7 +101,7 @@ public class AuctionDao {
 				rs = pstmt.executeQuery();
 				if (rs.next()) {
 					do {
-						currPriceList.put(anum,rs.getInt("currprice"));
+						currPriceList.put(anum, rs.getInt("currprice"));
 					} while (rs.next());
 
 				} else {
@@ -115,7 +115,7 @@ public class AuctionDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
-		}finally {
+		} finally {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
@@ -125,33 +125,31 @@ public class AuctionDao {
 	// where bid.a_num = auction.a_num and m_num = 1 and bidstatus = 1 group by
 	// auction.a_num
 
-	public HashMap<Integer, Integer> getBidCount(String id) {
+	public HashMap<Integer, Integer> getBidCount(ArrayList<Integer> anumlist) {
 
 		HashMap<Integer, Integer> bidCountList = new HashMap<Integer, Integer>();
-		int mnum = getMnum(id);
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 
 		try {
+			for (int anum : anumlist) {
+				con = ConnectionPool.getCon();
+				String sql = "select count(bid.a_num) count, auction.a_num a_num from bid, auction where bid.a_num = auction.a_num and bidstatus = 1 "
+						+ "and bid.a_num = ? group by auction.a_num";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, anum);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					do {
+						int count = rs.getInt("count");
+						bidCountList.put(anum, count);
+					} while (rs.next());
 
-			con = ConnectionPool.getCon();
-			String sql = "select count(bid.a_num) count, auction.a_num a_num from bid, auction "
-					+ " where bid.a_num = auction.a_num and m_num = ? and bidstatus = 1 group by auction.a_num";
-			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, mnum);
-			rs = pstmt.executeQuery();
-			if (rs.next()) {
-				do {
-					int anum = rs.getInt("a_num");
-					int count = rs.getInt("count");
-
-					bidCountList.put(anum,count);
-				} while (rs.next());
-
-			} else {
-				return null;
+				} else {
+					return null;
+				}
 			}
 
 			return bidCountList;
@@ -159,14 +157,14 @@ public class AuctionDao {
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
-		}finally {
+		} finally {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
-	
-	//입찰 순위
-	public HashMap<Integer, Integer> getBidRank(ArrayList<Integer> anumlist, String id){
-		
+
+	// 입찰 순위
+	public HashMap<Integer, Integer> getBidRank(ArrayList<Integer> anumlist, String id) {
+
 		HashMap<Integer, Integer> bidRankList = new HashMap<Integer, Integer>();
 		int mnum = getMnum(id);
 
@@ -178,18 +176,16 @@ public class AuctionDao {
 
 			for (int anum : anumlist) {
 				con = ConnectionPool.getCon();
-				String sql = "select * from" + 
-						"(" + 
-						"select rownum rnm, aa.* from" + 
-						"(select * from bid where a_num = ? order by bid_price desc) aa)" + 
-						"where m_num = ? and rownum = 1";
+				String sql = "select * from" + "(" + "select rownum rnm, aa.* from"
+						+ "(select * from bid where a_num = ? order by bid_price desc) aa)"
+						+ "where m_num = ? and rownum = 1";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, anum);
 				pstmt.setInt(2, mnum);
 				rs = pstmt.executeQuery();
 				if (rs.next()) {
 					do {
-						bidRankList.put(anum,rs.getInt("rnm"));
+						bidRankList.put(anum, rs.getInt("rnm"));
 					} while (rs.next());
 
 				} else {
@@ -207,10 +203,10 @@ public class AuctionDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
-	
-	//물품명, 조회,마감일 BiddingVo
-	public HashMap<Integer, BiddingVo>  getBiddingInfo(ArrayList<Integer> anumlist){
-		HashMap<Integer, BiddingVo> biddingInfoList = new HashMap<Integer, BiddingVo>();
+
+	// 물품명, 조회,마감일 BiddingVo
+	public HashMap<Integer, BuyerBiddingVo> getBiddingInfo(ArrayList<Integer> anumlist) {
+		HashMap<Integer, BuyerBiddingVo> biddingInfoList = new HashMap<Integer, BuyerBiddingVo>();
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -222,35 +218,33 @@ public class AuctionDao {
 			for (int anum : anumlist) {
 				con = ConnectionPool.getCon();
 				String sql = "select * from auction where a_num = ?";
-				
+
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, anum);
 				rs = pstmt.executeQuery();
-				
 
 				if (rs.next()) {
 					do {
-						String title =rs.getString("a_title");
+						String title = rs.getString("a_title");
 						int check = rs.getInt("a_check");
 						Date endDate = rs.getDate("a_enddate");
 						int selNumber = rs.getInt("sel_number");
-						
-						String sql2 = "select m_id from seller, members"
-								+ " where seller.m_num = members.m_num "
+
+						String sql2 = "select m_id from seller, members" + " where seller.m_num = members.m_num "
 								+ "and sel_number = ?";
 						pstmt2 = con.prepareStatement(sql2);
 						pstmt2.setInt(1, selNumber);
 						rs = pstmt2.executeQuery();
-						String mId ="";
-						
-						if(rs.next()) {
+						String mId = "";
+
+						if (rs.next()) {
 							mId = rs.getString("m_id");
-						}else {
+						} else {
 							return null;
 						}
-						
-						biddingInfoList.put(anum,new BiddingVo(title, check, endDate,mId));
-						
+
+						biddingInfoList.put(anum, new BuyerBiddingVo(title, check, endDate, mId));
+
 					} while (rs.next());
 
 				} else {
@@ -269,10 +263,11 @@ public class AuctionDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
-	
-	//판매자 번호 가져오기
-	public int getSelnum(String id) {
 
+	// 판매자 번호 가져오기
+	public ArrayList<Integer> getSelnum(String id) {
+
+		ArrayList<Integer> list = new ArrayList<Integer>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
@@ -288,25 +283,65 @@ public class AuctionDao {
 			if (rs.next()) {
 				// 회원번호 출력
 				int mnum = rs.getInt("m_num");
-				String sql2 = "select sel_num from seller where m_num = ? ";
-				pstmt2 = con.prepareStatement(sql);
+
+				String sql2 = "select SEL_NUMBER from seller where m_num = ? ";
+				pstmt2 = con.prepareStatement(sql2);
 				pstmt2.setInt(1, mnum);
-				rs = pstmt.executeQuery();
-				if(rs.next()) {
-					return rs.getInt("sel_num");
-				}else {
-					return -1;					
+				rs = pstmt2.executeQuery();
+				if (rs.next()) {
+
+					do {
+						list.add(rs.getInt("SEL_NUMBER"));
+					} while (rs.next());
+					return list;
+				} else {
+					return null;
 				}
 			} else {
-				return -1;
+				return null;
 			}
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			return -1;
-		}finally {
+			return null;
+		} finally {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
-	
+
+	// aution테이블에서 판매자가 팔고 있는 물품중 현재 입찰중인 (bidstatus = 1)인 것리스트 가져오기
+	public ArrayList<Integer> sellerBidinglist(ArrayList<Integer> selNumlist) {
+
+		ArrayList<Integer> bidlist = new ArrayList<Integer>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			for (int selnum : selNumlist) {
+				con = ConnectionPool.getCon();
+				String sql = "select a_num from auction where sel_number=? and bidstatus=1";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, selnum);
+				rs = pstmt.executeQuery();
+				System.out.println(selnum);
+				if (rs.next()) {
+					do {
+						int anum = rs.getInt("a_num");
+						System.out.println("anum" + anum);
+						bidlist.add(anum);
+					}while(rs.next());
+				} 
+			}
+
+			return bidlist;
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
 }

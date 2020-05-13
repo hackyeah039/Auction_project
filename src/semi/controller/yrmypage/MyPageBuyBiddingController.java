@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.yr.AuctionDao;
-import semi.vo.yr.BiddingVo;
+import semi.vo.yr.BuyerBiddingVo;
 
 @WebServlet("/mypage/buyerBidding.do")
 public class MyPageBuyBiddingController extends HttpServlet {
@@ -32,19 +32,19 @@ public class MyPageBuyBiddingController extends HttpServlet {
 		AuctionDao auctiondao = new AuctionDao();
 		
 		//입찰중경매리스트 얻어오기
-		ArrayList<Integer> bidlist =  auctiondao.bidinglist(id);
+		ArrayList<Integer> bidlist =  auctiondao.buyerBidinglist(id);
 	
 		//입찰한 경매리스트 현재가격 얻어오기
 		HashMap<Integer, Integer> currPriceList = auctiondao.getCurrPrice(bidlist);
 		
-		//입찰등록한 수
-		HashMap<Integer, Integer> getBidCountList = auctiondao.getBidCount(id);
+		//입찰 수
+		HashMap<Integer, Integer> getBidCountList = auctiondao.getBidCount(bidlist);
 		
 		//입찰 순위
 		HashMap<Integer, Integer> getBidRankList = auctiondao.getBidRank(bidlist, id);
 	
 		//경매상품 정보
-		HashMap<Integer, BiddingVo> BiddingInfoList = auctiondao.getBiddingInfo(bidlist);
+		HashMap<Integer, BuyerBiddingVo> BiddingInfoList = auctiondao.getBiddingInfo(bidlist);
 		
 
         req.setAttribute("bidlist", bidlist);		
