@@ -4,9 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel = "stylesheet" type="text/css" href="jquery.datetimepicker.min.css"/>
 <script src="jquery.js"></script>
-<script src="jquery.datetimepicker.full.js"></script>
 <script>
 $('#datetimepicker').datetimepicker();
 </script>
@@ -135,11 +133,18 @@ $('#datetimepicker').datetimepicker();
 		경매기간
 	</td>
 	<td>
-		<input id="datetimepicker" type="text">
-		~
-		<!-- 
-		<input id="datetimepicker" name="date1" type="text">		
-		 -->
+		<input id="startdate" name="a_startdate" type="text">
+		-
+		<input id="enddate" name="a_enddate" type="text">
+		
+		<script type="text/javascript">
+		$(document).ready(function() {
+		    $('#startdate').datetimepicker();
+		});
+		$(document).ready(function() {
+		    $('#enddate').datetimepicker();
+		});
+		</script>
 	</td>
 </tr>
 </table>
@@ -175,4 +180,6 @@ $('#datetimepicker').datetimepicker();
 <input type="submit" value="등록" style="width: 100px;height: 50px">
 </form>
 </body>
+<link rel = "stylesheet" type="text/css" href="jquery.datetimepicker.min.css"/>
+<script src="jquery.datetimepicker.full.js"></script>
 </html>
