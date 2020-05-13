@@ -7,7 +7,7 @@
 
 <h1>회원가입</h1>
 <div>
-<form method="post" action="${cp }join/insert.jh">
+<form method="post" action="${cp }/join/insert.jh">
 	<table border="1" >
 		<tr>
 			<th>* 이름 : </th>
@@ -201,6 +201,9 @@
 			var phoneck=/^[0-9]+$/; 
 			if(phone.length>13){
 				phoneckmsg.innerHTML="번호는 13자리 이하로 입력해주세요.";
+				phonebool=false;
+			}else if(phone.length<1){
+				phoneckmsg.innerHTML="번호를 입력해주세요";
 				phonebool=false;
 			}else if(!(phoneck.test(phone))){
 				phoneckmsg.innerHTML="번호는 숫자만 입력해주세요.";

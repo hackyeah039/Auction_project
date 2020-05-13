@@ -10,7 +10,7 @@
 <h1>메인화면 테스트용 입니다.</h1>
 <ul>
 	<li><a href="${cp }/join/join.jsp">회원가입</a></li>
-	
+	<li><a href="${cp }/login/login.jsp">로그인</a></li>
 </ul>
 </body>
 <script type="text/javascript"></script>

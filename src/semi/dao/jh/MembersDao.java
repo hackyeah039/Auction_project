@@ -63,7 +63,7 @@ public class MembersDao {
 		try {
 			con=ConnectionPool.getCon();
 			String sql="insert into members values(seq_members_m_num.nextval,"
-					+ "?,?,?,?,?,?,5,0,sysdate);";
+					+ "?,?,?,?,?,?,5,0,sysdate)";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, vo.getM_name());
 			pstmt.setString(2, vo.getM_email());
