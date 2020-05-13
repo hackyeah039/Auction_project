@@ -23,27 +23,33 @@ public class HistoryController extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		String spageNum =req.getParameter("pageNum");
 		int a_num=Integer.parseInt(req.getParameter("a_num"));
-		int field =Integer.parseInt(req.getParameter("field"));
-		
+		String sfield=req.getParameter("numbers");
+		int field =10;
+		if(sfield!=null) {
+			field=Integer.parseInt(sfield);
+		}
 		int pageNum=1;
 		if(spageNum!=null) {pageNum=Integer.parseInt(spageNum);}
 		int startRow=(pageNum-1)*field +1;
 		int endRow =(startRow-1)+field;
-		
-		BidDao dao= new BidDao();
+		int startPage =(pageNum-1)/5*5+1;
+		int endPage =startPage+4;
+		BidDao dao= BidDao.getInstance();
 		ArrayList<BidVo> list = dao.list(startRow, endRow, field, a_num);
-		
 		int paging =(int)Math.ceil(dao.getCount(field));
-				
+		
+		if(endPage>paging) {endPage = paging;}
+		System.out.println("페이지:"+paging+"endPage:"+endPage);		
 		req.setAttribute("list", list);
 		req.setAttribute("paging", paging);
 		req.setAttribute("startrow", startRow);
 		req.setAttribute("endRow", endRow);
 		req.setAttribute("field", field);
 		req.setAttribute("pageNum", spageNum);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
 		
 		req.getRequestDispatcher("/detailview.jsp").forward(req , resp);
-		//BidVo vo=dao.list(11);//int startrow , int endrow , int field,int a_num
 	}
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)

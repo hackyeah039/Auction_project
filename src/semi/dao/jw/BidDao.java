@@ -10,6 +10,11 @@ import semi.db.jw.JDBCUtil;
 import semi.vo.jw.BidVo;
 
 public class BidDao {
+	private static BidDao instance = new BidDao();
+	private BidDao() {};
+	public static BidDao getInstance() {
+		return instance;
+	}
 //	public BidVo list(int num){
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
@@ -34,26 +39,27 @@ public class BidDao {
 //			JDBCUtil.close(rs, pstmt, con);
 //		}
 //	}
-	public ArrayList<BidVo> list(int startrow , int endrow , int field,int a_num){
+	public ArrayList<BidVo> list(int startrow , int endrow , int field, int a_num){
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		try {	
+		try {
+			System.out.println("dao list접근");
 			con=JDBCUtil.getConn();
 			String sql=null;
-			if(field==0) { // 검색어값이 아무것도 없을 때
+		//	if(field==0) {
 				 sql = "select * from "
 						+ "	("
-						+ "	select aa.*, rownum rnum from"
+						+ "	select aa.*, rownum rnum from "
 						+ " ( "
 						+ "	select m_num,bid_price, to_char(systimestamp, 'YYYY/MM/DD HH24:MI:SS:ff') realdate from bid where a_num=? order by bid_price asc"
 						+ " )aa"
-						+ " )where rnum>=? and rnum<=?";
+						+ " ) where rnum>=? and rnum<=?";
 				 		pstmt=con.prepareStatement(sql);
 			 			pstmt.setInt(1, a_num);
 			 			pstmt.setInt(2, startrow);
 			 			pstmt.setInt(3, endrow);
-			}else { // 검색어값이 있을 때 
+	/*		}else { // 검색어값이 있을 때 
 				
 				 sql="select * from "
 						+ "	("
@@ -66,7 +72,7 @@ public class BidDao {
 				 		pstmt.setInt(1, a_num);
 				 		pstmt.setInt(2, startrow);
 				 		pstmt.setInt(3, endrow+field);
-			}
+			}*/
 			
 			rs= pstmt.executeQuery();
 			ArrayList<BidVo> list = new ArrayList<BidVo>();
