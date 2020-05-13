@@ -10,7 +10,8 @@ public class SingoVo {
 	private int singo_status;//신고상태
 	private Date singo_date;//신고날짜
 	private String m_id;//신고자 아이디
-	private String singoProcess;
+	private String singoProcess; //처리상태
+	private String singo_id;
 	public SingoVo() {}
 	
 	public SingoVo(int sel_number, int m_num, int singo_num, 
@@ -35,6 +36,19 @@ public class SingoVo {
 		this.singo_date = singo_date;
 		this.m_id = m_id;
 		this.singoProcess = singoProcess;
+	}
+	
+	//신고대상자 아이디 추가 vo
+	public SingoVo(int sel_number, int m_num, int singo_num, 
+			String singo_content, int singo_status, Date singo_date,String singo_id) {
+		super();
+		this.sel_number = sel_number;
+		this.m_num = m_num;
+		this.singo_num = singo_num;
+		this.singo_content = singo_content;
+		this.singo_status = singo_status;
+		this.singo_date = singo_date;
+		this.singo_id = singo_id;
 	}
 		
 	public int getSel_number() {
@@ -84,6 +98,13 @@ public class SingoVo {
 	}
 	public void setSingoProcess(String singoProcess) {
 		this.singoProcess = singoProcess;
+	}
+	
+	public String getSingo_id() {
+		return singo_id;
+	}
+	public void setSingo_id(String singo_id) {
+		this.singo_id = singo_id;
 	}
 	
 	

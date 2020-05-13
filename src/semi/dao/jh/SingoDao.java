@@ -130,6 +130,109 @@ public class SingoDao {
 			}
 		}
 	}
+	
+	//관리자_신고페이지 상세리스트 가져오기
+	public ArrayList<SingoVo> singoDetailList(int snum){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from singo where singo_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, snum);
+			rs=pstmt.executeQuery();
+			ArrayList<SingoVo> list=new ArrayList<SingoVo>();
+			if(rs.next()) {
+				int sel_number=rs.getInt("sel_number");
+				int m_num=rs.getInt("m_num");
+				int singo_num=rs.getInt("singo_num");
+				String singo_content=rs.getString("singo_content");
+				int singo_status=rs.getInt("singo_status");
+				Date singo_date=rs.getDate("singo_date");
+				int singoM_num=singoMnum(sel_number);//신고대상자 회원번호 가져오기
+				String singoReId=singoRe(singoM_num);//신고대상자 아이디 가져오기
+				SingoVo vo=new SingoVo(sel_number, singoM_num, singo_num, singo_content, 
+						singo_status, singo_date, singoReId);
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	//sel_number로 신고 대상자 회원번호 가져오기
+	public int singoMnum(int selNumber) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select m_num from seller where sel_number=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, selNumber);
+			rs=pstmt.executeQuery();
+			int m_num=0;
+			if(rs.next()) {
+				m_num=rs.getInt("m_num");
+			}
+			return m_num;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	//위에서 구한 신고대상자 회원번호로 아이디 가져오기
+	public String singoRe(int num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select DISTINCT m.m_id id" + 
+					"from seller s,members m" + 
+					"where s.m_num=m.m_num and s.m_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			String id=null;
+			if(rs.next()) {
+				id=rs.getString("id");
+			}
+			return id;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	
+	
+	
 }
 
 

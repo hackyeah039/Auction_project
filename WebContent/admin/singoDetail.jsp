@@ -4,7 +4,7 @@
 <table>
 	<tr>
 		<th>신고자: </th>
-		<td>신고자아이디</td>
+		<td></td>
 	</tr>
 	<tr>
 		<th>신고일자: </th>
