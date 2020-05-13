@@ -1,6 +1,7 @@
 package semi.controller.jhjoin;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,26 +9,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import semi.dao.jh.MembersDao;
-import semi.vo.jh.MembersVo;
+import org.json.JSONObject;
 
-@WebServlet("/join/insert.jh")
-public class InsertController extends HttpServlet{
+import semi.dao.jh.MembersDao;
+@WebServlet("/join/emailck.jh")
+public class EmailCkController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String name=req.getParameter("name");
-		String id=req.getParameter("id");
-		String pwd=req.getParameter("pwd");
+		req.setCharacterEncoding("utf-8");
 		String email=req.getParameter("email");
-		String addr=req.getParameter("addr");
-		int phone=Integer.parseInt(req.getParameter("phone"));
-		MembersVo vo=new MembersVo(0, name, email, phone, addr, id, pwd, 0, 0, null);
 		MembersDao dao=MembersDao.getMembersDao();
-		int n=dao.insertMembers(vo);
+		resp.setContentType("text/plain;charset=utf-8");
+		JSONObject json=new JSONObject();
+		int n=dao.emailCk(email);
 		if(n>0) {
-			//성공
+			json.put("msg", "error");
 		}else {
-			//실패
+			json.put("msg", "ok");
 		}
+		PrintWriter pw=resp.getWriter();
+		pw.print(json);
 	}
 }
