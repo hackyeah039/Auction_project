@@ -5,17 +5,46 @@
 <head>
 <meta charset="UTF-8">
 <script src="jquery.js"></script>
-<script>
-$('#datetimepicker').datetimepicker();
-</script>
+
 <title>InsertAuction.jsp</title>
 <!-- 0512
-	카테고리 테이블값 받아와서 value 값 및 내용에 뿌려주는걸로 수정하기
+	카테고리 테이블값 받아와서 value 값 및 내용에 뿌려주는걸로 수정하기 - 나중에
  -->
+ <style type="text/css">
+ 	#preview img {
+ 		width: 100px;
+ 		height: 100px;
+ 	}
+ </style>
+ <!-- 0513 이미지 프리뷰 스크립트 -->
+ <script type="text/javascript">
+ 	var sel_files = [];
+ 	$(document).ready(function(){
+ 		$('#file').on("change",showSelectImg);
+ 	});
+ 	function showSelectImg(e) {
+ 		// filelist 객체 
+ 		var files = e.target.files;
+		var filesArr = Array.prototype.slice.call(files);
+		// 이미지를 다시 올리고 싶을 때 div안 files 요소 지우기 -> 새로 업로드할 파일만
+		// 보이게 하기
+		$('#preview').empty();
+		filesArr.forEach(function(f) {
+			sel_files.push(f);
+			
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				var img_html = "<img src=\"" + e.target.result + "\"/>";
+				$('#preview').append(img_html);
+			}
+			reader.readAsDataURL(f);
+		});
+	}
+ </script>
 </head>
 <body>
 <h1> 카테고리 선택 </h1>
-<form method="post" action="">
+<form method="post" action="" enctype="multipart/form-data">
 <table>
 <tr>
 	<td>
@@ -90,11 +119,10 @@ $('#datetimepicker').datetimepicker();
 			 파일 인코드 타입 지정 참고 https://jhkang-tech.tistory.com/98
 			 전 과제 upload 참고 
 		-->
-		<input type="file" name="file" accept="image/*" multiple>
+		<input type="file" id="file" name="file" accept="image/*" multiple>
 		<br>
 		<!-- 이미지 프리뷰 -->
 		<div id = "preview">
-			<img id = "img">
 		</div>
 	</td>
 </tr>
@@ -137,6 +165,7 @@ $('#datetimepicker').datetimepicker();
 		-
 		<input id="enddate" name="a_enddate" type="text">
 		
+		<!-- jQuery 사용하여 캘린더 호출0513  -->
 		<script type="text/javascript">
 		$(document).ready(function() {
 		    $('#startdate').datetimepicker();
