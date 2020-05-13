@@ -8,8 +8,8 @@ public class AuctionVo {
 	private String a_content;
 	private String a_condition;
 	private Date a_regdate;
-	private Date a_startdate;
-	private Date a_enddate;
+	private	String a_startdate;
+	private String a_enddate;
 	private int a_check;
 	private int c_num;
 	private int a_jjim;
@@ -20,9 +20,9 @@ public class AuctionVo {
 	
 	public AuctionVo() {}
 
-	public AuctionVo(int a_num, String a_title, String a_content, String a_condition, Date a_regdate, Date a_startdate,
-			Date a_enddate, int a_check, int c_num, int a_jjim, int sel_number, int bidstatus, int a_startbid,
-			int a_bidunit) {
+	public AuctionVo(int a_num, String a_title, String a_content, String a_condition, Date a_regdate,
+			String a_startdate, String a_enddate, int a_check, int c_num, int a_jjim, int sel_number, int bidstatus,
+			int a_startbid, int a_bidunit) {
 		super();
 		this.a_num = a_num;
 		this.a_title = a_title;
@@ -80,19 +80,19 @@ public class AuctionVo {
 		this.a_regdate = a_regdate;
 	}
 
-	public Date getA_startdate() {
+	public String getA_startdate() {
 		return a_startdate;
 	}
 
-	public void setA_startdate(Date a_startdate) {
+	public void setA_startdate(String a_startdate) {
 		this.a_startdate = a_startdate;
 	}
 
-	public Date getA_enddate() {
+	public String getA_enddate() {
 		return a_enddate;
 	}
 
-	public void setA_enddate(Date a_enddate) {
+	public void setA_enddate(String a_enddate) {
 		this.a_enddate = a_enddate;
 	}
 
@@ -151,4 +151,7 @@ public class AuctionVo {
 	public void setA_bidunit(int a_bidunit) {
 		this.a_bidunit = a_bidunit;
 	}
+	
 }
+	
+	
