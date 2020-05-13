@@ -46,7 +46,7 @@
 		</tr>
 	</table>
 	<br>
-	<input type="button" value="취소"><!-- 취소버트 누르면 메인으로..? -->
+	<a href="${cp }/home.jiho"><input type="button" value="취소"></a>
 	<input type="submit" value="가입" id="insertBt" disabled="disabled">
 </form>
 </div>
