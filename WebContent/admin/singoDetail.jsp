@@ -19,5 +19,5 @@
 		<td>신고대상자 아이디</td>
 	</tr>
 </table>
-<input type="submit" value="처리반려">
-<input type="submit" value="처리승인">
+<input type="button" value="처리반려">
+<input type="button" value="처리승인">
