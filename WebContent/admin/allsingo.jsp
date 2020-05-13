@@ -12,7 +12,9 @@
 	<c:forEach var="vo" items="${list }">
 		<tr>
 			<td>${vo.singo_num }</td>
-			<td><a href="">${vo.m_id}</a></td>
+			<td><a href="${cp}/admin/adminIndex.jsp?file=/singo.detail.jh?singo_num=${vo.singo_num}
+				&id=${vo.m_id}">
+			${vo.m_id}</a></td>
 			<td>${vo.singoProcess }</td>
 			<td>${vo.singo_date }</td>
 		</tr>
