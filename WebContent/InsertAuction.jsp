@@ -48,24 +48,6 @@
 			reader.readAsDataURL(f);
 		});
 	}
- 	//0513 나중에 일자 클릭시 로직으로 비교할것 이전날짜클릭 못하도록
- 	/*
- 	function checkdate() {
-	 	let date1 = $('#startdate').val();	
- 		let date2 = $('#enddate').val();
- 		if(date2<date1){
- 			// 포커스 강제 해제
- 			$('#enddate').blur();
- 			alert("시작일자 보다 이전 일자를 입력할수 없습니다.");
- 			$('#enddate').val("");
- 		} else if(date2=date1) {
- 			$('#enddate').blur();
- 			alert("시작일자와 같은 일자를 입력할수 없습니다.");
- 			$('#enddate').val("");
- 		}
-	}
- 	*/
-
  </script>
 </head>
 <body>
@@ -191,27 +173,20 @@
 		<input id="startdate" name="a_startdate" type="text">
 		-
 		<input id="enddate" name="a_enddate" type="text">
-		<!-- 달력 수정 필요 -->
+		<!-- 달력 수정 완료 0514 -->
 		<!-- jQuery 사용하여 캘린더 호출0513  -->
 		<script type="text/javascript">
-		$(document).ready(function() {
-			$('#startdate').datetimepicker({
-				'format': 'd/m/Y H:i',
-				'minDate': 0,
-				'minDateTime': new Date()
-			});
-			$('#enddate').datetimepicker({
-				'format': 'd/m/Y H:i',
-			    //'minDate': 0,
-			    'closeOnDateSelect' : true,
-			    'validateOnBlur' : true,
-			    'minDateTime': new Date(),
-			    onSelect: function(selectedDate) {
-					var nextDay = new Date(selectedDate);
-					nextDay.setDate(nextDay.getDate() + 1);
-				  $('#startdate').datepicker("option","minDate", nextDay);
-				}
-			});
+		// 참고 페이지 https://xdsoft.net/jqplugins/datetimepicker/
+		$(document).ready(function(){
+			 $('#startdate').datetimepicker({
+			  format:'Y/m/d H:i',
+			  minDate:0
+			 });
+			 $('#enddate').datetimepicker({
+			  format:'Y/m/d H:i',
+			  minDate:'+1970/01/02',
+			  defaultDate: '+1970/01/02'
+			 });
 		});
 		</script>
 	</td>
