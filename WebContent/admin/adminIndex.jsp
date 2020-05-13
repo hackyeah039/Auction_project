@@ -5,11 +5,18 @@
 	#divleft {background-color: gray; width: 150px; height: 800px;float:left}
 	#divright {background-color: #dddddd; width: 700px; height: 800px;float:left}
 </style>
+<%
+	
+	String file=request.getParameter("file");
+	if(file==null){
+		file="/admin/adminMain.jsp";
+	}
+%>
 <div id="main">
 <div id="divleft">
 	<span>신고리스트</span>
 	<ul>
-		<li><a href="">전체리스트</a></li>
+		<li><a href="adminIndex.jsp?file=/singo.list.jh">전체리스트</a></li>
 		<li><a href="">신고검토중</a></li>
 		<li><a href="">처리완료</a></li>
 	</ul>
@@ -26,5 +33,7 @@
 		<li><a href="">탈퇴 처리완료</a></li>
 	</ul>
 </div>
-<div id="divright"></div>
+<div id="divright">
+	<jsp:include page="<%=file %>"></jsp:include>
+</div>
 </div>
