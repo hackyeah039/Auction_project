@@ -11,6 +11,7 @@
 <ul>
 	<li><a href="${cp }/join/join.jsp">회원가입</a></li>
 	<li><a href="${cp }/login/login.jsp">로그인</a></li>
+	<li><a href="${cp }/admin/adminIndex.jsp">관리자 페이지</a></li>
 </ul>
 </body>
 <script type="text/javascript"></script>

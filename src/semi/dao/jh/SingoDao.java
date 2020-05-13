@@ -18,14 +18,19 @@ public class SingoDao {
 	}
 	
 	//신고테이블 전체리스트 불러오기
-	public ArrayList<SingoVo> singoAll(){
+	public ArrayList<SingoVo> singoAll(int startRow,int endRow){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from singo order by singo_num desc";
+			String sql="select *\r\n" + 
+					"from(select aa.*,rownum rnum\r\n" + 
+					"from (select * from singo order by singo_num desc)aa)bb\r\n" + 
+					"where rnum>=? and rnum <=?";
 			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
 			rs=pstmt.executeQuery();
 			ArrayList<SingoVo> list=new ArrayList<SingoVo>();
 			while(rs.next()) {
@@ -34,7 +39,6 @@ public class SingoDao {
 				int singo_num=rs.getInt("singo_num");
 				String singo_content=rs.getString("singo_content");
 				int singo_status=rs.getInt("singo_status");
-				
 				Date singo_date=rs.getDate("singo_date");
 				String id = singoId(m_num); //신고자 아이디 가져오는 메소드 사용
 				String singoName=SingoProcess(singo_status);//신고상태 가져오는 메소드 사용
@@ -98,7 +102,34 @@ public class SingoDao {
 		}
 		return str;
 	}
-	
+	//신고리스트 전체 글번호 개수 가져오기
+	public int getCount() {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select nvl(count(*),0) count from singo";
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			int count=0;
+			if(rs.next()) {
+				count=rs.getInt("count");
+			}
+			return count;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
 }
 
 
