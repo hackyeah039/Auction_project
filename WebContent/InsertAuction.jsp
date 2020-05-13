@@ -48,6 +48,22 @@
 			reader.readAsDataURL(f);
 		});
 	}
+ 	//0513 나중에 일자 클릭시 로직으로 비교할것 이전날짜클릭 못하도록
+ 	function checkdate() {
+	 	let date1 = $('#startdate').val();	
+ 		let date2 = $('#enddate').val();
+ 		if(date2<date1){
+ 			// 포커스 강제 해제
+ 			$('#enddate').blur();
+ 			alert("시작일자 보다 이전 일자를 입력할수 없습니다.");
+ 			$('#enddate').val("");
+ 		} else if(date2=date1) {
+ 			$('#enddate').blur();
+ 			alert("시작일자와 같은 일자를 입력할수 없습니다.");
+ 			$('#enddate').val("");
+ 		}
+	}
+
  </script>
 </head>
 <body>
@@ -172,7 +188,7 @@
 	<td>
 		<input id="startdate" name="a_startdate" type="text">
 		-
-		<input id="enddate" name="a_enddate" type="text">
+		<input id="enddate" name="a_enddate" type="text" onchange="checkdate()">
 		
 		<!-- jQuery 사용하여 캘린더 호출0513  -->
 		<script type="text/javascript">
