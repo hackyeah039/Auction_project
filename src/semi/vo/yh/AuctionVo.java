@@ -39,6 +39,7 @@ public class AuctionVo {
 		this.a_startbid = a_startbid;
 		this.a_bidunit = a_bidunit;
 	}
+	
 
 	public int getA_num() {
 		return a_num;
