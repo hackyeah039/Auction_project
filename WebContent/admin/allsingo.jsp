@@ -13,11 +13,11 @@
 		<tr>
 			<td>${vo.singo_num }</td>
 			<td><a href="${cp}/singo.detail.jh?singo_num=${vo.singo_num}
-				&id=${vo.m_id}">
-			${vo.m_id}</a></td>
+				&id=${vo.m_id}">${vo.m_id}</a></td>
 			<td>${vo.singoProcess }</td>
 			<td>${vo.singo_date }</td>
 		</tr>
+			신고넘:${vo.singo_num}
 		
 	</c:forEach>
 </table>
@@ -25,7 +25,7 @@
 <div>
 <c:choose>
 	<c:when test="${startPage>3 }">
-		<a href="${cp}/singo.list.jh?pageNum=${startPage-3}">[이전]</a>
+		<a href="${cp}/singo.list.jh?pageNum=${startPage-3}&field=${field}&keyword=${keyword}">[이전]</a>
 	</c:when>
 	<c:otherwise>
 		처음
@@ -46,7 +46,7 @@
 <!-- 다음/끝.. -->
 <c:choose>
 	<c:when test="${endPage<pageCount }">
-		<a href="${cp}/singo.list.jh?pageNum=${endPage+1}">[다음]</a>
+		<a href="${cp}/singo.list.jh?pageNum=${endPage+1}&field=${field}&keyword=${keyword}">[다음]</a>
 	</c:when>
 	<c:otherwise>
 		끝
@@ -55,7 +55,7 @@
 </div>
 <br>
 <div>
-	<form method="post" action="${cp }/singo.list.jh?field=${field}&keyword=${keyword}&pageNum=${i}">
+	<form method="post" action="${cp }/singo.list.jh?">
 		<select name="field">
 			<option value="singojaId" <c:if test="${field=='singojaId'}">selected</c:if>>신고자 아이디</option>	
 			<option value="singo_content" <c:if test="${field=='singo_content'}">selected</c:if>>신고내용</option>	

@@ -18,27 +18,22 @@ public class SingoDao {
 	}
 	
 	//신고테이블 전체리스트 불러오기
-	public ArrayList<SingoVo> singoAll(int startRow,int endRow,String field,String keyword){
+	public ArrayList<SingoVo> singoAll(int startRow,int endRow){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql=null;
-			if(field==null || keyword==null) {
-				sql="select * from (select aa.*, rownum rnum from (select * from singo order by singo_num desc)aa) bb " + 
+			String sql="select * from (select aa.*, rownum rnum from (select * from singo order by singo_num desc)aa) bb " + 
 					"where rnum>=? and rnum <=?";
-			}else {
-				sql="select bb.*, mm.m_id id from members mm, (select aa.*, se.m_num 대상자회원번호, rownum rnum from seller se, (select s.*, m_id singojaId from singo s, members m where s.m_num=m.m_num order by s.singo_num desc)aa where aa.sel_number=se.sel_number)bb where mm.m_num=bb.대상자회원번호 and rnum>=? and rnum<=? and "+field+" like '%"+keyword+"%'";
-			}
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			rs=pstmt.executeQuery();
 			ArrayList<SingoVo> list=new ArrayList<SingoVo>();
 			while(rs.next()) {
+				System.out.println("신고테이블 전체리스트dao");
 				int sel_number=rs.getInt("sel_number");
-				System.out.println("while:"+sel_number);
 				int m_num=rs.getInt("m_num");
 				int singo_num=rs.getInt("singo_num");
 				String singo_content=rs.getString("singo_content");
@@ -64,6 +59,53 @@ public class SingoDao {
 			}
 		}
 	}
+	
+	//신고테이블 전체리스트 불러오기(검색조건 있을 때)
+		public ArrayList<SingoVo> singoAllSearch(int startRow,int endRow, String field,String keyword){
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select bb.*, mm.m_id id from members mm, (select aa.*, se.m_num 대상자회원번호, rownum rnum from seller se, (select s.*, m_id singojaId from singo s, members m where s.m_num=m.m_num order by s.singo_num desc)aa where aa.sel_number=se.sel_number)bb where mm.m_num=bb.대상자회원번호 and rnum>=? and rnum<=? and "+field+" like '%"+keyword+"%'";
+				pstmt=con.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				ArrayList<SingoVo> list=new ArrayList<SingoVo>();
+				System.out.println("신고테이블 검색전체리스트dao");
+				while(rs.next()) {
+					int sel_number=rs.getInt("sel_number");
+					int m_num=rs.getInt("m_num");
+					int singo_num=rs.getInt("singo_num");
+					String singo_content=rs.getString("singo_content");
+					int singo_status=rs.getInt("singo_status");
+					Date singo_date=rs.getDate("singo_date");
+					String id = singoId(m_num); //신고자 아이디 가져오는 메소드 사용
+					String singoName=SingoProcess(singo_status);//신고상태 가져오는 메소드 사용
+					SingoVo vo=new SingoVo(sel_number, m_num, singo_num, singo_content, 
+							singo_status, singo_date,id,singoName);
+					list.add(vo);
+				}
+				//System.out.println("검색조건전제글개수:"+allRow);
+				return list;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return null;
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+	
+	
+	
+	
+	
+	
 	//신고테이블 처리중인 리스트 불러오기
 	public ArrayList<SingoVo> singoDoing(int startRow,int endRow,int status){
 		Connection con=null;
@@ -182,6 +224,39 @@ public class SingoDao {
 			}
 		}
 	}
+	
+	//신고리스트 검색조건 있을 때 전체 글번호 개수 가져오기
+		public int getCountSearch(String field,String keyword) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select nvl(count(*),0) count from(select bb.*, mm.m_id id from members mm, (select aa.*, se.m_num 대상자회원번호, rownum rnum from seller se, (select s.*, m_id singojaId from singo s, members m where s.m_num=m.m_num order by s.singo_num desc)aa where aa.sel_number=se.sel_number)bb where mm.m_num=bb.대상자회원번호 and "+field+" like '%"+keyword+"%')";
+				pstmt=con.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				int count=0;
+				if(rs.next()) {
+					count=rs.getInt("count");
+				}
+				return count;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return -1;
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+	
+	
+	
+	
 	
 	//상태에 따른 신고리스트 전체 글번호 개수 가져오기
 		public int getCount(int singo_status) {

@@ -12,6 +12,7 @@ public class SingoVo {
 	private String m_id;//신고자 아이디
 	private String singoProcess; //처리상태
 	private String singo_id;
+	private int searchRow;
 	public SingoVo() {}
 	
 	public SingoVo(int sel_number, int m_num, int singo_num, 
@@ -38,7 +39,7 @@ public class SingoVo {
 		this.singoProcess = singoProcess;
 	}
 	
-	//신고대상자 아이디 추가 vo
+	//신고대상자 아이디 추가 vo(전체 신고리스트 할 때)
 	public SingoVo(int sel_number, int m_num, int singo_num, 
 			String singo_content, int singo_status, Date singo_date,String singo_id) {
 		super();
@@ -50,6 +51,22 @@ public class SingoVo {
 		this.singo_date = singo_date;
 		this.singo_id = singo_id;
 	}
+	
+	//전체리스트--> 검색조건 있을 때 전체 글번호 리턴값 추가
+	public SingoVo(int sel_number, int m_num, int singo_num, String singo_content, 
+			int singo_status, Date singo_date,String m_id,String singoProcess,int searchRow) {
+		super();
+		this.sel_number = sel_number;
+		this.m_num = m_num;
+		this.singo_num = singo_num;
+		this.singo_content = singo_content;
+		this.singo_status = singo_status;
+		this.singo_date = singo_date;
+		this.m_id = m_id;
+		this.singoProcess = singoProcess;
+		this.searchRow = searchRow;
+	}	
+	
 		
 	public int getSel_number() {
 		return sel_number;
@@ -105,6 +122,13 @@ public class SingoVo {
 	}
 	public void setSingo_id(String singo_id) {
 		this.singo_id = singo_id;
+	}
+	
+	public int getSearchRow() {
+		return searchRow;
+	}
+	public void setsearchRow(int searchRow) {
+		this.searchRow = searchRow;
 	}
 	
 	
