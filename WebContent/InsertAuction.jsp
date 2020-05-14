@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +48,15 @@
 			}
 			reader.readAsDataURL(f);
 		});
+	}
+<%
+	// 세션에서 회원번호를 가져와서 계좌번호 조회하기
+	//String m_num = (String)session.getAttribute("m_num");
+	String m_num = "1";
+%>
+ 	function showList() {
+		var url = "showAccount.jsp?m_num=" + <%=m_num%>;
+		window.open(url, "get", "height = 150, width = 280");
 	}
  </script>
 </head>
@@ -218,7 +228,8 @@
 		<td>계좌번호</td>
 		<td>
 			<!-- 0514 추가 하기 - 기등록 계좌 확인 버튼으로 세션에 있는 회원 번호를 받아서 있는 계좌 전부출력 -->
-			<input type="text" name="account">
+			<input type="text" name="account" id="account">
+			<input type="button" value="기존계좌확인" onclick="showList()">
 		</td>
 	</tr>
 </table>

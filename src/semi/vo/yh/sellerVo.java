@@ -1,24 +1,24 @@
 package semi.vo.yh;
 
 public class sellerVo {
-	private int account;
+	private Long account;
 	private int m_num;
-	private int sel_num;
+	private int sel_number;
 	
 	public sellerVo() {}
 
-	public sellerVo(int account, int m_num, int sel_num) {
+	public sellerVo(Long account, int m_num, int sel_number) {
 		super();
 		this.account = account;
 		this.m_num = m_num;
-		this.sel_num = sel_num;
+		this.sel_number = sel_number;
 	}
 
-	public int getAccount() {
+	public Long getAccount() {
 		return account;
 	}
 
-	public void setAccount(int account) {
+	public void setAccount(Long account) {
 		this.account = account;
 	}
 
@@ -30,12 +30,12 @@ public class sellerVo {
 		this.m_num = m_num;
 	}
 
-	public int getSel_num() {
-		return sel_num;
+	public int getSel_number() {
+		return sel_number;
 	}
 
-	public void setSel_num(int sel_num) {
-		this.sel_num = sel_num;
+	public void setSel_number(int sel_number) {
+		this.sel_number = sel_number;
 	}
 	
 }
