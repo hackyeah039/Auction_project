@@ -24,6 +24,9 @@
 			<th>남은 일자</th>
 		</tr>
 
+
+
+
 		<c:forEach var="anum" items="${anumList}">
 			<tr>
 				<td>${anum}</td>
