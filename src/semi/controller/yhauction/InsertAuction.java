@@ -1,26 +1,54 @@
 package semi.controller.yhauction;
 
+import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.util.List;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
-import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-
-import semi.vo.yh.sellerVo;
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 @WebServlet("/InsertAuction.do")
 public class InsertAuction extends HttpServlet{
+	@Override
+	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		String encoding = "utf-8";
+		req.setCharacterEncoding(encoding);
+		File currentPath = new File("C:\\file_repo");
+		DiskFileItemFactory factory = new DiskFileItemFactory(1024*1024*5, currentPath);
+		
+		ServletFileUpload upload = new ServletFileUpload(factory);
+		try {
+			List items = upload.parseRequest(req);
+			for(int i = 0 ; i < items.size() ; i++) {
+				FileItem fileItem = (FileItem)items.get(i);
+				if(fileItem.isFormField()) { //  전송된 name 속성 값 출력 
+					System.out.println(fileItem.getFieldName() + " = " +fileItem.getString(encoding));					
+				} else { // 파일인경우
+					System.out.println("파일명 : " + fileItem.getName());
+					if(fileItem.getSize() > 0) {
+						// 마지막 \\위치의 번호를 구해옴.
+						int idx = fileItem.getName().lastIndexOf("\\");
+						if(idx == -1) {
+							idx = fileItem.getName().lastIndexOf("/");
+						}
+						String fileName = fileItem.getName().substring(idx+1);
+						File uploadFile = new File(currentPath + "\\" + fileName); //이름 포함한 경로
+						fileItem.write(uploadFile); // 저장
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	/*
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//ContextPath 받기 - 홈 컨트롤러에서 application 영역으로 선언하므로
@@ -60,6 +88,6 @@ public class InsertAuction extends HttpServlet{
 		int m_num = sdao.getMnum(id);
 		//4. seller테이블에 인서트 
 		SellerVo svo = new sellerVo(account, m_num, sel_num)
-		*/
 	}
+	 */
 }

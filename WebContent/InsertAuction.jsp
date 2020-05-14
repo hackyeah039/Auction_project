@@ -70,7 +70,7 @@
 <body>
 <!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
 <h1> 카테고리 선택 </h1>
-<form method="post" action="" enctype="multipart/form-data">
+<form method="post" action="/InsertAuction.do" enctype="multipart/form-data">
 <table>
 <tr>
 	<td>
