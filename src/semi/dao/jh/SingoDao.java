@@ -59,17 +59,19 @@ public class SingoDao {
 		}
 	}
 	//신고테이블 처리중인 리스트 불러오기
-	public ArrayList<SingoVo> singoDoing(int startRow,int endRow){
+	public ArrayList<SingoVo> singoDoing(int startRow,int endRow,int status){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from (select aa.*, rownum rnum from (select * from singo order by singo_num desc)aa) bb " + 
+			String sql="select * from (select aa.*, rownum rnum from "
+					+ "(select * from singo order by singo_num desc)aa where singo_status=?) bb " + 
 					"where rnum>=? and rnum <=?";
 			pstmt=con.prepareStatement(sql);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(1, status);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			rs=pstmt.executeQuery();
 			ArrayList<SingoVo> list=new ArrayList<SingoVo>();
 			while(rs.next()) {
@@ -174,6 +176,39 @@ public class SingoDao {
 			}
 		}
 	}
+	
+	//상태에 따른 신고리스트 전체 글번호 개수 가져오기
+		public int getCount(int singo_status) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select nvl(count(*),0) count "
+						+ "from singo where singo_status=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, singo_status);
+				rs=pstmt.executeQuery();
+				int count=0;
+				if(rs.next()) {
+					count=rs.getInt("count");
+				}
+				return count;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return -1;
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+	
+	
 	
 	//관리자_신고페이지 상세리스트 가져오기
 	public ArrayList<SingoVo> singoDetailList(int snum){
