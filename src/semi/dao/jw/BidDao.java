@@ -48,17 +48,18 @@ public class BidDao {
 			con=JDBCUtil.getConn();
 			String sql=null;
 		//	if(field==0) {
-				 sql = "select * from "
-						+ "	("
-						+ "	select aa.*, rownum rnum from "
+				 sql = 
+//						 "select * from "
+//						+ "	("
+						  "	select aa.*, rownum rnum from "
 						+ " ( "
 						+ "	select m_num,bid_price, to_char(systimestamp, 'YYYY/MM/DD HH24:MI:SS:ff') realdate from bid where a_num=? order by bid_price asc"
-						+ " )aa"
-						+ " ) where rnum>=? and rnum<=?";
+						+ " )aa";
+//						+ " ) where rnum>=? and rnum<=?";
 				 		pstmt=con.prepareStatement(sql);
 			 			pstmt.setInt(1, a_num);
-			 			pstmt.setInt(2, startrow);
-			 			pstmt.setInt(3, endrow);
+//			 			pstmt.setInt(2, startrow);
+//			 			pstmt.setInt(3, endrow);
 	/*		}else { // 검색어값이 있을 때 
 				
 				 sql="select * from "

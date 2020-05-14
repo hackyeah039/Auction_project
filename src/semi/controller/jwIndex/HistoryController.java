@@ -50,6 +50,8 @@ public class HistoryController extends HttpServlet{
 		ArrayList<BidVo> list = dao.list(startRow, endRow, field, a_num); //
 		int paging =(int)Math.ceil(dao.getCount(field));
 		
+		System.out.println(dao.getCount(field));
+		
 		if(endPage>paging) {endPage = paging;}
 		System.out.println("페이지:"+paging+"endPage:"+endPage);		
 		req.setAttribute("list", list);
@@ -70,6 +72,7 @@ public class HistoryController extends HttpServlet{
 		//그걸 페이징처리하고 다시 AllList()메소드 써서 페이징처리 ㄱㄱ
 		//Ajax
 		int numbers=Integer.parseInt(req.getParameter("field"));
+		System.out.println(numbers);
 		ArrayList<BidVo> list=new ArrayList<BidVo>();
 	    //list.add(new CommentsVo(1,1,"길동1","좋아요!"));
 	    JSONArray jarr=new JSONArray();
