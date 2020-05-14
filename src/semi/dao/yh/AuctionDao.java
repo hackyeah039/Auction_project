@@ -23,6 +23,8 @@ public class AuctionDao {
 		try {
 			con = JdbcUtil.getConn();
 			String sql = "select * from auction where a_num = ?";
+			//0514 빼먹은 코드 수정완료
+			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, a_num);
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
