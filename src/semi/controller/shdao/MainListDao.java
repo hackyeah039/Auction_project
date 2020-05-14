@@ -16,7 +16,8 @@ public class MainListDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			String sql="select * from auction";
+			
+			String sql="select * from auction order by a_num asc";
 			con=JDBCUtil.getConn();
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
@@ -91,6 +92,28 @@ public class MainListDao {
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	public int getBidCnt(int a_num) {
+		int cnt=0;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			String sql="select count(*) cnt from bid where a_num=?";
+			con=JDBCUtil.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, a_num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				cnt=rs.getInt("cnt");
+			}
+			return cnt;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}

@@ -43,27 +43,24 @@
 				var allauc=document.getElementById("allauc");
 				var cnt=1;
 				for(var i=0;i<data.length;i++){
-					var a_num=data[i].getElementsByTagName("a_num")[0].firstChild.nodeValue;
 					var title=data[i].getElementsByTagName("a_title")[0].firstChild.nodeValue;
 					var price=data[i].getElementsByTagName("price")[0].firstChild.nodeValue;
-					var bidcnt=data[i].getElementsByTagName("bidcnt")[0].firstChild.nodeValue;
 					var id=data[i].getElementsByTagName("id")[0].firstChild.nodeValue;
 					var a_check=data[i].getElementsByTagName("a_check")[0].firstChild.nodeValue;
 					var endDate=data[i].getElementsByTagName("a_enddate")[0].firstChild.nodeValue;
 					var startDiv=document.createElement("div");
 					var div=document.createElement("div");
 					div.style.textAlign="center";
-					div.style.border="1px solid black";
 					let timeDiv=document.createElement("div");
-					div.innerHTML="<a href='${cp}/checkup.do?a_num='"+a_num+" style='text-decoration: none; color: black;'>"+
+					div.innerHTML="<a href='' style='text-decoration: none; color: black;'>"+
 					"제목 : " + title + "<br>" +
 					"가격 : " + price + "<br>"+
 					"작성자 : " + id + "<br>"+
-					"조회수 : " + a_check + "<br>" +
-					"입찰수 : " + bidcnt + "<br>" +"</a>";
+					"조회수 : " + a_check + "<br>" +"</a>";
 					div.style.float="left";
 					let arr=endDate.split('-');
 					let endTime=new Date(arr[0],arr[1],arr[2]);
+					console.log(endDate);
 					setInterval(function() {
 						var time=new Date();
 						var month=(endTime.getMonth()-time.getMonth())-1;
