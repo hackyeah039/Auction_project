@@ -52,12 +52,19 @@
 <%
 	// 세션에서 회원번호를 가져와서 계좌번호 조회하기
 	//String m_num = (String)session.getAttribute("m_num");
-	String m_num = "1";
+	//String m_num = "1";
 %>
+ 	<%-- 바로 팝업 띄우기
  	function showList() {
 		var url = "showAccount.jsp?m_num=" + <%=m_num%>;
 		window.open(url, "get", "height = 150, width = 280");
 	}
+	--%>
+
+ 	function showList() {
+		window.open("ShowAccount.do", "_blank", "top=200,left=500,height = 150, width = 280");
+	}
+	
  </script>
 </head>
 <body>
@@ -218,7 +225,7 @@
 			비용 부담
 		</td>
 		<td>
-		<input type="text" name="s_price">원
+			<input type="text" name="s_price">원
 		</td>
 	</tr>
 </table>
@@ -227,9 +234,9 @@
 	<tr>
 		<td>계좌번호</td>
 		<td>
-			<!-- 0514 추가 하기 - 기등록 계좌 확인 버튼으로 세션에 있는 회원 번호를 받아서 있는 계좌 전부출력 -->
-			<!-- controller 거쳐서 popup 으로 변경 -->
+			<!-- controller 거쳐서 popup 으로 변경완료 -->
 			<input type="text" name="account" id="account">
+			<input type="hidden" name="sel_number" id="sel_number">
 			<input type="button" value="기존계좌확인" onclick="showList()">
 		</td>
 	</tr>
