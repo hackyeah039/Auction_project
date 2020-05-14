@@ -17,6 +17,8 @@ import javax.websocket.Session;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
+import semi.vo.yh.sellerVo;
+
 @WebServlet("/InsertAuction.do")
 public class InsertAuction extends HttpServlet{
 	@Override
@@ -38,7 +40,6 @@ public class InsertAuction extends HttpServlet{
 		//글등록일자는 sysdate a_regdate
 		String a_startdate = mr.getParameter("a_startdate");
 		String a_enddate = mr.getParameter("a_enddate");
-		/*
 		// 조회수 0 a_check
 		int c_num = Integer.parseInt(mr.getParameter("c_num"));
 		// 찜 0 a_jjim
@@ -49,15 +50,16 @@ public class InsertAuction extends HttpServlet{
 		int s_way = Integer.parseInt(mr.getParameter("s_way"));
 		int s_price = Integer.parseInt(mr.getParameter("s_price"));
 		int account = Integer.parseInt(mr.getParameter("account"));
-		// 회원번호는 세션 아이디값을 받아서 출력
-		//2. 세션값 id 값을 받아옴.
+		// 회원번호는 세션 아이디값을 받아서 출력 + 0514 추가 세션에 회원아이디랑, 번호 같이 넘겨 줄거임. 
+		//2. 세션 회원번호 값을 받아옴.
 		HttpSession session = req.getSession();
-		String id = (String)session.getAttribute("id");
+		int m_num = Integer.parseInt((String)session.getAttribute("m_num"));
 		//3. 회원번호를 받아올 메소드 생성
+		/*
 		SellerDao sdao = SellerDao.getInstance();
 		int m_num = sdao.getMnum(id);
 		//4. seller테이블에 인서트 
-		SellerVo svo = new SellerVo(0, )
+		SellerVo svo = new sellerVo(account, m_num, sel_num)
 		*/
 	}
 }
