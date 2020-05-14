@@ -10,9 +10,10 @@ import java.util.HashMap;
 
 import semi.db.yr.ConnectionPool;
 import semi.vo.yr.AuctionVo;
-import semi.vo.yr.BuyerBiddingVo;
+import semi.vo.yr.BiddingVo;
 
-public class AuctionDao {
+
+public class BiddingDao {
 
 	// 회원번호 가져오기
 	public int getMnum(String id) {
@@ -205,8 +206,8 @@ public class AuctionDao {
 	}
 
 	// 물품명, 조회,마감일 BiddingVo
-	public HashMap<Integer, BuyerBiddingVo> getBiddingInfo(ArrayList<Integer> anumlist) {
-		HashMap<Integer, BuyerBiddingVo> biddingInfoList = new HashMap<Integer, BuyerBiddingVo>();
+	public HashMap<Integer, BiddingVo> getBiddingInfo(ArrayList<Integer> anumlist) {
+		HashMap<Integer, BiddingVo> biddingInfoList = new HashMap<Integer, BiddingVo>();
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -243,7 +244,7 @@ public class AuctionDao {
 							return null;
 						}
 
-						biddingInfoList.put(anum, new BuyerBiddingVo(title, check, endDate, mId));
+						biddingInfoList.put(anum, new BiddingVo(title, check, endDate, mId));
 
 					} while (rs.next());
 
@@ -300,7 +301,6 @@ public class AuctionDao {
 			} else {
 				return null;
 			}
-
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -344,4 +344,54 @@ public class AuctionDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
+	
+	// 물품명, 조회,마감일 BiddingVo
+	public HashMap<Integer, BiddingVo> sellergetBiddingInfo(ArrayList<Integer> anumlist) {
+		HashMap<Integer, BiddingVo> biddingInfoList = new HashMap<Integer, BiddingVo>();
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+
+		try {
+
+			for (int anum : anumlist) {
+				con = ConnectionPool.getCon();
+				String sql = "select a.*, a_enddate-a_startdate remaindate from" + 
+						"(select * from auction where a_num = ?) a";
+
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, anum);
+				rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+					do {
+						String title = rs.getString("a_title");
+						int check = rs.getInt("a_check");
+						Date startDate = rs.getDate("a_startdate");
+						Date endDate = rs.getDate("a_enddate");
+						String remaintDate = rs.getString("remainDate");
+
+						biddingInfoList.put(anum, new BiddingVo(title, check, startDate, endDate, remaintDate));
+
+					} while (rs.next());
+
+				} else {
+					return null;
+				}
+
+			}
+
+			return biddingInfoList;
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			ConnectionPool.close(pstmt2);
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	
 }

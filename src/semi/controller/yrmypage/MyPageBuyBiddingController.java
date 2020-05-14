@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import semi.dao.yr.AuctionDao;
-import semi.vo.yr.BuyerBiddingVo;
+import semi.dao.yr.BiddingDao;
+import semi.vo.yr.BiddingVo;
 
 @WebServlet("/mypage/buyerBidding.do")
 public class MyPageBuyBiddingController extends HttpServlet {
@@ -29,7 +29,7 @@ public class MyPageBuyBiddingController extends HttpServlet {
 //		
 //		String id = (String)session.getAttribute("id"); 
 		
-		AuctionDao auctiondao = new AuctionDao();
+		BiddingDao auctiondao = new BiddingDao();
 		
 		//입찰중경매리스트 얻어오기
 		ArrayList<Integer> bidlist =  auctiondao.buyerBidinglist(id);
@@ -44,7 +44,7 @@ public class MyPageBuyBiddingController extends HttpServlet {
 		HashMap<Integer, Integer> getBidRankList = auctiondao.getBidRank(bidlist, id);
 	
 		//경매상품 정보
-		HashMap<Integer, BuyerBiddingVo> BiddingInfoList = auctiondao.getBiddingInfo(bidlist);
+		HashMap<Integer, BiddingVo> BiddingInfoList = auctiondao.getBiddingInfo(bidlist);
 		
 
         req.setAttribute("bidlist", bidlist);		

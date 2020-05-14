@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<link rel="stylesheet" type="text/css" href="../css/MyPageCss.css">
-
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <div id="simpleList">
 	<jsp:include page="simpleList.jsp"></jsp:include>
 </div>
@@ -16,15 +14,15 @@
 		<tr>
 			<th>no</th>
 			<th>물품명</th>
-			<th>판매자</th>
-			<th>마감일</th>
 			<th>조회</th>
+			<th>시작일</th>
+			<th>마감일</th>
 			<th>현재가</th>
 			<th>입찰</th>
-			<th>입찰순위</th>
+			<th>남은 일자</th>
 		</tr>
 
-		<c:forEach var="anum" items="${bidlist}">
+		<c:forEach var="anum" items="${anumList}">
 			<tr>
 				<td>${anum}</td>
 
@@ -32,11 +30,9 @@
 				<c:forEach var = "bidinfo" items = "${BiddingInfoList}">
 					<c:if test="${ bidinfo.key == anum }">
 						<td>${bidinfo.value.a_title}</td>
-						<td>${bidinfo.value.sel_Id}</td>
-						<td>${bidinfo.value.a_enddate}</td>
 						<td>${bidinfo.value.a_check}</td>
-					</c:if>				
-				</c:forEach>
+						<td>${bidinfo.value.a_startdate}</td>
+						<td>${bidinfo.value.a_enddate}</td>
 
 				<!-- 현재 입찰 가격 -->
 				<c:forEach var = "currP" items = "${currPriceList}">
@@ -46,18 +42,15 @@
 				</c:forEach>
 
 				<!-- 입찰 등록 수-->
-				<c:forEach var = "bidCount" items = "${getBidCountList}">
+				<c:forEach var = "bidCount" items = "${BidCountList}">
 					<c:if test="${ bidCount.key == anum }">
 						<td>${bidCount.value}</td>
 					</c:if>				
 				</c:forEach>
 
-				<!-- 입찰 순위-->
-				<c:forEach var = "rankList" items = "${getBidRankList}">
-					<c:if test="${ rankList.key == anum }">
-						<td>${rankList.value}</td>
+				<td>${bidinfo.value.remainDate}</td>
 					</c:if>				
-				</c:forEach>				
+				</c:forEach>
 			</tr>
 		</c:forEach>
 	</table>
