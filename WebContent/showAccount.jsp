@@ -37,6 +37,7 @@
 					}
 				} else {
 %>
+					<option></option>
 <%
 				}
 %>

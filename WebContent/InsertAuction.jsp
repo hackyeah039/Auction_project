@@ -228,6 +228,7 @@
 		<td>계좌번호</td>
 		<td>
 			<!-- 0514 추가 하기 - 기등록 계좌 확인 버튼으로 세션에 있는 회원 번호를 받아서 있는 계좌 전부출력 -->
+			<!-- controller 거쳐서 popup 으로 변경 -->
 			<input type="text" name="account" id="account">
 			<input type="button" value="기존계좌확인" onclick="showList()">
 		</td>
