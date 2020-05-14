@@ -1,6 +1,6 @@
 package semi.dao.jw;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,7 +39,7 @@ public class BidDao {
 //			JDBCUtil.close(rs, pstmt, con);
 //		}
 //	}
-	public ArrayList<BidVo> list(int startrow , int endrow , int field, int a_num){
+	public ArrayList<BidVo> list(int a_num){
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -117,5 +117,43 @@ public class BidDao {
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}
+	}
+	
+	public ArrayList<BidVo> postlist(int startRow,
+			int endRow,int a_num){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=JDBCUtil.getConn();
+			String sql="select * from \r\n" + 
+					"                        (\r\n" + 
+					"                        select aa.*, rownum rnum from \r\n" + 
+					"						( \r\n" + 
+					"							select m_num,bid_price, to_char(systimestamp, 'YYYY/MM/DD HH24:MI:SS:ff') realdate from bid where a_num=? order by bid_price asc\r\n" + 
+					"						 )aa\r\n" + 
+					"						 ) where rnum>=? and rnum<=?";
+			
+			
+		    pstmt=con.prepareStatement(sql);
+		    pstmt.setInt(1, a_num);
+			pstmt.setInt(2,startRow);
+			pstmt.setInt(3,endRow);
+			rs=pstmt.executeQuery();
+			ArrayList<BidVo> list=new ArrayList<BidVo>();
+			while(rs.next()) {
+				BidVo vo = new BidVo();
+				vo.setBid_date(rs.getString("realdate"));
+				vo.setBid_price(rs.getInt("bid_price"));
+				vo.setM_num(rs.getInt("m_num"));
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}	
 	}
 }

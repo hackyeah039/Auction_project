@@ -24,8 +24,8 @@ public class HistoryController extends HttpServlet{
 			throws ServletException, IOException {
 		//여기서 BID 테이블에 있는 정보를 detailview에 AllList()메소드로 뿌리기
 		//근데 selectBox는 처음에 10개가 고정이니깐 10개 만 뿌리는 페이징 처리 ㄱㄱ
-		req.setCharacterEncoding("utf-8");
 		
+		req.setCharacterEncoding("utf-8");
 		int pageNum=1; // pageNum==현재 내가보는 페이지
 		String spageNum =req.getParameter("pageNum");
 		if(spageNum!=null) {
@@ -33,11 +33,7 @@ public class HistoryController extends HttpServlet{
 		}
 		int a_num=Integer.parseInt(req.getParameter("a_num")); // 경매물품번호
 		
-		String sfield=req.getParameter("numbers"); // 셀렉박스 밸류
 		int field =10;
-		if(sfield!=null) {
-			field=Integer.parseInt(sfield);
-		}
 		
 		int startRow=(pageNum-1)*field +1;
 		int endRow =(startRow-1)+field; // 페이지 '내' 시작,끝 줄
@@ -47,7 +43,7 @@ public class HistoryController extends HttpServlet{
 		
 		BidDao dao= BidDao.getInstance(); //싱글톤dao
 		
-		ArrayList<BidVo> list = dao.list(startRow, endRow, field, a_num); //
+		ArrayList<BidVo> list = dao.list(a_num); //
 		int paging =(int)Math.ceil(dao.getCount(field));
 		
 		System.out.println(dao.getCount(field));
@@ -68,20 +64,29 @@ public class HistoryController extends HttpServlet{
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//selectBox의 option value를 얻어와서 얻은걸 int로 형변환 &&
-		//그걸 페이징처리하고 다시 AllList()메소드 써서 페이징처리 ㄱㄱ
-		//Ajax
-		int numbers=Integer.parseInt(req.getParameter("field"));
-		System.out.println(numbers);
-		ArrayList<BidVo> list=new ArrayList<BidVo>();
-	    //list.add(new CommentsVo(1,1,"길동1","좋아요!"));
+		req.setCharacterEncoding("utf-8");
+		int field=Integer.parseInt(req.getParameter("field"));
+		int pageNum =Integer.parseInt(req.getParameter("pageNum")); //넘어옴
+//		int a_num=Integer.parseInt(req.getParameter("a_num"));
+		System.out.println(field +"필드값입니다," +pageNum +"현재 보고있는 페이지숫자입니다." + 18 +"경매물품번호입니다.");
+		int startRow=(pageNum-1)*field +1;
+		int endRow =(startRow-1)+field;
+		BidDao dao = BidDao.getInstance();
+		ArrayList<BidVo> list =dao.postlist(startRow, endRow, 18);
 	    JSONArray jarr=new JSONArray();
+	    
 	    for(BidVo vo:list){
 	    	JSONObject json=new JSONObject();
-	    	//json.put("mnum",vo.getMnum());
+//	    	System.out.println(vo.getBid_date());
+	    	json.put("date",vo.getBid_date());
+//	    	System.out.println(vo.getBid_price());
+	    	json.put("price",vo.getBid_price());
+//	    	System.out.println(vo.getM_num());
+	    	json.put("mnum",vo.getM_num());
+	    	jarr.put(json);
 	    }
 	    resp.setContentType("text/plain;charset=utf-8");
-	    PrintWriter pw=resp.getWriter();
-		pw.print(jarr);
+	    	PrintWriter pw=resp.getWriter();
+	    	pw.print(jarr);
 	}
 }
