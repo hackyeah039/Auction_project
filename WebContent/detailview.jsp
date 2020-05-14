@@ -9,8 +9,7 @@
 </head>
 <script type="text/javascript">
 	<%
-		//int a_num=Integer.parseInt(request.getParameter("a_num"));
-		int a_num=15;
+		int a_num=Integer.parseInt(request.getParameter("a_num"));
 	%>
 	var xhr=null;
 	
@@ -23,12 +22,12 @@
 		xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function (){
 			if(this.readyState == 4 && this.status == 200){
-				div.innerHTML = "<table><tr><th>입찰일시</th><th>입찰자</th><th>금액</th></tr>"
+				//div.innerHTML = "<table><tr><th>입찰일시</th><th>입찰자</th><th>금액</th></tr>"
 				var data=JSON.parse(xhr.responseText);
 				for(var i=0;i<data.length;i++){
-					div.innerHTML += "<tr><td>${data[i].date}</td><td>${data[i].mnum }</td><td>${data[i].price }</td></tr>";
+				//	div.innerHTML += "<tr><td>${data[i].date}</td><td>${data[i].mnum }</td><td>${data[i].price }</td></tr>";
 				}
-				div.innerHTML += "</table>";
+				//div.innerHTML += "</table>";
 			}
 		}
 		xhr.open('post' , 'history.do?field='+selectValue+'&pageNum=${pageNum}&a_num=${a_num}' , true);
@@ -71,10 +70,10 @@
 </c:choose>
 
 
-<c:forEach var="i" begin="${startPage }" end="${endPage }"> 
+<c:forEach var="i" begin="${startPage }" end="${endPage }" > 
 	<c:choose>
 		<c:when test="${i==pageNum }">
-			<a href="history.do?pageNum=${i }&a_num=<%=a_num%>">
+			<a href="history.do?pageNum=${i } & a_num=<%=a_num%>">
 			<span style='color :red'>[${i }]</span></a>
 		</c:when>
 		

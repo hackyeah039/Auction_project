@@ -22,9 +22,9 @@ public class HistoryController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		//여기서 BID 테이블에 있는 정보를 detailview에 AllList()메소드로 뿌리기
-		//근데 selectBox는 처음에 10개가 고정이니깐 10개 만 뿌리는 페이징 처리 ㄱㄱ
-		
+		System.out.println("doGet");
+		System.out.println(req.getParameter("check"));
+		System.out.println(req.getParameter("a_num"));
 		req.setCharacterEncoding("utf-8");
 		int pageNum=1; // pageNum==현재 내가보는 페이지
 		String spageNum =req.getParameter("pageNum");
@@ -32,7 +32,7 @@ public class HistoryController extends HttpServlet{
 			pageNum=Integer.parseInt(spageNum);
 		}
 		int a_num=Integer.parseInt(req.getParameter("a_num")); // 경매물품번호
-		
+//		System.out.println(a_num +"a_num 값 입니다.");
 		int field =10;
 		
 		int startRow=(pageNum-1)*field +1;
@@ -43,7 +43,40 @@ public class HistoryController extends HttpServlet{
 		
 		BidDao dao= BidDao.getInstance(); //싱글톤dao
 		
-		ArrayList<BidVo> list = dao.list(a_num); // 경매번호임
+		ArrayList<BidVo> list2 =dao.postlist(startRow, endRow, 18);
+		int paging =(int)Math.ceil(dao.getCount(field));
+		JSONArray jarr=new JSONArray();
+	    
+	    for(BidVo vo:list2){
+	    	JSONObject json=new JSONObject();
+//	    	System.out.println(vo.getBid_date());
+	    	json.put("date",vo.getBid_date());
+//	    	System.out.println(vo.getBid_price());
+	    	json.put("price",vo.getBid_price());
+//	    	System.out.println(vo.getM_num());
+	    	json.put("paging",paging);
+//	    	System.out.println(paging);
+	    	json.put("startRow",startRow);
+//	    	System.out.println(startRow);
+	    	json.put("endRow",endRow);
+//	    	System.out.println(endRow);
+	    	json.put("field",field);
+//	    	System.out.println(field);
+	    	json.put("startPage",startPage);
+//	    	System.out.println(startPage);
+	    	json.put("endPage",endPage);
+//	    	System.out.println(endPage);
+	    	json.put("list", list2);
+//	    	System.out.println(list);
+	    	jarr.put(json);
+	    }
+	    resp.setContentType("text/plain;charset=utf-8");
+	    	PrintWriter pw=resp.getWriter();
+	    	pw.print(jarr);
+		
+		
+		
+		ArrayList<BidVo> list = dao.list(a_num,startRow,endRow); // 경매번호임
 		int allpages =(int)Math.ceil(dao.getCount(field));
 		
 		System.out.println(dao.getCount(field));
@@ -57,9 +90,10 @@ public class HistoryController extends HttpServlet{
 		req.setAttribute("pageNum", spageNum);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
-		
+		req.setAttribute("a_num", a_num);
 		req.getRequestDispatcher("/detailview.jsp").forward(req , resp);
 	}
+	/*
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -119,4 +153,5 @@ public class HistoryController extends HttpServlet{
 	    	PrintWriter pw=resp.getWriter();
 	    	pw.print(jarr);
 	}
+	*/
 }
