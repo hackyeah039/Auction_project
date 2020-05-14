@@ -16,8 +16,9 @@
 <div id="divleft">
 	<span>신고리스트</span>
 	<ul>
-		<li><a href="adminIndex.jsp?file=/singo.list.jh">전체리스트</a></li>
-		<li><a href="">신고검토중</a></li>
+		<li><a href="${cp }/singo.list.jh">전체리스트</a></li>
+		<li><a href="${cp }/singo.doing.jh">신고검토중</a></li>
+		<li><a href="">처리반려</a></li>
 		<li><a href="">처리완료</a></li>
 	</ul>
 	<span>문의사항(QNA)</span>

@@ -12,7 +12,7 @@
 	<c:forEach var="vo" items="${list }">
 		<tr>
 			<td>${vo.singo_num }</td>
-			<td><a href="${cp}/admin/adminIndex.jsp?file=/singo.detail.jh?singo_num=${vo.singo_num}
+			<td><a href="${cp}/singo.detail.jh?singo_num=${vo.singo_num}
 				&id=${vo.m_id}">
 			${vo.m_id}</a></td>
 			<td>${vo.singoProcess }</td>
@@ -25,7 +25,7 @@
 <div>
 <c:choose>
 	<c:when test="${startPage>3 }">
-		<a href="${cp}/admin/adminIndex.jsp?file=/singo.list.jh?pageNum=${startPage-3}">[이전]</a>
+		<a href="${cp}/singo.list.jh?pageNum=${startPage-3}">[이전]</a>
 	</c:when>
 	<c:otherwise>
 		처음
@@ -34,11 +34,11 @@
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${i==pageNum }">
-				<a href="${cp}/admin/adminIndex.jsp?file=/singo.list.jh?pageNum=${i}">
+				<a href="${cp}/singo.list.jh?pageNum=${i}">
 				<span style='color:blue;'>[${i}]</span></a>
 			</c:when>
 			<c:otherwise>
-				<a href="${cp}/admin/adminIndex.jsp?file=/singo.list.jh?pageNum=${i}">
+				<a href="${cp}/singo.list.jh?pageNum=${i}">
 				<span>[${i}]</span></a>
 			</c:otherwise>
 		</c:choose>
@@ -46,7 +46,7 @@
 <!-- 다음/끝.. -->
 <c:choose>
 	<c:when test="${endPage<pageCount }">
-		<a href="${cp}/admin/adminIndex.jsp?file=/singo.list.jh?pageNum=${endPage+1}">[다음]</a>
+		<a href="${cp}/singo.list.jh?pageNum=${endPage+1}">[다음]</a>
 	</c:when>
 	<c:otherwise>
 		끝

@@ -24,9 +24,7 @@ public class SingoDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select *\r\n" + 
-					"from(select aa.*,rownum rnum\r\n" + 
-					"from (select * from singo order by singo_num desc)aa)bb\r\n" + 
+			String sql="select * from (select aa.*, rownum rnum from (select * from singo order by singo_num desc)aa) bb " + 
 					"where rnum>=? and rnum <=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
@@ -60,6 +58,52 @@ public class SingoDao {
 			}
 		}
 	}
+	//신고테이블 처리중인 리스트 불러오기
+	public ArrayList<SingoVo> singoDoing(int startRow,int endRow){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from (select aa.*, rownum rnum from (select * from singo order by singo_num desc)aa) bb " + 
+					"where rnum>=? and rnum <=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			rs=pstmt.executeQuery();
+			ArrayList<SingoVo> list=new ArrayList<SingoVo>();
+			while(rs.next()) {
+				int sel_number=rs.getInt("sel_number");
+				int m_num=rs.getInt("m_num");
+				int singo_num=rs.getInt("singo_num");
+				String singo_content=rs.getString("singo_content");
+				int singo_status=rs.getInt("singo_status");
+				Date singo_date=rs.getDate("singo_date");
+				String id = singoId(m_num); //신고자 아이디 가져오는 메소드 사용
+				String singoName=SingoProcess(singo_status);//신고상태 가져오는 메소드 사용
+				SingoVo vo=new SingoVo(sel_number, m_num, singo_num, singo_content, 
+						singo_status, singo_date,id,singoName);
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	
+	
+	
+	
+	
 	//신고자 아이디 가져오기
 	public String singoId(int num) {
 		Connection con=null;
@@ -207,7 +251,7 @@ public class SingoDao {
 		try {
 			con=ConnectionPool.getCon();
 			String sql="select DISTINCT m.m_id id" + 
-					"from seller s,members m" + 
+					" from seller s, members m " + 
 					"where s.m_num=m.m_num and s.m_num=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, num);
@@ -230,7 +274,89 @@ public class SingoDao {
 			}
 		}
 	}
-	
+	//신고자 아이디 받아서 신뢰도 가져오기
+	public int getTrust(String id) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from members where m_id=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs=pstmt.executeQuery();
+			int trust=0;
+			if(rs.next()) {
+				trust=rs.getInt("trust");
+			}
+			return trust;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	//신고자 아이디 받아서 신뢰도 깍기&&신고테이블 처리완료 상태로 변경--처리상태:1
+	public int trustDown(String id,int singoNum) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		PreparedStatement pstmt2=null;
+		try {
+			con=ConnectionPool.getCon();
+			con.setAutoCommit(false);//트랜잭션처리 자동커밋 해제
+			String sql="update members set trust=(trust-1) where m_id=?";
+			String sql2="update singo set singo_status=1 where singo_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt2=con.prepareStatement(sql2);
+			pstmt.setString(1, id);
+			pstmt2.setInt(1, singoNum);
+			int n=pstmt.executeUpdate();
+			int j=pstmt2.executeUpdate();
+			con.commit();
+			return n+j;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(pstmt2!=null) pstmt2.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+
+	//신고테이블 처리반려 상태로 변경--처리상태:2
+	public int trustStay(int singoNum) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="update singo set singo_status=2 where singo_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, singoNum);
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
 	
 	
 }
