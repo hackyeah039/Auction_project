@@ -65,8 +65,28 @@ public class SellerDao {
 				return list;
 			} catch (SQLException se) {
 				se.printStackTrace();
-				
 				return null;
+			} finally {
+				JdbcUtil.close(con, pstmt, rs);
+			}
+		}
+		public int checkAccount(long a) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			try {
+				con = JdbcUtil.getConn();
+				String sql = "select * from seller where sel_number = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setLong(1, a);
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					return 1;
+				}
+				return 0;
+			} catch (SQLException se) {
+				se.printStackTrace();
+				return -1;
 			} finally {
 				JdbcUtil.close(con, pstmt, rs);
 			}
