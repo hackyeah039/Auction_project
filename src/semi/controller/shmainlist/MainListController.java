@@ -21,15 +21,14 @@ public class MainListController extends HttpServlet{
 		if(spageNum>pageNum) {
 			pageNum=spageNum;
 		}
-		int endrow=pageNum*10;
-		int startrow=pageNum-9;
+		int endrow=pageNum*12;
+		int startrow=endrow-11;
 		
 		MainListDao dao=new MainListDao();
 		ArrayList<SHAuctionVo> list=dao.AllList(startrow,endrow);
-		
-		int pageCnt=(int)Math.ceil(dao.getAllCnt()/10.0);
-		int startPageNum=((pageNum-1)/10)*10+1;
-		int endPageNum=startPageNum+9;
+		int pageCnt=(int)Math.ceil(dao.getAllCnt()/5.0);
+		int startPageNum=((pageNum-1)/5)*5+1;
+		int endPageNum=startPageNum+4;
 		if(pageCnt<endPageNum) {
 			endPageNum=pageCnt;
 		}

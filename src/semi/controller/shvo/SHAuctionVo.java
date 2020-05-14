@@ -152,5 +152,10 @@ public class SHAuctionVo {
 		this.a_bidunit = a_bidunit;
 	}
 
+	@Override
+	public String toString() {
+		return "SHAuctionVo [a_num=" + a_num + "]";
+	}
+
 	
 }
