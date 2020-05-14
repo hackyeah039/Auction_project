@@ -16,14 +16,34 @@ import semi.controller.shvo.SHAuctionVo;
 public class MainListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int spageNum=Integer.parseInt(req.getParameter("pageNum"));
+		int pageNum=1;
+		if(spageNum>pageNum) {
+			pageNum=spageNum;
+		}
+		int endrow=pageNum*10;
+		int startrow=pageNum-9;
+		
 		MainListDao dao=new MainListDao();
-		ArrayList<SHAuctionVo> list=dao.AllList();
+		ArrayList<SHAuctionVo> list=dao.AllList(startrow,endrow);
+		
+		int pageCnt=(int)Math.ceil(dao.getAllCnt()/10.0);
+		int startPageNum=((pageNum-1)/10)*10+1;
+		int endPageNum=startPageNum+9;
+		if(pageCnt<endPageNum) {
+			endPageNum=pageCnt;
+		}
+		
 		resp.setContentType("text/xml;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		pw.println("<result>");
 		for(SHAuctionVo vo:list) {
 			pw.println("<data>");
+			pw.println("<pageNum>" + pageNum + "</pageNum>");
+			pw.println("<pageCnt>" + pageCnt + "</pageCnt>");
+			pw.println("<startPageNum>" + startPageNum + "</startPageNum>");
+			pw.println("<endPageNum>" + endPageNum + "</endPageNum>");
 			pw.println("<a_num>" + vo.getA_num() + "</a_num>");
 			pw.println("<price>"+dao.getPrice(vo.getA_num())+"</price>");
 			pw.println("<id>"+dao.getId(vo.getSel_number())+"</id>");

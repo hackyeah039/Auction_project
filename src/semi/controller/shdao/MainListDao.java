@@ -11,15 +11,19 @@ import db.JDBCUtil;
 import semi.controller.shvo.SHAuctionVo;
 
 public class MainListDao {
-	public ArrayList<SHAuctionVo> AllList(){
+	//전체글 불러오는 메소드
+	public ArrayList<SHAuctionVo> AllList(int startrow,int  endrow){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			
-			String sql="select * from auction order by a_num asc";
+			String sql="select * from(select aa.*,rownum rnum from(\r\n" + 
+					"select * from auction order by a_num asc , rownum asc) aa)\r\n" + 
+					"where rnum>=? and rnum<=?";
 			con=JDBCUtil.getConn();
 			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, startrow);
+			pstmt.setInt(2, endrow);
 			rs=pstmt.executeQuery();
 			ArrayList<SHAuctionVo> list=new ArrayList<SHAuctionVo>();
 			while(rs.next()) {
@@ -52,6 +56,7 @@ public class MainListDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+	//가격 가져오는 메소드
 	public int getPrice(int num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -74,6 +79,29 @@ public class MainListDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+	//전체글 수 가져오는 메소드
+	public int getAllCnt() {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int cnt=0;
+		try {
+			String sql="select NVL(count(a_num),0) cnt FROM auction";
+			con=JDBCUtil.getConn();
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				cnt=rs.getInt("cnt");
+			}
+			return cnt;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	//판매자 아이디 가져오는 메소드
 	public String getId(int num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -96,6 +124,7 @@ public class MainListDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
+	//각 판매글의 입찰횟수 가져오는 메소드
 	public int getBidCnt(int a_num) {
 		int cnt=0;
 		Connection con=null;
