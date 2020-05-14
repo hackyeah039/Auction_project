@@ -43,15 +43,14 @@ public class HistoryController extends HttpServlet{
 		
 		BidDao dao= BidDao.getInstance(); //싱글톤dao
 		
-		ArrayList<BidVo> list = dao.list(a_num); //
-		int paging =(int)Math.ceil(dao.getCount(field));
+		ArrayList<BidVo> list = dao.list(a_num); // 경매번호임
+		int allpages =(int)Math.ceil(dao.getCount(field));
 		
 		System.out.println(dao.getCount(field));
 		
-		if(endPage>paging) {endPage = paging;}
-		System.out.println("페이지:"+paging+"endPage:"+endPage);		
+		if(endPage>allpages) {endPage = allpages;}
 		req.setAttribute("list", list);
-		req.setAttribute("paging", paging);
+		req.setAttribute("allpages", allpages);
 		req.setAttribute("startrow", startRow);
 		req.setAttribute("endRow", endRow);
 		req.setAttribute("field", field);
@@ -71,8 +70,26 @@ public class HistoryController extends HttpServlet{
 		System.out.println(field +"필드값입니다," +pageNum +"현재 보고있는 페이지숫자입니다." + 18 +"경매물품번호입니다.");
 		int startRow=(pageNum-1)*field +1;
 		int endRow =(startRow-1)+field;
-		BidDao dao = BidDao.getInstance();
+		int startPage =(pageNum-1)/5*5+1; 
+		int endPage =startPage+4;
+		
+		
+		BidDao dao= BidDao.getInstance();
+		int paging =(int)Math.ceil(dao.getCount(field));
+		if(endPage>paging) {endPage = paging;}
+
+		System.out.println("paging값입니다. " +paging +",startrow " +startRow +",endRow " +endRow +",field " +field +",startPage " +startPage +",endPage " +endPage);
 		ArrayList<BidVo> list =dao.postlist(startRow, endRow, 18);
+		
+		
+		req.setAttribute("paging", paging);
+		req.setAttribute("startrow", startRow);
+		req.setAttribute("endRow", endRow);
+		req.setAttribute("field", field);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		req.setAttribute("list", list);
+		
 	    JSONArray jarr=new JSONArray();
 	    
 	    for(BidVo vo:list){
@@ -82,7 +99,20 @@ public class HistoryController extends HttpServlet{
 //	    	System.out.println(vo.getBid_price());
 	    	json.put("price",vo.getBid_price());
 //	    	System.out.println(vo.getM_num());
-	    	json.put("mnum",vo.getM_num());
+	    	json.put("paging",paging);
+//	    	System.out.println(paging);
+	    	json.put("startRow",startRow);
+//	    	System.out.println(startRow);
+	    	json.put("endRow",endRow);
+//	    	System.out.println(endRow);
+	    	json.put("field",field);
+//	    	System.out.println(field);
+	    	json.put("startPage",startPage);
+//	    	System.out.println(startPage);
+	    	json.put("endPage",endPage);
+//	    	System.out.println(endPage);
+	    	json.put("list", list);
+//	    	System.out.println(list);
 	    	jarr.put(json);
 	    }
 	    resp.setContentType("text/plain;charset=utf-8");

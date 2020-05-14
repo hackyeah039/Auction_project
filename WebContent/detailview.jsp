@@ -16,24 +16,25 @@
 	
 	function selectdd(){
 		var selectone = document.getElementById("numbers");
+		var div = document.getElementById("result");
 		var selectValue =selectone.options[selectone.selectedIndex].value;
+		
 		console.log(selectValue);
 		xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function (){
 			if(this.readyState == 4 && this.status == 200){
+				div.innerHTML = "<table><tr><th>입찰일시</th><th>입찰자</th><th>금액</th></tr>"
 				var data=JSON.parse(xhr.responseText);
 				for(var i=0;i<data.length;i++){
-					console.log(data[i].date);
-					console.log(data[i].price);
-					console.log(data[i].mnum);
-				}	
+					div.innerHTML += "<tr><td>${data[i].date}</td><td>${data[i].mnum }</td><td>${data[i].price }</td></tr>";
+				}
+				div.innerHTML += "</table>";
 			}
 		}
-		
-		  xhr.open('post' , 'history.do?field='+selectValue+'&pageNum=${pageNum}&a_num=${a_num}' , true);
-		  xhr.send();
-	
+		xhr.open('post' , 'history.do?field='+selectValue+'&pageNum=${pageNum}&a_num=${a_num}' , true);
+		xhr.send();
 	}
+	
 </script>
 <body>
 <h1>물품이름 쓰는 곳입니다.</h1>
@@ -44,18 +45,21 @@
   <option value="20" <c:if test="${numbers=='20' }">selected</c:if>>20</option>
   <option value="30" <c:if test="${numbers=='30' }">selected</c:if>>30</option>
 </select>
-<table>
-		<tr>
-			<th>입찰일시</th><th>입찰자</th><th>금액</th>
-		</tr>
-		<c:forEach var="vo" items='${list }'>
+<div id="result">
+	<table>
 			<tr>
-				<td>${vo.getBid_date() }</td>
-				<td>${vo.getM_num() }</td>
-				<td>${vo.getBid_price() }</td>
+				<th>입찰일시</th><th>입찰자</th><th>금액</th>
 			</tr>
-		</c:forEach>
-</table>
+			<c:forEach var="vo" items='${list }'>
+				<tr>
+					<td>${vo.getBid_date() }</td>
+					<td>${vo.getM_num() }</td>
+					<td>${vo.getBid_price() }</td>
+				</tr>
+			</c:forEach>
+	</table>
+</div>
+
 
 <c:choose>
 	<c:when test="${startPage>5}">
@@ -81,9 +85,8 @@
 	</c:choose>
 </c:forEach>	
 
-
 <c:choose>
-	<c:when test="${endPage<paging }">
+	<c:when test="${endPage<allpages }">
 		<a href="history.do?pageNum=${endPage+1 }&a_num=<%=a_num%>">[next]</a>
 	</c:when>
 	<c:otherwise>
