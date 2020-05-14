@@ -51,7 +51,7 @@
  </script>
 </head>
 <body>
-<!-- 0513 변수명 db 컬럼값과 동일하게 수정 -->
+<!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
 <h1> 카테고리 선택 </h1>
 <form method="post" action="" enctype="multipart/form-data">
 <table>
@@ -180,12 +180,13 @@
 		$(document).ready(function(){
 			 $('#startdate').datetimepicker({
 			  format:'Y/m/d H:i',
-			  minDate:0
+			  // 오늘 일자
+			  minDate:0 
 			 });
 			 $('#enddate').datetimepicker({
 			  format:'Y/m/d H:i',
-			  minDate:'+1970/01/02',
-			  defaultDate: '+1970/01/02'
+			  minDate:'+1970/01/02', // 내일 
+			  defaultDate: '+1970/01/02' // 내일
 			 });
 		});
 		</script>
