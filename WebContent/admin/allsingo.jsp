@@ -34,11 +34,11 @@
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${i==pageNum }">
-				<a href="${cp}/singo.list.jh?pageNum=${i}">
+				<a href="${cp}/singo.list.jh?pageNum=${i}&field=${field}&keyword=${keyword}">
 				<span style='color:blue;'>[${i}]</span></a>
 			</c:when>
 			<c:otherwise>
-				<a href="${cp}/singo.list.jh?pageNum=${i}">
+				<a href="${cp}/singo.list.jh?pageNum=${i}&field=${field}&keyword=${keyword}">
 				<span>[${i}]</span></a>
 			</c:otherwise>
 		</c:choose>
@@ -52,4 +52,17 @@
 		끝
 	</c:otherwise>
 </c:choose>
+</div>
+<br>
+<div>
+	<form method="post" action="${cp }/singo.list.jh?field=${field}&keyword=${keyword}&pageNum=${i}">
+		<select name="field">
+			<option value="singojaId" <c:if test="${field=='singojaId'}">selected</c:if>>신고자 아이디</option>	
+			<option value="singo_content" <c:if test="${field=='singo_content'}">selected</c:if>>신고내용</option>	
+			<option value="id" <c:if test="${field=='id'}">selected</c:if>>대상자 아이디</option>	
+		</select>
+		<input type="text" name="keyword" value=${keyword }>
+		<input type="submit" value="검색">	
+	</form>
+
 </div>

@@ -18,14 +18,19 @@ public class SingoDao {
 	}
 	
 	//신고테이블 전체리스트 불러오기
-	public ArrayList<SingoVo> singoAll(int startRow,int endRow){
+	public ArrayList<SingoVo> singoAll(int startRow,int endRow,String field,String keyword){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from (select aa.*, rownum rnum from (select * from singo order by singo_num desc)aa) bb " + 
+			String sql=null;
+			if(field==null || keyword==null) {
+				sql="select * from (select aa.*, rownum rnum from (select * from singo order by singo_num desc)aa) bb " + 
 					"where rnum>=? and rnum <=?";
+			}else {
+				sql="select bb.*, mm.m_id id from members mm, (select aa.*, se.m_num 대상자회원번호, rownum rnum from seller se, (select s.*, m_id singojaId from singo s, members m where s.m_num=m.m_num order by s.singo_num desc)aa where aa.sel_number=se.sel_number)bb where mm.m_num=bb.대상자회원번호 and rnum>=? and rnum<=? and "+field+" like '%"+keyword+"%'";
+			}
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
@@ -33,6 +38,7 @@ public class SingoDao {
 			ArrayList<SingoVo> list=new ArrayList<SingoVo>();
 			while(rs.next()) {
 				int sel_number=rs.getInt("sel_number");
+				System.out.println("while:"+sel_number);
 				int m_num=rs.getInt("m_num");
 				int singo_num=rs.getInt("singo_num");
 				String singo_content=rs.getString("singo_content");
