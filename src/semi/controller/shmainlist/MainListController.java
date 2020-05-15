@@ -23,16 +23,14 @@ public class MainListController extends HttpServlet{
 		}
 		int endrow=pageNum*12;
 		int startrow=endrow-11;
-		
 		MainListDao dao=new MainListDao();
 		ArrayList<SHAuctionVo> list=dao.AllList(startrow,endrow);
-		int pageCnt=(int)Math.ceil(dao.getAllCnt()/5.0);
+		int pageCnt=(int)Math.ceil(dao.getAllCnt()/12.0);
 		int startPageNum=((pageNum-1)/5)*5+1;
 		int endPageNum=startPageNum+4;
 		if(pageCnt<endPageNum) {
 			endPageNum=pageCnt;
 		}
-		
 		resp.setContentType("text/xml;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");

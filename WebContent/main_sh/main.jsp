@@ -7,14 +7,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>main.jsp</title>
 <style type="text/css">
+	#top_var{width: 1300px; border:1px solid black;}
 	#wrap{width: 1300px;}
 	#mid{border:1px solid black;}
 	#start{border:1px solid black;}
-	.auc{width: 300px;height: 400px;border:1px solid black;margin-bottom: 5px;
-			margin-left: 20px; margin-top: 10px;}
+	.auc{width: 300px;height: 400px;
+		border:1px solid black;margin-bottom: 5px;
+		margin-left: 20px; margin-top: 10px;}
 </style>
 </head>
 <body onload="allList(1)">
+<div id="top_bar">gfg</div>
 <h1>메인화면</h1>
 <div id="wrap">
 <h1>wrap 부분</h1>
@@ -32,12 +35,29 @@
 </div>
 </body>
 <script type="text/javascript">
+	<%-- 전체글 뽑아오는 함수 --%>
 	function allList(num) {
-		delAuc();
-		delPage();
+		<%-- 최상단 시간 출력 부분 --%>
+		var top_var=document.getElementById("top_var");
+		setInterval(function() {
+			var time=new Date();
+			var year=time.getYear();
+			var month=(time.getMonth()-1);
+			var d=time.getDate();
+			var h=time.getHours();
+			var m=time.getMinutes();
+			var s=time.getSeconds();
+			nowTime="현재시간 : " + year + "년" + month + "월"+ d + "일" + h + "시" +
+			m + "분" + s + "초";
+			top_var.innerHTML=nowTime;
+		}, 1000)
+		<%-- 까지 최상단 시간 출력  --%>
+		
+		delAuc(); <%-- 기존 경매글 지우기 --%>
+		delPage(); <%-- 기존  페이지 지우기 --%>
 		var xhrList=null;
 		xhrList=new XMLHttpRequest();
-		xhrList.onreadystatechange=function(){
+		xhrList.onreadystatechange=function(){ <%-- 이름없는 함수 사용 --%>
 			if(xhrList.readyState==4 && xhrList.status==200){
 				var nowTime="";
 				var xml=xhrList.responseXML;
@@ -62,6 +82,7 @@
 					<%--까지 페이징 데이터 --%>
 					
 					<%--xml데이터 가져오는 부분 --%>
+					var a_num=data[i].getElementsByTagName("a_num")[0].firstChild.nodeValue;
 					var title=data[i].getElementsByTagName("a_title")[0].firstChild.nodeValue;
 					var price=data[i].getElementsByTagName("price")[0].firstChild.nodeValue;
 					var id=data[i].getElementsByTagName("id")[0].firstChild.nodeValue;
@@ -75,7 +96,7 @@
 					var div=document.createElement("div");
 					div.style.textAlign="center";
 					let timeDiv=document.createElement("div");
-					div.innerHTML="<a href='' style='text-decoration: none; color: black;'>"+
+					div.innerHTML="<a href='${cp}/checkup.do?a_num="+ a_num +"' style='text-decoration: none; color: black;'>"+
 					"제목 : " + title + "<br>" +
 					"가격 : " + price + "<br>"+
 					"작성자 : " + id + "<br>"+
@@ -87,13 +108,18 @@
 					setInterval(function() {
 						var time=new Date();
 						var month=(endTime.getMonth()-time.getMonth())-1;
-						var d=endTime.getDate()-time.getDate();
+						var d=(endTime.getDate()-time.getDate());
 						var h=24-time.getHours();
 						var m=60-time.getMinutes();
 						var s=60-time.getSeconds();
 						nowTime="마감시간 : " + month + "개월"+ d + "일" + h + "시간" +
 						m + "분" + s + "초";
-						timeDiv.innerHTML=nowTime;
+						if(d<0){
+							div.innerHTML="";
+							div.innerHTML="<img src='${cp}/img/0.png'>";
+						}else{
+							timeDiv.innerHTML=nowTime;
+						}
 					}, 1000)
 					div.className="auc";
 					div.appendChild(timeDiv);
@@ -105,7 +131,7 @@
 				
 				<%-- 페이징 출력 부분 --%>
 				if(5<startPageNum){
-					pageDiv.innerHTML+="<a href='javascript:allList("+ startPageNum-1 +");'>[이전]</a>";
+					pageDiv.innerHTML+="<a href='javascript:allList("+ (startPageNum-1) +");'>[이전]</a>";
 				}
 				for(var i=startPageNum; i<=endPageNum; i++){
 					if(i==pageNum){
@@ -117,7 +143,7 @@
 				
 				if(pageCnt>endPageNum){
 					 console.log(endPageNum+1);
-					pageDiv.innerHTML+="<a href='javascript:allList("+ endPageNum+1 +");'>[다음]</a>";
+					pageDiv.innerHTML+="<a href='javascript:allList("+ (endPageNum+1) +");'>[다음]</a>";
 				}
 					page.appendChild(pageDiv);
 					page.style.float="bottom";

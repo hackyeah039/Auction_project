@@ -13,11 +13,13 @@ import semi.controller.shdao.CheckUpDao;
 public class CheckUpController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("checkup.do 접속");
 		int a_num=Integer.parseInt(req.getParameter("a_num")) ;
 		CheckUpDao dao=new CheckUpDao();
 		int n=dao.checkup(a_num);
+		System.out.println("dao 접속 후");
 		if(n>0) {
-			resp.sendRedirect("${cp}/mainlist.do");
+			resp.sendRedirect(req.getContextPath()+"/main.do");
 		}
 	}
 }
