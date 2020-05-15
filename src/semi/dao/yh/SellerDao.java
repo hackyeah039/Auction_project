@@ -18,7 +18,7 @@ public class SellerDao {
 			return instance;
 		}
 		
-		public sellerVo searchSeller(int sel_number) {
+		public sellerVo SearchSeller(int sel_number) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -70,6 +70,7 @@ public class SellerDao {
 				JdbcUtil.close(con, pstmt, rs);
 			}
 		}
+		//계좌번호가 DB에 존재하는지 확인
 		public int checkAccount(long a) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -89,6 +90,29 @@ public class SellerDao {
 				return -1;
 			} finally {
 				JdbcUtil.close(con, pstmt, rs);
+			}
+		}
+		// seller 테이블 인서트 
+		public int InsertSeller(Long account, int sel_number, int m_num) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			int n = 0;
+			try {
+				if(sel_number == 0) {
+					con = JdbcUtil.getConn();
+					String sql = "insert into seller values(?,?,seq_seller_sel_number.nextval)";
+					pstmt = con.prepareStatement(sql);
+					pstmt.setLong(1, account);
+					pstmt.setInt(2, m_num);
+					n = pstmt.executeUpdate();
+					return n;
+				}
+				return 0; // 기존에 있던 값일 경우
+			} catch (SQLException se) {
+				se.printStackTrace();
+				return -1;
+			} finally {
+				JdbcUtil.close(con, pstmt, null);
 			}
 		}
 }
