@@ -176,10 +176,10 @@
 		상품상태
 	</td>
 	<td>
-		<input type="radio" name="a_condition" value="최상">최상
-		<input type="radio" name="a_condition" value="상">상
-		<input type="radio" name="a_condition" value="중">중
-		<input type="radio" name="a_condition" value="하">하
+		<input type="radio" name="a_condition" value="1">최상
+		<input type="radio" name="a_condition" value="2">상
+		<input type="radio" name="a_condition" value="3">중
+		<input type="radio" name="a_condition" value="4">하
 	</td>
 </tr>
 <tr>
