@@ -205,7 +205,7 @@ public class BiddingDao {
 		}
 	}
 
-	// 물품명, 조회,마감일 BiddingVo
+	// 물품명, 조회, 마감일 BiddingVo
 	public HashMap<Integer, BiddingVo> getBiddingInfo(ArrayList<Integer> anumlist) {
 		HashMap<Integer, BiddingVo> biddingInfoList = new HashMap<Integer, BiddingVo>();
 

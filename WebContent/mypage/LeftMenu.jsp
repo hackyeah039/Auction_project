@@ -8,7 +8,7 @@
 		<td><a href = "${cp }/mypage/buyerBidding.do">입찰중</a></td>
 	</tr>
 	<tr>
-		<td><a href = "#">구매종료</a></td>
+		<td><a href = "${cp }/mypage/buyerTranCompleted.do">구매종료</a></td>
 	</tr>
 	<tr>
 		<td><a href = "${cp }/mypage/buyerTransact.do">거래진행중</a></td>
@@ -23,6 +23,6 @@
 		<td ><a href = "#">구매종료</a></td>
 	</tr>
 	<tr>
-		<td><a href = "#">거래진행중</a></td>
+		<td><a href = "${cp }/mypage/sellerTransact.do">거래진행중</a></td>
 	</tr>
 </table>

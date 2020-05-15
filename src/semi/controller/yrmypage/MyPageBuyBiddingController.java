@@ -26,7 +26,6 @@ public class MyPageBuyBiddingController extends HttpServlet {
 
 		
 //		HttpSession session = req.getSession();
-//		
 //		String id = (String)session.getAttribute("id"); 
 		
 		BiddingDao auctiondao = new BiddingDao();

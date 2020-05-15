@@ -21,8 +21,6 @@
 	</ul>
 </div>
 
-placehold
-
 <div id = "buyDiv">
 	<h1>구매현황</h1>
 	<a href = "#">구매관리 바로가기</a>

@@ -25,7 +25,7 @@ public class BuyerTransact extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		int mnum = 2;
+		int mnum = 1;
 
 		try {
 
@@ -45,13 +45,17 @@ public class BuyerTransact extends HttpServlet {
 			// 입찰정보 가져오기
 			ArrayList<BidVo> tranBidList = dao.getTranBidList(anumlist, mnum);
 
-			for(BidVo vo : tranBidList) {
-				System.out.println(vo);
-			}
+//			for(BidVo vo : tranBidList) {
+//				System.out.println(vo);
+//			}
 
 			// 물품이름
 			HashMap<Integer, String> auctionTitleList = dao.getAuctionTitle(tranBidList);
-
+//			for (Integer key : auctionTitleList.keySet()) {
+//				System.out.println(String.format("키 : %s, 값 : %s", key, auctionTitleList.get(key)));
+//			}
+			
+			
 			// 거래상태, 입금기한
 			HashMap<Integer, PaymentVo> paymentList = new HashMap<Integer, PaymentVo>();
 			for (BidVo bidVo : tranBidList) {
@@ -62,9 +66,9 @@ public class BuyerTransact extends HttpServlet {
 			// 판매자
 			HashMap<Integer, String> sellerIdList = dao.getSellerId(tranBidList);
 
-			for (Integer key : sellerIdList.keySet()) {
-				System.out.println(String.format("키 : %s, 값 : %s", key, sellerIdList.get(key)));
-			}
+//			for (Integer key : sellerIdList.keySet()) {
+//				System.out.println(String.format("키 : %s, 값 : %s", key, sellerIdList.get(key)));
+//			}
 
 			req.setAttribute("getListSize", tranBidList.size() );
 			req.setAttribute("tranBidList", tranBidList);
