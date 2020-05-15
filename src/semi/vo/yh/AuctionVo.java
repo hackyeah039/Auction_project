@@ -6,7 +6,8 @@ public class AuctionVo {
 	private int a_num;
 	private String a_title;
 	private String a_content;
-	private String a_condition;
+	// String -> int 오타 수정 
+	private int a_condition;
 	private Date a_regdate;
 	private	String a_startdate;
 	private String a_enddate;
@@ -20,7 +21,7 @@ public class AuctionVo {
 	
 	public AuctionVo() {}
 
-	public AuctionVo(int a_num, String a_title, String a_content, String a_condition, Date a_regdate,
+	public AuctionVo(int a_num, String a_title, String a_content, int a_condition, Date a_regdate,
 			String a_startdate, String a_enddate, int a_check, int c_num, int a_jjim, int sel_number, int bidstatus,
 			int a_startbid, int a_bidunit) {
 		super();
@@ -65,11 +66,11 @@ public class AuctionVo {
 		this.a_content = a_content;
 	}
 
-	public String getA_condition() {
+	public int getA_condition() {
 		return a_condition;
 	}
 
-	public void setA_condition(String a_condition) {
+	public void setA_condition(int a_condition) {
 		this.a_condition = a_condition;
 	}
 
