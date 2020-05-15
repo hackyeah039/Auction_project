@@ -23,7 +23,7 @@
 	</ul>
 	<span>문의사항(QNA)</span>
 	<ul>
-		<li><a href="">전체글목록</a></li>
+		<li><a href="${cp }/board.qnalist.jh">전체글목록</a></li>
 		<li><a href="">답변중</a></li>
 		<li><a href="">답변완료</a></li>
 	</ul>

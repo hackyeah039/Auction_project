@@ -25,7 +25,6 @@
 	<c:when test="${startPage>3 }">
 		<a href="${cp}/singo.list.jh?pageNum=${startPage-3}&field=${field}&keyword=${keyword}">[이전]</a>
 	</c:when>
-	
 </c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
