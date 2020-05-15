@@ -18,8 +18,8 @@
 	<ul>
 		<li><a href="${cp }/singo.list.jh">전체리스트</a></li>
 		<li><a href="${cp }/singo.doing.jh?type=0">신고검토중</a></li>
-		<li><a href="${cp }/singo.doing.jh?type=1">처리완료</a></li>
 		<li><a href="${cp }/singo.doing.jh?type=2">처리반려</a></li>
+		<li><a href="${cp }/singo.doing.jh?type=1">처리완료</a></li>
 	</ul>
 	<span>문의사항(QNA)</span>
 	<ul>

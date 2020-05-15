@@ -36,22 +36,12 @@ public class SingoListController extends HttpServlet{
 		}else {
 			list=dao.singoAllSearch(startRow, endRow, field, keyword);
 			pageCount=(int)Math.ceil(dao.getCountSearch(field, keyword)/5.0);
-			
-			int a=dao.getCountSearch(field, keyword);
-			System.out.println("검색조건 전체 글개수:"+a);
 		}
 		int startPage=(pageNum-1)/3*3+1;
 		int endPage=startPage+2;
 		if(endPage>pageCount) {
 			endPage=pageCount;
 		}
-//		System.out.println("필드:"+field);
-//		System.out.println("키워드:"+keyword);
-		System.out.println("startRow:"+startRow);
-		System.out.println("endRow:"+endRow);
-		System.out.println("pageNum:"+pageNum);
-		System.out.println("startPage:"+startPage);
-		System.out.println("endPage:"+endPage);
 		
 		req.setAttribute("list", list);
 		req.setAttribute("pageCount", pageCount);
@@ -61,7 +51,6 @@ public class SingoListController extends HttpServlet{
 		req.setAttribute("endRow", endRow);
 		req.setAttribute("field", field);
 		req.setAttribute("keyword", keyword);
-		
 		req.getRequestDispatcher("admin/adminIndex.jsp?file=allsingo.jsp").forward(req, resp);
 	}
 }

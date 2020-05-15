@@ -18,6 +18,8 @@ public class SingoDoingListController extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		String spageNum=req.getParameter("pageNum");
 		int type=Integer.parseInt(req.getParameter("type"));
+		String field=req.getParameter("field");
+		String keyword=req.getParameter("keyword");
 		
 		int pageNum=1;
 		if(spageNum!=null) {
@@ -26,8 +28,17 @@ public class SingoDoingListController extends HttpServlet{
 		int startRow=(pageNum-1)*5+1;
 		int endRow=startRow+4;
 		SingoDao dao=SingoDao.getSingoDao();
-		ArrayList<SingoVo> list=dao.singoDoing(startRow, endRow,type);
-		int pageCount=(int)Math.ceil(dao.getCount(type)/5.0);
+		ArrayList<SingoVo> list=null;
+		int pageCount=0;
+		
+		if(field==null || keyword==null || field=="" || keyword=="") {
+			list=dao.singoDoing(startRow, endRow,type);
+			pageCount=(int)Math.ceil(dao.getCount(type)/5.0);
+		}else {
+			list=dao.singoDoing(startRow, endRow, type, field, keyword);
+			pageCount=(int)Math.ceil(dao.getCount(type, field, keyword)/5.0);
+		}
+		
 		int startPage=(pageNum-1)/3*3+1;
 		int endPage=startPage+2;
 		if(endPage>pageCount) {
@@ -41,8 +52,8 @@ public class SingoDoingListController extends HttpServlet{
 		req.setAttribute("startRow", startRow);
 		req.setAttribute("endRow", endRow);
 		req.setAttribute("type", type);
-		
+		req.setAttribute("field", field);
+		req.setAttribute("keyword", keyword);
 		req.getRequestDispatcher("admin/adminIndex.jsp?file=doingsingo.jsp").forward(req, resp);
-		
 	}
 }

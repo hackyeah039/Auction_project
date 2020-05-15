@@ -16,4 +16,3 @@ public class IndexMainTest extends HttpServlet{
 		resp.sendRedirect(contentPath+"/indextest.jsp");
 	}
 }
-

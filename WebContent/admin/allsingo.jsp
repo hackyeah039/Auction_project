@@ -17,8 +17,6 @@
 			<td>${vo.singoProcess }</td>
 			<td>${vo.singo_date }</td>
 		</tr>
-			신고넘:${vo.singo_num}
-		
 	</c:forEach>
 </table>
 <br>
@@ -27,9 +25,7 @@
 	<c:when test="${startPage>3 }">
 		<a href="${cp}/singo.list.jh?pageNum=${startPage-3}&field=${field}&keyword=${keyword}">[이전]</a>
 	</c:when>
-	<c:otherwise>
-		처음
-	</c:otherwise>
+	
 </c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
@@ -48,9 +44,6 @@
 	<c:when test="${endPage<pageCount }">
 		<a href="${cp}/singo.list.jh?pageNum=${endPage+1}&field=${field}&keyword=${keyword}">[다음]</a>
 	</c:when>
-	<c:otherwise>
-		끝
-	</c:otherwise>
 </c:choose>
 </div>
 <br>
@@ -59,10 +52,9 @@
 		<select name="field">
 			<option value="singojaId" <c:if test="${field=='singojaId'}">selected</c:if>>신고자 아이디</option>	
 			<option value="singo_content" <c:if test="${field=='singo_content'}">selected</c:if>>신고내용</option>	
-			<option value="id" <c:if test="${field=='id'}">selected</c:if>>대상자 아이디</option>	
+			<option value="sinid" <c:if test="${field=='sinid'}">selected</c:if>>대상자 아이디</option>	
 		</select>
 		<input type="text" name="keyword" value=${keyword }>
 		<input type="submit" value="검색">	
 	</form>
-
 </div>

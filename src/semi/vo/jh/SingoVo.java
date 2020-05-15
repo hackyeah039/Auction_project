@@ -66,7 +66,6 @@ public class SingoVo {
 		this.singoProcess = singoProcess;
 		this.searchRow = searchRow;
 	}	
-	
 		
 	public int getSel_number() {
 		return sel_number;
