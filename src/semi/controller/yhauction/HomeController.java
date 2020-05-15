@@ -17,7 +17,7 @@ public class HomeController extends HttpServlet {
 		req.getServletContext().setAttribute("cp", cp);
 		System.out.println(cp);
 		//req.setAttribute("header",  "");
-		req.setAttribute("content",  "/Auction/InsertAuction.jsp");
+		req.setAttribute("content", "/Auction/InsertAuction.jsp");
 		
 		req.getRequestDispatcher("/index.jsp").forward(req, resp);	
 	}
