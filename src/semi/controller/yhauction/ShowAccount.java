@@ -23,6 +23,6 @@ public class ShowAccount extends HttpServlet{
 		
 		req.setAttribute("list", list);
 		
-		req.getRequestDispatcher("/showAccount.jsp").forward(req , resp);
+		req.getRequestDispatcher("/Auction/showAccount.jsp").forward(req , resp);
 	}
 }

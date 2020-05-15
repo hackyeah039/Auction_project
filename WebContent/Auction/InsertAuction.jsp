@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="jquery.js"></script>
+<script src="${cp }/Auction/jquery.js"></script>
 
 <title>InsertAuction.jsp</title>
 <!-- 0512
@@ -62,7 +62,7 @@
 	--%>
 
  	function showList() {
-		window.open("ShowAccount.do", "_blank", "top=200,left=500,height = 150, width = 280");
+		window.open("${cp}/ShowAccount.do", "_blank", "top=200,left=500,height = 150, width = 280");
 	}
 	
  </script>
@@ -70,7 +70,7 @@
 <body>
 <!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
 <h1> 카테고리 선택 </h1>
-<form method="post" action="InsertAuction.do" enctype="multipart/form-data">
+<form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data">
 <table>
 <tr>
 	<td>
@@ -237,9 +237,8 @@
 			<!-- controller 거쳐서 popup 으로 변경완료 -->
 			<input type="text" name="account" id="account">
 			<input type="hidden" name="sel_number" id="sel_number">
-			<!-- 
 			<input type="button" value="기존계좌확인" onclick="showList()">
-			 -->
+
 		</td>
 	</tr>
 </table>
@@ -247,6 +246,6 @@
 <input type="submit" value="등록" style="width: 100px;height: 50px">
 </form>
 </body>
-<link rel = "stylesheet" type="text/css" href="jquery.datetimepicker.min.css"/>
-<script src="jquery.datetimepicker.full.js"></script>
+<link rel = "stylesheet" type="text/css" href="${cp }/Auction/jquery.datetimepicker.min.css"/>
+<script src="${cp }/Auction/jquery.datetimepicker.full.js"></script>
 </html>

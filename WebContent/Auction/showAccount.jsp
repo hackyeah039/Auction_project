@@ -13,6 +13,7 @@
 	function sendData() {
 		var array = document.getElementById("useAccount").value.split(':');
 		opener.document.getElementById("account").value = array[0];
+		opener.document.getElementById("account").readOnly = true;		
 		opener.document.getElementById("sel_number").value = array[1];
 		window.close();	
 	}

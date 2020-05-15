@@ -20,15 +20,18 @@ public class InsertAuction extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String encoding = "utf-8";
 		req.setCharacterEncoding(encoding);
-		File currentPath = new File("C:\\file_repo"); // 파일 업로드 저장소 위치, 나중에 cp + 폴더명 하면 될듯
-		// 업로드 파일 크기와 파일 저장소 위치 지정
+		// 파일 업로드 저장소 위치, 나중에 cp + 폴더명 하면 될듯
+		File currentPath = new File("C:\\file_repo"); 
+		// 최대 업로드 파일 크기와 파일 저장소 위치 지정
 		DiskFileItemFactory factory = new DiskFileItemFactory(1024*1024*5, currentPath);
 		
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		try {
-			// ArrayList와 같다고 생각하면 됨. 
+			// List -> ArrayList와 같다고 생각하면 됨.
+			// parseRequest -> request객체에서 매개변수를 List로 가져옴
 			List items = upload.parseRequest(req);
 			for(int i = 0 ; i < items.size() ; i++) {
+				// 파일 업로드창에서 업로드된 항목들을 하나씩 가져옴
 				FileItem fileItem = (FileItem)items.get(i);
 				if(fileItem.isFormField()) { //  전송된 name value 값 출력 
 					System.out.println(fileItem.getFieldName() + " = " +fileItem.getString(encoding));	
@@ -43,7 +46,7 @@ public class InsertAuction extends HttpServlet{
 						}
 						String fileName = fileItem.getName().substring(idx+1); // 파일명 얻어오기 
 						File uploadFile = new File(currentPath + "\\" + fileName); //이름 포함한 경로
-						fileItem.write(uploadFile); // 저장
+						fileItem.write(uploadFile); // 지정한 저장소 위치에 저장
 						System.out.println(uploadFile);
 					}
 				}
