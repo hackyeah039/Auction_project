@@ -2,6 +2,9 @@ package semi.controller.yhauction;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,6 +23,24 @@ public class InsertAuction extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String encoding = "utf-8";
 		req.setCharacterEncoding(encoding);
+		// 세션에 저장된 m_num값 가져오기
+		//int m_num = Integer.parseInt((String)req.getAttribute("m_num"));
+		//변수
+		int c_des = 0;
+		String a_title = null;
+		String a_content = null;
+		int a_startbid = 0;
+		int a_bidunit = 0;
+		int a_condition = 0;
+		String a_startdate = null;
+		String a_enddate = null;
+		String s_way = null;
+		int s_price = 0;
+		Long account = 0L;
+		String sel_number1 = null;
+		int sel_number = 0;
+		ArrayList<String> fList;
+
 		// 파일 업로드 저장소 위치, 나중에 cp + 폴더명 하면 될듯
 		File currentPath = new File("C:\\file_repo");
 		if(currentPath.mkdir()) {
@@ -39,47 +60,49 @@ public class InsertAuction extends HttpServlet {
 				// 파일 업로드창에서 업로드된 항목들을 하나씩 가져옴
 				FileItem fileItem = (FileItem) items.get(i);
 				if (fileItem.isFormField()) { // 전송된 name value 값 출력
-					System.out.println(fileItem.getFieldName() + " = " + fileItem.getString(encoding));
 					// 변수 명 일치 할때 값을 담아주기 -> 저장해서 가공할 수 있도록
 					switch (fileItem.getFieldName()) {
 					case "c_des":
-						String c_des = fileItem.getString(encoding);
+						c_des = Integer.parseInt(fileItem.getString(encoding));
 						break;
 					case "a_title":
-						String a_title = fileItem.getString(encoding);
+						a_title = fileItem.getString(encoding);
 						break;
 					case "a_content":
-						String a_content = fileItem.getString(encoding);
+						a_content = fileItem.getString(encoding);
 						break;
 					case "a_startbid":
-						int a_startbid = Integer.parseInt(fileItem.getString(encoding));
+						a_startbid = Integer.parseInt(fileItem.getString(encoding));
 						break;
 					case "a_bidunit":
-						int a_bidunit = Integer.parseInt(fileItem.getString(encoding));
+						a_bidunit = Integer.parseInt(fileItem.getString(encoding));
 						break;
 					case "a_condition":
-						int a_condition = Integer.parseInt(fileItem.getString(encoding));
+						a_condition = Integer.parseInt(fileItem.getString(encoding));
 						break;
 					case "a_startdate":
-						String a_startdate = fileItem.getString(encoding);
+						a_startdate = fileItem.getString(encoding);
 						break;
 					case "a_enddate":
-						String a_enddate = fileItem.getString(encoding);
+						a_enddate = fileItem.getString(encoding);
+						String a = a_enddate.replaceAll("/", "-");
+
 						break;
 					case "s_way":
-						String s_way = fileItem.getString(encoding);
+						s_way = fileItem.getString(encoding);
 						break;
 					case "s_price":
-						int s_price = Integer.parseInt(fileItem.getString(encoding));
+						s_price = Integer.parseInt(fileItem.getString(encoding));
 						break;
 					case "account":
-						Long account = Long.parseLong(fileItem.getString(encoding));
+						account = Long.parseLong(fileItem.getString(encoding));
 						break;
 					case "sel_number":
-						String sel_number1 = fileItem.getString(encoding);
+						sel_number1 = fileItem.getString(encoding);
+						// 새로등록할경우 hidden field값이기때문에 변경해줘야함. -> DB에 입력시에는 시퀀스 사용.
 						if(sel_number1 == "" || sel_number1.equals("")) {
 							sel_number1 = "0";
-							int sel_number = Integer.parseInt(sel_number1);
+							sel_number = Integer.parseInt(sel_number1);
 						}
 						break;
 					default:
@@ -87,20 +110,20 @@ public class InsertAuction extends HttpServlet {
 						break;
 					}
 				} else { // 파일인경우
-					System.out.println("파일명 : " + fileItem.getName());
 					if (fileItem.getSize() > 0) { // 첨부된 파일이 있을 경우
-						// 마지막 \\위치의 번호를 구해옴. -> 순수파일명 앞자리까지 자르기 위해 
+/*						삭제해도 문제는 없을 듯
+						마지막 \\위치의 번호를 구해옴. -> 순수파일명 앞자리까지 자르기 위해 
 						int idx = fileItem.getName().lastIndexOf("\\");
 						if (idx == -1) {
 							idx = fileItem.getName().lastIndexOf("/");
 						}
+
 						// 순수 파일명 얻어오기
-						System.out.println(fileItem.getName() + "124694");
 						String fileName = fileItem.getName().substring(idx + 1);
-						System.out.println(fileName + "521");
+*/						String fileName = fileItem.getName();
 						
 // 기존					File uploadFile = new File(currentPath + "\\" + fileName); // 이름 포함한 경로
-						
+						fList = new ArrayList<String>(); // 파일 경로 담을 배열
 						File uploadFile = new File(currentPath, fileName);
 						// 업로드 폴더에 파일네임과 같은 파일이 존재시
 						if(uploadFile.exists()) {
@@ -115,8 +138,8 @@ public class InsertAuction extends HttpServlet {
 								}
 							}
 						}
+						fList.add(uploadFile.getAbsolutePath()); // 여러개 파일일경우를 대비하여 ArrayList에 저장
 						fileItem.write(uploadFile); // 지정한 저장소 위치에 저장
-						System.out.println(uploadFile);
 					}
 				}
 			}
