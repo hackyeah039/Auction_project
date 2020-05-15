@@ -196,12 +196,14 @@
 		// 참고 페이지 https://xdsoft.net/jqplugins/datetimepicker/
 		$(document).ready(function(){
 			 $('#startdate').datetimepicker({
-			  format:'Y/m/d H:i',
+			  	//형식 수정 완
+				 format:'Y/m/d H:i:s',
 			  // 오늘 일자
 			  minDate:0 
 			 });
 			 $('#enddate').datetimepicker({
-			  format:'Y/m/d H:i',
+			  format:'Y/m/d H:i:s',
+			  // startdate에서 받아와 기본값이 다음날이 되도록 
 			  minDate:'+1970/01/02', // 내일 
 			  defaultDate: '+1970/01/02' // 내일
 			 });
