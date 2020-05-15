@@ -15,14 +15,14 @@ public class ImgDao {
 	public static ImgDao getInstance() {
 		return instance;
 	}
-	//파일 업로드
+	//테이블 인서트 메소드 추가 
 	public int fileListInsert(ArrayList<String> flist,int a_num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		int n = 0;
 		try {
 			con = JdbcUtil.getConn();
-			String sql = "insert from auction values(?,?)";
+			String sql = "insert into auction values(?,?)";
 			pstmt=con.prepareStatement(sql);
 			for(String a:flist) {
 				pstmt.setInt(1, a_num);
