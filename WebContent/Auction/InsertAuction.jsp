@@ -74,47 +74,47 @@
 <table>
 <tr>
 	<td>
-<input type="radio" name="c_des" value="1">디지털/가전
+<input type="radio" name="c_num" value="1">디지털/가전
 	</td>
 	<td>
-<input type="radio" name="c_des" value="2">가구/인테리어
+<input type="radio" name="c_num" value="2">가구/인테리어
 	</td>
 	<td>
-<input type="radio" name="c_des" value="3">유아동/도서
+<input type="radio" name="c_num" value="3">유아동/도서
 	</td>
 	<td>
-<input type="radio" name="c_des" value="4">생활/가공식품
+<input type="radio" name="c_num" value="4">생활/가공식품
 	</td>
 	<td>
-<input type="radio" name="c_des" value="5">스포츠/레저
+<input type="radio" name="c_num" value="5">스포츠/레저
 	</td>
 	<td>
-<input type="radio" name="c_des" value="6">여성잡화
+<input type="radio" name="c_num" value="6">여성잡화
 	</td>
 </tr>
 <tr>
 	<td>
-<input type="radio" name="c_des" value="7">여성의류
+<input type="radio" name="c_num" value="7">여성의류
 	</td>
 	<td>
-<input type="radio" name="c_des" value="8">남성패션
+<input type="radio" name="c_num" value="8">남성패션
 	</td>
 	<td>
-<input type="radio" name="c_des" value="9">게임/취미
+<input type="radio" name="c_num" value="9">게임/취미
 	</td>
 	<td>
-<input type="radio" name="c_des" value="10">뷰티/미용
+<input type="radio" name="c_num" value="10">뷰티/미용
 	</td>
 	<td>
-<input type="radio" name="c_des" value="11">반려동물용품
+<input type="radio" name="c_num" value="11">반려동물용품
 	</td>
 	<td>
-<input type="radio" name="c_des" value="12">도서/티켓/음반
+<input type="radio" name="c_num" value="12">도서/티켓/음반
 	<td>
 </tr>
 <tr>
 	<td>
-<input type="radio" name="c_des" value="13">기타
+<input type="radio" name="c_num" value="13">기타
 	</td>
 </tr>
 </table>
