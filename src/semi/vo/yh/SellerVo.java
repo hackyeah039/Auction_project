@@ -1,13 +1,13 @@
 package semi.vo.yh;
 
-public class sellerVo {
+public class SellerVo {
 	private Long account;
 	private int m_num;
 	private int sel_number;
 	
-	public sellerVo() {}
+	public SellerVo() {}
 
-	public sellerVo(Long account, int m_num, int sel_number) {
+	public SellerVo(Long account, int m_num, int sel_number) {
 		super();
 		this.account = account;
 		this.m_num = m_num;
