@@ -1,4 +1,4 @@
-<%@page import="semi.vo.yh.sellerVo"%>
+<%@page import="semi.vo.yh.SellerVo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="semi.dao.yh.SellerDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
