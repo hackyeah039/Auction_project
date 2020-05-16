@@ -3,6 +3,7 @@ package semi.controller.yhauction;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +18,29 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import semi.dao.yh.SellerDao;
+import semi.vo.yh.AuctionVo;
+import semi.vo.yh.SellerVo;
+
 @WebServlet("/InsertAuction.do")
 public class InsertAuction extends HttpServlet {
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		req.setAttribute("header", "/header.jsp");
+		req.setAttribute("content", "/Auction/InsertAuction.jsp");
+		req.setAttribute("footer", "/footer.jsp");
+		
+		req.getRequestDispatcher("/index.jsp").forward(req, resp);
+	}
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String encoding = "utf-8";
 		req.setCharacterEncoding(encoding);
 		// 세션에 저장된 m_num값 가져오기
 		//int m_num = Integer.parseInt((String)req.getAttribute("m_num"));
+		int m_num = 1;
 		//변수
-		int c_des = 0;
+		int c_num = 0;
 		String a_title = null;
 		String a_content = null;
 		int a_startbid = 0;
@@ -39,6 +53,7 @@ public class InsertAuction extends HttpServlet {
 		Long account = 0L;
 		String sel_number1 = null;
 		int sel_number = 0;
+		int bidstatus = 0;
 		ArrayList<String> fList;
 
 		// 파일 업로드 저장소 위치, 나중에 cp + 폴더명 하면 될듯
@@ -62,8 +77,8 @@ public class InsertAuction extends HttpServlet {
 				if (fileItem.isFormField()) { // 전송된 name value 값 출력
 					// 변수 명 일치 할때 값을 담아주기 -> 저장해서 가공할 수 있도록
 					switch (fileItem.getFieldName()) {
-					case "c_des":
-						c_des = Integer.parseInt(fileItem.getString(encoding));
+					case "c_num":
+						c_num = Integer.parseInt(fileItem.getString(encoding));
 						break;
 					case "a_title":
 						a_title = fileItem.getString(encoding);
@@ -85,8 +100,6 @@ public class InsertAuction extends HttpServlet {
 						break;
 					case "a_enddate":
 						a_enddate = fileItem.getString(encoding);
-						String a = a_enddate.replaceAll("/", "-");
-
 						break;
 					case "s_way":
 						s_way = fileItem.getString(encoding);
@@ -111,16 +124,8 @@ public class InsertAuction extends HttpServlet {
 					}
 				} else { // 파일인경우
 					if (fileItem.getSize() > 0) { // 첨부된 파일이 있을 경우
-/*						삭제해도 문제는 없을 듯
-						마지막 \\위치의 번호를 구해옴. -> 순수파일명 앞자리까지 자르기 위해 
-						int idx = fileItem.getName().lastIndexOf("\\");
-						if (idx == -1) {
-							idx = fileItem.getName().lastIndexOf("/");
-						}
 
-						// 순수 파일명 얻어오기
-						String fileName = fileItem.getName().substring(idx + 1);
-*/						String fileName = fileItem.getName();
+						String fileName = fileItem.getName();
 						
 // 기존					File uploadFile = new File(currentPath + "\\" + fileName); // 이름 포함한 경로
 						fList = new ArrayList<String>(); // 파일 경로 담을 배열
@@ -146,7 +151,33 @@ public class InsertAuction extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		// 경매상태 구하기 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
+		java.util.Date regdate = new java.util.Date();
+		java.util.Date dstart;
+		try {
+			dstart = sdf.parse(a_startdate.replaceAll("/", "-"));
+			int bidresult = regdate.compareTo(dstart);
+			// 0 입찰 전 -> result 0보다 작을때 
+			if(bidresult < 0){
+				bidstatus = 0;
+			// 1 입찰 중 -> result 0보다 같거나 클때 
+			} else {
+				bidstatus = 1;			
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		// 테이블에 입력 
+		SellerVo svo = new SellerVo(account, m_num, sel_number);
+		SellerDao sdao = SellerDao.getInstance();
+		int n = sdao.InsertSeller(svo);
+		
+		AuctionVo avo = new AuctionVo(0, a_title, a_content, a_condition, null, a_startdate, a_enddate, 0, c_num, 0, sel_number, bidstatus, a_startbid, a_bidunit);
+		// 경매테이블 추가 메소드 필요 - 내일 작업할것 
 	}
+}
 	/*
 	 * @Override protected void service(HttpServletRequest req, HttpServletResponse
 	 * resp) throws ServletException, IOException { //ContextPath 받기 - 홈 컨트롤러에서
@@ -174,4 +205,4 @@ public class InsertAuction extends HttpServlet {
 	 * 생성 /* SellerDao sdao = SellerDao.getInstance(); int m_num = sdao.getMnum(id);
 	 * //4. seller테이블에 인서트 SellerVo svo = new sellerVo(account, m_num, sel_num) }
 	 */
-}
+
