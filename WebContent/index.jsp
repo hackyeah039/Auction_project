@@ -10,11 +10,14 @@
 </head>
 <body>
 <div id = "wrap">
-	<div id = header style="height: 500px;border: solid 2px black;">
-		<%-- <jsp:include page="${requestScope.header}"></jsp:include>--%>
+	<div id = header style="height: 150px;border: solid 2px black;">
+		<jsp:include page="${requestScope.header}"></jsp:include>
 	</div>
 	<div id = content>
 		<jsp:include page="${requestScope.content }"></jsp:include>	
+	</div>
+	<div id = footer style="height: 150px;border: solid 2px red;">
+		<jsp:include page="${requestScope.footer }"></jsp:include>
 	</div>
 </div>
 </body>
