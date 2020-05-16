@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import jdbc.JdbcUtil;
-import semi.vo.yh.sellerVo;
+import semi.vo.yh.SellerVo;
 
 public class SellerDao {
 		private static SellerDao instance = new SellerDao();
@@ -18,7 +18,7 @@ public class SellerDao {
 			return instance;
 		}
 		
-		public sellerVo SearchSeller(int sel_number) {
+		public SellerVo SearchSeller(int sel_number) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -29,7 +29,7 @@ public class SellerDao {
 				pstmt.setInt(1, sel_number);
 				rs = pstmt.executeQuery();
 				if(rs.next()) {
-					sellerVo vo = new sellerVo(
+					SellerVo vo = new SellerVo(
 					rs.getLong("account"),
 					rs.getInt("m_num"),
 					rs.getInt("sel_number")
@@ -44,7 +44,7 @@ public class SellerDao {
 				JdbcUtil.close(con, pstmt, rs);
 			}
 		}
-		public ArrayList<sellerVo> listAccount(int m_num1){
+		public ArrayList<SellerVo> listAccount(int m_num1){
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -54,12 +54,12 @@ public class SellerDao {
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, m_num1);
 				rs = pstmt.executeQuery();
-				ArrayList<sellerVo> list = new ArrayList<sellerVo>();
+				ArrayList<SellerVo> list = new ArrayList<SellerVo>();
 				while(rs.next()) {
 					Long account = rs.getLong(1);
 					int m_num = rs.getInt(2);
 					int sel_number = rs.getInt(3);
-					sellerVo vo=new sellerVo(account, m_num, sel_number);
+					SellerVo vo=new SellerVo(account, m_num, sel_number);
 					list.add(vo);
 				}
 				return list;
@@ -93,17 +93,18 @@ public class SellerDao {
 			}
 		}
 		// seller 테이블 인서트 
-		public int InsertSeller(Long account, int sel_number, int m_num) {
+		//public int InsertSeller(Long account, int sel_number, int m_num) {
+		public int InsertSeller(SellerVo vo) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			int n = 0;
 			try {
-				if(sel_number == 0) {
+				if(vo.getSel_number() == 0) {
 					con = JdbcUtil.getConn();
 					String sql = "insert into seller values(?,?,seq_seller_sel_number.nextval)";
 					pstmt = con.prepareStatement(sql);
-					pstmt.setLong(1, account);
-					pstmt.setInt(2, m_num);
+					pstmt.setLong(1, vo.getAccount());
+					pstmt.setInt(2, vo.getM_num());
 					n = pstmt.executeUpdate();
 					return n;
 				}
