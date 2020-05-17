@@ -100,11 +100,11 @@ public class BoardDao {
 			ResultSet rs=null;
 			try {
 				con=ConnectionPool.getCon();
-				String sql="select * from(select bb.*, rownum rnum "
-							+ "from (SELECT b.*, m.m_id id from board b,members m "
-							+ "where b.m_num=m.m_num order by b_num desc)bb) "
-							+ "where rnum>=? and rnum<=? and "
-							+field+" like '%"+keyword+"%'";
+				String sql="select * from (select aa.*, rownum rnum " + 
+						"from (select b.*, m.m_id id from board b, members m " + 
+						"where b.m_num=m.m_num order by b_num desc)aa " + 
+						"where "+field+" like '%"+keyword+"%') " + 
+						"where rnum>=? and rnum<=?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setInt(1, startRow);
 				pstmt.setInt(2, endRow);
