@@ -125,4 +125,12 @@ public class AuctionVo {
 		this.a_bidunit = a_bidunit;
 	}
 
+	@Override
+	public String toString() {
+		return "AuctionVo [a_num=" + a_num + ", a_title=" + a_title + ", a_content=" + a_content + ", a_condition="
+				+ a_condition + ", a_regdate=" + a_regdate + ", a_startdate=" + a_startdate + ", a_enddate=" + a_enddate
+				+ ", a_check=" + a_check + ", c_num=" + c_num + ", a_jjim=" + a_jjim + ", sel_number=" + sel_number
+				+ ", bidstatus=" + bidstatus + ", startbid=" + startbid + ", a_bidunit=" + a_bidunit + "]";
+	}
+
 }

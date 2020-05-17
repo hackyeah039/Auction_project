@@ -25,7 +25,7 @@ public class BuyerTransact extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		int mnum = 1;
+		int mnum = 2;
 
 		try {
 
@@ -46,7 +46,7 @@ public class BuyerTransact extends HttpServlet {
 			ArrayList<BidVo> tranBidList = dao.getTranBidList(anumlist, mnum);
 
 //			for(BidVo vo : tranBidList) {
-//				System.out.println(vo);
+//				System.out.println("bid"+vo);
 //			}
 
 			// 물품이름
@@ -66,8 +66,8 @@ public class BuyerTransact extends HttpServlet {
 			// 판매자
 			HashMap<Integer, String> sellerIdList = dao.getSellerId(tranBidList);
 
-//			for (Integer key : sellerIdList.keySet()) {
-//				System.out.println(String.format("키 : %s, 값 : %s", key, sellerIdList.get(key)));
+//			for (Integer key : paymentList.keySet()) {
+//				System.out.println(String.format("키 : %s, 값 : %s", key, paymentList.get(key)));
 //			}
 
 			req.setAttribute("getListSize", tranBidList.size() );
@@ -78,7 +78,7 @@ public class BuyerTransact extends HttpServlet {
 
 		} catch (NullPointerException e) {
 			// TODO: handle exception
-			req.setAttribute("error", "null");
+			req.setAttribute("getListSize", 0);			
 		}
 		
 		req.setAttribute("header", "header.jsp");

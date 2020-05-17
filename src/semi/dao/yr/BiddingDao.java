@@ -15,6 +15,8 @@ import semi.vo.yr.BiddingVo;
 
 public class BiddingDao {
 
+	
+	
 	// 회원번호 가져오기
 	public int getMnum(String id) {
 
@@ -358,7 +360,7 @@ public class BiddingDao {
 
 			for (int anum : anumlist) {
 				con = ConnectionPool.getCon();
-				String sql = "select a.*, a_enddate-a_startdate remaindate from" + 
+				String sql = "select a.*,  (TRUNC(a_enddate) - TRUNC(SYSDATE)) remainDate from" + 
 						"(select * from auction where a_num = ?) a";
 
 				pstmt = con.prepareStatement(sql);

@@ -88,6 +88,7 @@ public class SellerTransact extends HttpServlet{
 		}catch (NullPointerException e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
+			req.setAttribute("getListSize", 0);
 		}
 		req.setAttribute("header", "header.jsp");
 		req.setAttribute("content", "/mypage/mypageSellerTransact.jsp");
