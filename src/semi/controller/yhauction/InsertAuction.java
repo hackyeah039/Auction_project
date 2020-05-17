@@ -18,9 +18,13 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import semi.dao.yh.AuctionDao;
+import semi.dao.yh.ImgDao;
 import semi.dao.yh.SellerDao;
 import semi.vo.yh.AuctionVo;
+import semi.vo.yh.IMGVo;
 import semi.vo.yh.SellerVo;
+import semi.vo.yh.ShipVo;
 
 @WebServlet("/InsertAuction.do")
 public class InsertAuction extends HttpServlet {
@@ -54,7 +58,8 @@ public class InsertAuction extends HttpServlet {
 		String sel_number1 = null;
 		int sel_number = 0;
 		int bidstatus = 0;
-		ArrayList<String> fList;
+		ArrayList<String> fList = null;
+		int n = 0; // 데이터 입력이 잘 되었는지 확인하기 위한 변수 
 
 		// 파일 업로드 저장소 위치, 나중에 cp + 폴더명 하면 될듯
 		File currentPath = new File("C:\\file_repo");
@@ -71,6 +76,7 @@ public class InsertAuction extends HttpServlet {
 			// List -> ArrayList와 같다고 생각하면 됨.
 			// parseRequest -> request객체에서 매개변수를 List로 가져옴
 			List items = upload.parseRequest(req);
+			fList = new ArrayList<String>(); // 파일 경로 담을 배열 - 밑에서 자꾸 초기화되서 위로 올림
 			for (int i = 0; i < items.size(); i++) {
 				// 파일 업로드창에서 업로드된 항목들을 하나씩 가져옴
 				FileItem fileItem = (FileItem) items.get(i);
@@ -112,9 +118,11 @@ public class InsertAuction extends HttpServlet {
 						break;
 					case "sel_number":
 						sel_number1 = fileItem.getString(encoding);
-						// 새로등록할경우 hidden field값이기때문에 변경해줘야함. -> DB에 입력시에는 시퀀스 사용.
+						// 새로등록할경우 hidden field값이 없기때문에 변경해줘야함. -> DB에 입력시에는 시퀀스 사용.
 						if(sel_number1 == "" || sel_number1.equals("")) {
 							sel_number1 = "0";
+							sel_number = Integer.parseInt(sel_number1);
+						} else {
 							sel_number = Integer.parseInt(sel_number1);
 						}
 						break;
@@ -123,12 +131,12 @@ public class InsertAuction extends HttpServlet {
 						break;
 					}
 				} else { // 파일인경우
+					
 					if (fileItem.getSize() > 0) { // 첨부된 파일이 있을 경우
 
 						String fileName = fileItem.getName();
 						
 // 기존					File uploadFile = new File(currentPath + "\\" + fileName); // 이름 포함한 경로
-						fList = new ArrayList<String>(); // 파일 경로 담을 배열
 						File uploadFile = new File(currentPath, fileName);
 						// 업로드 폴더에 파일네임과 같은 파일이 존재시
 						if(uploadFile.exists()) {
@@ -143,6 +151,7 @@ public class InsertAuction extends HttpServlet {
 								}
 							}
 						}
+						System.out.println(uploadFile.getAbsolutePath());
 						fList.add(uploadFile.getAbsolutePath()); // 여러개 파일일경우를 대비하여 ArrayList에 저장
 						fileItem.write(uploadFile); // 지정한 저장소 위치에 저장
 					}
@@ -169,40 +178,24 @@ public class InsertAuction extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		// 테이블에 입력 
-		SellerVo svo = new SellerVo(account, m_num, sel_number);
-		SellerDao sdao = SellerDao.getInstance();
-		int n = sdao.InsertSeller(svo);
-		
+		// 테이블에 입력 할 값들 vo에 담기 
+		SellerVo sevo = new SellerVo(account, m_num, sel_number);
 		AuctionVo avo = new AuctionVo(0, a_title, a_content, a_condition, null, a_startdate, a_enddate, 0, c_num, 0, sel_number, bidstatus, a_startbid, a_bidunit);
-		// 경매테이블 추가 메소드 필요 - 내일 작업할것 
+		ShipVo shvo = new ShipVo(0, s_way, s_price, 0);
+		
+		AuctionDao sdao = AuctionDao.getInstance();
+		n = sdao.InsertTables(sel_number, sevo, avo, shvo, fList);
+		// DB저장 결과 페이지로 이동
+		if(n>0) {
+			req.setAttribute("code","success");
+		}else {
+			req.setAttribute("code","fail");
+		}
+		
+		req.setAttribute("header", "/header.jsp");
+		req.setAttribute("content", "/Auction/result.jsp");
+		req.setAttribute("footer", "/footer.jsp");
+		
+		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 }
-	/*
-	 * @Override protected void service(HttpServletRequest req, HttpServletResponse
-	 * resp) throws ServletException, IOException { //ContextPath 받기 - 홈 컨트롤러에서
-	 * application 영역으로 선언하므로 String cp = req.getContextPath(); ServletContext
-	 * application = getServletConfig().getServletContext(); //이미지 저장 폴더 경로 얻어오기 -
-	 * 폴더 미리 생성해 둬야함. - web 콘텐츠 하위 폴더 String upload =
-	 * application.getRealPath("/upload"); System.out.println(upload); //0. 인코딩 설정
-	 * req.setCharacterEncoding("utf-8"); //1.폼에서 넘어온 값 들 다 변수에 담기(MultipartRequest)
-	 * MultipartRequest mr = new MultipartRequest(req, upload, 1024*1024*10,
-	 * "utf-8", new DefaultFileRenamePolicy()); //경매번호는 시퀀스 a_num String a_title =
-	 * mr.getParameter("a_title"); String a_content= mr.getParameter("a_content");
-	 * String a_condition = mr.getParameter("a_condition"); //글등록일자는 sysdate
-	 * a_regdate String a_startdate = mr.getParameter("a_startdate"); String
-	 * a_enddate = mr.getParameter("a_enddate"); // 조회수 0 a_check int c_num =
-	 * Integer.parseInt(mr.getParameter("c_num")); // 찜 0 a_jjim // 경매상태는 로직 처리
-	 * sysdate랑 startdate랑 비교해서 처리 // 0 : 입찰전 1 : 입찰중 2 : 거래중 3 : 거래완료 int
-	 * a_startbid = Integer.parseInt(mr.getParameter("a_startbid")); int a_bidunit =
-	 * Integer.parseInt(mr.getParameter("a_bidunit")); int s_way =
-	 * Integer.parseInt(mr.getParameter("s_way")); int s_price =
-	 * Integer.parseInt(mr.getParameter("s_price")); int account =
-	 * Integer.parseInt(mr.getParameter("account")); // 회원번호는 세션 아이디값을 받아서 출력 + 0514
-	 * 추가 세션에 회원아이디랑, 번호 같이 넘겨 줄거임. //2. 세션 회원번호 값을 받아옴. HttpSession session =
-	 * req.getSession(); int m_num =
-	 * Integer.parseInt((String)session.getAttribute("m_num")); //3. 회원번호를 받아올 메소드
-	 * 생성 /* SellerDao sdao = SellerDao.getInstance(); int m_num = sdao.getMnum(id);
-	 * //4. seller테이블에 인서트 SellerVo svo = new sellerVo(account, m_num, sel_num) }
-	 */
-
