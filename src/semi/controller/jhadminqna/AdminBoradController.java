@@ -28,15 +28,30 @@ public class AdminBoradController extends HttpServlet{
 		int endRow=startRow+4;
 		
 		BoardDao dao=BoardDao.getBoardDao();
-		ArrayList<BoardVo> list=dao.allBoard(startRow, endRow);
+		int pageCount=0;
+		ArrayList<BoardVo> list=null;
+		if(field==null || keyword ==null || field =="" || keyword =="") {
+			list=dao.allBoard(startRow, endRow);
+			pageCount=(int)Math.ceil(dao.getCount()/5.0);
+		}else {
+			list=dao.allBoard(startRow, endRow,field,keyword);
+			pageCount=(int)Math.ceil(dao.getCount(field,keyword)/5.0);
+		}
 		
-		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
 		int startPage=(pageNum-1)/3*3+1;
 		int endPage=startPage+2;
 		if(endPage>pageCount) {
 			endPage=pageCount;
 		}
+		System.out.println("필드:"+field);
+		System.out.println("키워드:"+keyword);
+		System.out.println("전체페이지수:"+pageCount);
+		System.out.println("스타트로우:"+startRow);
+		System.out.println("앤드로우:"+endRow);
 		System.out.println("pageNum:"+pageNum);
+		System.out.println("리스트:"+list.size());
+		
+		
 		req.setAttribute("list", list);
 		req.setAttribute("startRow", startRow);
 		req.setAttribute("endRow", endRow);

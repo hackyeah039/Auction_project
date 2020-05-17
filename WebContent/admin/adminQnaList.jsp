@@ -46,3 +46,16 @@
 		</c:when>
 	</c:choose>
 </div>
+<br>
+<!-- 검색기능 -->
+<div>
+	<form method="post" action="${cp }/board.qnalist.jh">
+		<select name="field">
+			<option value="id" <c:if test="${field=='id' }">selected</c:if>>작성자</option>
+			<option value="b_title" <c:if test="${field=='b_title' }">selected</c:if>>글제목</option>
+			<option value="b_content" <c:if test="${field=='b_contnent' }">selected</c:if>>내용</option>
+		</select>
+		<input type="text" name="keyword" value="${keyword }">
+		<input type="submit" value="검색">
+	</form>
+</div>
