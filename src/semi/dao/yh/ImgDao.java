@@ -22,7 +22,7 @@ public class ImgDao {
 		int n = 0;
 		try {
 			con = JdbcUtil.getConn();
-			String sql = "insert into auction values(?,?)";
+			String sql = "insert into img values(?,?)";
 			pstmt=con.prepareStatement(sql);
 			for(String a:flist) {
 				pstmt.setInt(1, a_num);
