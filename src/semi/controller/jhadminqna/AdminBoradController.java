@@ -19,6 +19,7 @@ public class AdminBoradController extends HttpServlet{
 		String spageNum=req.getParameter("pageNum");
 		String field=req.getParameter("field");
 		String keyword=req.getParameter("keyword");
+		
 		int pageNum=1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
@@ -30,7 +31,7 @@ public class AdminBoradController extends HttpServlet{
 		ArrayList<BoardVo> list=dao.allBoard(startRow, endRow);
 		
 		int pageCount=(int)Math.ceil(dao.getCount()/5.0);
-		int startPage=((pageNum)-1)*3+1;
+		int startPage=(pageNum-1)/3*3+1;
 		int endPage=startPage+2;
 		if(endPage>pageCount) {
 			endPage=pageCount;
@@ -45,7 +46,8 @@ public class AdminBoradController extends HttpServlet{
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("field", field);
 		req.setAttribute("keyword", keyword);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=adminQNA/adminQnaList.jsp").forward(req, resp);
+		
+		req.getRequestDispatcher("admin/adminIndex.jsp?file=adminQnaList.jsp").forward(req, resp);
 		
 	}
 }

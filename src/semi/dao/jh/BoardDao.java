@@ -19,13 +19,14 @@ public class BoardDao {
 	
 	//보드테이블 전체 글목록 담아오기
 	public ArrayList<BoardVo> allBoard(int startRow,int endRow){
+		System.out.println("dao실행");
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
 			String sql="select * from(select bb.*, rownum rnum "
-					+ "from (SELECT b.*, m.m_id from board b,members m "
+					+ "from (SELECT b.*, m.m_id id from board b,members m "
 					+ "where b.m_num=m.m_num order by b_num desc)bb) "
 					+ "where rnum>=? and rnum<=?";
 			/*
@@ -43,7 +44,7 @@ public class BoardDao {
 			pstmt.setInt(1, startRow);
 			pstmt.setInt(2, endRow);
 			rs=pstmt.executeQuery();
-			ArrayList<BoardVo> list=null;
+			ArrayList<BoardVo> list=new ArrayList<BoardVo>();
 			while(rs.next()) {
 				int b_num=rs.getInt("b_num");
 				String b_title=rs.getString("b_title");
@@ -51,7 +52,7 @@ public class BoardDao {
 				int b_status=rs.getInt("b_status");
 				int m_num=rs.getInt("m_num");
 				Date b_regdate=rs.getDate("b_regdate");
-				String m_id=rs.getString("m_id");
+				String m_id=rs.getString("id");
 				String bName=BoardProcess(b_status);
 				BoardVo vo=new BoardVo(b_num, b_title, b_content, b_status, m_num, 
 						b_regdate,m_id,bName);
