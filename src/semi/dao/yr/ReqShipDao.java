@@ -18,16 +18,17 @@ import semi.vo.yr.PaymentVo;
  */
 public class ReqShipDao {
 	  
-	  public PaymentVo getBuyerInfo(int anum) {
+	  public PaymentVo getBuyerInfo(int paynum) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		try {
 			con = ConnectionPool.getCon();
-			String sql = "";
+			String sql = "select * from payment where pay_num = ?";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, anum);
+			pstmt.setInt(1, paynum);
+			rs = pstmt.executeQuery();
 			if(rs.next()) {
 				int pay_num = rs.getInt("pay_num");
 				String pay_addr = rs.getString("pay_addr");

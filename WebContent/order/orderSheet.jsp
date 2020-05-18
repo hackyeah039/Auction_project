@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<form>
+<form action = "${cp }/order/payment.do" method = "post" onsubmit="return submitClick()"> 
 <h1>상품정보</h1>
 <table border = 1>
 	<tr>
@@ -40,16 +40,16 @@
 <table border = 1>
 	<tr>
 		<th>수령인 </th>	
-		<td><input type = "text"></td>			
+		<td><input type = "text" id = "buyerName"></td>			
 	</tr>
 	<tr>
 		<th>주소</th>
 		<td>
-		<input type = "text" name = "zipcode">
+		<input type = "text" id = "addr1" name = "zipcode" placeholder="우편번호" readonly="readonly">
 		<input type = "button" value = "주소찾기">
 		<br>
-		<input type = "text" name = "roadname"><br>
-		<input type = "text" name = "detailaddr"><br>		
+		<input type = "text" name = "roadname" readonly="readonly" id = "addr2"><br>
+		<input type = "text" name = "detailaddr" placeholder="상세주소" readonly="readonly" id = "addr3"><br>		
 		</td>	
 	</tr>
 	<tr>
@@ -118,21 +118,36 @@
 		bankbookInfo.style.display = "block";
 	}
 	
+	
+	
 	function submitClick(){
 		var ra = document.getElementsByName("paytype");
 		var raval;
+		
 		for(var i =0; i<ra.length ; i++){
 			if(ra[i].checked){
 				raval = ra[i].value;
 			}
 		}
 		
-		console.log("test")
+		var buyername = document.getElementById("buyerName").value;
+		var addr1 = document.getElementById("addr1").value;
+		var addr2 = document.getElementById("addr2").value;
+		var addr3 = document.getElementById("addr3").value;
+		
+		if(buyername == "" || addr1 == "" || addr2 == "" || addr3 == "" || ra.length == 0){
+			alert("정보를 입력해주세요");
+			return false;
+		}
+		
 		if(raval == "bankbook"){
 			var accountHolder = document.getElementById("accountHolder").value;
 			if(accountHolder==""){
-				console.log("입력하시오..")
+				alert("정보를 입력해주세요");
+				return false;
 			}
 		}
+		
+		return true;
 	}
 </script>

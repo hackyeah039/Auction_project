@@ -31,7 +31,7 @@ public class SellerTransact extends HttpServlet{
 //		HttpSession session = req.getSession();
 //		int mnum = (int)session.getAttribute("mnum");
 
-		int mnum = 4;
+		int mnum = 5;
 		
 		
 		try {

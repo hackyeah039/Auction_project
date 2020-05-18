@@ -27,19 +27,26 @@ public class OrderController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, javax.servlet.http.HttpServletResponse resp)
 			throws ServletException, IOException {
+		
+	
 		String message = req.getParameter("message");
 		// 0 : num, 1:title, 2:price
 		String[] messages = message.split(":");
 
 		OrderDao dao = new OrderDao();
+		
 		// 배송 정보
 		HashMap<Integer, ShipVo> shipinfoList = new HashMap<Integer, ShipVo>();
+		
 		// 상품 제목
 		HashMap<Integer, String> titleList = new HashMap<Integer, String>();
+		
 		// 상품 가격
 		HashMap<Integer, Integer> priceList = new HashMap<Integer, Integer>();
 
+		
 		ArrayList<Integer> orderanumList = new ArrayList<Integer>();
+		
 		int anum = 0;
 
 		for (int i = 0; i < messages.length; i++) {

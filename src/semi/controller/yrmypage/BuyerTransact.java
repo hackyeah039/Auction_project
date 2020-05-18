@@ -25,7 +25,7 @@ public class BuyerTransact extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		int mnum = 1;
+		int mnum = 2;
 
 		try {
 

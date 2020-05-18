@@ -10,6 +10,8 @@ import semi.db.yr.ConnectionPool;
 import semi.vo.yr.ShipVo;
 
 public class OrderDao {
+	
+	
 
 	public ShipVo getShipInfo(int anum) {
 		Connection con = null;
