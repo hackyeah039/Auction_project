@@ -20,8 +20,10 @@ public class ShowAccount extends HttpServlet{
 		int m_num = 1;
 		SellerDao sdao = SellerDao.getInstance();
 		ArrayList<SellerVo> list = sdao.listAccount(m_num);
-		
+		System.out.println(list);
 		req.setAttribute("list", list);
+		//데이터가 변수에 들어갔는지 아닌지 구분하기 위해 size를 보냄
+		req.setAttribute("size", list.size());
 		
 		req.getRequestDispatcher("/Auction/showAccount.jsp").forward(req , resp);
 	}
