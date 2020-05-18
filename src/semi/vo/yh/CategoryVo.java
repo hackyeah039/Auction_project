@@ -1,12 +1,12 @@
 package semi.vo.yh;
 
-public class categoryVo {
+public class CategoryVo {
 	private int c_num;
 	private String c_des;
 	
-	public categoryVo() {}
+	public CategoryVo() {}
 
-	public categoryVo(int c_num, String c_des) {
+	public CategoryVo(int c_num, String c_des) {
 		super();
 		this.c_num = c_num;
 		this.c_des = c_des;
@@ -27,4 +27,12 @@ public class categoryVo {
 	public void setC_des(String c_des) {
 		this.c_des = c_des;
 	}
+
+	//바로 출력할 수 있도록 
+	@Override
+	public String toString() {
+		return "CategoryVo [c_num=" + c_num + ", c_des=" + c_des + "]";
+	}
+	
+	
 }
