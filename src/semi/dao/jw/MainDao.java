@@ -231,4 +231,18 @@ public class MainDao {
 			JDBCUtil.close(rs, pstmt2, con);
 		}
 	}
+	
+	public void singo(int a_num,int m_num) {
+		Connection con=null;	
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql="";
+		try {
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
 }

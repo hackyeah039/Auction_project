@@ -60,6 +60,8 @@ public class MainController extends HttpServlet{
 		req.setAttribute("day", day);
 		
 		
+		
+		
 		req.getServletContext().setAttribute("cp", req.getContextPath());
 		req.getRequestDispatcher("/mainview.jsp").forward(req, resp);
 	}

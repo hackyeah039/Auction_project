@@ -12,6 +12,10 @@
 		function myFunction(){
 		 	var allwindow= window.open("${cp}/jjim.do?a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=500,width=250,height=100");
 		}
+		//신고하기
+		function singo(){
+			var allwindow= window.open("${cp}/singo.jsp?seller=${seller}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=400,height=300");
+		}
 		//경매시간
 		var myVar = setInterval(function () {
 			var now = new Date();//현재시간
@@ -33,6 +37,15 @@
 			    document.getElementById("result").innerHTML = "종료된 경매입니다";
 			}
 		}, 1000);
+		
+		
+
+		function fnMove(seq){
+			typeof event.preventDefault=="function" ? event.preventDefault() : (event.returnValue = false);
+			var offset = $("#product-detail-tab" + seq).offset();
+			$('html, body').animate({scrollTop : (offset.top - 100)}, 200);
+		}
+	
 	</script>
 	<script src="js/mainjs.js"></script>
 </head>
@@ -64,7 +77,7 @@
 <a href="${cp }/history.do?a_num=${a_num }">경매기록보기</a> <br>
 배송방법 ${ship.s_way }<br>
 배송비용 ${ship.s_price }<br>
-판매자 ID : ${seller }<br>
+판매자 ID : <a href="" onclick="singo()">${seller }</a><br>
 <a href="">입찰하기</a><br>
 <a href="" onclick="myFunction()">관심물품 찜하기</a><br>
 문의하기<br>
