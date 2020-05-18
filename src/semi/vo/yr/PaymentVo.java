@@ -3,11 +3,11 @@ package semi.vo.yr;
 import java.sql.Date;
 
 public class PaymentVo {
-	int pay_num;
-	String pay_addr;
-	int pay_status;
-	int bid_number;
-	Date pay_deadline;
+	private int pay_num;
+	private String pay_addr;
+	private int pay_status;
+	private int bid_number;
+	private Date pay_deadline;
 	
 	
 	public PaymentVo(int pay_num, String pay_addr, int pay_status, int bid_number, Date pay_deadline) {

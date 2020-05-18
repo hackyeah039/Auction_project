@@ -64,15 +64,18 @@
 					<c:if test="${ payVo.key == anum }">
 						<c:choose>
 							<c:when test="${payVo.value.pay_status == 0 }"><td>입금확인중</td></c:when>
-							<c:when test="${payVo.value.pay_status == 1 }"><td>배송요청</td></c:when>
+							<c:when test="${payVo.value.pay_status == 1 }"><td><a href ="#" onclick="showPopup(${anum})">배송요청</a></td></c:when>
 						</c:choose>
 						<td>${payVo.value.pay_deadline}</td>
 					</c:if>
 				</c:forEach>
-				
-
-				
 			</tr>
 		</c:forEach>
 	</table>
 </div>
+<script type="text/javascript">
+ function showPopup(anum){
+	 window.open("${cp}/popup/reqShipPopup.do?anum="+anum, "배송요청", 
+			 "width=400, height=300, left=100, top=50");
+ }
+</script>

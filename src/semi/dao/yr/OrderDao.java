@@ -28,10 +28,10 @@ public class OrderDao {
 				String s_way = rs.getString("s_way");
 				int s_price = rs.getInt("s_price");
 				int a_num = rs.getInt("a_num");
-				String courier = rs.getString("courier");
-				int invoicenum = rs.getInt("invoicenum");
+//				String courier = rs.getString("courier");
+//				int invoicenum = rs.getInt("invoicenum");
 
-				return new ShipVo(s_num, s_way, s_price, a_num, courier, invoicenum);
+				return new ShipVo(s_num, s_way, s_price, a_num, null, 0);
 			}else {
 				return null;
 			}

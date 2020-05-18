@@ -16,8 +16,9 @@
 		<li><a href="#">입금완료</a></li>
 	</ul>
 	<form action="${cp }/order/order.do" method="get"
-		onsubmit="return submitClick()">
-		<table border="1">
+		onsubmit="return submitClick()" >
+		<!-- onsubmit="return submitClick()" -->
+		<table border="1" id = "table">
 			<tr>
 				<th>NO</th>
 				<th>물품명</th>
@@ -26,12 +27,12 @@
 				<th>판매자</th>
 				<th>입금기한</th>
 				<th>거래상태</th>
-				<th><input type="checkbox"></th>
+				<th><input type="checkbox" onclick = "allClick()"></th>
 			</tr>
 
 			<c:if test="${getListSize == 0  }">
 				<tr>
-					<td colspan="7">정보가 존재하지 않습니다.</td>
+					<td colspan="8">정보가 존재하지 않습니다.</td>
 				</tr>
 			</c:if>
 			<c:forEach var="anum" items="${tranBidList}">
@@ -49,7 +50,6 @@
 					<c:forEach var="bidinfo" items="${tranBidList}">
 						<c:if test="${ bidinfo.a_num == anum.a_num }">
 							<td>${bidinfo.bid_price}</td>
-							<!--<c:set var="price" value="${bidinfo.bid_price}" />-->
 							<td>${bidinfo.bid_date}</td>
 						</c:if>
 					</c:forEach>
@@ -84,6 +84,7 @@
 			</c:forEach>
 		</table>
 		<br> 
+		<input type="hidden" id="message" name = "message">
 		<input type="submit" value="입금하기" id="sbtn">
 	</form>
 
@@ -92,22 +93,61 @@
 <script type="text/javascript">
 	function submitClick(){
 		
+		var table = document.getElementById("table");
 		var ckb = document.getElementsByName("checkbox");
+		var hidden = document.getElementById("message");
 		var length = ckb.length;
 		var count = 0;
+		var message = "";
 		
 		for(var i = 0 ; i < length; i++){
+			if(count > 0){
+				message += ":"
+			}
 			if(ckb[i].checked == true){
+				var row = ckb[i].parentNode.parentNode;
+                message += row.cells[0].innerHTML;
+                message += ":" + row.cells[1].innerHTML;
+                message += ":" + row.cells[2].innerHTML;
 				count++;		
 			}
 		}
 		
-		alert(count);
+		hidden.value = message;
+
+		
+		alert(message);
 		
 		if(count > 0){
 			return true;
 		}else{
 			return false;
 		}
+		
 	}
+	
+	var checked1 = true;
+	var checked2 = false;
+
+	function allClick(){
+		
+		console.log(checked1);
+		
+		var temp;
+		var ckb = document.getElementsByName("checkbox");
+		
+		for(var i = 0; i < ckb.length; i++){
+			
+			ckb[i].checked = checked1;
+			
+			if(i == ckb.length-1){
+				temp = checked1;
+				checked1 = checked2;
+				checked2 = temp;
+			}
+			console.log(checked1);
+		}	
+		
+	}
+	
 </script>

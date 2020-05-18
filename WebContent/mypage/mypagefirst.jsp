@@ -18,6 +18,7 @@
 		<li><a href="#">최근 상품 리스트</a></li>
 		<li><a href="#">나의 정보 수정하기</a></li>
 		<li><a href="#">문의 하기</a></li>
+		<li><a href="#">탈퇴 하기</a></li>
 	</ul>
 </div>
 
