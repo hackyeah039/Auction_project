@@ -17,12 +17,12 @@ public class HomeController extends HttpServlet {
 		String header = (String)req.getAttribute("header");
 		String content = (String)req.getAttribute("content");
 		String footer = (String)req.getAttribute("footer");
+		
 		// 초기에는 호출된 값들이 없으므로 null 값일때 보여질 주소값 대입
 		if(header == null) header = "/header.jsp";
 		if(content == null) content = "/main.jsp";
 		if(footer == null) footer = "/footer.jsp";
 
-		
 		//페이지 이동 전 페이지 주소에 대한 값을 담음
 		req.setAttribute("header",  header);
 		req.setAttribute("footer",  footer);
