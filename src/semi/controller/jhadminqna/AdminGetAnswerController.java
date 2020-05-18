@@ -28,9 +28,13 @@ public class AdminGetAnswerController extends HttpServlet{
 		PrintWriter pw=resp.getWriter();
 		JSONObject json=new JSONObject();
 		for(B_answerVo vo:list) {
-			json.put("b_dap", vo.getB_dap());
-			json.put("b_num", vo.getB_num());
-			json.put("answerdate", vo.getAnswerdate());
+			if(vo.getB_dap()==null || vo.getB_dap()=="") {
+				json.put("b_dap", "no");
+			}else {
+				json.put("b_dap", vo.getB_dap());
+				json.put("b_num", vo.getB_num());
+				json.put("answerdate", vo.getAnswerdate());
+			}
 		}
 		pw.println(json);
 	}

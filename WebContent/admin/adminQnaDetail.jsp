@@ -28,7 +28,7 @@
 		</tr>
 	</table>
 <br>
-<div id="dap" onload="getDap()">
+<div id="dap" >
 </div>
 <c:choose>
 	<c:when test="${vo.b_status == 0}"><!-- 답글이 없는 경우-->
@@ -88,6 +88,9 @@
 			var inputDap=document.getElementById("inputDap");
 			var div=document.createElement("div");
 			console.log(json.b_dap);
+			if(typeof json.b_dap == "undefined" || json.b_dap ==null || json.b_dap ==""){
+				dap.innerHTML="";
+			}
 			div.innerHTML="답변내용:"+json.b_dap+"<br>"+
 							"답변날짜:"+json.answerdate+"<br>";
 			div.className="comm";
@@ -95,7 +98,6 @@
 			inputDap.innerHTML="";
 		}
 	}
-	
 	window.onload = function test() {
 		getDap();
 	}
