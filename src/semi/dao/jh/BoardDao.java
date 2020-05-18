@@ -171,6 +171,95 @@ public class BoardDao {
 		}
 	}
 	
+	//상태에 따른 전체 글개수 가져오기
+	public int getCount(int type,String field, String keyword) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		
+		try {
+			con=ConnectionPool.getCon();
+			String sql;
+			if(field!=null || field!="") {
+				sql="select nvl(count(*),0) count " + 
+					"from(SELECT b.*, m.m_id id from board b,members m " + 
+					"where b.m_num=m.m_num and b_status=1) " + 
+					"where "+field+" like '%"+keyword+"%'";
+			}else {
+				sql="select nvl(count(*),0) count from board where b_status=?";
+			}
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, type);
+			rs=pstmt.executeQuery();
+			int count=0;
+			if(rs.next()) {
+				count=rs.getInt("count");
+			}
+			return count;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	
+	
+		//보드테이블 검색조건 있을 때 전체글목록 가져오기(상태에 따라서)
+		public ArrayList<BoardVo> allBoard(int startRow,int endRow, int type,
+			String field,String keyword){
+			System.out.println("dao실행");
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select * from (select aa.*, rownum rnum " + 
+						"from (select b.*, m.m_id id from board b, members m " + 
+						"where b.m_num=m.m_num order by b_num desc)aa " + 
+						"where "+field+" like '%"+keyword+"%' and b_status=?) " + 
+						"where rnum>=? and rnum<=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, type);
+				pstmt.setInt(2, startRow);
+				pstmt.setInt(3, endRow);
+				rs=pstmt.executeQuery();
+				ArrayList<BoardVo> list=new ArrayList<BoardVo>();
+				while(rs.next()) {
+					int b_num=rs.getInt("b_num");
+					String b_title=rs.getString("b_title");
+					String b_content=rs.getString("b_content");
+					int b_status=rs.getInt("b_status");
+					int m_num=rs.getInt("m_num");
+					Date b_regdate=rs.getDate("b_regdate");
+					String m_id=rs.getString("id");
+					String bName=BoardProcess(b_status);
+					BoardVo vo=new BoardVo(b_num, b_title, b_content, b_status, m_num, 
+							b_regdate,m_id,bName);
+					list.add(vo);
+				}
+				return list;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return null;
+			}finally {
+				try{
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+	
+	
 	//답글상태 가져오는 메소드
 	public String BoardProcess(int num) {
 		String str=null;//답변상태
@@ -202,6 +291,39 @@ public class BoardDao {
 				int m_num=rs.getInt("m_num");
 				Date b_regdate=rs.getDate("b_regdate");
 				BoardVo vo=new BoardVo(b_num, b_title, b_content, b_status, m_num, b_regdate);
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			try{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	//답글가져오기
+	public ArrayList<B_answerVo> dapDetail(int num){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from b_answer where b_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			ArrayList<B_answerVo> list=new ArrayList<B_answerVo>();
+			if(rs.next()) {
+				String b_dap=rs.getString("b_dap");
+				int b_num=rs.getInt("b_num");
+				Date answerdate=rs.getDate("answerdate");
+				B_answerVo vo=new B_answerVo(b_dap, b_num, answerdate);
 				list.add(vo);
 			}
 			return list;
@@ -285,8 +407,50 @@ public class BoardDao {
 		}
 	}
 	
-	
-	
+	//상태에 따른 qna(board테이블) 전체리스트 가져오기
+	public ArrayList<BoardVo> allBoard(int startRow,int endRow,int type){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from(select bb.*, rownum rnum " + 
+					"from (SELECT b.*, m.m_id id from board b,members m " + 
+					"where b.m_num=m.m_num and b_status=?  order by b_num desc)bb) " + 
+					"where rnum>=? and rnum<=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, type);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			rs=pstmt.executeQuery();
+			ArrayList<BoardVo> list=new ArrayList<BoardVo>();
+			while(rs.next()) {
+				int b_num=rs.getInt("b_num");
+				String b_title=rs.getString("b_title");
+				String b_content=rs.getString("b_content");
+				int b_status=rs.getInt("b_status");
+				int m_num=rs.getInt("m_num");
+				Date b_regdate=rs.getDate("b_regdate");
+				String m_id=rs.getString("id");
+				String bName=BoardProcess(b_status);
+				BoardVo vo=new BoardVo(b_num, b_title, b_content, b_status, m_num, 
+						b_regdate,m_id,bName);
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			try{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
 	
 	
 	

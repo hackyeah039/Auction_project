@@ -21,9 +21,10 @@ public class AdminQnaDetailController extends HttpServlet{
 		int b_num=Integer.parseInt(req.getParameter("b_num"));
 		String m_id=req.getParameter("m_id");
 		BoardDao dao=BoardDao.getBoardDao();
-		ArrayList<BoardVo> list=new ArrayList<BoardVo>();
-		list=dao.boardDetail(b_num);
+		ArrayList<BoardVo> list=dao.boardDetail(b_num);
+		ArrayList<B_answerVo> list2=dao.dapDetail(b_num);
 		req.setAttribute("list", list);
+		req.setAttribute("list2", list2);
 		req.setAttribute("id", m_id);
 		req.getRequestDispatcher("admin/adminIndex.jsp?file=adminQnaDetail.jsp").forward(req, resp);
 	}

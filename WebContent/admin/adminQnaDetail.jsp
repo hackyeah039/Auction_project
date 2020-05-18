@@ -38,12 +38,15 @@
 		<input type="button" value="등록" onclick="insertDap()">
 		</div>
 	</c:when>
-	<c:otherwise> <!-- 답글있는 경우 -->
-		<input type="hidden" name="b_num" value="${vo.b_num }" id="b_num">
-		<div id="dap">
-			
-		</div>
-	</c:otherwise>
+	<c:when test="${vo.b_status==1 }"><!-- 답글이 있는 경우 -->
+		<c:forEach var="vo2" items="${list2 }">
+			<div id="dap2">
+				답변 : ${vo2.b_dap } 
+				<br>
+				답변일자 : ${vo2.answerdate }
+			</div>
+		</c:forEach>
+	</c:when>
 </c:choose>
 </c:forEach>
 <script>
