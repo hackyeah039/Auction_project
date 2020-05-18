@@ -8,12 +8,31 @@
 	<title>Insert title here</title>
 	<link rel= "stylesheet" type="text/css" href="css/main.css">
 	<script>
-		//버튼을 누르면 그럼 먼저 컨트롤러에 가서 판별한다음에 MSg가져와서 function을 실행
-		//첫번째 속성을 ""로 줌
-		//
+		//찜
 		function myFunction(){
 		 	var allwindow= window.open("${cp}/jjim.do?a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=500,width=250,height=100");
 		}
+		//경매시간
+		var myVar = setInterval(function () {
+			var now = new Date();//현재시간
+			var enddate = new Date(${months}+"/"+${day}+"/"+${years});
+			var distance =enddate.getTime()-now.getTime();
+			
+			var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+			days
+		  	var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		  	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		  	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		  	
+		  	
+			document.getElementById("result").innerHTML = days + "일 " + hours + "시 "
+			  + minutes + "분 " + seconds + "초 ";
+			
+			if (distance < 0) {
+			    clearInterval(myVar);
+			    document.getElementById("result").innerHTML = "종료된 경매입니다";
+			}
+		}, 1000);
 	</script>
 	<script src="js/mainjs.js"></script>
 </head>
@@ -36,6 +55,7 @@
 </div>
 <br>
  경매기간 ${info.a_startdate } ~~ ${info.a_enddate }<br> 
+ 경매 남은시간 <div id="result"></div>
 물품번호 ${info.a_num }<br>
 시작가 ${info.a_startbid }<br>
 입찰단위 ${info.a_bidunit }<br>
@@ -48,10 +68,8 @@
 <a href="">입찰하기</a><br>
 <a href="" onclick="myFunction()">관심물품 찜하기</a><br>
 문의하기<br>
-물품정보보<br>
+물품정보<br>
 물품문의<br>
-배송/반품<br>
-영수증 발행안내<br>
 
 
 

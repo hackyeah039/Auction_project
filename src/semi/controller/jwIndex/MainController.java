@@ -1,6 +1,7 @@
 package semi.controller.jwIndex;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import semi.dao.jw.AuctionDao;
 import semi.dao.jw.MainDao;
 import semi.vo.jw.MainVo;
 @WebServlet("/main.do")
@@ -45,6 +47,18 @@ public class MainController extends HttpServlet{
 		
 		int bidnum = dao.bidnum(a_num);//입찰수
 		req.setAttribute("bidnum", bidnum);
+		
+		
+		AuctionDao dao2 = AuctionDao.getInstance();//현재시간
+		Date enddate=dao2.enddate(18);
+		String years=enddate.toString().substring(0,4);
+		String months=enddate.toString().substring(5,7);
+		String day=enddate.toString().substring(8,10);
+		
+		req.setAttribute("years", years);
+		req.setAttribute("months", months);
+		req.setAttribute("day", day);
+		
 		
 		req.getServletContext().setAttribute("cp", req.getContextPath());
 		req.getRequestDispatcher("/mainview.jsp").forward(req, resp);
