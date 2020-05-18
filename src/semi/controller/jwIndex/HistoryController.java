@@ -1,6 +1,6 @@
 package semi.controller.jwIndex;
 
-import java.io.IOException;
+import java.io.IOException;  
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -23,8 +23,8 @@ public class HistoryController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		System.out.println("doGet");
-		System.out.println(req.getParameter("check"));
-		System.out.println(req.getParameter("a_num"));
+//		System.out.println(req.getParameter("check"));
+//		System.out.println(req.getParameter("a_num"));
 		req.setCharacterEncoding("utf-8");
 		int pageNum=1; // pageNum==현재 내가보는 페이지
 		String spageNum =req.getParameter("pageNum");

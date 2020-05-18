@@ -46,6 +46,7 @@ public class BidDao {
 		try {
 			System.out.println("dao list접근");
 			con=JDBCUtil.getConn();
+			System.out.println(con);
 			String sql=null;
 				 sql = 
 						 "select * from "
@@ -111,6 +112,7 @@ public class BidDao {
 		ResultSet rs=null;
 		try {
 			con=JDBCUtil.getConn();
+			System.out.println("postlsit 커넥션" +con);
 			String sql="select * from \r\n" + 
 					"                        (\r\n" + 
 					"                        select aa.*, rownum rnum from \r\n" + 
@@ -118,8 +120,6 @@ public class BidDao {
 					"							select m_num,bid_price, to_char(systimestamp, 'YYYY/MM/DD HH24:MI:SS:ff') realdate from bid where a_num=? order by bid_price asc\r\n" + 
 					"						 )aa\r\n" + 
 					"						 ) where rnum>=? and rnum<=?";
-			
-			
 		    pstmt=con.prepareStatement(sql);
 		    pstmt.setInt(1, a_num);
 			pstmt.setInt(2,startRow);
