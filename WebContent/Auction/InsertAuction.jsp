@@ -9,9 +9,7 @@
 <script src="${cp }/Auction/jquery.js"></script>
 
 <title>InsertAuction.jsp</title>
-<!-- 0512
-	카테고리 테이블값 받아와서 value 값 및 내용에 뿌려주는걸로 수정하기 - 나중에(jstl, arraylist로 table값 받아오기)
- -->
+
  <style type="text/css">
  	#preview img {
  		width: 100px;
@@ -54,13 +52,46 @@
  	function showList() {
 		window.open("${cp}/ShowAccount.do", "_blank", "top=200,left=500,height = 150, width = 280");
 	}
-	
- </script>
+	function chkValues(){
+		//카테고리 예외처리
+		var category = document.getElementsByName("c_num");
+		var cn = 0;
+		for(let i = 0 ; i<category.length ; i++){
+			if(category[i].checked){
+				cn++;
+			}
+		}
+		if(cn == 0){
+			alert("카테고리를 선택해주세요.");
+		}
+		if(document.getElementsByName("a_title")[0].value.trim() == ""){
+			alert("제목을 입력하세요.");
+			return false;
+		}
+		if(document.getElementsByName("a_content")[0].value.trim() == ""){
+			alert("내용을 입력하세요.");
+			return false;
+		}
+		if(!document.getElementById("file").value){
+			alert("사진을 등록해주세요.");
+			return false;
+		}
+		if(document.getElementsByName("a_startbid")[0].value.trim() == ""){
+			alert("시작가격을 입력하세요.");
+			return false;
+		} else if($.isNumeric($('input[name=a_startbid]').val()) == false){
+			alert("숫자로 입력하세요.");
+			return false;
+		} else if($('input[name=a_startbid]')){
+			//0518 - 예외처리 
+		}
+	}
+	</script>
 </head>
 <body>
 <!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
 <h1> 카테고리 선택 </h1>
-<form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data">
+<form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data" onsubmit="">
  <table>
  	<c:forEach var="vo" items="${clist }" varStatus="vs">
  		<c:choose>
@@ -149,24 +180,64 @@
 	<td>
 		<input id="startdate" name="a_startdate" type="text">
 		-
-		<input id="enddate" name="a_enddate" type="text">
-		<!-- 달력 수정 완료 0514 -->
-		<!-- jQuery 사용하여 캘린더 호출0513  -->
+		<input id="enddate" name="a_enddate" type="text"><span id=click></span>
+		
+		<!-- 캘린더 시작일 클릭 지정 후 종료일 지정시 종료일 기본 선택값이 캘린더 시작일 다음날이 되도록 수정 -->
 		<script type="text/javascript">
 		// 참고 페이지 https://xdsoft.net/jqplugins/datetimepicker/
+		/*
 		$(document).ready(function(){
 			 $('#startdate').datetimepicker({
-			  	//형식 수정 완
-				 format:'Y/m/d H:i:s',
-			  // 오늘 일자
-			  minDate:0 
+				//형식 수정 완
+				format:'Y/m/d H:i:s',
+				// 오늘 일자
+				minDate:0 
 			 });
 			 $('#enddate').datetimepicker({
 			  format:'Y/m/d H:i:s',
 			  // startdate에서 받아와 기본값이 다음날이 되도록 
-			  minDate:'+1970/01/02', // 내일 
-			  defaultDate: '+1970/01/02' // 내일
+			  minDate: '+1970/01/02'// 내일 
 			 });
+		});
+		*/
+
+		$(document).ready(function() {
+		    // 선택한 날의 다음날 부터 선택하도록 체크
+			function checkDateStart(){
+		        if ($('#startdate').val()){
+		        	var date = new Date($('#startdate').val());
+		        	date.setDate(date.getDate()+1);
+		        	return date;
+		        } else {
+		        	// 값이 없을때 다음날 부터 선택할 수 있도록 
+			        return '+1970/01/02';
+		        }
+		    }
+
+		    $(function(){
+		    	// 시작일 
+		    	$('#startdate').datetimepicker({
+		    		format:'Y/m/d H:i:s',
+		    		onShow:function( ct ){
+		    			this.setOptions({
+		    				maxDate:$('#enddate').val()?$('#enddate').val():false,
+		    				//오늘 이전 날짜는 클릭 불가능
+		    				minDate:0
+		    			})
+		    		},
+		    		timepicker:true
+		    	});
+		    	
+		    	$('#enddate').datetimepicker({
+		    		format:'Y/m/d H:i:s',
+		    		onShow:function( ct ){
+		    			this.setOptions({
+		    				minDate:checkDateStart()
+		    			})
+		    		},
+		    		timepicker:true
+		    	});
+		    });
 		});
 		</script>
 	</td>
