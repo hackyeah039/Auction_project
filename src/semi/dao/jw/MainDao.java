@@ -58,7 +58,8 @@ public class MainDao {
 			rs=pstmt2.executeQuery();
 			ArrayList<String> path =new ArrayList<String>();
 			while(rs.next()) {
-				path.add(rs.getString(1));
+				System.out.println("jpg이름입니다."+rs.getString(1).substring(59));
+				path.add(rs.getString(1).substring(59));
 			}
 			return path;
 		}catch(SQLException se) {
@@ -95,7 +96,7 @@ public class MainDao {
 	}
 	
 	//경매물품 상세정보 //CONTNET다 스펠링조심
-	public ArrayList<MainVo> info(int a_num) {
+	public MainVo info(int a_num) {
 		Connection con=null;	
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
@@ -105,15 +106,22 @@ public class MainDao {
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
 			rs=pstmt2.executeQuery();
-			ArrayList<MainVo> info = new ArrayList<MainVo>();
+			MainVo vo = null;
 			while(rs.next()) {
-				//int a_num,Date a_startdate,Date a_enddate,int a_startbid,int a_bidunit,String a_contNEt,String a_title
-				MainVo vo = new MainVo(rs.getInt("A_NUM"),rs.getDate("A_STARTDATE"),rs.getDate("A_ENDDATE"),
-						rs.getInt("A_STARTBID"),rs.getInt("A_BIDUNIT"),rs.getString("A_CONTNET"),rs.getString("A_TITLE")
+				//int a_num,Date a_startdate,Date a_enddate,int a_startbid,int a_bidunit,String a_content,String a_title
+				vo = new MainVo(rs.getInt("A_NUM"),rs.getDate("A_STARTDATE"),rs.getDate("A_ENDDATE"),
+						rs.getInt("A_STARTBID"),rs.getInt("A_BIDUNIT"),rs.getString("A_CONTENT"),rs.getString("A_TITLE")
 						);
-				info.add(vo);
+				System.out.println(rs.getInt("A_NUM"));
+				System.out.println(rs.getDate("A_STARTDATE"));
+				System.out.println(rs.getDate("A_ENDDATE"));
+				System.out.println(rs.getInt("A_STARTBID"));
+				System.out.println(rs.getInt("A_BIDUNIT"));
+				System.out.println(rs.getString("A_CONTENT"));
+				System.out.println(rs.getString("A_TITLE"));
 			}
-			return info;
+			System.out.println("info저장완료");
+			return vo;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return null;
@@ -124,7 +132,7 @@ public class MainDao {
 	
 	
 	//배송방법
-	public ArrayList<MainVo> ship(int a_num) {
+	public MainVo ship(int a_num) {
 		Connection con=null;	
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
@@ -134,15 +142,42 @@ public class MainDao {
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
 			rs=pstmt2.executeQuery();
-			ArrayList<MainVo> info = new ArrayList<MainVo>();
+			MainVo vo = null;
 			while(rs.next()) {
-				MainVo vo = new MainVo(rs.getInt("s_num"),rs.getString("s_way"),rs.getInt("s_price"),rs.getInt("a_num"));
-				info.add(vo);
+				vo = new MainVo(rs.getInt("s_num"),rs.getString("s_way"),rs.getInt("s_price"),rs.getInt("a_num"));
+				System.out.println(rs.getInt("s_num"));
+				System.out.println(rs.getString("s_way"));
+				System.out.println(rs.getInt("s_price"));
+				System.out.println(rs.getInt("a_num"));
 			}
-			return info;
+			return vo;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt2, con);
+		}
+	}
+	
+	public int seller(int a_num) {
+		Connection con=null;	
+		PreparedStatement pstmt2=null;
+		ResultSet rs=null;
+		try {
+			con=JDBCUtil.getConn();
+			String sql="select seller.sel_number hi from seller,auction where a_num=? and auction.sel_number =seller.sel_number";
+			pstmt2=con.prepareStatement(sql);
+			pstmt2.setInt(1, a_num);
+			rs=pstmt2.executeQuery();
+			int seller = 0;
+			if(rs.next()) {
+				seller=rs.getInt("hi");
+				System.out.println(seller+"셀러의 인트값입니다.");
+			}
+			return seller;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
 		}finally {
 			JDBCUtil.close(rs, pstmt2, con);
 		}

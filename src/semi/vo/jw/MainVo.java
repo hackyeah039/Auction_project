@@ -171,6 +171,14 @@ public class MainVo {
 	public void setA_bidunit(int a_bidunit) {
 		this.a_bidunit = a_bidunit;
 	}
+	@Override
+	public String toString() {
+		return "MainVo [path=" + path + ", a_num=" + a_num + ", a_title=" + a_title + ", a_content=" + a_content
+				+ ", a_condition=" + a_condition + ", a_regdate=" + a_regdate + ", a_startdate=" + a_startdate
+				+ ", a_enddate=" + a_enddate + ", a_check=" + a_check + ", c_num=" + c_num + ", a_jjim=" + a_jjim
+				+ ", sel_number=" + sel_number + ", bidstatus=" + bidstatus + ", a_startbid=" + a_startbid
+				+ ", a_bidunit=" + a_bidunit + ", s_num=" + s_num + ", s_way=" + s_way + ", s_price=" + s_price + "]";
+	}
 	
 	
 }

@@ -31,13 +31,20 @@ public class MainController extends HttpServlet{
 		String cate = dao.cate(a_num); //카테고리
 		req.setAttribute("cate", cate);
 		
-		ArrayList<MainVo> info =dao.info(a_num);//경매정보들
+		
+		MainVo info =dao.info(a_num);//경매정보들
 		req.setAttribute("info", info);
 		
 		
-		ArrayList<MainVo> ship=dao.ship(a_num);//배송방법
+		MainVo ship=dao.ship(a_num);//배송방법
 		req.setAttribute("ship", ship);
 		
+		
+		int seller = dao.seller(a_num);//판매자번호
+		req.setAttribute("seller",seller);
+		
+		
+		req.getServletContext().setAttribute("cp", req.getContextPath());
 		req.getRequestDispatcher("/mainview.jsp").forward(req, resp);
 	}
 }
