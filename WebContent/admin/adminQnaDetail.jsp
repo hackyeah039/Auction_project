@@ -98,9 +98,10 @@
 			inputDap.innerHTML="";
 		}
 	}
-	window.onload = function test() {
+	
+	/*window.onload = function test() {
 		getDap();
-	}
+	}*/
 	
 </script>
 
