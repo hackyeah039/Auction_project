@@ -19,11 +19,10 @@ public class AdminAnswerController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		String b_num=req.getParameter("b_num");
+		int b_num=Integer.parseInt(req.getParameter("b_num"));
 		String b_dap=req.getParameter("b_dap");
-		System.out.println("문의번호:"+b_num);
 		BoardDao dao=BoardDao.getBoardDao();
-		int i=dao.boardAnswer(Integer.parseInt(b_num), b_dap);
+		int i=dao.boardAnswer(b_num, b_dap);
 		resp.setContentType("text/plain;charset=utf-8");
 		JSONObject json=new JSONObject();
 		if(i==2) {
