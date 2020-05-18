@@ -19,9 +19,11 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import semi.dao.yh.AuctionDao;
+import semi.dao.yh.CategoryDao;
 import semi.dao.yh.ImgDao;
 import semi.dao.yh.SellerDao;
 import semi.vo.yh.AuctionVo;
+import semi.vo.yh.CategoryVo;
 import semi.vo.yh.IMGVo;
 import semi.vo.yh.SellerVo;
 import semi.vo.yh.ShipVo;
@@ -34,6 +36,11 @@ public class InsertAuction extends HttpServlet {
 		req.setAttribute("content", "/Auction/InsertAuction.jsp");
 		req.setAttribute("footer", "/footer.jsp");
 		
+		//카테고리 리스트 넘겨주기 
+		CategoryDao cdao = CategoryDao.getInstance();
+		ArrayList<CategoryVo> clist = cdao.ShowList();
+		req.setAttribute("clist", clist);
+
 		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 	@Override
@@ -151,9 +158,10 @@ public class InsertAuction extends HttpServlet {
 								}
 							}
 						}
-						System.out.println(uploadFile.getAbsolutePath());
-						fList.add(uploadFile.getAbsolutePath()); // 여러개 파일일경우를 대비하여 ArrayList에 저장
-						fileItem.write(uploadFile); // 지정한 저장소 위치에 저장
+						// 여러개 파일일경우를 대비하여 ArrayList에 저장
+						fList.add(uploadFile.getAbsolutePath());
+						// 지정한 저장소 위치에 저장
+						fileItem.write(uploadFile); 
 					}
 				}
 			}

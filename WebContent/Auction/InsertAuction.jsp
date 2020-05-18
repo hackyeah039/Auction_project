@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
@@ -9,7 +10,7 @@
 
 <title>InsertAuction.jsp</title>
 <!-- 0512
-	카테고리 테이블값 받아와서 value 값 및 내용에 뿌려주는걸로 수정하기 - 나중에
+	카테고리 테이블값 받아와서 value 값 및 내용에 뿌려주는걸로 수정하기 - 나중에(jstl, arraylist로 table값 받아오기)
  -->
  <style type="text/css">
  	#preview img {
@@ -49,18 +50,7 @@
 			reader.readAsDataURL(f);
 		});
 	}
-<%
-	// 세션에서 회원번호를 가져와서 계좌번호 조회하기
-	//String m_num = (String)session.getAttribute("m_num");
-	//String m_num = "1";
-%>
- 	<%-- 바로 팝업 띄우기
- 	function showList() {
-		var url = "showAccount.jsp?m_num=" + <%=m_num%>;
-		window.open(url, "get", "height = 150, width = 280");
-	}
-	--%>
-
+	//팝업 창 - 계좌 번호 조회
  	function showList() {
 		window.open("${cp}/ShowAccount.do", "_blank", "top=200,left=500,height = 150, width = 280");
 	}
@@ -71,53 +61,23 @@
 <!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
 <h1> 카테고리 선택 </h1>
 <form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data">
-<table>
-<tr>
-	<td>
-<input type="radio" name="c_num" value="1">디지털/가전
-	</td>
-	<td>
-<input type="radio" name="c_num" value="2">가구/인테리어
-	</td>
-	<td>
-<input type="radio" name="c_num" value="3">유아동/도서
-	</td>
-	<td>
-<input type="radio" name="c_num" value="4">생활/가공식품
-	</td>
-	<td>
-<input type="radio" name="c_num" value="5">스포츠/레저
-	</td>
-	<td>
-<input type="radio" name="c_num" value="6">여성잡화
-	</td>
-</tr>
-<tr>
-	<td>
-<input type="radio" name="c_num" value="7">여성의류
-	</td>
-	<td>
-<input type="radio" name="c_num" value="8">남성패션
-	</td>
-	<td>
-<input type="radio" name="c_num" value="9">게임/취미
-	</td>
-	<td>
-<input type="radio" name="c_num" value="10">뷰티/미용
-	</td>
-	<td>
-<input type="radio" name="c_num" value="11">반려동물용품
-	</td>
-	<td>
-<input type="radio" name="c_num" value="12">도서/티켓/음반
-	<td>
-</tr>
-<tr>
-	<td>
-<input type="radio" name="c_num" value="13">기타
-	</td>
-</tr>
-</table>
+ <table>
+ 	<c:forEach var="vo" items="${clist }" varStatus="vs">
+ 		<c:choose>
+ 			<c:when test="${vs.index%6 == 0}">
+ 			<tr>
+ 				<td>
+ 				<input type="radio" name="c_num" value="${vo.c_num }">${vo.c_des }
+ 				</td>
+ 			</c:when>
+ 			<c:otherwise>
+ 				<td>
+ 				<input type="radio" name="c_num" value="${vo.c_num }">${vo.c_des }
+ 				</td>
+ 			</c:otherwise>
+ 		</c:choose>
+ 	</c:forEach>
+ </table>
 <h1> 경매 물품 정보 </h1>
 <table>
 <tr>
@@ -240,7 +200,6 @@
 			<input type="text" name="account" id="account">
 			<input type="hidden" name="sel_number" id="sel_number">
 			<input type="button" value="기존계좌확인" onclick="showList()">
-
 		</td>
 	</tr>
 </table>
