@@ -182,4 +182,53 @@ public class MainDao {
 			JDBCUtil.close(rs, pstmt2, con);
 		}
 	}
+	
+	public int bidnum(int a_num) {
+		Connection con=null;	
+		PreparedStatement pstmt2=null;
+		ResultSet rs=null;
+		try {
+			con=JDBCUtil.getConn();
+			String sql="select nvl(max(rownum),0) hi from bid where a_num=?";
+			pstmt2=con.prepareStatement(sql);
+			pstmt2.setInt(1, a_num);
+			rs=pstmt2.executeQuery();
+			int seller = 0;
+			if(rs.next()) {
+				seller=rs.getInt("hi");
+				System.out.println(seller+"셀러의 인트값입니다.");
+			}
+			return seller;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			JDBCUtil.close(rs, pstmt2, con);
+		}
+	}
+	
+	public void jjim(int a_num,int m_num) {
+		Connection con=null;	
+		PreparedStatement pstmt2=null;
+		PreparedStatement pstmt3=null;
+		ResultSet rs=null;
+		ResultSet rs2=null;
+		try {
+			con=JDBCUtil.getConn();
+			String sql="update auction set a_jjim = (select a_jjim from auction where a_num=?)+1 where a_num=?";
+			String sql2="insert into interproduct values(?,?) ";
+			pstmt2=con.prepareStatement(sql);
+			pstmt3=con.prepareStatement(sql);
+			pstmt2.setInt(1, a_num);
+			pstmt2.setInt(2, a_num);
+			pstmt3.setInt(1, m_num);
+			pstmt3.setInt(1, a_num);
+			rs=pstmt2.executeQuery();
+			rs2=pstmt3.executeQuery();
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+		}finally {
+			JDBCUtil.close(rs, pstmt2, con);
+		}
+	}
 }

@@ -22,7 +22,6 @@ public class HistoryController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		System.out.println("doGet");
 //		System.out.println(req.getParameter("check"));
 //		System.out.println(req.getParameter("a_num"));
 		req.setCharacterEncoding("utf-8");

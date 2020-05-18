@@ -43,6 +43,8 @@ public class MainController extends HttpServlet{
 		int seller = dao.seller(a_num);//판매자번호
 		req.setAttribute("seller",seller);
 		
+		int bidnum = dao.bidnum(a_num);//입찰수
+		req.setAttribute("bidnum", bidnum);
 		
 		req.getServletContext().setAttribute("cp", req.getContextPath());
 		req.getRequestDispatcher("/mainview.jsp").forward(req, resp);
