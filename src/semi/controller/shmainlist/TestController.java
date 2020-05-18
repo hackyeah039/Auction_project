@@ -12,38 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.controller.shdao.MainListDao;
 import semi.controller.shvo.SHAuctionVo;
-@WebServlet("/sh/mainlist.do")
-public class MainListController extends HttpServlet{
+@WebServlet("/test.do")
+public class TestController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		int spageNum=Integer.parseInt(req.getParameter("pageNum"));
-		int cateNum=Integer.parseInt(req.getParameter("cateNum"));
-		int recomNum=Integer.parseInt(req.getParameter("recomNum"));
 		int pageNum=1;
 		if(spageNum>pageNum) {
 			pageNum=spageNum;
 		}
 		int endrow=pageNum*12;
 		int startrow=endrow-11;
-		MainListDao dao=new MainListDao();
-		ArrayList<SHAuctionVo> list=new ArrayList<SHAuctionVo>();
-		if(recomNum==0 && cateNum==0) { //전체목록 또는 첫실행시
-			list=dao.AllList(startrow,endrow);
-		//추천목록 클릭시 (인기순(조회수)은 1번 , 추천순(찜 수)은 2번, 마감임박순은 3번)
-		}else if(recomNum==1 && cateNum==0) {
-			System.out.println("startrow : " + startrow + ", endrow : " + endrow);
-			list=dao.CheckList(startrow, endrow);
-			System.out.println("인기순 리스트 메소드 실행,"+list);
-		}else if(recomNum==2 && cateNum==0) { 
-			list=dao.JjimList(startrow, endrow);
-			System.out.println("추천순 리스트 메소드 실행");
-		}else if(recomNum==3 && cateNum==0) { 
-			list=dao.EndList(startrow, endrow);
-			System.out.println("마감임박순 리스트 메소드 실행");
-		}
-		/* 카테고리 클릭시 실행구문
-		else if(recomNum==0 && cateNum>0) { 
-		}*/
+		MainListDao dao=new MainListDao(); 
+		ArrayList<SHAuctionVo> list=dao.AllList(startrow,endrow);
 		int pageCnt=(int)Math.ceil(dao.getAllCnt()/12.0);
 		int startPageNum=((pageNum-1)/5)*5+1;
 		int endPageNum=startPageNum+4;
