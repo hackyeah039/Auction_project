@@ -10,6 +10,7 @@
 		<th>신고일자</th>
 	</tr>
 	<c:forEach var="vo" items="${list }">
+	
 		<tr>
 			<td>${vo.singo_num }</td>
 			<td><a href="${cp}/singo.detail.jh?singo_num=${vo.singo_num}

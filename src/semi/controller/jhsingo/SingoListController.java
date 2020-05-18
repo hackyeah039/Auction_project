@@ -16,7 +16,6 @@ import semi.vo.jh.SingoVo;
 public class SingoListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("신고 웹서블릿 실행");
 		req.setCharacterEncoding("utf-8");
 		String spageNum=req.getParameter("pageNum");
 		String field=req.getParameter("field");

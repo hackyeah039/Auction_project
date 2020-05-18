@@ -41,15 +41,6 @@
 </form>
 </c:forEach>
 <script>
-	/*
-	window.onload = function(){
-		var btn1=document.getElementById("btn1");
-		var btn2=document.getElementById("btn2");
-		console.log(vo.singo_status);
-		
-	}*/
-	
-	
 	
 	function goSubmit1(form) { /*처리 반려 서블릿으로 이동*/
 		form.action="${cp}/singo.return.jh";

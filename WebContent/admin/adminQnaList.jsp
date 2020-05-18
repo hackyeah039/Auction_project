@@ -13,7 +13,8 @@
 	<c:forEach var="vo" items="${list }">
 		<tr>
 			<td>${vo.b_num }</td>		
-			<td><a href="">${vo.b_title}</a></td>		
+			<td><a href="${cp }/board.detail.jh?b_num=${vo.b_num}&m_id=${vo.m_id}">
+			${vo.b_title}</a></td>		
 			<td>${vo.m_id}</td>		
 			<td>${vo.boardName }</td>
 			<td>${vo.b_regdate }</td>

@@ -43,14 +43,6 @@ public class AdminBoradController extends HttpServlet{
 		if(endPage>pageCount) {
 			endPage=pageCount;
 		}
-		System.out.println("필드:"+field);
-		System.out.println("키워드:"+keyword);
-		System.out.println("전체페이지수:"+pageCount);
-		System.out.println("스타트로우:"+startRow);
-		System.out.println("앤드로우:"+endRow);
-		System.out.println("pageNum:"+pageNum);
-		System.out.println("리스트:"+list.size());
-		
 		
 		req.setAttribute("list", list);
 		req.setAttribute("startRow", startRow);

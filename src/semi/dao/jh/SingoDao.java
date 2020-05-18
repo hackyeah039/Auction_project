@@ -104,11 +104,6 @@ public class SingoDao {
 			}
 		}
 	
-	
-	
-	
-	
-	
 	//신고테이블 상태에 따른 리스트 불러오기(검색조건x)
 	public ArrayList<SingoVo> singoDoing(int startRow,int endRow,int status){
 		Connection con=null;
@@ -201,8 +196,6 @@ public class SingoDao {
 		}
 	
 	
-	
-	
 	//신고자 아이디 가져오기
 	public String singoId(int num) {
 		Connection con=null;
@@ -233,6 +226,7 @@ public class SingoDao {
 			}
 		}
 	}
+	
 	//int 값 넣어서 처리상태 뽑아오기
 	public String SingoProcess(int num) {
 		String str=null;//신고상태
@@ -245,6 +239,7 @@ public class SingoDao {
 		}
 		return str;
 	}
+	
 	//신고리스트 전체 글번호 개수 가져오기
 	public int getCount() {
 		Connection con=null;
@@ -367,14 +362,6 @@ public class SingoDao {
 				}
 			}
 		}	
-		
-		
-		
-		
-		
-		
-		
-	
 	
 	//관리자_신고페이지 상세리스트 가져오기
 	public ArrayList<SingoVo> singoDetailList(int snum){
@@ -558,8 +545,6 @@ public class SingoDao {
 			}
 		}
 	}
-	
-	
 }
 
 
