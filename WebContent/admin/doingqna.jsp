@@ -2,7 +2,7 @@
     pageEncoding="EUC-KR"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>관리자 처리중 리스트</h1>
+<h1>문의글 리스트</h1>
 <table border="1">
 	<tr>
 		<th>NO</th>

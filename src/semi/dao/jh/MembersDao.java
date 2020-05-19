@@ -237,6 +237,7 @@ public class MembersDao {
 		}
 	}
 	
+	//회원탈퇴처리 메소드
 	public int membersOut(int num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -260,5 +261,99 @@ public class MembersDao {
 			}
 		}
 	}
+	
+		//전체 회원리스트_상태에 따른(검색조건 있을때 or 없을때)
+		public ArrayList<MembersVo> allMembersList(int startRow,int endRow,
+				String field,String keyword,int type){
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql=null;
+				if(field==null || field.equals("") || keyword==null || keyword.equals("")) {
+					sql="select * from (select aa.*, rownum rnum from " + 
+						"(select * from members where m_type="+type+" order by m_num desc)aa) " + 
+						"where rnum>=? and rnum<=?";
+				}else {
+					sql="select * " + 
+						"from(select aa.*, rownum rnum " + 
+						"from (select * from members where "+field+" like '%"+keyword+"%' and m_type="+type+ 
+						" order by m_num desc)aa) " + 
+						"where rnum>=? and rnum<=?";
+				}
+				
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				rs=pstmt.executeQuery();
+				ArrayList<MembersVo> list=new ArrayList<MembersVo>();
+				while(rs.next()) {
+					int m_num=rs.getInt("m_num");
+					String m_name=rs.getString("m_name");
+					String m_email=rs.getString("m_email");
+					int m_phone=rs.getInt("m_phone");
+					String m_addr=rs.getString("m_addr");
+					String m_id=rs.getString("m_id");
+					String m_pwd=rs.getString("m_pwd");
+					int trust=rs.getInt("trust");
+					int m_type=rs.getInt("m_type");
+					Date m_regdate=rs.getDate("m_regdate");
+					String typeName=getType(m_type);
+					MembersVo vo=new MembersVo(m_num, m_name, m_email, m_phone,
+							m_addr, m_id, m_pwd, trust, m_type, m_regdate,typeName);
+					list.add(vo);
+				}
+				return list;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return null;
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+		
+		//상태에 따른 전체 회원 글번호 가져오기(검색조건 있을 때 || 없을 때)
+		public int getCount(String field,String keyword,int type){
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql=null;
+				if(field==null || field.equals("") || keyword==null || keyword.equals("")) {
+					//검색조건 없을 때
+					sql="select nvl(count(*),0) count from members where m_type="+type;
+				}else {
+					sql="select nvl(count(*),0) count from members where "
+							+field+" like '%"+keyword+"%' and m_type="+type;
+				}
+				pstmt=con.prepareStatement(sql);
+				rs=pstmt.executeQuery();
+				int count=0;
+				if(rs.next()) {
+					count=rs.getInt("count");
+				}
+				return count;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return -1;
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+		
 	
 }
