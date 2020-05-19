@@ -113,5 +113,12 @@ public class MembersVo {
 	public void setTypeName(String typeName) {
 		this.typeName=typeName;
 	}
+	@Override
+	public String toString() {
+		return "MembersVo [m_num=" + m_num + ", m_name=" + m_name + ", m_email=" + m_email + ", m_phone=" + m_phone
+				+ ", m_addr=" + m_addr + ", m_id=" + m_id + ", m_pwd=" + m_pwd + ", trust=" + trust + ", m_type="
+				+ m_type + ", m_regdate=" + m_regdate+"]";
+	}
+	
 	
 }

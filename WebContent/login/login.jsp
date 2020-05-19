@@ -64,7 +64,7 @@
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="upw" name="pwd" class="form-control" placeholder="Password" required><br>
         <div class="checkbox">
-        <div></div>
+        <span style="color:red; font-size:15" id="loginMsg"></span>
         <!--
           <label>
             <input type="checkbox" value="remember-me"> 기억하기
@@ -101,11 +101,13 @@
 	}
 	function loginck() {
 		if(xhr.readyState==4 && xhr.status==200){
-			
-			
+			var loginMsg=document.getElementById("loginMsg");
+			var msg=xhr.responseText;
+			var json=JSON.parse(msg);
+			console.log("제이슨:"+json.msg);
+			if(json.msg=='not'){
+				loginMsg.innerHTML="아이디 또는 비밀번호가 맞지 않습니다.";
+			}
 		}		
 	}
-
-
-
 </script>

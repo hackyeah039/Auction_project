@@ -14,7 +14,6 @@ import semi.dao.jh.SingoDao;
 public class SingoReturnController extends HttpServlet{ //신고반려
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("신고반려 서블릿");
 		req.setCharacterEncoding("utf-8");
 		int singo_num=Integer.parseInt(req.getParameter("singo_num"));
 		SingoDao dao=SingoDao.getSingoDao();		
