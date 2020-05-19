@@ -52,10 +52,11 @@
  	function showList() {
 		window.open("${cp}/ShowAccount.do", "_blank", "top=200,left=500,height = 150, width = 280");
 	}
+	//예외처리  
 	function chkValues(){
-		//카테고리 예외처리
-		var category = document.getElementsByName("c_num");
-		var cn = 0;
+		//카테고리 
+		let category = document.getElementsByName("c_num");
+		let cn = 0;
 		for(let i = 0 ; i<category.length ; i++){
 			if(category[i].checked){
 				cn++;
@@ -63,35 +64,116 @@
 		}
 		if(cn == 0){
 			alert("카테고리를 선택해주세요.");
+			return false;
 		}
+		// 글 제목, 한글만 
 		if(document.getElementsByName("a_title")[0].value.trim() == ""){
 			alert("제목을 입력하세요.");
 			return false;
+		} else if(document.getElementsByName("a_title")[0].value.length > 33){
+			alert("제목에 입력가능한 글자수를 초과하였습니다.");
+			return false;
 		}
+		// 글 내용 
 		if(document.getElementsByName("a_content")[0].value.trim() == ""){
 			alert("내용을 입력하세요.");
 			return false;
+		} else if(document.getElementsByName("a_content")[0].value.length > 333){
+			alert("내용에 입력가능한 글자수를 초과하였습니다.");
+			return false;
 		}
+		// 파일
 		if(!document.getElementById("file").value){
 			alert("사진을 등록해주세요.");
 			return false;
 		}
+		//시작가격
 		if(document.getElementsByName("a_startbid")[0].value.trim() == ""){
 			alert("시작가격을 입력하세요.");
 			return false;
-		} else if($.isNumeric($('input[name=a_startbid]').val()) == false){
-			alert("숫자로 입력하세요.");
+		} else if(document.getElementsByName("a_startbid")[0].value.length > 8){
+			alert("시작가격 입력범위를 초과하였습니다.");
 			return false;
-		} else if($('input[name=a_startbid]')){
-			//0518 - 예외처리 
+		} else if($.isNumeric($('input[name=a_startbid]').val()) == false){
+			alert("시작가격을 숫자로 입력하세요.");
+			return false;
 		}
+		//입찰단위
+		if(document.getElementsByName("a_bidunit")[0].value.trim() == ""){
+			alert("입찰단위를 입력하세요.");
+			return false;
+		} else if(document.getElementsByName("a_bidunit")[0].value.length > 7){
+			alert("입찰단위의 입력범위를 초과하였습니다.");
+			return false;
+		} else if($.isNumeric($('input[name=a_bidunit]').val()) == false){
+			alert("입찰단위를 숫자로 입력하세요.");
+			return false;
+		}
+		//상품상태 
+		let condition = document.getElementsByName("a_condition");
+		let con = 0;
+		for(let i = 0 ; i<condition.length ; i++){
+			if(condition[i].checked){
+				con++;
+			}
+		}
+		if(con == 0){
+			alert("상품상태를 선택해주세요.");
+			return false;
+		}
+		//날짜 비교 
+		let startdate = document.getElementsByName("a_startdate")[0].value;
+		let enddate = document.getElementsByName("a_enddate")[0].value;
+		if(startdate.trim() == "" || enddate.trim() == ""){
+			alert("경매일자를 입력해주세요.");
+			return false;
+		}
+		if(startdate.substring(0, 10) >= enddate.substring(0, 10)){
+			alert("경매시작일자가 종료일자와 같거나 클 수 없습니다.");
+			return false;
+		}
+		//배송방법
+		let way = document.getElementsByName("s_way");
+		let wn = 0;
+		for(let i = 0 ; i<way.length ; i++){
+			if(way[i].checked){
+				wn++;
+			}
+		}
+		if(wn == 0){
+			alert("배송방법을 선택해주세요.");
+			return false;
+		}
+		//배송비용
+		if(document.getElementsByName("s_price")[0].value.trim() == ""){
+			alert("배송비용를 입력하세요.");
+			return false;
+		} else if(document.getElementsByName("s_price")[0].value.length > 6){
+			alert("배송비용의 입력범위를 초과하였습니다.");
+			return false;
+		} else if($.isNumeric($('input[name=s_price]').val()) == false){
+			alert("배송비용을 숫자로 입력하세요.");
+			return false;
+		}
+		//계좌번호
+		if(document.getElementsByName("account")[0].value.trim() == ""){
+			alert("계좌번호를 입력하세요.");
+			return false;
+		} else if(document.getElementsByName("account")[0].value.length > 13){
+			alert("계좌번호 입력범위를 초과하였습니다.");
+			return false;
+		} else if($.isNumeric($('input[name=account]').val()) == false){
+			alert("계좌번호를 숫자로 입력하세요.");
+			return false;
+		}
+		return true;
 	}
 	</script>
 </head>
 <body>
 <!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
 <h1> 카테고리 선택 </h1>
-<form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data" onsubmit="">
+<form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data" onsubmit="return chkValues()">
  <table>
  	<c:forEach var="vo" items="${clist }" varStatus="vs">
  		<c:choose>
@@ -124,7 +206,7 @@
 		물품설명 
 	</td>
 	<td>
-		<textarea rows="10" cols="50" name="a_content"></textarea>
+		<textarea rows="10" cols="50" name="a_content" maxlength="333"></textarea>
 	</td>
 </tr>
 <tr>
