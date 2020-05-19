@@ -108,7 +108,7 @@ public class TranCompletedDao {
 		}
 	}
 
-	// bid가져오기
+	// bid 가져오기
 	public BidVo getBidVo(int anum) {
 
 		Connection con = null;

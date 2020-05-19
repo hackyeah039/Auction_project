@@ -24,6 +24,12 @@
 			<th>입찰순위</th>
 		</tr>
 
+		<c:if test="${getListSize == 0  }">
+			<tr>
+				<td colspan="8">정보가 존재하지 않습니다.</td>
+			</tr>
+		</c:if>
+		
 		<c:forEach var="anum" items="${bidlist}">
 			<tr>
 				<td>${anum}</td>

@@ -46,6 +46,7 @@ public class MyPageBuyBiddingController extends HttpServlet {
 		HashMap<Integer, BiddingVo> BiddingInfoList = auctiondao.getBiddingInfo(bidlist);
 		
 
+		req.setAttribute("getListSize", bidlist.size());		
         req.setAttribute("bidlist", bidlist);		
         req.setAttribute("currPriceList", currPriceList);		
         req.setAttribute("getBidCountList", getBidCountList);

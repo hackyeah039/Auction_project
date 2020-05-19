@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import semi.db.yr.ConnectionPool;
+import semi.vo.yr.PaymentVo;
 import semi.vo.yr.ShipVo;
 
 public class OrderDao {
@@ -45,4 +46,46 @@ public class OrderDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
+	
+
+//	해당 paynum에 입력받은 수령인, 주소, 전화번호로 update
+
+	public int updatePayInfo(PaymentVo vo, ArrayList<Integer> paynumlist) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {		
+			con = ConnectionPool.getCon();
+			
+			int n = 0;
+
+			for (int paynum : paynumlist) {
+				String sql = "update payment set pay_addr = ?, pay_name = ?,"
+						+ "pay_phone = ? where pay_num = ?";
+
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, vo.getPay_addr());
+				pstmt.setString(2, vo.getPay_name());
+				pstmt.setString(3, vo.getPay_phone());
+				pstmt.setInt(4, paynum);
+				
+				n = pstmt.executeUpdate();
+				if(n<0) {
+					return -1;
+				}else {
+					n += n;
+				}
+			}
+			return n;
+		} catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	
+	
 }

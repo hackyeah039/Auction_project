@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.yr.OrderDao;
+import semi.vo.yr.PaymentVo;
 import semi.vo.yr.ShipVo;
 
 /**
@@ -25,10 +26,10 @@ import semi.vo.yr.ShipVo;
 public class OrderController extends HttpServlet {
 
 	@Override
-	protected void service(HttpServletRequest req, javax.servlet.http.HttpServletResponse resp)
+	protected void doGet(HttpServletRequest req, javax.servlet.http.HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-	
+		String[] spaynum = req.getParameterValues("checkbox");
 		String message = req.getParameter("message");
 		// 0 : num, 1:title, 2:price
 		String[] messages = message.split(":");
@@ -61,7 +62,10 @@ public class OrderController extends HttpServlet {
 				priceList.put(anum, Integer.parseInt(messages[i]));
 			}
 		}
-
+		
+		
+		
+		
 		// test
 //		for (Integer key : shipinfoList.keySet()) {
 //			System.out.println(String.format("키 : %s, 값 : %s", key, shipinfoList.get(key)));
@@ -76,7 +80,9 @@ public class OrderController extends HttpServlet {
 //		for (int anum2 : orderanumList) {
 //			System.out.println(anum2);
 //		}
-
+		
+		
+		req.setAttribute("paynumList", spaynum);
 		req.setAttribute("orderanumList", orderanumList);
 		req.setAttribute("shipinfoList", shipinfoList);
 		req.setAttribute("titleList", titleList);
@@ -85,5 +91,4 @@ public class OrderController extends HttpServlet {
 		req.setAttribute("content", "/order/orderSheet.jsp");
 		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
-
 }

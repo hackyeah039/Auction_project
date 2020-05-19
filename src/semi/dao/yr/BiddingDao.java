@@ -275,6 +275,7 @@ public class BiddingDao {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 
 		try {
 			con = ConnectionPool.getCon();
@@ -290,12 +291,12 @@ public class BiddingDao {
 				String sql2 = "select SEL_NUMBER from seller where m_num = ? ";
 				pstmt2 = con.prepareStatement(sql2);
 				pstmt2.setInt(1, mnum);
-				rs = pstmt2.executeQuery();
-				if (rs.next()) {
+				rs2 = pstmt2.executeQuery();
+				if (rs2.next()) {
 
 					do {
-						list.add(rs.getInt("SEL_NUMBER"));
-					} while (rs.next());
+						list.add(rs2.getInt("SEL_NUMBER"));
+					} while (rs2.next());
 					return list;
 				} else {
 					return null;
@@ -307,6 +308,7 @@ public class BiddingDao {
 			System.out.println(e.getMessage());
 			return null;
 		} finally {
+			ConnectionPool.close(rs2);
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}

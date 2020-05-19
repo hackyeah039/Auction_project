@@ -21,7 +21,10 @@ public class SellerTranCompletedController extends HttpServlet{
 	
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	
+		
+		//경로..나중에 지워야함..
+		req.getServletContext().setAttribute("cp", req.getContextPath());
+
 		int mnum = 1;
 
 		try {

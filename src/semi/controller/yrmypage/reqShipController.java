@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
-import semi.dao.yr.ReqShipDao;
 import semi.dao.yr.ShipDao;
 import semi.vo.yr.PaymentVo;
 
@@ -25,7 +24,7 @@ public class reqShipController extends HttpServlet {
 		String sanum = req.getParameter("anum");
 //		System.out.println("paynum"+spaynum);
 		
-		ReqShipDao dao = new ReqShipDao();
+		ShipDao dao = new ShipDao();
 		
 		int paynum = Integer.parseInt(spaynum);
 		PaymentVo buyerInfo = dao.getBuyerInfo(paynum); 
@@ -38,11 +37,15 @@ public class reqShipController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		//인코딩
+		req.setCharacterEncoding("utf-8");
+		
+		
 		String courier = req.getParameter("courier");
 		String invoicenum = req.getParameter("invoicenum");
 		String anum = req.getParameter("anum");
 		
-		JSONObject data = new JSONObject();
+		org.json.JSONObject data = new JSONObject();
 		PrintWriter out = resp.getWriter();
 		
 		System.out.println(courier + ", "+invoicenum + ", "+ anum);

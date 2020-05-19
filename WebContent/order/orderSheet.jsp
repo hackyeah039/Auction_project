@@ -4,6 +4,12 @@
 
 <form action = "${cp }/order/payment.do" method = "post" onsubmit="return submitClick()"> 
 <h1>상품정보</h1>
+
+<c:forEach var = "paynum" items = "${paynumList }">
+	<input type = "hidden" name = "paynumList" value = "${paynum }">
+	${paynum }
+</c:forEach>
+
 <table border = 1>
 	<tr>
 		<th>삼풍명</th>
@@ -40,7 +46,7 @@
 <table border = 1>
 	<tr>
 		<th>수령인 </th>	
-		<td><input type = "text" id = "buyerName"></td>			
+		<td><input type = "text" id = "buyerName" name ="buyerName"></td>			
 	</tr>
 	<tr>
 		<th>주소</th>
@@ -107,7 +113,6 @@
 	</table>
 </div>
 
-<input type = "button" value = "test" onclick = "submitClick()">
 <input type = "submit" value = "결제하기">
 </form>
 
@@ -119,7 +124,7 @@
 	}
 	
 	
-	
+	/*
 	function submitClick(){
 		var ra = document.getElementsByName("paytype");
 		var raval;
@@ -150,4 +155,5 @@
 		
 		return true;
 	}
+	*/
 </script>

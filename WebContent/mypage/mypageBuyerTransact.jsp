@@ -18,7 +18,7 @@
 	<form action="${cp }/order/order.do" method="get"
 		onsubmit="return submitClick()" >
 		<!-- onsubmit="return submitClick()" -->
-		<table border="1" id = "table">
+		<table border="1" id = "table">		
 			<tr>
 				<th>NO</th>
 				<th>물품명</th>
@@ -70,7 +70,7 @@
 								<c:when test="${payVo.value.pay_status == 0 }">
 									<td>미입금</td>
 									<td><input type="checkbox" id="checkbox" name="checkbox"
-										value="${anum.a_num }"></td>
+										value="${payVo.value.pay_num }"></td>
 								</c:when>
 								<c:when test="${payVo.value.pay_status == 1 }">
 									<td>입금</td>
@@ -114,9 +114,6 @@
 		}
 		
 		hidden.value = message;
-
-		
-		alert(message);
 		
 		if(count > 0){
 			return true;

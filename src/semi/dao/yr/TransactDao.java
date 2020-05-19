@@ -14,6 +14,8 @@ import semi.vo.yr.PaymentVo;
 
 public class TransactDao {
 
+	
+	//거래중인 리스트 가져오기
 	public ArrayList<Integer> getTransactList(int mnum) {
 
 		ArrayList<Integer> transactlist = new ArrayList<Integer>();
@@ -104,6 +106,7 @@ public class TransactDao {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 
 		try {
 
@@ -120,9 +123,9 @@ public class TransactDao {
 					pstmt2 = con.prepareStatement(sql1);
 					pstmt2.setInt(1, selNumber);
 
-					rs = pstmt2.executeQuery();
-					if (rs.next()) {
-						String m_id = rs.getString("m_id");
+					rs2 = pstmt2.executeQuery();
+					if (rs2.next()) {
+						String m_id = rs2.getString("m_id");
 						sellerIdList.put(anum.getA_num(), m_id);
 					}
 				}
@@ -139,13 +142,49 @@ public class TransactDao {
 		}
 	}
 
+	public String getSellerId(int anum) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		String m_id = "";
+		try {
+				con = ConnectionPool.getCon();
+				String sql = "select * from auction where a_num = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, anum);
+				rs = pstmt.executeQuery();
+				if (rs.next()) {
+					int selNumber = rs.getInt("sel_number");
+					System.out.println("selnumber : " + selNumber);
+					String sql1 = "select * from seller, members where seller.m_num = members.m_num and sel_number=?";
+					pstmt2 = con.prepareStatement(sql1);
+					pstmt2.setInt(1, selNumber);
+
+					rs2 = pstmt2.executeQuery();
+					if (rs2.next()) {
+						 m_id = rs2.getString("m_id");
+					}		
+				}
+			System.out.println("id"+m_id);
+			return m_id;
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		} finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+
 	// 판매물품명
 	public HashMap<Integer, String> getAuctionTitle(ArrayList<BidVo> anumList) {
 		HashMap<Integer, String> auctionTitleList = new HashMap<Integer, String>();
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
 
 		try {

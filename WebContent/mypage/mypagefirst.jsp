@@ -14,7 +14,7 @@
 	당신의 신용도는 ${requestScope.trust }입니다.	
 	</h1>
 	<ul>
-		<li><a href="#">관심 상품 리스트</a></li>
+		<li><a href="${cp }/interest/interest.do">관심 상품 리스트</a></li>
 		<li><a href="#">최근 상품 리스트</a></li>
 		<li><a href="#">나의 정보 수정하기</a></li>
 		<li><a href="#">문의 하기</a></li>
@@ -24,7 +24,7 @@
 
 <div id = "buyDiv">
 	<h1>구매현황</h1>
-	<a href = "#">구매관리 바로가기</a>
+	<a href = "${cp }/mypage/buyerBidding.do">구매관리 바로가기</a>
 	<table border = "1" >
 		<tr>
 			<th>입금 요청</th>

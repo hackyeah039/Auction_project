@@ -24,9 +24,10 @@
 
 		<c:if test="${getListSize == 0  }">
 			<tr>
-				<td colspan="7">정보가 존재하지 않습니다.</td>
+				<td colspan="8">정보가 존재하지 않습니다.</td>
 			</tr>
 		</c:if>
+
 		<c:forEach var="anum" items="${completedTranList}">
 			<tr>
 				<td>${anum.a_num }</td>
@@ -68,3 +69,5 @@
 		</c:forEach>
 	</table>
 </div>
+
+
