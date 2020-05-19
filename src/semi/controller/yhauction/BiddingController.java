@@ -77,10 +77,10 @@ public class BiddingController extends HttpServlet {
 		// DB저장 결과 페이지로 이동
 		PrintWriter pw = resp.getWriter(); 
 		if (n > 0) {
-			pw.print("<script>alert('입찰성공');widow.close();</script>");
+			pw.print("<script>alert('입찰성공');window.open(\"about:blank\", \"_self\").close();</script>");
 			//alert 누를때 창 닫기 추가하기 
 		} else {
-			pw.print("<script>alert('입찰실패');</script>");
+			pw.print("<script>alert('입찰실패');window.open(\\\"about:blank\\\", \\\"_self\\\").close();</script>");
 		}
 	}
 }

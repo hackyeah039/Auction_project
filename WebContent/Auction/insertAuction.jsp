@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <script src="${cp }/Auction/jquery.js"></script>
 
-<title>InsertAuction.jsp</title>
+<title>insertAuction.jsp</title>
 
  <style type="text/css">
  	#preview img {
