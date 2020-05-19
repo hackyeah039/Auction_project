@@ -22,7 +22,63 @@ public class MainVo {
 	private int s_num;
 	private String s_way;
 	private int s_price;
+	int que_num;
+	String que_title;
+	String que_content;
+	int m_num;
+	int que_status;
+	Date que_regdate;
+	String b_content;
+	int rnum;
 	
+	public int getQue_num() {
+		return que_num;
+	}
+	public void setQue_num(int que_num) {
+		this.que_num = que_num;
+	}
+	public String getQue_title() {
+		return que_title;
+	}
+	public void setQue_title(String que_title) {
+		this.que_title = que_title;
+	}
+	public String getQue_content() {
+		return que_content;
+	}
+	public void setQue_content(String que_content) {
+		this.que_content = que_content;
+	}
+	public int getM_num() {
+		return m_num;
+	}
+	public void setM_num(int m_num) {
+		this.m_num = m_num;
+	}
+	public int getQue_status() {
+		return que_status;
+	}
+	public void setQue_status(int que_status) {
+		this.que_status = que_status;
+	}
+	public Date getQue_regdate() {
+		return que_regdate;
+	}
+	public void setQue_regdate(Date que_regdate) {
+		this.que_regdate = que_regdate;
+	}
+	public String getB_content() {
+		return b_content;
+	}
+	public void setB_content(String b_content) {
+		this.b_content = b_content;
+	}
+	public int getRnum() {
+		return rnum;
+	}
+	public void setRnum(int rnum) {
+		this.rnum = rnum;
+	}
 	public MainVo() {};
 	public MainVo(String path) {
 		this.path=path;
@@ -63,6 +119,18 @@ public class MainVo {
 		this.a_num=a_num;
 	}
 	
+	
+	//문의게시판
+	public MainVo(int que_num,String que_title,String que_content,int m_num,int que_status,Date que_regdate,String b_content,int rnum) {
+		this.que_content=que_content;
+		this.que_title=que_title;
+		this.que_content=que_content;
+		this.m_num=m_num;
+		this.que_status=que_status;
+		this.que_regdate=que_regdate;
+		this.b_content=b_content;
+		this.rnum=rnum;
+	};
 	public int getS_num() {
 		return s_num;
 	}

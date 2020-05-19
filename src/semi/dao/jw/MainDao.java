@@ -1,6 +1,6 @@
 package semi.dao.jw;
 
-import java.sql.Connection;
+import java.sql.Connection; 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -232,17 +232,104 @@ public class MainDao {
 		}
 	}
 	
-	public void singo(int a_num,int m_num) {
-		Connection con=null;	
+//	public ArrayList<MainVo> queList(int a_num){
+//		Connection con=null;	
+//		PreparedStatement pstmt3=null;
+//		ResultSet rs=null;
+//		ArrayList<MainVo> list = new ArrayList<MainVo>();
+//		try {
+//			con=JDBCUtil.getConn();
+//			String sql="select q.que_num a,que_title b,que_contnet c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q,answer x where x.que_num =q.que_num and q.a_num=? order by q.que_num asc";
+//			pstmt3=con.prepareStatement(sql);
+//			pstmt3.setInt(1, a_num);
+//			rs=pstmt3.executeQuery();
+//			while(rs.next()) {
+//				MainVo vo = new MainVo(rs.getInt("a"),rs.getString("b"),rs.getString("c"),rs.getInt("d"),rs.getInt("e"),rs.getDate("f"),rs.getString("g"),rs.getInt("h"));
+//				list.add(vo);
+//			}
+//		}catch(SQLException se) {
+//			System.out.println(se.getMessage());
+//		}finally {
+//			JDBCUtil.close(rs, pstmt3, con);
+//		}
+//		return list;
+//	}
+	public ArrayList<MainVo> list(int startRow,int endRow,String keyword,int a_num){
+		System.out.println("들어왔습니다.");
+		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		String sql="";
 		try {
-			
+			con=JDBCUtil.getConn();
+			String sql=null;
+			if(keyword==null || keyword.equals("")) {//검색조건이 없는경우
+				sql="select * from" + 		
+						"    (" + 
+						"        select aa.*,rownum rnum from" + 
+						"        (" + 
+						"            select q.que_num a,que_title b,que_contnet c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q left join answer x on x.que_num =q.que_num and q.a_num=? order by q.que_num asc "+ 
+						"        )aa" + 
+						")where rnum>=? and  rnum<=?";
+	
+			}else {//검색조건이 있는 경우
+				sql="select * from" + 		
+						"    (" + 
+						"        select aa.*,rownum rnum from" + 
+						"        (" + 
+						"            select q.que_num a,que_title b,que_contnet c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q,answer x where  que_title  like '%"+ keyword + "%' and x.que_num =q.que_num and q.a_num=? order by q.que_num asc "+ 
+						"        )aa" + 
+						")where rnum>=? and  rnum<=?";
+			}
+			System.out.println("sql진행했습니다.");
+		    pstmt=con.prepareStatement(sql);
+		    pstmt.setInt(1,a_num);
+			pstmt.setInt(2,startRow);
+			pstmt.setInt(3,endRow);
+			rs=pstmt.executeQuery();
+			System.out.println("실행했습니다.");
+			ArrayList<MainVo> list=new ArrayList<MainVo>();
+			while(rs.next()) {
+				System.out.println(rs.getInt("a"));
+				System.out.println(rs.getString("b"));
+				System.out.println(rs.getString("c"));
+				System.out.println(rs.getInt("d"));
+				System.out.println(rs.getInt("e"));
+				System.out.println(rs.getDate("f"));
+				System.out.println(rs.getString("g"));
+				System.out.println(rs.getInt("h"));
+				
+				MainVo vo=new MainVo(rs.getInt("a"),rs.getString("b"),rs.getString("c"),rs.getInt("d"),rs.getInt("e"),rs.getDate("f"),rs.getString("g"),rs.getInt("h"));
+				list.add(vo);
+			}
+			System.out.println("저장완료했습니다.");
+			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}	
+	}
+	
+	public int getCount(int a_num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql="select nvl(count(*),0) a from  question where a_num=?";
+		int a=0;
+		try {
+			con=JDBCUtil.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, a_num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				a=rs.getInt(1);
+			}
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 		}finally {
 			JDBCUtil.close(rs, pstmt, con);
 		}
+		return a;
 	}
 }

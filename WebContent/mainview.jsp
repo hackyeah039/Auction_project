@@ -1,12 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+	<meta http-equi="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Insert title here</title>
 	<link rel= "stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="btcss/bootstrap.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="btjs/bootstrap.js"></script>
 	<script>
 		//찜
 		function myFunction(){
@@ -38,14 +42,22 @@
 			}
 		}, 1000);
 		
+		//검색
+		var xml= new XMLHttpRequest();	
 		
-
-		function fnMove(seq){
-			typeof event.preventDefault=="function" ? event.preventDefault() : (event.returnValue = false);
-			var offset = $("#product-detail-tab" + seq).offset();
-			$('html, body').animate({scrollTop : (offset.top - 100)}, 200);
+		function searchFunction(){
+			xml.open("Post","${cp}/main.do?keyword=" +encodeURIComponent(document.getElementById("keyword").value),true);
+			xml.onreadystatechange = searchProcess;
+			xml.send(null);
 		}
-	
+		
+		function searchProcess(){
+			var table = document.getElementById("ajaxTable");
+			table.innerHTML = "";
+			if(xml.readyState == 4 && xml.status == 200){
+				var result = eval('(' + xml.responseText + ')');
+			}
+		}
 	</script>
 	<script src="js/mainjs.js"></script>
 </head>
@@ -80,11 +92,103 @@
 판매자 ID : <a href="" onclick="singo()">${seller }</a><br>
 <a href="">입찰하기</a><br>
 <a href="" onclick="myFunction()">관심물품 찜하기</a><br>
-문의하기<br>
-물품정보<br>
-물품문의<br>
+
+<table class="table table-condensed" style="text-align: center; border: 1px soli #dddddd; border-collapse:collapse">
+	<thead>
+		<tr>
+			<th style="background-color: #fafafa; text-align: center;">번호</th>
+			<th style="background-color: #fafafa; text-align: center;">제목</th>
+			<th style="background-color: #fafafa; text-align: center;">등록자</th>
+			<th style="background-color: #fafafa; text-align: center;">등록일</th>
+		</tr>
+	</thead>
+	<tbody id="ajaxTable">
+		<c:forEach var="vo" items="${list }">
+			<tr data-toggle="collapse" data-target=".demo${vo.rnum }" class="accordion-toggle"><!-- 문의라인 -->
+					<td>${vo.rnum }</td>
+					<td>${vo.que_title }</td>
+					<td>${vo.m_num }</td>
+					<td>${vo.que_regdate }</td>
+			</tr>
+			<tr><!-- 문의내용라인 -->
+				 	<td colspan="6" class="hiddenRow">
+					<div class="accordian-body collapse p-3" class="demo${vo.rnum }">
+						<img src="${cp }/image/q.svg" class="img-fluid" alt="Responsive image">
+					</div>
+					</td>
+				 	<td colspan="6" class="hiddenRow">
+					<div class="accordian-body collapse p-3" class="demo${vo.rnum }">
+						${vo.que_content }
+					</div>
+					</td>
+				</div>
+			</tr>
+			<tr><!--답변라인 -->
+					<td colspan="6" class="hiddenRow">
+					<div class="accordian-body collapse p-3" class="demo${vo.rnum }">
+						<img src="${cp }/image/a.svg" class="img-fluid" alt="Responsive image">
+					</div>
+					</td>
+				 	<td colspan="6" class="hiddenRow">
+					<div class="accordian-body collapse p-3" class="demo${vo.rnum }">
+						${vo.b_content }
+					</div>
+					</td>
+			</tr>
+		</c:forEach>
+	</tbody>
+</table>
+
+<!-- 이전 -->
+<c:choose>
+	<c:when test="${startPage>4 }">
+		<a href="${cp }/main.do?pageNum=${startPage-1 }">[이전]</a>
+	</c:when>
+	<c:otherwise>
+		이전
+	</c:otherwise>
+</c:choose>
 
 
+	<!-- 페이지 -->
+	<c:forEach var="i" begin="${startPage }" end="${endPage}">
+		<c:choose>
+			<c:when test="${i==pageNum }">
+				<a href="${cp }/main.do?pageNum=${i}&keyword">
+				<span style='color:blue'>[${i }]</span></a>			
+			</c:when>
+			<c:otherwise>
+				<a href="${cp }/main.do?pageNum=${i}&keyword=${keyword}">
+				<span style='color:#999'>[${i }]</span></a>
+			</c:otherwise>
+		</c:choose>
+	</c:forEach>
+	
+	
+<!-- 다음 -->
+<c:choose>
+	<c:when test="${endPage<pageCount }">
+		<a href="${cp }/main.do?pageNum=${endPage+1 }">[다음]</a>
+	</c:when>
+	<c:otherwise>
+		이후
+	</c:otherwise>
+</c:choose>
+
+
+<div class="container">
+		<div class="col-xs-2">
+			<button class="btn btn-primary" type="button">문의하기</button>
+		</div>
+	<div class ="form-group row pull-right"><!-- 폼그룹 오른쪽정렬 -->
+		<div class="col-xs-8">
+			<input class="form-control" type="text" size="20" id="keyword" name="keyword" value="${keyword }" onkeyup="searchFunction()">
+		</div>
+		<div class="col-xs-2">
+			<button class="btn btn-primary" type="button" onclick ="searchFunction()">검색</button>
+		</div>
+	</div>
+</div>
 
 </body>
 </html>

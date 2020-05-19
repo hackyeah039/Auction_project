@@ -2,9 +2,8 @@
 	//대상 .addEventListener('이벤트종류',할일);
 	//DOMcontentLoaded
 	//할일 == 함수 == function(){실제로할일  }
-
-document.addEventListener('DOMContentLoaded',function(){
 	
+document.addEventListener('DOMContentLoaded',function(){
 	//변수 지정
 	
 	var slideWrap = document.querySelector('.container'), //컨테이너 DIV
