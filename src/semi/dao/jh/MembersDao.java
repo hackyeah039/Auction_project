@@ -194,4 +194,71 @@ public class MembersDao {
 		return str;
 	}
 	
+	//회원번호 넣어서 리스트 가지고오기
+	public ArrayList<MembersVo> membersDetail(int num){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from members where m_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			ArrayList<MembersVo> list=new ArrayList<MembersVo>();
+			if(rs.next()) {
+				int m_num=rs.getInt("m_num");
+				String m_name=rs.getString("m_name");
+				String m_email=rs.getString("m_email");
+				int m_phone=rs.getInt("m_phone");
+				String m_addr=rs.getString("m_addr");
+				String m_id=rs.getString("m_id");
+				String m_pwd=rs.getString("m_pwd");
+				int trust=rs.getInt("trust");
+				int m_type=rs.getInt("m_type");
+				Date m_regdate=rs.getDate("m_regdate");
+				String typeName=getType(m_type);
+				MembersVo vo=new MembersVo(m_num, m_name, m_email, m_phone,
+						m_addr, m_id, m_pwd, trust, m_type, m_regdate,typeName);
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			try {
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	
+	public int membersOut(int num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="update members set m_name='null', m_email='null', "
+					+ "m_phone=0, m_addr='null', " + 
+					"m_pwd='null', trust=0, m_type=2 where m_num=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			return pstmt.executeUpdate();
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try {
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	
 }

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<h1>전체 신고 페이지</h1>
+<h1>신고결과 페이지</h1>
 <c:choose>
 	<c:when test="${msg=='max'}">
 		<span>더이상 내릴 신뢰도가 없습니다.</span>

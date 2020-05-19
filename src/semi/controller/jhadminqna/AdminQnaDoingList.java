@@ -41,7 +41,6 @@ public class AdminQnaDoingList extends HttpServlet{
 			list=dao.allBoard(startRow, endRow, type, field, keyword);
 			pageCount=(int)Math.ceil(dao.getCount(type, field, keyword)/5.0);
 		}
-		System.out.println("pageCount:"+pageCount);
 		int startPage=(pageNum-1)/3*3+1;
 		int endPage=startPage+2;
 		if(endPage>pageCount) {

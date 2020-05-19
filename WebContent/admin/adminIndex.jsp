@@ -34,8 +34,8 @@
 			<span>회원리스트</span>
 			<ul>
 				<li><a href="${cp }/members.list.jh">전체 회원리스트</a></li>
-				<li><a href="">탈퇴처리중</a></li>
-				<li><a href="">탈퇴 처리완료</a></li>
+				<li><a href="${cp }/members.doing.jh?type=1">탈퇴처리중</a></li>
+				<li><a href="${cp }/members.doing.jh?type=2">탈퇴 처리완료</a></li>
 			</ul>
 		</div>
 		<div id="divright">

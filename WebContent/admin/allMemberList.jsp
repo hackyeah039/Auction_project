@@ -11,8 +11,15 @@
 	</tr>
 	<c:forEach var="vo" items="${list }">
 		<tr>
-			<td>${vo.m_num }</td>		
-			<td>${vo.m_id }</td>		
+			<td>${vo.m_num }</td>
+			<c:choose>
+				<c:when test="${vo.m_type==2 }">
+					<td>${vo.m_id }</td>
+				</c:when>
+				<c:otherwise>		
+					<td><a href="${cp }/members.detail.jh?m_num=${vo.m_num}">${vo.m_id }</a></td>
+				</c:otherwise>
+			</c:choose>	
 			<td>${vo.typeName }</td>		
 			<td>${vo.m_regdate }</td>		
 		</tr>
