@@ -171,23 +171,14 @@ public class BoardDao {
 		}
 	}
 	
-	//상태에 따른 전체 글개수 가져오기
-	public int getCount(int type,String field, String keyword) {
+	//상태에 따른 전체 글개수 가져오기(검색조건 없을 때)
+	public int getCount(int type) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
-		
 		try {
 			con=ConnectionPool.getCon();
-			String sql;
-			if(field!=null || field!="") {
-				sql="select nvl(count(*),0) count " + 
-					"from(SELECT b.*, m.m_id id from board b,members m " + 
-					"where b.m_num=m.m_num and b_status=1) " + 
-					"where "+field+" like '%"+keyword+"%'";
-			}else {
-				sql="select nvl(count(*),0) count from board where b_status=?";
-			}
+			String sql="select nvl(count(*),0) count from board where b_status=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, type);
 			rs=pstmt.executeQuery();
@@ -209,6 +200,39 @@ public class BoardDao {
 			}
 		}
 	}
+	//상태에 따른 전체 글개수 가져오기(검색조건 있을 때)
+	public int getCount(int type,String field, String keyword) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select nvl(count(*),0) count " + 
+					"from(SELECT b.*, m.m_id id from board b,members m " + 
+					"where b.m_num=m.m_num and b_status=?) " + 
+					"where "+field+" like '%"+keyword+"%'";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, type);
+			rs=pstmt.executeQuery();
+			int count=0;
+			if(rs.next()) {
+				count=rs.getInt("count");
+			}
+			return count;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try{
+				if(rs!=null) rs.close();
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	
 	
 	
 		//보드테이블 검색조건 있을 때 전체글목록 가져오기(상태에 따라서)

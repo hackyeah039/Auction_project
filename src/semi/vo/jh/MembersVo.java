@@ -13,6 +13,7 @@ public class MembersVo {
 	private int trust; //신뢰도
 	private int m_type; //회원타입
 	private Date m_regdate;//가입일
+	private String typeName;//가입일
 	public MembersVo() {}
 	public MembersVo(int m_num, String m_name, String m_email, int m_phone, String m_addr, String m_id, String m_pwd,
 			int trust, int m_type, Date m_regdate) {
@@ -28,6 +29,24 @@ public class MembersVo {
 		this.m_type = m_type;
 		this.m_regdate = m_regdate;
 	}
+	//회원상태 추가된 vo
+	public MembersVo(int m_num, String m_name, String m_email, int m_phone, String m_addr, String m_id, String m_pwd,
+			int trust, int m_type, Date m_regdate,String typeName) {
+		super();
+		this.m_num = m_num;
+		this.m_name = m_name;
+		this.m_email = m_email;
+		this.m_phone = m_phone;
+		this.m_addr = m_addr;
+		this.m_id = m_id;
+		this.m_pwd = m_pwd;
+		this.trust = trust;
+		this.m_type = m_type;
+		this.m_regdate = m_regdate;
+		this.typeName = typeName;
+	}
+	
+	
 	public int getM_num() {
 		return m_num;
 	}
@@ -88,4 +107,11 @@ public class MembersVo {
 	public void setM_regdate(Date m_regdate) {
 		this.m_regdate=m_regdate;
 	}
+	public String getTypeName() {
+		return typeName;
+	}
+	public void setTypeName(String typeName) {
+		this.typeName=typeName;
+	}
+	
 }

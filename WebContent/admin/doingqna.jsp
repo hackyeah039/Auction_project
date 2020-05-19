@@ -26,19 +26,19 @@
 <div>
 	<c:choose>
 		<c:when test="${startPage>3}">
-				<a href="${cp}/board.qnalist.jh?pageNum=${startPage-3}&field=${field}
+				<a href="${cp}/board.qnadoing.jh?pageNum=${startPage-3}&field=${field}
 				&keyword=${keyword}&type=${type}">[이전]</a>
 		</c:when>
 	</c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${pageNum==i }">
-				<span><a href="${cp}/board.qnalist.jh?pageNum=${i}&field=${field}
+				<span><a href="${cp}/board.qnadoing.jh?pageNum=${i}&field=${field}
 				&keyword=${keyword}&type=${type}">
 				[${i}]</a></span>
 			</c:when>
 			<c:otherwise>
-				<span><a href="${cp}/board.qnalist.jh?pageNum=${i}&field=${field}
+				<span><a href="${cp}/board.qnadoing.jh?pageNum=${i}&field=${field}
 				&keyword=${keyword}&type=${type}">
 				[${i}]</a></span>
 			</c:otherwise>
@@ -47,7 +47,7 @@
 	<!-- 다음버튼 -->
 		<c:choose>
 		<c:when test="${endPage<pageCount }">
-			<a href="${cp}/board.qnalist.jh?pageNum=${endPage+1}&field=${field}
+			<a href="${cp}/board.qnadoing.jh?pageNum=${endPage+1}&field=${field}
 			&keyword=${keyword}&type=${type}">[다음]</a>
 		</c:when>
 	</c:choose>
@@ -55,7 +55,7 @@
 <br>
 <!-- 검색기능 -->
 <div>
-	<form method="post" action="${cp }/board.qnalist.jh">
+	<form method="post" action="${cp }/board.qnadoing.jh?type=${type}">
 		<select name="field">
 			<option value="id" <c:if test="${field=='id' }">selected</c:if>>작성자</option>
 			<option value="b_title" <c:if test="${field=='b_title' }">selected</c:if>>글제목</option>

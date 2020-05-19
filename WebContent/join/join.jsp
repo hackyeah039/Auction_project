@@ -63,7 +63,7 @@
 		function nameck() { 
 			var name=document.getElementById("name").value;
 			var nameckmsg=document.getElementById("nameckmsg");
-			var nameck= /[a-z0-9]|[ []{}()<>?|`~!@#$%^&*-_+=,.;:\"'\]/g;
+			var nameck= /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
 			if(name.length>=4){  /*이름 4자 이상이면x*/
 				nameckmsg.innerHTML="이름은 4자 이하로 입력해주세요.";
 				namebool=false;			
