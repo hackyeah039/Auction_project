@@ -25,11 +25,11 @@ function chkBidPrice() {
 		return false;
 	}
 	return true;
-} 
+}
 </script>
 </head>
 <body>
-<form action="${cp }/Bidding.do" onsubmit="return chkBidPrice()">
+<form action="${cp }/Bidding.do" method="post" onsubmit="return chkBidPrice()">
 <table>
 	<tr>
 		<td>

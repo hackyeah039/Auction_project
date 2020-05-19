@@ -43,7 +43,7 @@ public class BiddingDao {
 		PreparedStatement pstmt = null;
 		try {
 			con = JdbcUtil.getConn();
-			String sql = "insert into bid values(?,?,?,sysdate,seq_bid_bid_number)";
+			String sql = "insert into bid values (?,?,?,sysdate,seq_bid_bid_number.nextval)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, vo.getM_num());
 			pstmt.setInt(2, vo.getA_num());

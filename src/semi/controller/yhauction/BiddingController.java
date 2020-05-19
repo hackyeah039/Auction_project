@@ -1,12 +1,14 @@
 package semi.controller.yhauction;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.ws.RespectBindingFeature;
 
 import com.sun.java.swing.plaf.windows.resources.windows;
 
@@ -26,7 +28,7 @@ public class BiddingController extends HttpServlet {
 
 //		경매번호 받아오기(파라미터로 넘겼음)
 //		int a_num = Integer.parseInt(req.getParameter("a_num"));		
-		int a_num = 2; // 테스트 용
+		int a_num = 3; // 테스트 용
 
 //		입찰단위 가져오기 
 		AuctionDao adao = AuctionDao.getInstance();
@@ -60,26 +62,25 @@ public class BiddingController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setContentType("text/html; charset=utf-8");
 		// 입력 받은 값 변수에 넣기
 		int m_num = Integer.parseInt(req.getParameter("m_num"));
 		int a_num = Integer.parseInt(req.getParameter("a_num"));
 		int bid_price = Integer.parseInt(req.getParameter("bid_price"));
-
+		System.out.println(m_num);
+		System.out.println(a_num);
+		System.out.println(bid_price);
 		// Vo에 넣기
 		BiddingVo bvo = new BiddingVo(m_num, a_num, bid_price, null, 0);
 		BiddingDao bdao = BiddingDao.getInstance();
 		int n = bdao.insertBid(bvo);
 		// DB저장 결과 페이지로 이동
+		PrintWriter pw = resp.getWriter(); 
 		if (n > 0) {
-			req.setAttribute("code", "success");
+			pw.print("<script>alert('입찰성공');widow.close();</script>");
+			//alert 누를때 창 닫기 추가하기 
 		} else {
-			req.setAttribute("code", "fail");
+			pw.print("<script>alert('입찰실패');</script>");
 		}
-			
-		req.setAttribute("header", "/header.jsp");
-		req.setAttribute("content", "/Auction/result.jsp");
-		req.setAttribute("footer", "/footer.jsp");
-
-		req.getRequestDispatcher("/index.jsp").forward(req, resp);
 	}
 }

@@ -33,7 +33,7 @@ public class InsertAuction extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setAttribute("header", "/header.jsp");
-		req.setAttribute("content", "/Auction/InsertAuction.jsp");
+		req.setAttribute("content", "/Auction/insertAuction.jsp");
 		req.setAttribute("footer", "/footer.jsp");
 		
 		//카테고리 리스트 넘겨주기 
