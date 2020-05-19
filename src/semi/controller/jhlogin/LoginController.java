@@ -43,7 +43,7 @@ public class LoginController extends HttpServlet{
 			HttpSession session=req.getSession();
 			session.setAttribute("id", vo.getM_id());
 			session.setAttribute("m_num", vo.getM_num());
-			
+			req.getRequestDispatcher("/indextest.jsp").forward(req, resp);
 		}
 		
 	}
