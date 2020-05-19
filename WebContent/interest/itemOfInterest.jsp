@@ -7,22 +7,22 @@
 <form action="${cp}/interest/interest.do" method="post" onsubmit="return submitClick()">
  -->
 	<h1>관심물품</h1>
-	<table border = "1">
+	<table border = "1" id = "interesttable">
 		<tr>
 			<th>no</th>
 			<th>제목</th>
 			<th>현재가</th>
 			<th>입찰</th>
 			<th>조회</th>
-			<th>판매자</th>
 			<th>마감일</th>
+			<th>판매자</th>
 			<th>구분</th>
 			<th><input type="checkbox" onclick = "allClick()"></th>
 		</tr>
 		
 		<c:if test="${getListSize == 0  }">
 			<tr>
-				<td colspan="8">정보가 존재하지 않습니다.</td>
+				<td colspan="9">정보가 존재하지 않습니다.</td>
 			</tr>
 		</c:if>
 		
@@ -111,32 +111,53 @@
 	
 	function deleteClick(){
 		
+		
 		var checkbox = document.getElementsByName("checkbox");
 		var msg = "";
+		var count = 0;
 		
 		for(var i = 0; i < checkbox.length; i++){
 			console.log(i);
 			
-			if(i==0){
-				msg += "checkbox=" 								
-			}else{
-				msg += "&checkbox=" 								
-			}
-			
-			
-			
 			if(checkbox[i].checked == true){
-				msg += checkbox[i].value
+				if(count==0){
+					msg += "checkbox=" 								
+				}else{
+					msg += "&checkbox=" 								
+				}
+				msg += checkbox[i].value;
 			}
 			console.log("msg : " + msg);
 		}	
-	/*	
+		
 		xhr = new XMLHttpRequest();
-		xhr.onreadystatechange = getResult;
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = xhr.responseText;
+ 				var json = JSON.parse(data);
+				
+			    if(json.message == "success"){
+			    	var table = document.getElementById("interesttable");
+					for(var i = 1; i < table.rows.length; i++){
+						console.log("i : " +i);
+						var chkbox = table.rows[i].cells[8].childNodes[1].checked;
+						
+						if(chkbox){
+							table.deleteRow(i);
+							i--;
+						}
+					}
+			    	
+			    }else{
+			    	alert("삭제에 실패하였습니다.");
+			    }	
+			}
+		};
 		xhr.open('post','${cp}/interest/interest.do',true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.send();	
-	*/
+		xhr.send(msg);	
 	}
+	
+	
 	
 </script>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import semi.dao.yr.ShipDao;
@@ -45,7 +46,7 @@ public class reqShipController extends HttpServlet {
 		String invoicenum = req.getParameter("invoicenum");
 		String anum = req.getParameter("anum");
 		
-		org.json.JSONObject data = new JSONObject();
+		JSONObject data = new JSONObject();
 		PrintWriter out = resp.getWriter();
 		
 		System.out.println(courier + ", "+invoicenum + ", "+ anum);
@@ -53,10 +54,15 @@ public class reqShipController extends HttpServlet {
 		ShipDao dao = new ShipDao();
 		int n = dao.updateShipInfo(Integer.parseInt(anum), courier, invoicenum);
 		
-		if(n>0) {
-			data.put("message", "success");
-		}else {
-			data.put("message", "fail");
+		try {
+			if(n>0) {
+					data.put("message", "success");
+			}else {
+				data.put("message", "fail");
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		out.print(data);
