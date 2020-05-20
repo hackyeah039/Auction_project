@@ -20,7 +20,7 @@
 		<li><a href="${cp }/InsertAuction.do">글작성</a></li>
 		<li><a href="" onclick="showBidding()">입찰하기</a></li>
 		<li>
-		<form method="post" action="${cp }/list">
+		<form method="post" action="${cp }/list.do">
 			<select name="field">
 				<option value="content" <c:if test="${field=='content'}"> selected </c:if>> 내용</option>
 				<option value="title" <c:if test="${field=='title'}"> selected </c:if>> 제목</option>
