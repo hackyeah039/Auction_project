@@ -122,7 +122,7 @@ public class MainVo {
 	
 	//문의게시판
 	public MainVo(int que_num,String que_title,String que_content,int m_num,int que_status,Date que_regdate,String b_content,int rnum) {
-		this.que_content=que_content;
+		this.que_num=que_num;
 		this.que_title=que_title;
 		this.que_content=que_content;
 		this.m_num=m_num;

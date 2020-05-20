@@ -18,7 +18,7 @@
 		}
 		//신고하기
 		function singo(){
-			var allwindow= window.open("${cp}/singo.jsp?seller=${seller}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=400,height=300");
+			var allwindow= window.open("${cp}/singo.jsp?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=400,height=300");
 		}
 		//경매시간
 		var myVar = setInterval(function () {
@@ -46,18 +46,45 @@
 		var xml= new XMLHttpRequest();	
 		
 		function searchFunction(){
-			xml.open("Post","${cp}/main.do?keyword=" +encodeURIComponent(document.getElementById("keyword").value),true);
+			xml.open("POST","${cp}/main.do?keyword=" +encodeURIComponent(document.getElementById("keyword").value),true);
 			xml.onreadystatechange = searchProcess;
-			xml.send(null);
+			xml.send();
 		}
 		
 		function searchProcess(){
 			var table = document.getElementById("ajaxTable");
-			table.innerHTML = "";
 			if(xml.readyState == 4 && xml.status == 200){
-				var result = eval('(' + xml.responseText + ')');
+				var result =JSON.parse(xml.responseText);
+				for(var i=0;i<result.length();i++){//오브젝트상태
+					var row = table.insertRow(0);//내용제목
+					var row1 = table.insertRow(1);//내용컨텐트
+					var row2 = table.insertRow(2);//Ask컨텐트
+					
+					var cell1 = row.insertCell(0);//첫번째줄
+					var cell2 = row.insertCell(1);
+					var cell3 = row.insertCell(2);
+					var cell4 = row.insertCell(3);
+					
+					var cell5 = row1.insertCell(0);//두번째줄
+					var cell6 = row1.insertCell(1);
+					
+					var cell7 = row2.insertCell(0);//세번째줄
+					var cell8 = row2.insertCell(1);
+					
+					cell1.innerHTML += result[i].rnum;
+					cell2.innerHTML += result[i].que_title;
+					cell3.innerHTML += result[i].m_num;
+					cell4.innerHTML += result[i].que_regdate;
+					
+					cell5.innerHTML += '<img src="${cp }/image/q.svg" class="img-fluid" alt="Responsive image">';
+					cell6.innerHTML += result[i].que_content;
+					
+					cell7.innetHTML += '<img src="${cp }/image/a.svg" class="img-fluid" alt="Responsive image">';
+					cell8.innerHTML += result[i].b_content;
+				}
 			}
 		}
+		
 	</script>
 	<script src="js/mainjs.js"></script>
 </head>

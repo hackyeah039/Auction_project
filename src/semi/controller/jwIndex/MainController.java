@@ -1,6 +1,7 @@
 package semi.controller.jwIndex;
 
-import java.io.IOException; 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Date;
 import java.util.ArrayList;
 
@@ -10,14 +11,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import semi.dao.jw.AuctionDao;
 import semi.dao.jw.MainDao;
 import semi.vo.jw.MainVo;
 @WebServlet("/main.do")
 public class MainController extends HttpServlet{
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("ggggggggggggg");
 		//회원번호, 경매번호 받아오기
 //		int a_num=Integer.parseInt(req.getParameter("a_num"));
 		int a_num=18;
@@ -61,7 +65,6 @@ public class MainController extends HttpServlet{
 		req.setAttribute("day", day);
 		
 		
-		
 		String keyword=req.getParameter("keyword");//페이징처리
 		String spageNum=req.getParameter("pageNum");
 		int pageNum=1;
@@ -73,7 +76,42 @@ public class MainController extends HttpServlet{
 		int startPage=(pageNum-1)/4*4+1;
 		int endPage=startPage+3;
 		if(pageCount<endPage) endPage=pageCount;
-		req.setAttribute("list", list);
+		req.setAttribute("startRow", startRow);
+		req.setAttribute("endRow", endRow);
+		req.setAttribute("pageNum", pageNum);
+		req.setAttribute("pageCount", pageCount);
+		req.setAttribute("startPage", startPage);
+		req.setAttribute("endPage", endPage);
+		req.setAttribute("list", list);//문의게시판정보 저장
+		
+		
+	
+	
+		
+		req.getServletContext().setAttribute("cp", req.getContextPath());
+		req.getRequestDispatcher("/mainview.jsp").forward(req, resp);
+	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("doPost");
+		MainDao dao = MainDao.getInstance();
+//		int a_num=Integer.parseInt(req.getParameter("a_num"));
+		int a_num=18;
+		
+		String keyword=req.getParameter("keyword");//페이징처리
+		System.out.println("받아온 keyword입니다" +keyword);
+		String spageNum=req.getParameter("pageNum");
+		int pageNum=1;
+		if(spageNum!=null) {pageNum=Integer.parseInt(spageNum);}
+		int startRow=(pageNum-1)*5+1;
+		int endRow=startRow+4;
+		ArrayList<MainVo> list =dao.list(startRow,endRow,keyword,a_num);//문의게시판정보
+		System.out.println(list +"리스트입니디ㅏ");
+		int pageCount=(int)Math.ceil(dao.getCount(a_num)/5.0);	
+		int startPage=(pageNum-1)/4*4+1;
+		int endPage=startPage+3;
+		if(pageCount<endPage) endPage=pageCount;
 		req.setAttribute("startRow", startRow);
 		req.setAttribute("endRow", endRow);
 		req.setAttribute("pageNum", pageNum);
@@ -81,9 +119,23 @@ public class MainController extends HttpServlet{
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		
-		
-		
-		req.getServletContext().setAttribute("cp", req.getContextPath());
-		req.getRequestDispatcher("/mainview.jsp").forward(req, resp);
+		JSONArray jarr = new JSONArray();//JSONArray로 보내기
+		for(MainVo vo : list) {
+			JSONObject json = new JSONObject();
+			json.put("que_num", vo.getQue_num());
+			json.put("que_title", vo.getQue_title());
+			json.put("que_content", vo.getQue_content());
+			json.put("m_num",vo.getM_num());
+			json.put("que_status", vo.getQue_status());
+			json.put("que_regdate", vo.getQue_regdate());
+			json.put("b_content", vo.getB_content());
+			json.put("rnum", vo.getRnum());
+			System.out.println("이건 VO 입니다!" + vo);
+			jarr.put(json);
+		}
+		System.out.println(jarr +"배열입니다.");
+		resp.setContentType("text/plain;charset=utf-8");
+		PrintWriter pw =resp.getWriter();
+		pw.print(jarr);
 	}
 }

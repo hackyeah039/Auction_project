@@ -255,53 +255,52 @@ public class MainDao {
 //		return list;
 //	}
 	public ArrayList<MainVo> list(int startRow,int endRow,String keyword,int a_num){
-		System.out.println("들어왔습니다.");
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
 			con=JDBCUtil.getConn();
 			String sql=null;
+			System.out.println(keyword+"  dao안에서의 키워드");
+			System.out.println(startRow +"   startRow입니다.");
+			System.out.println(endRow +"   endRow입니다.");
+			System.out.println(a_num +"   a_num입니다.");
 			if(keyword==null || keyword.equals("")) {//검색조건이 없는경우
 				sql="select * from" + 		
 						"    (" + 
 						"        select aa.*,rownum rnum from" + 
 						"        (" + 
-						"            select q.que_num a,que_title b,que_contnet c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q left join answer x on x.que_num =q.que_num and q.a_num=? order by q.que_num asc "+ 
+						"            select q.que_num a,que_title b,que_content c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q left join answer x on x.que_num =q.que_num and q.a_num=? order by q.que_num asc "+ 
 						"        )aa" + 
 						")where rnum>=? and  rnum<=?";
 	
 			}else {//검색조건이 있는 경우
-				sql="select * from" + 		
-						"    (" + 
-						"        select aa.*,rownum rnum from" + 
-						"        (" + 
-						"            select q.que_num a,que_title b,que_contnet c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q,answer x where  que_title  like '%"+ keyword + "%' and x.que_num =q.que_num and q.a_num=? order by q.que_num asc "+ 
-						"        )aa" + 
-						")where rnum>=? and  rnum<=?";
+				sql="select * from 		\r\n" + 
+						"						(\r\n" + 
+						"						select aa.*,rownum rnum from\r\n" + 
+						"						(\r\n" + 
+						" select q.que_num a,que_title b,que_content c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q,answer x where  que_title  like '%\"+keyword+\"%' and x.que_num =q.que_num and q.a_num=? order by q.que_num asc\r\n" + 
+						"                     )aa \r\n" + 
+						"						)where rnum>=? and  rnum<=?";
 			}
-			System.out.println("sql진행했습니다.");
 		    pstmt=con.prepareStatement(sql);
 		    pstmt.setInt(1,a_num);
 			pstmt.setInt(2,startRow);
 			pstmt.setInt(3,endRow);
 			rs=pstmt.executeQuery();
-			System.out.println("실행했습니다.");
 			ArrayList<MainVo> list=new ArrayList<MainVo>();
 			while(rs.next()) {
-				System.out.println(rs.getInt("a"));
-				System.out.println(rs.getString("b"));
-				System.out.println(rs.getString("c"));
-				System.out.println(rs.getInt("d"));
-				System.out.println(rs.getInt("e"));
-				System.out.println(rs.getDate("f"));
-				System.out.println(rs.getString("g"));
-				System.out.println(rs.getInt("h"));
-				
+				System.out.println("바뀐값입니다!"+rs.getInt(1));
+				System.out.println("바뀐값입니다!"+rs.getString(2));
+				System.out.println("바뀐값입니다!"+rs.getString(3));
+				System.out.println("바뀐값입니다!"+rs.getInt(4));
+				System.out.println("바뀐값입니다!"+rs.getInt(5));
+				System.out.println("바뀐값입니다!"+rs.getDate(6));
+				System.out.println("바뀐값입니다!"+rs.getString(7));
+				System.out.println("바뀐값입니다!"+rs.getInt(8));
 				MainVo vo=new MainVo(rs.getInt("a"),rs.getString("b"),rs.getString("c"),rs.getInt("d"),rs.getInt("e"),rs.getDate("f"),rs.getString("g"),rs.getInt("h"));
 				list.add(vo);
 			}
-			System.out.println("저장완료했습니다.");
 			return list;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
@@ -331,5 +330,22 @@ public class MainDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 		return a;
+	}
+	
+	public void singo(int a_num,int mnum,String textarea) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql="insert into singo values(?,?,SEQ_SINGO_SINGO_NUM.nextval,?,0,sysdate)";
+		
+		try {
+			con=JDBCUtil.getConn();
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
 	}
 }
