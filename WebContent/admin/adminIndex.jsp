@@ -11,7 +11,7 @@
 	
 	String file=request.getParameter("file");
 	if(file==null){
-		file="/admin/adminMain.jsp";
+		file="${cp}/adminmain/main.jh";
 	}
 %>
 <div id="main">
@@ -39,7 +39,7 @@
 			</ul>
 		</div>
 		<div id="divright">
-			<jsp:include page="<%=file %>"></jsp:include>
+  			<jsp:include page="<%=file %>"></jsp:include>
 		</div>
 	</div>
 </div>

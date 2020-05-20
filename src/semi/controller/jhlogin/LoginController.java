@@ -30,20 +30,21 @@ public class LoginController extends HttpServlet{
 		ArrayList<MembersVo> list=dao.loginCk(id, pwd);
 		JSONObject json=new JSONObject();
 		resp.setContentType("text/plain;charset=utf-8");
+		PrintWriter pw=resp.getWriter();
 		if(list.isEmpty()) {
 			json.put("msg", "not");
-			PrintWriter pw=resp.getWriter();
 			pw.print(json);
+			pw.close();
 		}else {
-			System.out.println("리스트사이즈"+list.size());
-			System.out.println("리스트 담긴거"+list.get(0));
 			MembersVo vo=list.get(0);
-			System.out.println("꺼내온 아이디"+vo.getM_id());
-			System.out.println("꺼내온 회원번호"+vo.getM_num());
-			HttpSession session=req.getSession();
-			session.setAttribute("id", vo.getM_id());
-			session.setAttribute("m_num", vo.getM_num());
-			req.getRequestDispatcher("/indextest.jsp").forward(req, resp);
+			//HttpSession session=req.getSession();
+			//session.setAttribute("id", vo.getM_id());
+			//session.setAttribute("m_num", vo.getM_num());
+			json.put("id", vo.getM_id());
+			json.put("m_num", vo.getM_num());
+			pw.print(json);
+			pw.close();
+			
 		}
 		
 	}
