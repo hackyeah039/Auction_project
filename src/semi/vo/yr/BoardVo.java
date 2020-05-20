@@ -63,6 +63,16 @@ public class BoardVo {
 	public void setB_regdate(Date b_regdate) {
 		this.b_regdate = b_regdate;
 	}
+	
+	public Date getAnswerdate() {
+		return answerdate;
+	}
+
+
+
+	public void setAnswerdate(Date answerdate) {
+		this.answerdate = answerdate;
+	}
 
 
 

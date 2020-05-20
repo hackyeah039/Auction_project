@@ -124,7 +124,7 @@
 	}
 	
 	
-	/*
+	
 	function submitClick(){
 		var ra = document.getElementsByName("paytype");
 		var raval;
@@ -155,5 +155,5 @@
 		
 		return true;
 	}
-	*/
+	
 </script>

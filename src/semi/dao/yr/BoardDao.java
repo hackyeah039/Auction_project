@@ -17,13 +17,11 @@ public class BoardDao {
 			
 		try {
 			con = ConnectionPool.getCon();
-			String sql = "insert into board values (?,?,?,?,?,sysdate)";
+			String sql = "insert into board values (SEQ_BOARD_B_NUM.nextval,?,?,0,?,sysdate)";
 			pstmt = con.prepareStatement(sql);
-			pstmt.setInt(1, vo.getB_num());
-			pstmt.setString(2, vo.getB_title());
-			pstmt.setString(3, vo.getB_content());
-			pstmt.setInt(4, vo.getB_status());
-			pstmt.setInt(5, vo.getM_num());
+			pstmt.setString(1, vo.getB_title());
+			pstmt.setString(2, vo.getB_content());
+			pstmt.setInt(3, vo.getM_num());
 			int n = pstmt.executeUpdate();
 			return n;
 		}catch (SQLException e) {
@@ -45,7 +43,7 @@ public class BoardDao {
 		
 		try {
 			con = ConnectionPool.getCon();
-			String sql = "select * from board where m_num = ?";
+			String sql = "select * from board where m_num = ? order by b_regdate desc";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -64,8 +62,8 @@ public class BoardDao {
 						 pstmt2 = con.prepareStatement(sql2);
 						 pstmt2.setInt(1,b_num);
 						 rs2 = pstmt2.executeQuery();
-						 if(rs.next()) {
-							 answerDate = rs.getDate("answerdate"); 	
+						 if(rs2.next()) {
+							 answerDate = rs2.getDate("answerdate"); 	
 						 }
 					 }
 					 
@@ -81,4 +79,61 @@ public class BoardDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
+	
+	public String listAnswer(int bnum) {
+			
+			ArrayList<BoardVo> list = new ArrayList<BoardVo>();
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ConnectionPool.getCon();
+				String sql = "select * from b_answer where b_num = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setInt(1, bnum);
+				rs = pstmt.executeQuery();
+				String dap = null;
+				
+				if(rs.next()) {
+					dap = rs.getString("B_DAP");
+				}
+				return dap;
+			}catch (SQLException e) {
+				System.out.println(e.getMessage());
+				return null;
+			}finally {
+				ConnectionPool.close(rs, pstmt, con);
+			}
+		}
+
+	//content 질문
+	public String listQuestion(int bnum) {
+		
+		ArrayList<BoardVo> list = new ArrayList<BoardVo>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ConnectionPool.getCon();
+			String sql = "select * from board where b_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, bnum);
+			rs = pstmt.executeQuery();
+			String question = null;
+			
+			if(rs.next()) {
+				question = rs.getString("b_content");
+			}
+			return question;
+		}catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return null;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	
+	
 }
