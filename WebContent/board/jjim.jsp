@@ -6,7 +6,6 @@
 <meta charset="UTF-8">
 <title>jjim.jsp</title>
 <script>
-	var myWindow = window.open("", "myWindow", "width=200,height=100");
 </script>
 </head>
 <body>

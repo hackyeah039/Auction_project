@@ -21,7 +21,6 @@ import semi.vo.jw.MainVo;
 public class MainController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("ggggggggggggg");
 		//회원번호, 경매번호 받아오기
 //		int a_num=Integer.parseInt(req.getParameter("a_num"));
 		int a_num=18;
@@ -89,7 +88,7 @@ public class MainController extends HttpServlet{
 	
 		
 		req.getServletContext().setAttribute("cp", req.getContextPath());
-		req.getRequestDispatcher("/mainview.jsp").forward(req, resp);
+		req.getRequestDispatcher("/board/mainview.jsp").forward(req, resp);
 	}
 	
 	@Override

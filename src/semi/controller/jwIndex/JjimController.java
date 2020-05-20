@@ -29,6 +29,6 @@ public class JjimController extends HttpServlet{
 			String errMsg="회원만 가능한 기능입니다.";
 			req.setAttribute("errMsg", errMsg);
 		}
-		req.getRequestDispatcher("/jjim.jsp").forward(req, resp);
+		req.getRequestDispatcher("/board/jjim.jsp").forward(req, resp);
 	}
 }

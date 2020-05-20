@@ -14,11 +14,15 @@
 	<script>
 		//찜
 		function myFunction(){
-		 	var allwindow= window.open("${cp}/jjim.do?a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=500,width=250,height=100");
+		 	var allwindow= window.open("${cp}/jjim.do?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=500,width=250,height=100");
 		}
 		//신고하기
 		function singo(){
-			var allwindow= window.open("${cp}/singo.jsp?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=400,height=300");
+			var allwindow= window.open("${cp}/board/singo.jsp?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=400,height=300");
+		}
+		//경매기록보기
+		function bidlist(){
+			var allwindow= window.open("${cp }/history.do?a_num=${a_num }", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=500,height=400");
 		}
 		//경매시간
 		var myVar = setInterval(function () {
@@ -113,7 +117,7 @@
 입찰단위 ${info.a_bidunit }<br>
 입찰방식 : 비공개<br>
 입찰수  : ${bidnum }<br>
-<a href="${cp }/history.do?a_num=${a_num }">경매기록보기</a> <br>
+<a href="" onclick="bidlist()">경매기록보기</a> <br>
 배송방법 ${ship.s_way }<br>
 배송비용 ${ship.s_price }<br>
 판매자 ID : <a href="" onclick="singo()">${seller }</a><br>

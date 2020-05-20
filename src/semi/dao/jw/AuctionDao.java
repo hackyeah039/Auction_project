@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import semi.db.jw.JDBCUtil;
+import semi.db.jw.ConnectionPool;
 import semi.vo.jw.BidVo;
 
 public class AuctionDao {
@@ -22,7 +22,7 @@ public class AuctionDao {
 		String sql="select a_enddate from auction where a_num=?";
 		//String sql="select to_char(hiredate,'YYYY-MM-DD HH24:MI:SS') date1 from emp where empno=?";
 		try{
-			con= JDBCUtil.getConn();
+			con= ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
@@ -36,7 +36,7 @@ public class AuctionDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	

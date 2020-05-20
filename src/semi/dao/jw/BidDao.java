@@ -1,12 +1,12 @@
 package semi.dao.jw;
 
-import java.sql.Connection; 
+import java.sql.Connection;  
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import semi.db.jw.JDBCUtil;
+import semi.db.jw.ConnectionPool;
 import semi.vo.jw.BidVo;
 
 public class BidDao {
@@ -45,7 +45,7 @@ public class BidDao {
 		ResultSet rs = null;
 		try {
 			System.out.println("dao list접근");
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			System.out.println(con);
 			String sql=null;
 				 sql = 
@@ -76,7 +76,7 @@ public class BidDao {
 							System.out.println(se.getMessage());
 							return null;
 						}finally {
-							JDBCUtil.close(rs, pstmt, con);
+							ConnectionPool.close(rs, pstmt, con);
 						}
 	}
 	
@@ -85,7 +85,7 @@ public class BidDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			con= JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="select nvl(max(rownum),0) rnum from bid";
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
@@ -101,7 +101,7 @@ public class BidDao {
 			System.out.println(se.getMessage());
 			return -1.0;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	
@@ -111,7 +111,7 @@ public class BidDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			System.out.println("postlsit 커넥션" +con);
 			String sql="select * from \r\n" + 
 					"                        (\r\n" + 
@@ -138,7 +138,7 @@ public class BidDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}	
 	}
 }

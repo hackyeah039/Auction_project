@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.internal.compiler.batch.Main;
 
-import semi.db.jw.JDBCUtil;
+import semi.db.jw.ConnectionPool;
 import semi.vo.jw.MainVo;
 
 public class MainDao {
@@ -19,14 +19,13 @@ public class MainDao {
 		return instance;
 	}
 	
-	
 	//이미지경로
 	public ArrayList<MainVo> ipath(int a_num) {
 		Connection con=null;	
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="select i_path from img where a_num =?";
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
@@ -42,7 +41,7 @@ public class MainDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt2, con);
+			ConnectionPool.close(rs, pstmt2, con);
 		}
 	}
 	//이미지 경로
@@ -51,7 +50,7 @@ public class MainDao {
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="select i_path from img where a_num =?";
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
@@ -66,7 +65,7 @@ public class MainDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt2, con);
+			ConnectionPool.close(rs, pstmt2, con);
 		}
 	}
 	
@@ -76,7 +75,7 @@ public class MainDao {
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="select c_des from category,auction where a_num=? and auction.c_num =category.c_num";
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
@@ -91,7 +90,7 @@ public class MainDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt2, con);
+			ConnectionPool.close(rs, pstmt2, con);
 		}
 	}
 	
@@ -101,7 +100,7 @@ public class MainDao {
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="select * from auction where a_num =?";
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
@@ -126,7 +125,7 @@ public class MainDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt2, con);
+			ConnectionPool.close(rs, pstmt2, con);
 		}
 	} 
 	
@@ -137,7 +136,7 @@ public class MainDao {
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="select * from ship where a_num=?";
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
@@ -155,7 +154,7 @@ public class MainDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt2, con);
+			ConnectionPool.close(rs, pstmt2, con);
 		}
 	}
 	
@@ -164,7 +163,7 @@ public class MainDao {
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="select seller.sel_number hi from seller,auction where a_num=? and auction.sel_number =seller.sel_number";
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
@@ -179,7 +178,7 @@ public class MainDao {
 			System.out.println(se.getMessage());
 			return -1;
 		}finally {
-			JDBCUtil.close(rs, pstmt2, con);
+			ConnectionPool.close(rs, pstmt2, con);
 		}
 	}
 	
@@ -188,7 +187,7 @@ public class MainDao {
 		PreparedStatement pstmt2=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="select nvl(max(rownum),0) hi from bid where a_num=?";
 			pstmt2=con.prepareStatement(sql);
 			pstmt2.setInt(1, a_num);
@@ -203,7 +202,7 @@ public class MainDao {
 			System.out.println(se.getMessage());
 			return -1;
 		}finally {
-			JDBCUtil.close(rs, pstmt2, con);
+			ConnectionPool.close(rs, pstmt2, con);
 		}
 	}
 	
@@ -214,7 +213,7 @@ public class MainDao {
 		ResultSet rs=null;
 		ResultSet rs2=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql="update auction set a_jjim = (select a_jjim from auction where a_num=?)+1 where a_num=?";
 			String sql2="insert into interproduct values(?,?) ";
 			pstmt2=con.prepareStatement(sql);
@@ -228,7 +227,8 @@ public class MainDao {
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 		}finally {
-			JDBCUtil.close(rs, pstmt2, con);
+			ConnectionPool.close(rs, pstmt2, con);
+			ConnectionPool.close(rs2, pstmt3, null);
 		}
 	}
 	
@@ -259,7 +259,7 @@ public class MainDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			String sql=null;
 			System.out.println(keyword+"  dao안에서의 키워드");
 			System.out.println(startRow +"   startRow입니다.");
@@ -306,7 +306,7 @@ public class MainDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}	
 	}
 	
@@ -317,7 +317,7 @@ public class MainDao {
 		String sql="select nvl(count(*),0) a from  question where a_num=?";
 		int a=0;
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, a_num);
 			rs=pstmt.executeQuery();
@@ -327,7 +327,7 @@ public class MainDao {
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 		return a;
 	}
@@ -339,13 +339,14 @@ public class MainDao {
 		String sql="insert into singo values(?,?,SEQ_SINGO_SINGO_NUM.nextval,?,0,sysdate)";
 		
 		try {
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
+			
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 }

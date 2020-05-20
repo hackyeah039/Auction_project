@@ -90,7 +90,7 @@ public class HistoryController extends HttpServlet{
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("a_num", a_num);
-		req.getRequestDispatcher("/detailview.jsp").forward(req , resp);
+		req.getRequestDispatcher("/board/detailview.jsp").forward(req , resp);
 	}
 	/*
 	@Override
