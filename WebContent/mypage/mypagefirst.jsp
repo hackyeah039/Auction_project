@@ -7,9 +7,7 @@
 	<ul>
 		<li><a href="${cp }/interest/interest.do">관심 상품 리스트</a></li>
 		<li><a href="#">최근 상품 리스트</a></li>
-		<li><a href="#">나의 정보 수정하기</a></li>
-		<li><a href="#">문의 하기</a></li>
-		<li><a href="#">탈퇴 하기</a></li>
+		<li><a href="${cp }/board/userQnA.do">1:1 문의 하기</a></li>
 	</ul>
 </div>
 
@@ -35,5 +33,3 @@
 
 <a href = "${cp }/mypage/buyerBidding.do"><input type="button" id = "btn1" value = "구매관리 바로가기" ></a>
 <a href = "${cp }/mypage/sellerBidding.do"><input type="button" id = "btn2" value = "판매관리 바로가기" ></a>
-
-
