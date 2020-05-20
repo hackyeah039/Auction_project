@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import jdbc.JdbcUtil;
+import jdbc.ConnectionPool;
 import semi.vo.yh.SellerVo;
 
 public class SellerDao {
@@ -23,7 +23,7 @@ public class SellerDao {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			try {
-				con = JdbcUtil.getConn();
+				con = ConnectionPool.getConn();
 				String sql = "select * from seller where sel_number = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, sel_number);
@@ -41,7 +41,7 @@ public class SellerDao {
 				se.printStackTrace();
 				return null;
 			} finally {
-				JdbcUtil.close(con, pstmt, rs);
+				ConnectionPool.close(con, pstmt, rs);
 			}
 		}
 		public ArrayList<SellerVo> listAccount(int m_num1){
@@ -49,7 +49,7 @@ public class SellerDao {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			try {
-				con = JdbcUtil.getConn();
+				con = ConnectionPool.getConn();
 				String sql = "select * from seller where m_num=?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, m_num1);
@@ -67,7 +67,7 @@ public class SellerDao {
 				se.printStackTrace();
 				return null;
 			} finally {
-				JdbcUtil.close(con, pstmt, rs);
+				ConnectionPool.close(con, pstmt, rs);
 			}
 		}
 		//계좌번호가 DB에 존재하는지 확인
@@ -76,7 +76,7 @@ public class SellerDao {
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
 			try {
-				con = JdbcUtil.getConn();
+				con = ConnectionPool.getConn();
 				String sql = "select * from seller where sel_number = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setLong(1, a);
@@ -89,7 +89,7 @@ public class SellerDao {
 				se.printStackTrace();
 				return -1;
 			} finally {
-				JdbcUtil.close(con, pstmt, rs);
+				ConnectionPool.close(con, pstmt, rs);
 			}
 		}
 		// seller 테이블 인서트 
@@ -100,7 +100,7 @@ public class SellerDao {
 			int n = 0;
 			try {
 				if(vo.getSel_number() == 0) {
-					con = JdbcUtil.getConn();
+					con = ConnectionPool.getConn();
 					String sql = "insert into seller values(?,?,seq_seller_sel_number.nextval)";
 					pstmt = con.prepareStatement(sql);
 					pstmt.setLong(1, vo.getAccount());
@@ -113,7 +113,7 @@ public class SellerDao {
 				se.printStackTrace();
 				return -1;
 			} finally {
-				JdbcUtil.close(con, pstmt, null);
+				ConnectionPool.close(con, pstmt, null);
 			}
 		}
 }

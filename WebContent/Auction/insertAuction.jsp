@@ -52,6 +52,7 @@
  	function showList() {
 		window.open("${cp}/ShowAccount.do", "_blank", "top=200,left=500,height = 150, width = 280");
 	}
+	
 	//예외처리  
 	function chkValues(){
 		//카테고리 
@@ -122,13 +123,12 @@
 			return false;
 		}
 		//날짜 비교 
-		let startdate = document.getElementsByName("a_startdate")[0].value;
-		let enddate = document.getElementsByName("a_enddate")[0].value;
+		var startdate = document.getElementsByName("a_startdate")[0].value;
+		var enddate = document.getElementsByName("a_enddate")[0].value;
 		if(startdate.trim() == "" || enddate.trim() == ""){
 			alert("경매일자를 입력해주세요.");
 			return false;
-		}
-		if(startdate.substring(0, 10) >= enddate.substring(0, 10)){
+		} else if(startdate.substring(0, 10) >= enddate.substring(0, 10)){
 			alert("경매시작일자가 종료일자와 같거나 클 수 없습니다.");
 			return false;
 		}
@@ -260,6 +260,7 @@
 		경매기간
 	</td>
 	<td>
+		<input id=curTime type="hidden" value="">
 		<input id="startdate" name="a_startdate" type="text">
 		-
 		<input id="enddate" name="a_enddate" type="text"><span id=click></span>
@@ -304,7 +305,9 @@
 		    			this.setOptions({
 		    				maxDate:$('#enddate').val()?$('#enddate').val():false,
 		    				//오늘 이전 날짜는 클릭 불가능
-		    				minDate:0
+		    				minDate:0,
+		    				minTime:0,
+		    				defaultTime: true
 		    			})
 		    		},
 		    		timepicker:true,

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import jdbc.JdbcUtil;
+import jdbc.ConnectionPool;
 import semi.vo.yh.AuctionVo;
 import semi.vo.yh.SellerVo;
 import semi.vo.yh.ShipVo;
@@ -24,7 +24,7 @@ public class AuctionDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "select * from auction where a_num = ?";
 			//0514 빼먹은 코드 수정완료!
 			pstmt = con.prepareStatement(sql);
@@ -54,7 +54,7 @@ public class AuctionDao {
 			se.printStackTrace();
 			return null;
 		} finally {
-			JdbcUtil.close(con, pstmt, rs);
+			ConnectionPool.close(con, pstmt, rs);
 		}
 	}
 	//테이블 인서트 메소드 추가 
@@ -63,7 +63,7 @@ public class AuctionDao {
 		PreparedStatement pstmt = null;
 		int n = 0;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "insert into auction values(seq_auction_a_num.nextval,?,?,?,sysdate,?,?,0,?,0,?,?,?,?)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, vo.getA_title());
@@ -81,7 +81,7 @@ public class AuctionDao {
 			se.printStackTrace();
 			return -1;
 		} finally {
-			JdbcUtil.close(con, pstmt, null);
+			ConnectionPool.close(con, pstmt, null);
 		}
 	}
 	public int InsertTables(int sel_number, SellerVo sevo, AuctionVo avo, ShipVo shvo, ArrayList<String> fList) {
@@ -91,7 +91,7 @@ public class AuctionDao {
 		PreparedStatement pstmtShip = null;
 		PreparedStatement pstmtImg = null;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			con.setAutoCommit(false);
 			// 신규일때 -> seller, action
 			if(sel_number == 0 ) {
@@ -138,11 +138,8 @@ public class AuctionDao {
 			pstmtShip.setInt(2, shvo.getS_price());
 			pstmtShip.executeUpdate();
 			
-			System.out.println(fList + "     asdae");
-
 			for(String path:fList) {
 				String sqlImg = "insert into img values(seq_auction_a_num.currval,?)";
-				System.out.println(path + "     111111");
 				pstmtImg = con.prepareStatement(sqlImg);
 				pstmtImg.setString(1, path);
 				pstmtImg.executeUpdate();
@@ -158,11 +155,11 @@ public class AuctionDao {
 			}
 			return -1;
 		} finally {
-			JdbcUtil.close(pstmtImg);
-			JdbcUtil.close(pstmtShip);
-			JdbcUtil.close(pstmtAuction);
-			JdbcUtil.close(pstmtSeller);
-			JdbcUtil.close(con);
+			ConnectionPool.close(pstmtImg);
+			ConnectionPool.close(pstmtShip);
+			ConnectionPool.close(pstmtAuction);
+			ConnectionPool.close(pstmtSeller);
+			ConnectionPool.close(con);
 		}
 	}
 }

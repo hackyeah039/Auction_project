@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import jdbc.JdbcUtil;
+import jdbc.ConnectionPool;
 import semi.vo.yh.BiddingVo;
 
 public class BiddingDao {
@@ -22,7 +22,7 @@ public class BiddingDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "select max(bid_price) as bid_price from bid where a_num = ?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, a_num);
@@ -35,14 +35,14 @@ public class BiddingDao {
 			se.printStackTrace();
 			return -1;
 		} finally {
-			JdbcUtil.close(con, pstmt, rs);
+			ConnectionPool.close(con, pstmt, rs);
 		}
 	}
 	public int insertBid(BiddingVo vo) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "insert into bid values (?,?,?,sysdate,seq_bid_bid_number.nextval)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, vo.getM_num());
@@ -53,7 +53,7 @@ public class BiddingDao {
 			se.printStackTrace();
 			return -1;
 		} finally {
-			JdbcUtil.close(con, pstmt, null);
+			ConnectionPool.close(con, pstmt, null);
 		}
 	}
 }

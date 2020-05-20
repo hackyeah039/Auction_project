@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import jdbc.JdbcUtil;
+import jdbc.ConnectionPool;
 import semi.vo.yh.CategoryVo;
 
 public class CategoryDao {
@@ -23,7 +23,7 @@ public class CategoryDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "select * from category";
 			pstmt = con.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -39,7 +39,7 @@ public class CategoryDao {
 			se.printStackTrace();
 			return null;
 		} finally {
-			JdbcUtil.close(con, pstmt, rs);
+			ConnectionPool.close(con, pstmt, rs);
 		}
 	}
 }

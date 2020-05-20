@@ -2,10 +2,11 @@ package semi.controller.yhauction;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -168,21 +169,21 @@ public class InsertAuction extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		// 경매상태 구하기 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");					
-		java.util.Date regdate = new java.util.Date();
-		java.util.Date dstart;
+		// 경매상태 구하기 (형식에 해당하는 값들이 다 있어야 에러 안남.)
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");					
+		Calendar cal = Calendar.getInstance();
+		String currTime = sdf.format(cal.getTime());
 		try {
-			dstart = sdf.parse(a_startdate.replaceAll("/", "-"));
-			int bidresult = regdate.compareTo(dstart);
-			// 0 입찰 전 -> result 0보다 작을때 
-			if(bidresult < 0){
+			Date today = sdf.parse(currTime);
+			System.out.println(today);
+			Date startdate = sdf.parse(a_startdate);
+			System.out.println(startdate);
+			if(today.getTime() < startdate.getTime()) {
 				bidstatus = 0;
-			// 1 입찰 중 -> result 0보다 같거나 클때 
 			} else {
-				bidstatus = 1;			
+				bidstatus = 1;
 			}
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
@@ -191,8 +192,8 @@ public class InsertAuction extends HttpServlet {
 		AuctionVo avo = new AuctionVo(0, a_title, a_content, a_condition, null, a_startdate, a_enddate, 0, c_num, 0, sel_number, bidstatus, a_startbid, a_bidunit);
 		ShipVo shvo = new ShipVo(0, s_way, s_price, 0);
 		
-		AuctionDao sdao = AuctionDao.getInstance();
-		n = sdao.InsertTables(sel_number, sevo, avo, shvo, fList);
+		AuctionDao adao = AuctionDao.getInstance();
+		n = adao.InsertTables(sel_number, sevo, avo, shvo, fList);
 		// DB저장 결과 페이지로 이동
 		if(n>0) {
 			req.setAttribute("code","success");

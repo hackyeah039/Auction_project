@@ -7,20 +7,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class JdbcUtil {
-	public static Connection getConn() throws SQLException{
-		Connection con=null;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class ConnectionPool {
+	
+	static DataSource ds = null;
+	static {
 		try {
-			Class.forName("oracle.jdbc.OracleDriver");
-			String url="jdbc:oracle:thin:@localhost:1521:xe";
-			// 접속 유저 아이디 비밀번호 수정  
-			con=DriverManager.getConnection(url,"semi","semi1234");
-			return con;
-		}catch(ClassNotFoundException ce) {
-			System.out.println(ce.getMessage());
-			return null;
+			Context initContext = new InitialContext();
+			Context envContext  = (Context)initContext.lookup("java:/comp/env");
+			ds = (DataSource)envContext.lookup("jdbc/myoracle");			
+		} catch(NamingException ne) {
+			System.out.println(ne.getMessage());
 		}
 	}
+	
+	public static Connection getConn() throws SQLException{
+		Connection con = ds.getConnection();
+		return con;
+	}
+	
 	public static void close(Connection con,Statement stmt,ResultSet rs) {
 		try {
 			if(rs!=null) rs.close();

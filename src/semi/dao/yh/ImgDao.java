@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import jdbc.JdbcUtil;
+import jdbc.ConnectionPool;
 
 public class ImgDao {
 	private static ImgDao instance = new ImgDao();
@@ -21,7 +21,7 @@ public class ImgDao {
 		PreparedStatement pstmt = null;
 		int n = 0;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "insert into img values(?,?)";
 			pstmt=con.prepareStatement(sql);
 			for(String a:flist) {
@@ -34,7 +34,7 @@ public class ImgDao {
 			se.printStackTrace();
 			return -1;
 		} finally {
-			JdbcUtil.close(con, pstmt, null);
+			ConnectionPool.close(con, pstmt, null);
 		}
 	}
 }

@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import jdbc.JdbcUtil;
+import jdbc.ConnectionPool;
 import semi.vo.yh.MembersVo;
 
 public class MembersDao {
@@ -22,7 +22,7 @@ public class MembersDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "select * from members where m_num=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, m_num);
@@ -47,7 +47,7 @@ public class MembersDao {
 			se.printStackTrace();
 			return null;
 		} finally {
-			JdbcUtil.close(con, pstmt, rs);
+			ConnectionPool.close(con, pstmt, rs);
 		}
 	}
 	//신뢰도 조회
@@ -56,7 +56,7 @@ public class MembersDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "select trust from members where m_num=?";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, m_num);
@@ -69,7 +69,7 @@ public class MembersDao {
 			se.printStackTrace();
 			return -1;
 		} finally {
-			JdbcUtil.close(con, pstmt, rs);
+			ConnectionPool.close(con, pstmt, rs);
 		}
 	}
 }

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import jdbc.JdbcUtil;
+import jdbc.ConnectionPool;
 
 public class ShipDao {
 	private static ShipDao instance = new ShipDao();
@@ -20,7 +20,7 @@ public class ShipDao {
 		PreparedStatement pstmt = null;
 		int n = 0;
 		try {
-			con = JdbcUtil.getConn();
+			con = ConnectionPool.getConn();
 			String sql = "insert into Ship values(seq_ship_s_num.nextval, ?, ?, seq_auction_a_num.currval)";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, s_way);
@@ -30,7 +30,7 @@ public class ShipDao {
 			se.printStackTrace();
 			return -1;
 		} finally {
-			JdbcUtil.close(con, pstmt, null);
+			ConnectionPool.close(con, pstmt, null);
 		}
 	}
 }
