@@ -12,6 +12,7 @@
 <ul>
 	<li><a href="${cp }/join/join.jsp">회원가입</a></li>
 	<li><a href="${cp }/logout.jh">로그아웃</a></li>		
+	<li><a href="">내정보</a></li>		
 	<li><a href="${cp }/login/login.jsp">로그인</a></li>
 	<li><a href="${cp }/adminmain/main.jh">관리자 페이지</a></li>
 	세션아이디 : ${id}

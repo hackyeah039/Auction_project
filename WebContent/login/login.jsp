@@ -16,7 +16,7 @@
   		padding-bottom: 40px;
   		font-family: "Nanum Gothic", arial, helvetica, sans-serif;
   		background-repeat: no-repeat;
-  		background:linear-gradient(to bottom right, #0098FF, #6BA8D1);
+  		background:linear-gradient(to bottom right, #343a40, #282925);
 	}
 	
     .card {
@@ -55,7 +55,7 @@
 
 	<div class="card align-middle" style="width:20rem; border-radius:20px;">
 		<div class="card-title" style="margin-top:30px;">
-			<h2 class="card-title text-center" style="color:#113366;">LOGIN</h2>
+			<h2 class="card-title text-center" style="color:#6c757d;">LOGIN</h2>
 		</div>
 		<div class="card-body">
       <form class="form-signin" method="POST" onSubmit="logincall();return false">
@@ -73,9 +73,9 @@
          -->
         </div>
         <br>
-        <button id="btn-Yes" class="btn btn-lg btn-primary btn-block" type="submit">로 그 인</button>
+        <button id="btn-Yes" class="btn btn-lg btn-dark btn-block" type="submit">로 그 인</button>
         <br>
-        <a href="">아이디찾기</a><a href="">/비밀번호 찾기</a>
+        <a href="${cp }/login/findMain.jsp">아이디찾기</a><a href="">/비밀번호 찾기</a>
       </form>
       
 		</div>
@@ -96,8 +96,6 @@
 		xhr.onreadystatechange=loginck;
 		xhr.open('post','${cp}/login.jh',true);
 		xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-		console.log('아이디:'+id);
-		console.log('비번:'+pwd);
 		xhr.send('id='+id+'&pwd='+pwd);
 	}
 	function loginck() {
@@ -105,16 +103,9 @@
 			var loginMsg=document.getElementById("loginMsg");
 			var msg=xhr.responseText;
 			var json=JSON.parse(msg);
-			console.log("제이슨:"+json.msg);
-			console.log("제이슨아뒤:"+json.id);
-			console.log("버노:"+json.m_num);
 			if(json.msg=='not'){
 				loginMsg.innerHTML="아이디 또는 비밀번호가 맞지 않습니다.";
 			}else if(json.msg=='ok'){
-				//console.log('id'+json.id);
-				//console.log('넘'+json.m_num);
-				//session.setAttribute('id', json.id);
-				//session.setAttribute('m_num', json.m_num);
 				window.location = "${cp}/indextest.jsp";
 			}
 		}		
