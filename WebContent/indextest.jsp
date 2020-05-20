@@ -14,6 +14,9 @@
 	<li><a href="">로그아웃</a></li>		
 	<li><a href="${cp }/login/login.jsp">로그인</a></li>
 	<li><a href="${cp }/adminmain/main.jh">관리자 페이지</a></li>
+	세션아이디 : ${id}
+	세션회번호 : ${m_num}
+	관리자아이디 : ${adminId}
 </ul>
 </body>
 <script type="text/javascript"></script>

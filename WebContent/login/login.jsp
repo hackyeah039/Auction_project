@@ -110,7 +110,7 @@
 			console.log("버노:"+json.m_num);
 			if(json.msg=='not'){
 				loginMsg.innerHTML="아이디 또는 비밀번호가 맞지 않습니다.";
-			}else{
+			}else if(json.msg=='ok'){
 				//console.log('id'+json.id);
 				//console.log('넘'+json.m_num);
 				//session.setAttribute('id', json.id);

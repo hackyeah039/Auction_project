@@ -24,14 +24,21 @@ public class LoginController extends HttpServlet{
 		req.setCharacterEncoding("utf-8");
 		String id=req.getParameter("id");
 		String pwd=req.getParameter("pwd");
-		System.out.println("아이디:"+id);
-		System.out.println("비번:"+pwd);
+		//System.out.println("아이디:"+id);
+		//System.out.println("비번:"+pwd);
 		LoginDao dao=LoginDao.getLoginDao();
 		ArrayList<MembersVo> list=dao.loginCk(id, pwd);
 		JSONObject json=new JSONObject();
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
-		if(list.isEmpty()) {
+		if(id.equals("admin") && pwd.equals("admin1234")) {
+			System.out.println("관리자용~");
+			HttpSession session=req.getSession();
+			session.setAttribute("adminId", id);
+			json.put("msg", "ok");
+			pw.print(json);
+			pw.close();	
+		}else if(list.isEmpty()) {
 			json.put("msg", "not");
 			pw.print(json);
 			pw.close();
@@ -43,8 +50,6 @@ public class LoginController extends HttpServlet{
 			json.put("msg", "ok");
 			pw.print(json);
 			pw.close();
-			
 		}
-		
 	}
 }
