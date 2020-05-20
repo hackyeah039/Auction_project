@@ -299,7 +299,7 @@
 		    $(function(){
 		    	// 시작일 
 		    	$('#startdate').datetimepicker({
-		    		format:'Y/m/d H:i:s',
+		    		format:'Y/m/d H:i',
 		    		onShow:function( ct ){
 		    			this.setOptions({
 		    				maxDate:$('#enddate').val()?$('#enddate').val():false,
@@ -307,11 +307,11 @@
 		    				minDate:0
 		    			})
 		    		},
-		    		timepicker:true
+		    		timepicker:true,
 		    	});
 		    	
 		    	$('#enddate').datetimepicker({
-		    		format:'Y/m/d H:i:s',
+		    		format:'Y/m/d H:i',
 		    		onShow:function( ct ){
 		    			this.setOptions({
 		    				minDate:checkDateStart()

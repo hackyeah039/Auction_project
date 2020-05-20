@@ -9,8 +9,8 @@
 <script type="text/javascript">
 	//입찰하기 팝업 띄우기 
 	function showBidding() {
-		//?a_num=${a_num} 추가 
-		window.open("${cp}/Bidding.do", "_blank", "top=200,left=500,height = 150, width = 280");
+		//?a_num=${a_num} 추가 세션에서 값을 받아와야함. 
+		window.open("${cp}/Bidding.do", "_blank", "top=200,left=500,height = 150, width = 500");
 	}
 </script>
 <div>

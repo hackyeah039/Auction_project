@@ -41,6 +41,7 @@ public class BiddingController extends HttpServlet {
 		BiddingDao bdao = BiddingDao.getInstance();
 		int check = bdao.showMaxBid(a_num);
 		if (check == 0) {
+//			DB에 입찰된 값이 없을 경우 초기 설정값으로 입찰 할 수 있도록
 			maxBid = bidunit + a_startbid;
 		} else {
 			maxBid = check + bidunit;
@@ -53,34 +54,31 @@ public class BiddingController extends HttpServlet {
 
 //		Bidding.jsp로 이동
 		req.getRequestDispatcher("/Bidding/bidding.jsp").forward(req, resp);
-
-//		필터 만들고 맵핑 한 뒤 아래 조건일때 페이지가 이동되도록 하기 
-//		신뢰도가 2이하인경우 경고창 띄우기
-//		3이상인경우 입찰 페이지로 넘어가기
-
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html; charset=utf-8");
-		// 입력 받은 값 변수에 넣기
+//		입력 받은 값 변수에 넣기
 		int m_num = Integer.parseInt(req.getParameter("m_num"));
 		int a_num = Integer.parseInt(req.getParameter("a_num"));
 		int bid_price = Integer.parseInt(req.getParameter("bid_price"));
-		System.out.println(m_num);
-		System.out.println(a_num);
-		System.out.println(bid_price);
-		// Vo에 넣기
+		
+//		Vo에 넣기
 		BiddingVo bvo = new BiddingVo(m_num, a_num, bid_price, null, 0);
+		
 		BiddingDao bdao = BiddingDao.getInstance();
+		
+//		DB 저장 결과 출력
 		int n = bdao.insertBid(bvo);
-		// DB저장 결과 페이지로 이동
+		
+//		DB저장 결과 페이지로 이동
 		PrintWriter pw = resp.getWriter(); 
 		if (n > 0) {
-			pw.print("<script>alert('입찰성공');window.open(\"about:blank\", \"_self\").close();</script>");
-			//alert 누를때 창 닫기 추가하기 
+//			저장 성공시 alert창 띄우고 닫기 클릭시 자동으로 창 닫음. 
+			pw.print("<script>alert('입찰성공');window.open('about:blank', '_self').close();</script>"); 
 		} else {
-			pw.print("<script>alert('입찰실패');window.open(\\\"about:blank\\\", \\\"_self\\\").close();</script>");
+			pw.print("<script>alert('입찰실패');window.open('about:blank', '_self').close();</script>");
 		}
 	}
 }
