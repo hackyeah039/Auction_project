@@ -18,6 +18,7 @@
 	<div id="top">머리부분</div>
 	<div id="content">
 		<div id="divleft">
+			<a href="${cp }/adminmain/main.jh">관리자 상황판</a><br>
 			<span>신고리스트</span>
 			<ul>
 				<li><a href="${cp }/singo.list.jh">전체리스트</a></li>
