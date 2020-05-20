@@ -67,4 +67,31 @@ public class ShipDao {
 		}
 		
 	}
+	
+	//구매종료 상태로 업그레이드
+
+	public int updateBidStatus(int a) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = ConnectionPool.getCon();
+			String sql= "update auction set  bidstatus = 3  where a_num = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, a);
+
+			int n = pstmt.executeUpdate();
+			return n;
+		}catch (SQLException e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			return -1;
+		}finally {
+			ConnectionPool.close(null, pstmt, con);
+		}
+		
+	}
+	
+	
 }

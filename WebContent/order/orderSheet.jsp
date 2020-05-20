@@ -46,7 +46,7 @@
 <table border = 1>
 	<tr>
 		<th>수령인 </th>	
-		<td><input type = "text" id = "buyerName" name ="buyerName"></td>			
+		<td><input type = "text" id = "buyerName" name ="buyerName" value = "${memberInfo.m_name }"></td>			
 	</tr>
 	<tr>
 		<th>주소</th>
@@ -60,7 +60,7 @@
 	</tr>
 	<tr>
 		<th>휴대전화</th>	
-		<td><input type = "text" id = "phone"></td>			
+		<td><input type = "text" id = "phone" value = ${memberInfo.m_phone }></td>			
 	</tr>
 </table>
 <h1>총 결제 금액</h1>

@@ -50,10 +50,9 @@ public class BiddingDao {
 	// 입찰중 리스트
 	// select distinct bid.a_num from bid, auction where bid.a_num = auction.a_num
 	// and m_num = 1 and bidstatus = 1;
-	public ArrayList<Integer> buyerBidinglist(String id) {
+	public ArrayList<Integer> buyerBidinglist(int mnum) {
 
 		ArrayList<Integer> bidlist = new ArrayList<Integer>();
-		int mnum = getMnum(id);
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -166,10 +165,9 @@ public class BiddingDao {
 	}
 
 	// 입찰 순위
-	public HashMap<Integer, Integer> getBidRank(ArrayList<Integer> anumlist, String id) {
+	public HashMap<Integer, Integer> getBidRank(ArrayList<Integer> anumlist, int mnum) {
 
 		HashMap<Integer, Integer> bidRankList = new HashMap<Integer, Integer>();
-		int mnum = getMnum(id);
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -215,6 +213,7 @@ public class BiddingDao {
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
 
 		try {
 
@@ -237,18 +236,18 @@ public class BiddingDao {
 								+ "and sel_number = ?";
 						pstmt2 = con.prepareStatement(sql2);
 						pstmt2.setInt(1, selNumber);
-						rs = pstmt2.executeQuery();
+						rs2 = pstmt2.executeQuery();
 						String mId = "";
 
-						if (rs.next()) {
-							mId = rs.getString("m_id");
+						if (rs2.next()) {
+							mId = rs2.getString("m_id");
 						} else {
 							return null;
 						}
 
 						biddingInfoList.put(anum, new BiddingVo(title, check, endDate, mId));
 
-					} while (rs.next());
+					} while (rs2.next());
 
 				} else {
 					return null;
@@ -262,6 +261,8 @@ public class BiddingDao {
 			System.out.println(e.getMessage());
 			return null;
 		} finally {
+			
+			ConnectionPool.close(rs2);
 			ConnectionPool.close(pstmt2);
 			ConnectionPool.close(rs, pstmt, con);
 		}
@@ -309,6 +310,7 @@ public class BiddingDao {
 			return null;
 		} finally {
 			ConnectionPool.close(rs2);
+			ConnectionPool.close(pstmt2);
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}

@@ -2,9 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<div id="simpleList">
-	<jsp:include page="simpleList.jsp"></jsp:include>
-</div>
 
 <div id="leftMenu">
 	<jsp:include page="LeftMenu.jsp"></jsp:include>

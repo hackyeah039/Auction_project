@@ -8,10 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.yr.OrderDao;
-import semi.vo.yr.PaymentVo;
+import semi.vo.yr.MembersVo;
 import semi.vo.yr.ShipVo;
 
 /**
@@ -29,6 +28,15 @@ public class OrderController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, javax.servlet.http.HttpServletResponse resp)
 			throws ServletException, IOException {
 		
+		//회원 번호 가져오기
+		int mnum = 1;
+		
+		// 회원번호 가져오기
+//		HttpSession session = req.getSession();
+//		int mnum = (int)session.getAttribute("mnum");
+
+
+		
 		String[] spaynum = req.getParameterValues("checkbox");
 		String message = req.getParameter("message");
 		// 0 : num, 1:title, 2:price
@@ -44,7 +52,9 @@ public class OrderController extends HttpServlet {
 		
 		// 상품 가격
 		HashMap<Integer, Integer> priceList = new HashMap<Integer, Integer>();
-
+		
+		//구매자 정보 가져오기
+		MembersVo vo = dao.getMemberInfo(mnum);
 		
 		ArrayList<Integer> orderanumList = new ArrayList<Integer>();
 		
@@ -86,6 +96,7 @@ public class OrderController extends HttpServlet {
 		req.setAttribute("orderanumList", orderanumList);
 		req.setAttribute("shipinfoList", shipinfoList);
 		req.setAttribute("titleList", titleList);
+		req.setAttribute("memberInfo", vo);
 		req.setAttribute("priceList", priceList);
 		req.setAttribute("header", "header.jsp");
 		req.setAttribute("content", "/order/orderSheet.jsp");

@@ -31,7 +31,7 @@ public class SellerTranCompletedController extends HttpServlet{
 			//판매자 num 가져오기
 			TransactDao td = new TransactDao();
 			ArrayList<Integer> selList = td.getSelnum(mnum);
-			
+			System.out.println("selList:" + selList);
 			TranCompletedDao dao = new TranCompletedDao();
 			ArrayList<AuctionVo> completedTranList = dao.getCompletedTranForSeller(selList);
 //			for (AuctionVo auctionVo : completedTranList) {

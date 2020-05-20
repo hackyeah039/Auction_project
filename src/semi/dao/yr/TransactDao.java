@@ -279,7 +279,7 @@ public class TransactDao {
 	}
 
 	// 판매자가 거래하고 있는 물품리스트 들고오기
-	public ArrayList<Integer> getForSellerTran(ArrayList<Integer> selList) {
+	public ArrayList<Integer> getForSellerTran(ArrayList<Integer> selList, int type) {
 		ArrayList<Integer> forSellerTranList = new ArrayList<Integer>();
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -288,7 +288,13 @@ public class TransactDao {
 		try {
 			for (int selnum : selList) {
 				con = ConnectionPool.getCon();
-				String sql = "select * from auction where sel_number = ? and bidstatus = 2";
+				String sql = "";
+				if(type == 0) {
+					sql = "select distinct * from auction where sel_number = ? and bidstatus = 2";					
+				}else{
+					sql = "select * from auction where sel_number = ? and bidstatus BETWEEN 0 and 2";										
+				}
+				
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, selnum);
 				rs = pstmt.executeQuery();

@@ -44,19 +44,25 @@ public class reqShipController extends HttpServlet {
 		
 		String courier = req.getParameter("courier");
 		String invoicenum = req.getParameter("invoicenum");
-		String anum = req.getParameter("anum");
-		
-		JSONObject data = new JSONObject();
-		PrintWriter out = resp.getWriter();
+		String sanum = req.getParameter("anum");
+		int anum = Integer.parseInt(sanum);
 		
 		System.out.println(courier + ", "+invoicenum + ", "+ anum);
 		
 		ShipDao dao = new ShipDao();
-		int n = dao.updateShipInfo(Integer.parseInt(anum), courier, invoicenum);
+		int n = dao.updateShipInfo(anum, courier, invoicenum);
+		
+		JSONObject data = new JSONObject();
+		PrintWriter out = resp.getWriter();
 		
 		try {
 			if(n>0) {
-					data.put("message", "success");
+					int n2 = dao.updateBidStatus(anum);
+					if(n2 > 0) {
+						data.put("message", "success");						
+					}else {
+						data.put("message", "fail");						
+					}
 			}else {
 				data.put("message", "fail");
 			}

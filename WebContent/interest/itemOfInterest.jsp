@@ -126,6 +126,7 @@
 					msg += "&checkbox=" 								
 				}
 				msg += checkbox[i].value;
+				count++;
 			}
 			console.log("msg : " + msg);
 		}	

@@ -1,14 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/MyPageCss.css">
-<title>index.jsp</title>
-</head>
-<body>
 <div id = "myTrust">
 	<h1>
 	당신의 신용도는 ${requestScope.trust }입니다.	
@@ -22,52 +13,27 @@
 	</ul>
 </div>
 
-<div id = "buyDiv">
-	<h1>구매현황</h1>
-	<a href = "${cp }/mypage/buyerBidding.do">구매관리 바로가기</a>
-	<table border = "1" >
-		<tr>
-			<th>입금 요청</th>
-			<th>입금 확인 중</th>
-			<th>결제 완료/배송준비 중</th>
-			<th>배송중</th>
-			<th>입찰중</th>
-			<th>미입금</th>
-		</tr>
-		
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>		
-	</table>
-</div>
+<table border=1 id = "table">
+	<tr>
+		<th rowspan="2">MY</th>
+		<th>입찰중</th>
+		<th>입금요청</th>
+		<th>배송</th>
+		<th>판매중</th>
+		<th>배송요청</th>
+		<th>구매자 문의</th>
+	</tr>
+	<tr>
+		<td>${bidCount }</td>
+		<td>${reqPayCount }</td>
+		<td><a href="#">배송조회</a></td>
+		<td>${saleCount }</td>
+		<td>${shipReqCount }</td>
+		<td>0</td>
+	</tr>
+</table>
+
+<a href = "${cp }/mypage/buyerBidding.do"><input type="button" id = "btn1" value = "구매관리 바로가기" ></a>
+<a href = "${cp }/mypage/sellerBidding.do"><input type="button" id = "btn2" value = "판매관리 바로가기" ></a>
 
 
-
-<div id = "sellDiv">
-	<h1>판매현황</h1>
-	<a href="#">판매관리 바로가기</a>
-	<table border = "1">
-		<tr>
-			<th>입금 요청</th>
-			<th>입금 확인 중</th>
-			<th>배송 요청</th>
-			<th>배송 중</th>
-			<th>구매 거부</th>
-		</tr>
-		
-		<tr>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
-		</tr>		
-	</table>
-</div>
-</body>    
-</html>

@@ -31,7 +31,7 @@ public class SellerTransact extends HttpServlet{
 //		HttpSession session = req.getSession();
 //		int mnum = (int)session.getAttribute("mnum");
 
-		int mnum = 5;
+		int mnum = 4;
 		
 		
 		try {
@@ -47,7 +47,7 @@ public class SellerTransact extends HttpServlet{
 			
 			
 			//판매자가 올린 경매 중에서 거래중인 리스트 가져 오기
-			ArrayList<Integer> forSellerTranList = dao.getForSellerTran(selList);
+			ArrayList<Integer> forSellerTranList = dao.getForSellerTran(selList,0);
 			
 	//		for (int anum : forSellerTranList) {
 	//			System.out.println(anum);
@@ -63,7 +63,6 @@ public class SellerTransact extends HttpServlet{
 			HashMap<Integer, PaymentVo> paymentInfoList = new HashMap<Integer, PaymentVo>();
 			
 			for (BidVo bidList : tranBidList) {
-				
 				int mnum2 = bidList.getM_num();
 				buyerId.put(bidList.getA_num(),dao.getMId(mnum2));
 				paymentInfoList.put(bidList.getA_num(),dao.getPaymentInfo(bidList.getBid_num()));

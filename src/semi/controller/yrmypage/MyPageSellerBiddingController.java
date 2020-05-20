@@ -1,10 +1,7 @@
 package semi.controller.yrmypage;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -14,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.yr.BiddingDao;
-import semi.vo.yr.AuctionVo;
 import semi.vo.yr.BiddingVo;
 
 @WebServlet("/mypage/sellerBidding.do")

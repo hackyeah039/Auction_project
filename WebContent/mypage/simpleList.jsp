@@ -1,35 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <script>
-	function td_copy(val){
+/*
+	window.onload = function(){
 		
-		table1 = document.getElementById("table");
-	
-	    table1.rows[1].cells[0].innerHTML = "hello";
-	
-	}
+		
+		var xhr = null;
+		
+		xhr = new XMLHttpRequest;
+		xhr.open('get','${cp}/mypage/simplelist.do',true)
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState == 4 && xhr.status == 200){
+				var data = xhr.responseText;
+ 				var json = JSON.parse(data);
+ 				table1 = document.getElementById("table");		
+ 				table1.rows[1].cells[0].innerHTML = json.bidCount;
+ 				table1.rows[1].cells[1].innerHTML = json.reqPayCount;
+ 				table1.rows[1].cells[3].innerHTML = json.saleCount;
+ 				table1.rows[1].cells[4].innerHTML = json.shipReqCount;
+			}
+		}
+		xhr.send();
+		
+	}*/
 	
 </script>
 
 <table border=1 id = "table">
 	<tr>
 		<th rowspan="2">MY</th>
-		<th>ÀÔÂûÁß</th>
-		<th>ÀÔ±İ¿äÃ»</th>
-		<th>¹è¼Û</th>
-		<th>ÆÇ¸ÅÁß</th>
-		<th>¹è¼Û¿äÃ»</th>
-		<th>±¸¸ÅÀÚ ¹®ÀÇ</th>
+		<th>ì…ì°°ì¤‘</th>
+		<th>ì…ê¸ˆìš”ì²­</th>
+		<th>ë°°ì†¡</th>
+		<th>íŒë§¤ì¤‘</th>
+		<th>ë°°ì†¡ìš”ì²­</th>
+		<th>êµ¬ë§¤ì ë¬¸ì˜</th>
 	</tr>
 	<tr>
 		<td>0</td>
 		<td>0</td>
-		<td>0</td>
+		<td><a href="#">ë°°ì†¡ì¡°íšŒ</a></td>
 		<td>0</td>
 		<td>0</td>
 		<td>0</td>
 	</tr>
 </table>
-
-<input type = "button" onclick = "td_copy(0)">

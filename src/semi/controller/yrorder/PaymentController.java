@@ -17,6 +17,8 @@ public class PaymentController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+		req.setCharacterEncoding("utf-8");
+		
 		String[] spaynumList = req.getParameterValues("paynumList");
 		String buyerName = req.getParameter("buyerName");
 		String zipcode = req.getParameter("zipcode");
@@ -34,13 +36,12 @@ public class PaymentController extends HttpServlet {
 			paynumList.add(Integer.parseInt(spaynum));
 		}
 		
-		//해당 paynum에 입력받은 수령인, 주소, 전화번호로 update dao 실행
-		
-		
+		//해당 paynum에 입력받은 수령인, 주소, 전화번호로 update, pay_status 입금완료 1로 업데이트 dao 실행	
 		PaymentVo vo = new PaymentVo(0, zipcode+":"+rodename+":"+detailaddr,
 				buyerName, phone);
 		int n = dao.updatePayInfo(vo, paynumList);
-
+		
+		
 //		for (String string : paynumList) {
 //			System.out.println("paynum : " + string);			
 //		}
@@ -51,8 +52,11 @@ public class PaymentController extends HttpServlet {
 //		System.out.println("phone : " + phone);
 		
 		if(n>0) {
-			
+			req.setAttribute("result", "success");
+			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);
 		}else {
+			req.setAttribute("result", "false");
+			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);
 			
 		}
 		

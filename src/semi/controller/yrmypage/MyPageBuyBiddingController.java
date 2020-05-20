@@ -18,20 +18,28 @@ public class MyPageBuyBiddingController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		//회원 번호 가져오기
+		int mnum = 1;
+		
+		
+//		HttpSession session = req.getSession();
+//		int mnum = (Integer)session.getAttribute("m_num"); 
+		
+		
 		//아이디 가져오기
-		String id = "gogo";
+//		String id = "gogo";
 		
 		//경로
 		req.getServletContext().setAttribute("cp", req.getContextPath());
 
 		
 //		HttpSession session = req.getSession();
-//		String id = (String)session.getAttribute("id"); 
+//		int mnum = (Integer)session.getAttribute("m_num"); 
 		
 		BiddingDao auctiondao = new BiddingDao();
 		
 		//입찰중경매리스트 얻어오기
-		ArrayList<Integer> bidlist =  auctiondao.buyerBidinglist(id);
+		ArrayList<Integer> bidlist =  auctiondao.buyerBidinglist(1);
 	
 		//입찰한 경매리스트 현재가격 얻어오기
 		HashMap<Integer, Integer> currPriceList = auctiondao.getCurrPrice(bidlist);
@@ -40,7 +48,7 @@ public class MyPageBuyBiddingController extends HttpServlet {
 		HashMap<Integer, Integer> getBidCountList = auctiondao.getBidCount(bidlist);
 		
 		//입찰 순위
-		HashMap<Integer, Integer> getBidRankList = auctiondao.getBidRank(bidlist, id);
+		HashMap<Integer, Integer> getBidRankList = auctiondao.getBidRank(bidlist, mnum);
 	
 		//경매상품 정보
 		HashMap<Integer, BiddingVo> BiddingInfoList = auctiondao.getBiddingInfo(bidlist);
