@@ -62,7 +62,7 @@ public class MainListDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			String sql="select * from(select aa.*,rownum rnum from(select * from auction order by a_check desc , rownum asc) aa)where rnum>=? and rnum<=?";
+			String sql="select * from(select aa.*,rownum rnum from(select * from auction where (a_enddate-sysdate)>0 order by a_check desc , rownum asc) aa)where rnum>=? and rnum<=?";
 			con=JDBCUtil.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
@@ -105,7 +105,7 @@ public class MainListDao {
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			String sql="select * from(select aa.*,rownum rnum from(select * from auction order by a_jjim desc , rownum asc) aa)where rnum>=? and rnum<=?";
+			String sql="select * from(select aa.*,rownum rnum from(select * from auction where (a_enddate-sysdate)>0 order by a_jjim desc , rownum asc) aa)where rnum>=? and rnum<=?";
 			con=JDBCUtil.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
@@ -142,13 +142,13 @@ public class MainListDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
-	//추천글 불러오는 메소드(찜 수 높은 순)
+	//마감임박글 불러오는 메소드(찜 수 높은 순)
 	public ArrayList<SHAuctionVo> EndList(int startrow,int  endrow){
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		try {
-			String sql="select * from(select aa.*,rownum rnum from(select * from auction order by (a_enddate-sysdate) asc , rownum asc) aa)where rnum>=? and rnum<=?";
+			String sql="select * from(select aa.*,rownum rnum from(select * from auction where (a_enddate-sysdate)>0 order by (a_enddate-sysdate) asc , rownum asc) aa)where rnum>=? and rnum<=?";
 			con=JDBCUtil.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
@@ -185,7 +185,7 @@ public class MainListDao {
 			JDBCUtil.close(rs, pstmt, con);
 		}
 	}
-	//가격 가져오는 메소드
+	//최고 입찰가격 가져오는 메소드
 	public int getPrice(int num) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
@@ -199,6 +199,29 @@ public class MainListDao {
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				price=rs.getInt("price");
+			}
+			return price;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return 0;
+		}finally {
+			JDBCUtil.close(rs, pstmt, con);
+		}
+	}
+	//시작가격 가져오는 메소드
+	public int getStartBid(int num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int price=0;
+		try {
+			String sql="select a_startbid FROM auction WHERE A_NUM=?";
+			con=JDBCUtil.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				price=rs.getInt("a_startbid");
 			}
 			return price;
 		}catch(SQLException se) {

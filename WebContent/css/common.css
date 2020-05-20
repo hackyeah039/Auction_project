@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/* common.css */
+*{margin: 0px; padding: 0px;}
+#wrap{
+	width:1300px;
+	height:2000px;
+	margin: auto;
+	border: 1px solid blue;
+}

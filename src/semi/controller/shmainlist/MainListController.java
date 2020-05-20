@@ -31,15 +31,11 @@ public class MainListController extends HttpServlet{
 			list=dao.AllList(startrow,endrow);
 		//추천목록 클릭시 (인기순(조회수)은 1번 , 추천순(찜 수)은 2번, 마감임박순은 3번)
 		}else if(recomNum==1 && cateNum==0) {
-			System.out.println("startrow : " + startrow + ", endrow : " + endrow);
 			list=dao.CheckList(startrow, endrow);
-			System.out.println("인기순 리스트 메소드 실행,"+list);
 		}else if(recomNum==2 && cateNum==0) { 
 			list=dao.JjimList(startrow, endrow);
-			System.out.println("추천순 리스트 메소드 실행");
 		}else if(recomNum==3 && cateNum==0) { 
 			list=dao.EndList(startrow, endrow);
-			System.out.println("마감임박순 리스트 메소드 실행");
 		}
 		/* 카테고리 클릭시 실행구문
 		else if(recomNum==0 && cateNum>0) { 
@@ -67,6 +63,7 @@ public class MainListController extends HttpServlet{
 			pw.println("<a_title>" + vo.getA_title() + "</a_title>");
 			pw.println("<a_content>" + vo.getA_content() + "</a_content>");
 			pw.println("<a_condition>" + vo.getA_condition() + "</a_condition>");
+			
 			pw.println("<a_regdate>" + vo.getA_regdate() + "</a_regdate>");
 			pw.println("<a_startdate>" + vo.getA_startdate() + "</a_startdate>");
 			pw.println("<a_enddate>" + dao.getTime(vo.getA_num()) + "</a_enddate>");

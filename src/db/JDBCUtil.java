@@ -1,23 +1,30 @@
 package db;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class JDBCUtil {
-	public static Connection getConn() throws SQLException {
-		Connection con=null;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class ConnectionPool2 {
+	static DataSource ds=null;
+	static {//static멤버를 초기화할 때는 static 블록을 사용한다.
 		try {
-			Class.forName("oracle.jdbc.OracleDriver");
-			String url="jdbc:oracle:thin:@localhost:1521:xe";
-			con=DriverManager.getConnection(url,"semi","semi1234");
-			return con;
-		}catch(ClassNotFoundException ce) {
-			System.out.println(ce.getMessage());
-			return null;
+			Context initContext = new InitialContext();
+			Context envContext  = (Context)initContext.lookup("java:/comp/env");
+			ds = (DataSource)envContext.lookup("jdbc/myoracle"); //멤버변수로 있기 때문에 자료형 지울것
+		}catch(NamingException ne) {
+			System.out.println(ne.getMessage());
 		}
+	}
+	
+	public static Connection getCon() throws SQLException{
+		Connection con=ds.getConnection();
+		return con;
 	}
 	public static void close(ResultSet rs,Statement stmt,Connection con) {
 		try {
