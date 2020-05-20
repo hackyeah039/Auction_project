@@ -32,5 +32,6 @@ public class AdminAnswerController extends HttpServlet{
 		}
 		PrintWriter pw = resp.getWriter();
 		pw.print(json);
+		pw.close();
 	}
 }

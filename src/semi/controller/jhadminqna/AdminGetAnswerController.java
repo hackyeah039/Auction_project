@@ -37,5 +37,6 @@ public class AdminGetAnswerController extends HttpServlet{
 			}
 		}
 		pw.println(json);
+		pw.close();
 	}
 }

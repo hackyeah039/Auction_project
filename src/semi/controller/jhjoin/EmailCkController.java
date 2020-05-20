@@ -29,5 +29,6 @@ public class EmailCkController extends HttpServlet{
 		}
 		PrintWriter pw=resp.getWriter();
 		pw.print(json);
+		pw.close();
 	}
 }
