@@ -59,4 +59,30 @@ public class LoginDao {
 			}
 		}
 	}
+	//아이디찾기
+	public int findId(String name, int phone) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		try {
+			con=ConnectionPool.getCon();
+			String sql="select * from members where m_name=? and m_phone=?";
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, name);
+			pstmt.setInt(2, phone);
+			
+			
+			return -1;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			try{
+				if(pstmt!=null) pstmt.close();
+				if(con!=null) con.close();
+			}catch(SQLException s) {
+				System.out.println(s.getMessage());
+			}
+		}
+	}
+	
 }
