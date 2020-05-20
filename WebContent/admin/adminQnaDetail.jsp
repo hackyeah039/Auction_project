@@ -58,7 +58,7 @@
 		var b_dap=document.getElementById("b_dap").value;
 		xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=dapOk;
-		xhr.open('post','${cp}/board.approval.jh',true);
+		xhr.open('post','${cp}/board/approval.jh',true);
 		xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
 		xhr.send('b_num='+b_num+'&b_dap='+b_dap);
 	}
@@ -79,7 +79,7 @@
 		xhrDap=new XMLHttpRequest();
 		xhrDap.onreadystatechange=daplistOk;
 		var b_num=document.getElementById("b_num").value;
-		xhrDap.open('post','${cp}/admin.getAnswer.jh',true);
+		xhrDap.open('post','${cp}/admin/getAnswer.jh',true);
 		xhrDap.setRequestHeader('Content-type','application/x-www-form-urlencoded');
 		xhrDap.send('b_num='+b_num);
 	}

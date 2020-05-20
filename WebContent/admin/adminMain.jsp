@@ -9,9 +9,9 @@
 		<th>탈퇴처리중</th>
 	</tr>
 	<tr>
-		<td><a href="${cp }/singo.doing.jh?type=0">${singoCount }</a></td>
-		<td><a href="${cp }/board.qnadoing.jh?type=0">${qnaCount }</a></td>
-		<td><a href="${cp }/members.doing.jh?type=1">${membersCount }</a></td>
+		<td><a href="${cp }/singo/doing.jh?type=0">${singoCount }</a></td>
+		<td><a href="${cp }/board/qnadoing.jh?type=0">${qnaCount }</a></td>
+		<td><a href="${cp }/members/doing.jh?type=1">${membersCount }</a></td>
 	</tr>
 
 </table>

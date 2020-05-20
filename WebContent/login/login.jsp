@@ -106,11 +106,15 @@
 			var msg=xhr.responseText;
 			var json=JSON.parse(msg);
 			console.log("제이슨:"+json.msg);
+			console.log("제이슨아뒤:"+json.id);
+			console.log("버노:"+json.m_num);
 			if(json.msg=='not'){
 				loginMsg.innerHTML="아이디 또는 비밀번호가 맞지 않습니다.";
 			}else{
-				console.log('id'+json.id);
-				console.log('넘'+json.m_num);
+				//console.log('id'+json.id);
+				//console.log('넘'+json.m_num);
+				//session.setAttribute('id', json.id);
+				//session.setAttribute('m_num', json.m_num);
 				window.location = "${cp}/indextest.jsp";
 			}
 		}		

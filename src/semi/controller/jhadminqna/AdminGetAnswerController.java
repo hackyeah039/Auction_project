@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import semi.dao.jh.BoardDao;
 import semi.vo.jh.B_answerVo;
-@WebServlet("/admin.getAnswer.jh")
+@WebServlet("/admin/getAnswer.jh")
 public class AdminGetAnswerController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

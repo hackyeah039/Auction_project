@@ -37,7 +37,7 @@
 <br>
 <c:choose>
 	<c:when test="${vo.m_type==1 }">
-		<form method="post" action="${cp }/members.out.jh">
+		<form method="post" action="${cp }/members/out.jh">
 		<input type="hidden" name="m_num" value="${vo.m_num }">
 		<input type="submit" value="탈퇴승인">
 		</form>

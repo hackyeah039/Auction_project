@@ -43,12 +43,12 @@
 <script>
 	
 	function goSubmit1(form) { /*처리 반려 서블릿으로 이동*/
-		form.action="${cp}/singo.return.jh";
+		form.action="${cp}/singo/return.jh";
 		form.submit();
 		return true;
 	}
 	function goSubmit2(form) { /*처리 승인 서블릿으로 이동*/
-		form.action="${cp}/singo.approval.jh";
+		form.action="${cp}/singo/approval.jh";
 		form.submit();
 		return true;
 	}

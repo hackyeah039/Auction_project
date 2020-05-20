@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.jh.MembersDao;
 import semi.vo.jh.MembersVo;
-@WebServlet("/members.detail.jh")
+@WebServlet("/members/detail.jh")
 public class MembersDetailController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,6 +21,6 @@ public class MembersDetailController extends HttpServlet{
 		ArrayList<MembersVo> list=dao.membersDetail(m_num);
 		
 		req.setAttribute("list", list);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=membersDetail.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=membersDetail.jsp").forward(req, resp);
 	}
 }

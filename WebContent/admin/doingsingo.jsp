@@ -12,7 +12,7 @@
 	<c:forEach var="vo" items="${list }">
 		<tr>
 			<td>${vo.singo_num }</td>
-			<td><a href="${cp}/singo.detail.jh?singo_num=${vo.singo_num}
+			<td><a href="${cp}/singo/detail.jh?singo_num=${vo.singo_num}
 				&id=${vo.m_id}">
 			${vo.m_id}</a></td>
 			<td>${vo.singoProcess }</td>
@@ -24,17 +24,17 @@
 <div>
 <c:choose>
 	<c:when test="${startPage>3 }">
-		<a href="${cp}/singo.doing.jh?pageNum=${startPage-3}&type=${type}&field=${field}&keyword=${keyword}">[이전]</a>
+		<a href="${cp}/singo/doing.jh?pageNum=${startPage-3}&type=${type}&field=${field}&keyword=${keyword}">[이전]</a>
 	</c:when>
 </c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${i==pageNum }">
-				<a href="${cp}/singo.doing.jh?pageNum=${i}&type=${type}&field=${field}&keyword=${keyword}">
+				<a href="${cp}/singo/doing.jh?pageNum=${i}&type=${type}&field=${field}&keyword=${keyword}">
 				<span style='color:blue;'>[${i}]</span></a>
 			</c:when>
 			<c:otherwise>
-				<a href="${cp}/singo.doing.jh?pageNum=${i}&type=${type}&field=${field}&keyword=${keyword}">
+				<a href="${cp}/singo/doing.jh?pageNum=${i}&type=${type}&field=${field}&keyword=${keyword}">
 				<span>[${i}]</span></a>
 			</c:otherwise>
 		</c:choose>
@@ -42,13 +42,13 @@
 <!-- 다음/끝.. -->
 <c:choose>
 	<c:when test="${endPage<pageCount }">
-		<a href="${cp}/singo.doing.jh?pageNum=${endPage+1}&type=${type}&field=${field}&keyword=${keyword}">[다음]</a>
+		<a href="${cp}/singo/doing.jh?pageNum=${endPage+1}&type=${type}&field=${field}&keyword=${keyword}">[다음]</a>
 	</c:when>
 </c:choose>
 </div>
 <br>
 <div>
-	<form method="post" action="${cp }/singo.doing.jh?&type=${type}">
+	<form method="post" action="${cp }/singo/doing.jh?&type=${type}">
 		<select name="field">
 			<option value="singojaId" <c:if test="${field=='singojaId'}">selected</c:if>>신고자 아이디</option>	
 			<option value="singo_content" <c:if test="${field=='singo_content'}">selected</c:if>>신고내용</option>	

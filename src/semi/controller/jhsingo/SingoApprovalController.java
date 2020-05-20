@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import semi.dao.jh.SingoDao;
-@WebServlet("/singo.approval.jh")
+@WebServlet("/singo/approval.jh")
 public class SingoApprovalController extends HttpServlet{ //신고승인
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,6 +33,6 @@ public class SingoApprovalController extends HttpServlet{ //신고승인
 			}
 		}
 		req.setAttribute("msg", msg);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=singoOk.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=singoOk.jsp").forward(req, resp);
 	}
 }

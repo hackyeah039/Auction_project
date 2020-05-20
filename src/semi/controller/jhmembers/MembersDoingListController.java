@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.jh.MembersDao;
 import semi.vo.jh.MembersVo;
-@WebServlet("/members.doing.jh")
+@WebServlet("/members/doing.jh")
 public class MembersDoingListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,7 +47,7 @@ public class MembersDoingListController extends HttpServlet{
 		req.setAttribute("keyword", keyword);
 		req.setAttribute("type", type);
 		
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=doingMembersList.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=doingMembersList.jsp").forward(req, resp);
 	
 	}
 }

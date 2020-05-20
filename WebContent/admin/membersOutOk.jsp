@@ -10,4 +10,4 @@
 	</c:when>
 </c:choose>
 <br><br>
-<a href="${cp }/members.list.jh">전체 회원리스트</a>
+<a href="${cp }/members/list.jh">전체 회원리스트</a>

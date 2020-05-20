@@ -243,7 +243,7 @@ public class MembersDao {
 		PreparedStatement pstmt=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="update members set m_name='null', m_email='null', "
+			String sql="update members set m_name='null', "
 					+ "m_phone=0, m_addr='null', " + 
 					"m_pwd='null', trust=0, m_type=2 where m_num=?";
 			pstmt=con.prepareStatement(sql);

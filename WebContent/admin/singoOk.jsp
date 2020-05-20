@@ -14,4 +14,4 @@
 	</c:otherwise>
 </c:choose>
 <br><br>
-<a href="${cp }/singo.list.jh">전체 신고리스트</a>
+<a href="${cp }/singo/list.jh">전체 신고리스트</a>

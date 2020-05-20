@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.jh.MembersDao;
-@WebServlet("/members.out.jh")
+@WebServlet("/members/out.jh")
 public class MembersOutController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -24,6 +24,6 @@ public class MembersOutController extends HttpServlet{
 			msg="error";
 		}
 		req.setAttribute("msg", msg);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=membersOutOk.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=membersOutOk.jsp").forward(req, resp);
 	}
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.jh.SingoDao;
 
-@WebServlet("/singo.return.jh")
+@WebServlet("/singo/return.jh")
 public class SingoReturnController extends HttpServlet{ //신고반려
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,6 +25,6 @@ public class SingoReturnController extends HttpServlet{ //신고반려
 			msg="error";
 		}
 		req.setAttribute("msg", msg);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=singoOk.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=singoOk.jsp").forward(req, resp);
 	}
 }

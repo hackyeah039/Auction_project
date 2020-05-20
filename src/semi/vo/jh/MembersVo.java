@@ -13,7 +13,7 @@ public class MembersVo {
 	private int trust; //신뢰도
 	private int m_type; //회원타입
 	private Date m_regdate;//가입일
-	private String typeName;//가입일
+	private String typeName;//타입이름
 	public MembersVo() {}
 	public MembersVo(int m_num, String m_name, String m_email, int m_phone, String m_addr, String m_id, String m_pwd,
 			int trust, int m_type, Date m_regdate) {

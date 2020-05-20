@@ -13,7 +13,7 @@ import semi.dao.jh.BoardDao;
 import semi.vo.jh.B_answerVo;
 import semi.vo.jh.BoardVo;
 
-@WebServlet("/board.detail.jh")
+@WebServlet("/board/detail.jh")
 public class AdminQnaDetailController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -26,6 +26,6 @@ public class AdminQnaDetailController extends HttpServlet{
 		req.setAttribute("list", list);
 		req.setAttribute("list2", list2);
 		req.setAttribute("id", m_id);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=adminQnaDetail.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=adminQnaDetail.jsp").forward(req, resp);
 	}
 }

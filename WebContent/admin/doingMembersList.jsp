@@ -17,7 +17,7 @@
 					<td>${vo.m_id }</td>
 				</c:when>
 				<c:otherwise>		
-					<td><a href="${cp }/members.detail.jh?m_num=${vo.m_num}">${vo.m_id }</a></td>
+					<td><a href="${cp }/members/detail.jh?m_num=${vo.m_num}">${vo.m_id }</a></td>
 				</c:otherwise>
 			</c:choose>		
 			<td>${vo.typeName }</td>		
@@ -29,19 +29,19 @@
 <div>
 	<c:choose>
 		<c:when test="${startPage>3}">
-				<a href="${cp}/members.doing.jh?pageNum=${startPage-3}&field=${field}
+				<a href="${cp}/members/doing.jh?pageNum=${startPage-3}&field=${field}
 				&keyword=${keyword}&type=${type}">[이전]</a>
 		</c:when>
 	</c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${pageNum==i }">
-				<span><a href="${cp}/members.doing.jh?pageNum=${i}&field=${field}
+				<span><a href="${cp}/members/doing.jh?pageNum=${i}&field=${field}
 				&keyword=${keyword}&type=${type}">
 				[${i}]</a></span>
 			</c:when>
 			<c:otherwise>
-				<span><a href="${cp}/members.doing.jh?pageNum=${i}&field=${field}
+				<span><a href="${cp}/members/doing.jh?pageNum=${i}&field=${field}
 				&keyword=${keyword}&type=${type}">
 				[${i}]</a></span>
 			</c:otherwise>
@@ -50,7 +50,7 @@
 	<!-- 다음버튼 -->
 		<c:choose>
 		<c:when test="${endPage<pageCount }">
-			<a href="${cp}/members.doing.jh?pageNum=${endPage+1}&field=${field}
+			<a href="${cp}/members/doing.jh?pageNum=${endPage+1}&field=${field}
 			&keyword=${keyword}&type=${type}">[다음]</a>
 		</c:when>
 	</c:choose>
@@ -60,7 +60,7 @@
 <div>
 	<c:choose>
 	<c:when test="${type==2 }">
-		<form method="post" action="${cp }/members.doing.jh?type=${type}">
+		<form method="post" action="${cp }/members/doing.jh?type=${type}">
 			<select name="field">
 				<option value="m_id" <c:if test="${field=='m_id'}">selected</c:if>>회원 아이디</option>	
 			</select>
@@ -69,7 +69,7 @@
 		</form>
 	</c:when>
 	<c:otherwise>
-		<form method="post" action="${cp }/members.doing.jh?type=${type}">
+		<form method="post" action="${cp }/members/doing.jh?type=${type}">
 			<select name="field">
 				<option value="m_id" <c:if test="${field=='m_id'}">selected</c:if>>회원 아이디</option>	
 				<option value="m_name" <c:if test="${field=='m_name'}">selected</c:if>>회원 이름</option>	

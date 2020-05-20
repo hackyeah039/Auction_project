@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import semi.dao.jh.BoardDao;
 import semi.vo.jh.B_answerVo;
-@WebServlet("/board.approval.jh")
+@WebServlet("/board/approval.jh")
 public class AdminAnswerController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

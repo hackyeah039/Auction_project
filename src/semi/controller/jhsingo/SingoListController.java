@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import semi.dao.jh.SingoDao;
 import semi.vo.jh.SingoVo;
 
-@WebServlet("/singo.list.jh")
+@WebServlet("/singo/list.jh")
 public class SingoListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -51,6 +51,6 @@ public class SingoListController extends HttpServlet{
 		req.setAttribute("endRow", endRow);
 		req.setAttribute("field", field);
 		req.setAttribute("keyword", keyword);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=allsingo.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=allsingo.jsp").forward(req, resp);
 	}
 }

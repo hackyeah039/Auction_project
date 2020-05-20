@@ -37,11 +37,10 @@ public class LoginController extends HttpServlet{
 			pw.close();
 		}else {
 			MembersVo vo=list.get(0);
-			//HttpSession session=req.getSession();
-			//session.setAttribute("id", vo.getM_id());
-			//session.setAttribute("m_num", vo.getM_num());
-			json.put("id", vo.getM_id());
-			json.put("m_num", vo.getM_num());
+			HttpSession session=req.getSession();
+			session.setAttribute("id", vo.getM_id());
+			session.setAttribute("m_num", vo.getM_num());
+			json.put("msg", "ok");
 			pw.print(json);
 			pw.close();
 			

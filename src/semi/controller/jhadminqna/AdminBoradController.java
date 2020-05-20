@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.jh.BoardDao;
 import semi.vo.jh.BoardVo;
-@WebServlet("/board.qnalist.jh")
+@WebServlet("/board/qnalist.jh")
 public class AdminBoradController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,7 +54,7 @@ public class AdminBoradController extends HttpServlet{
 		req.setAttribute("field", field);
 		req.setAttribute("keyword", keyword);
 		
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=adminQnaList.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=adminQnaList.jsp").forward(req, resp);
 		
 	}
 }

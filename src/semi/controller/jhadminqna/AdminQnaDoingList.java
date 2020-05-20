@@ -13,7 +13,7 @@ import javax.websocket.server.ServerEndpoint;
 import semi.dao.jh.BoardDao;
 import semi.vo.jh.BoardVo;
 
-@WebServlet("/board.qnadoing.jh")
+@WebServlet("/board/qnadoing.jh")
 public class AdminQnaDoingList extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -56,6 +56,6 @@ public class AdminQnaDoingList extends HttpServlet{
 		req.setAttribute("type", type);
 		req.setAttribute("field", field);
 		req.setAttribute("keyword", keyword);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=doingqna.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=doingqna.jsp").forward(req, resp);
 	}
 }

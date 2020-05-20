@@ -17,7 +17,7 @@
 					<td>${vo.m_id }</td>
 				</c:when>
 				<c:otherwise>		
-					<td><a href="${cp }/members.detail.jh?m_num=${vo.m_num}">${vo.m_id }</a></td>
+					<td><a href="${cp }/members/detail.jh?m_num=${vo.m_num}">${vo.m_id }</a></td>
 				</c:otherwise>
 			</c:choose>	
 			<td>${vo.typeName }</td>		
@@ -29,32 +29,32 @@
 <div>
 	<c:choose>
 		<c:when test="${startPage>3 }">
-			<a href="${cp}/members.list.jh?pageNum=${startPage-3}&field=${field}
+			<a href="${cp}/members/list.jh?pageNum=${startPage-3}&field=${field}
 			&keyword=${keyword}">[이전]</a>
 		</c:when>
 	</c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${i==pageNum }">
-				<a href="${cp}/members.list.jh?pageNum=${i}&field=${field}&keyword=${keyword}">
+				<a href="${cp}/members/list.jh?pageNum=${i}&field=${field}&keyword=${keyword}">
 				<span style='color:blue;'>[${i}]</span></a>
 			</c:when>
 			<c:otherwise>
-				<a href="${cp}/members.list.jh?pageNum=${i}&field=${field}&keyword=${keyword}">
+				<a href="${cp}/members/list.jh?pageNum=${i}&field=${field}&keyword=${keyword}">
 				<span>[${i}]</span></a>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 	<c:choose>
 		<c:when test="${endPage<PageCount }">
-			<a href="${cp}/members.list.jh?pageNum=${endPage+1}&field=${field}
+			<a href="${cp}/members/list.jh?pageNum=${endPage+1}&field=${field}
 			&keyword=${keyword}">[다음]</a>
 		</c:when>
 	</c:choose>
 </div>
 <br>
 <div>
-	<form method="post" action="${cp }/members.list.jh?">
+	<form method="post" action="${cp }/members/list.jh?">
 		<select name="field">
 			<option value="m_id" <c:if test="${field=='m_id'}">selected</c:if>>회원 아이디</option>	
 			<option value="m_name" <c:if test="${field=='m_name'}">selected</c:if>>회원 이름</option>	

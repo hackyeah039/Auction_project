@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import semi.dao.jh.SingoDao;
 import semi.vo.jh.SingoVo;
-@WebServlet("/singo.doing.jh")
+@WebServlet("/singo/doing.jh")
 public class SingoDoingListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -54,6 +54,6 @@ public class SingoDoingListController extends HttpServlet{
 		req.setAttribute("type", type);
 		req.setAttribute("field", field);
 		req.setAttribute("keyword", keyword);
-		req.getRequestDispatcher("admin/adminIndex.jsp?file=doingsingo.jsp").forward(req, resp);
+		req.getRequestDispatcher("/admin/adminIndex.jsp?file=doingsingo.jsp").forward(req, resp);
 	}
 }
