@@ -8,8 +8,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script> 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>   
 
-<!-- 아이디찾기 -->
-<form method="post" onSubmit="findID();return false">
+<!-- 비밀번호 찾기 -->
+<form method="post" onSubmit="findPwd();return false">
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-3 col-form-label">아이디 : </label>
+    <div class="col-sm-10">
+      <input type="text" name="m_id" class="form-control" id="inputPassword" placeholder="Id">
+    </div>
+  </div>
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-3 col-form-label">이름 : </label>
     <div class="col-sm-10">
@@ -27,7 +33,7 @@
   </div>
   <div id="btn">
 	  <button type="submit" id="findBt" class="btn btn-secondary btn-lg" disabled="disabled">
-	  아이디찾기</button>
+	  비밀번호 찾기</button>
 	  <a href="${cp }/login/login.jsp">
 	  <button type="button" class="btn btn-secondary btn-lg">로그인하러가기</button></a>
 	</div>
@@ -37,14 +43,15 @@
 <script>
 	var phonebool=false;
 	var xhr=null;
-	function findID() {
+	function findPwd() {
 		var m_name=document.getElementsByName("m_name")[0].value;
 		var m_phone=document.getElementsByName("m_phone")[0].value;
+		var m_name=document.getElementsByName("m_name")[0].value;
 		xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=findok;
-		xhr.open('post','${cp}/login/findId.jh',true);
+		xhr.open('post','${cp}/login/findPwd.jh',true);
 		xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-		xhr.send('m_name='+m_name+'&m_phone='+m_phone);
+		xhr.send('m_name='+m_name+'&m_phone='+m_phone+'&m_name'+m_name);
 	}
 	function findok() {
 		if(xhr.readyState==4 && xhr.status==200){
@@ -54,7 +61,7 @@
 			var json=JSON.parse(msg);
 			if(json.msg=='ok'){
 				noFindMsg.innerHTML="";
-				okFindMsg.innerHTML="회원님의 아이디는 ["+json.id+"] 입니다.";
+				okFindMsg.innerHTML="회원님의 비밀번호는 ["+json.pwd+"] 입니다.";
 				noFindMsg.innerHTML="";
 			}else if(json.msg=='no'){
 				okFindMsg.innerHTML="";

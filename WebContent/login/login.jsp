@@ -75,7 +75,8 @@
         <br>
         <button id="btn-Yes" class="btn btn-lg btn-dark btn-block" type="submit">로 그 인</button>
         <br>
-        <a href="${cp }/login/findMain.jsp">아이디찾기</a><a href="">/비밀번호 찾기</a>
+        <a href="${cp }/login/findMain.jsp">아이디찾기</a>
+        <a href="${cp }/login/findMain.jsp?file=findPwd.jsp">/비밀번호 찾기</a>
       </form>
       
 		</div>

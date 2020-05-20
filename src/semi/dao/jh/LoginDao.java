@@ -11,6 +11,7 @@ import semi.db.jh.ConnectionPool;
 import semi.vo.jh.MembersVo;
 
 public class LoginDao {
+	private static final String String = null;
 	private static LoginDao dao=new LoginDao();
 	private LoginDao() {}
 	public static LoginDao getLoginDao() {
@@ -60,23 +61,28 @@ public class LoginDao {
 		}
 	}
 	//아이디찾기
-	public int findId(String name, int phone) {
+	public String findId(String name, int phone) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String m_id=null;
 		try {
 			con=ConnectionPool.getCon();
 			String sql="select * from members where m_name=? and m_phone=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, name);
 			pstmt.setInt(2, phone);
-			
-			
-			return -1;
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				m_id=rs.getString("m_id");
+			}
+			return m_id;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
-			return -1;
+			return null;
 		}finally {
 			try{
+				if(rs!=null) rs.close();
 				if(pstmt!=null) pstmt.close();
 				if(con!=null) con.close();
 			}catch(SQLException s) {
@@ -84,5 +90,38 @@ public class LoginDao {
 			}
 		}
 	}
+	
+	//비밀번호 찾기
+		public String findPwd(String id,String name, int phone) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			String m_pwd=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select * from members where m_id=? and m_name=? and m_phone=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.setString(2, name);
+				pstmt.setInt(3, phone);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					m_pwd=rs.getString("m_pwd");
+				}
+				return m_pwd;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return null;
+			}finally {
+				try{
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+	
 	
 }

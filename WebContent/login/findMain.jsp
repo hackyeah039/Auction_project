@@ -25,8 +25,10 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		    <div class="navbar-nav">
-		      <a class="nav-item nav-link" href="${cp }/login/findId.jsp">아이디찾기</a>
-		      <a class="nav-item nav-link" href="#">비밀번호찾기</a>
+		      <a class="nav-item nav-link" href="${cp }/login/findMain.jsp?file=findId.jsp">
+		    	  아이디찾기</a>
+		      <a class="nav-item nav-link" href="${cp }/login/findMain.jsp?file=findPwd.jsp">
+		      		비밀번호찾기</a>
 		    </div>
 		  </div>
 		</nav>

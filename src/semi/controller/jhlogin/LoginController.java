@@ -32,7 +32,6 @@ public class LoginController extends HttpServlet{
 		resp.setContentType("text/plain;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		if(id.equals("admin") && pwd.equals("admin1234")) {
-			System.out.println("관리자용~");
 			HttpSession session=req.getSession();
 			session.setAttribute("adminId", id);
 			json.put("msg", "ok");
