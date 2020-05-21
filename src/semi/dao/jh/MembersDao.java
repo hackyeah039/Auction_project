@@ -355,5 +355,48 @@ public class MembersDao {
 			}
 		}
 		
-	
+		//===========================내정보관련 메소드==================================
+		
+		//회원정보 가져오는 메소드(정보수정 관련)
+		public ArrayList<MembersVo> getMyInfo(int num){
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select * from members where m_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				rs=pstmt.executeQuery();
+				ArrayList<MembersVo> list=new ArrayList<MembersVo>();
+				if(rs.next()) {
+					int m_num=rs.getInt("m_num");
+					String m_name=rs.getString("m_name");
+					String m_email=rs.getString("m_email");
+					int m_phone=rs.getInt("m_phone");
+					String m_addr=rs.getString("m_addr");
+					String m_id=rs.getString("m_id");
+					String m_pwd=rs.getString("m_pwd");
+					int trust=rs.getInt("trust");
+					int m_type=rs.getInt("m_type");
+					Date m_regdate=rs.getDate("m_regdate");
+					MembersVo vo=new MembersVo(m_num, m_name, m_email, m_phone, m_addr, 
+							m_id, m_pwd, trust, m_type, m_regdate);
+					list.add(vo);
+				}
+				return list;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return null;
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+			
+		}
 }
