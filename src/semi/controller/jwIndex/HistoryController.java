@@ -30,90 +30,82 @@ public class HistoryController extends HttpServlet{
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
-		int a_num=Integer.parseInt(req.getParameter("a_num")); // 경매물품번호
-//		System.out.println(a_num +"a_num 값 입니다.");
+//		int a_num=Integer.parseInt(req.getParameter("a_num")); // 경매물품번호
 		int field =10;
 		
-		int startRow=(pageNum-1)*field +1;
-		int endRow =(startRow-1)+field; // 페이지 '내' 시작,끝 줄
+		int startRow=(pageNum-1)*10 +1;
+		int endRow =(startRow-1)+9; // 페이지 '내' 시작,끝 줄
 		
 		int startPage =(pageNum-1)/5*5+1; 
 		int endPage =startPage+4; // 페이징처리된 시작,끝 페이지
 		
 		BidDao dao= BidDao.getInstance(); //싱글톤dao
 		
-		ArrayList<BidVo> list2 =dao.postlist(startRow, endRow, 18);
-		int paging =(int)Math.ceil(dao.getCount(field));
+		ArrayList<BidVo> list2 =dao.postlist(startRow, endRow, 18); //18은 a_num
+		int paging =(int)Math.ceil(dao.getCount(field,18));//18은 a_num
+		if(endPage>paging) {endPage = paging;}
+		System.out.println(endPage +"페이징넘버입니다.");
+		
+		
 		JSONArray jarr=new JSONArray();
-	    
 	    for(BidVo vo:list2){
 	    	JSONObject json=new JSONObject();
-//	    	System.out.println(vo.getBid_date());
+	    	System.out.println(vo.getBid_date());
 	    	json.put("date",vo.getBid_date());
-//	    	System.out.println(vo.getBid_price());
+	    	System.out.println(vo.getBid_price());
 	    	json.put("price",vo.getBid_price());
-//	    	System.out.println(vo.getM_num());
+	    	System.out.println(vo.getM_num());
 	    	json.put("paging",paging);
-//	    	System.out.println(paging);
+	    	System.out.println(paging);
 	    	json.put("startRow",startRow);
-//	    	System.out.println(startRow);
+	    	System.out.println(startRow);
 	    	json.put("endRow",endRow);
-//	    	System.out.println(endRow);
+	    	System.out.println(endRow);
 	    	json.put("field",field);
-//	    	System.out.println(field);
+	    	System.out.println(field);
 	    	json.put("startPage",startPage);
-//	    	System.out.println(startPage);
+	    	System.out.println(startPage);
 	    	json.put("endPage",endPage);
-//	    	System.out.println(endPage);
+	    	System.out.println(endPage);
 	    	json.put("list", list2);
-//	    	System.out.println(list);
+	    	System.out.println(list2);
 	    	jarr.put(json);
 	    }
 	    resp.setContentType("text/plain;charset=utf-8");
-	    	PrintWriter pw=resp.getWriter();
-	    	pw.print(jarr);
+	    PrintWriter pw=resp.getWriter();
+	    pw.print(jarr);
 		
-		
-		
-		ArrayList<BidVo> list = dao.list(a_num,startRow,endRow); // 경매번호임
-		int allpages =(int)Math.ceil(dao.getCount(field));
-		
-		System.out.println(dao.getCount(field));
-		
-		if(endPage>allpages) {endPage = allpages;}
-		req.setAttribute("list", list);
-		req.setAttribute("allpages", allpages);
+		req.setAttribute("list", list2);
+		req.setAttribute("allpages", paging);
 		req.setAttribute("startrow", startRow);
 		req.setAttribute("endRow", endRow);
 		req.setAttribute("field", field);
-		req.setAttribute("pageNum", spageNum);
+		req.setAttribute("pageNum", pageNum);
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
-		req.setAttribute("a_num", a_num);
+		req.setAttribute("a_num", 18);
 		req.getRequestDispatcher("/board/detailview.jsp").forward(req , resp);
 	}
-	/*
+	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		int field=Integer.parseInt(req.getParameter("field"));
 		int pageNum =Integer.parseInt(req.getParameter("pageNum")); //넘어옴
-//		int a_num=Integer.parseInt(req.getParameter("a_num"));
+		int a_num=Integer.parseInt(req.getParameter("a_num")); 
 		System.out.println(field +"필드값입니다," +pageNum +"현재 보고있는 페이지숫자입니다." + 18 +"경매물품번호입니다.");
 		int startRow=(pageNum-1)*field +1;
 		int endRow =(startRow-1)+field;
 		int startPage =(pageNum-1)/5*5+1; 
 		int endPage =startPage+4;
 		
-		
 		BidDao dao= BidDao.getInstance();
-		int paging =(int)Math.ceil(dao.getCount(field));
+		int paging =(int)Math.ceil(dao.getCount(field,18)); //18은 a_num입니다.
 		if(endPage>paging) {endPage = paging;}
 
+		ArrayList<BidVo> list =dao.postlist(startRow, endRow, 18); //18은 a_num입니다.
 		System.out.println("paging값입니다. " +paging +",startrow " +startRow +",endRow " +endRow +",field " +field +",startPage " +startPage +",endPage " +endPage);
-		ArrayList<BidVo> list =dao.postlist(startRow, endRow, 18);
-		
 		
 		req.setAttribute("paging", paging);
 		req.setAttribute("startrow", startRow);
@@ -122,35 +114,23 @@ public class HistoryController extends HttpServlet{
 		req.setAttribute("startPage", startPage);
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("list", list);
+		req.setAttribute("pageNum", pageNum);
 		
 	    JSONArray jarr=new JSONArray();
 	    
 	    for(BidVo vo:list){
 	    	JSONObject json=new JSONObject();
-//	    	System.out.println(vo.getBid_date());
+//	    	System.out.println(vo.getBid_date() +"vo.getBid_date()");
 	    	json.put("date",vo.getBid_date());
-//	    	System.out.println(vo.getBid_price());
+//	    	System.out.println(vo.getBid_price() +"vo.getBid_price()");
 	    	json.put("price",vo.getBid_price());
-//	    	System.out.println(vo.getM_num());
-	    	json.put("paging",paging);
-//	    	System.out.println(paging);
-	    	json.put("startRow",startRow);
-//	    	System.out.println(startRow);
-	    	json.put("endRow",endRow);
-//	    	System.out.println(endRow);
-	    	json.put("field",field);
-//	    	System.out.println(field);
-	    	json.put("startPage",startPage);
-//	    	System.out.println(startPage);
-	    	json.put("endPage",endPage);
-//	    	System.out.println(endPage);
-	    	json.put("list", list);
-//	    	System.out.println(list);
+//	    	System.out.println(vo.getM_num()+" vo.getM_num()");
+	    	json.put("mnum", vo.getM_num());
 	    	jarr.put(json);
 	    }
 	    resp.setContentType("text/plain;charset=utf-8");
-	    	PrintWriter pw=resp.getWriter();
-	    	pw.print(jarr);
+	    PrintWriter pw=resp.getWriter();
+	    pw.print(jarr);
 	}
-	*/
+	
 }

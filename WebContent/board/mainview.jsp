@@ -8,17 +8,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-  <link rel= "stylesheet" type="text/css" href="css/main.css">
+
   <link rel="stylesheet" href="btcss/bootstrap.css">
   <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="btjs/bootstrap.js"></script>
   <title>Blog Post - Start Bootstrap Template</title>
-
+  <!-- Custom styles for this template -->
+  <link href="css/blog-post.css" rel="stylesheet">
+  <link rel= "stylesheet" type="text/css" href="css/main.css">
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	
-  <!-- Custom styles for this template -->
-  <link href="css/blog-post.css" rel="stylesheet">
+  
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
   <script>
 	//찜
@@ -106,7 +108,7 @@
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
+    <div class="containr">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -129,8 +131,7 @@
   </nav>
 
   <!-- Page Content -->
-  <div class="container">
-
+  <div class="container" id="a">
     <div class="row">
 
       <!-- Post Content Column -->
@@ -147,16 +148,11 @@
 
         <hr>
 
-        <!-- Date/Time -->
-        <p>경매 남은시간 <div id="result" style="width:100%; height:20px"></div></p>
-        <hr>
-
-		
 		<div class="container">
 		<ul class="slider-container simple-list" id="slider">
 			<c:forEach var="vo" items="${ipath }">
 				<li class ="slide">
-					<img src="${cp}/image/${vo}" width="600" height="50">
+					<img src="${cp}/image/${vo}" width="600">
 				</li>
 			</c:forEach>
 		</ul>
@@ -273,7 +269,7 @@
               <div class="form-group">
                 <textarea class="form-control" rows="3"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">등록</button>
+              <button type="submit" class="btn btn-primary pull-right">등록</button>
             </form>
           </div>
         </div>
@@ -301,6 +297,7 @@
 
         <!-- Side Widget -->
         <div class="card my-4">
+          <h5 class="card-header">경매 남은시간 <div id="result" style="width:100%; height:20px"></div></h5>
           <h5 class="card-header">${info.a_startdate } 부터 ${info.a_enddate } 까지</h5>
           <h5 class="card-header">입찰수  : ${bidnum }</h5>
           <h5 class="card-header"><a href="" onclick="bidlist()">경매기록보기</a></h5>
@@ -330,10 +327,15 @@
     </div>
     <!-- /.container -->
   </footer>
+  
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript">
+  window.onload=function(){
+	  var a=document.getElementById("a");
+	  a.style.height="1400px";
+  }
+</script>
+
 
 </body>
 

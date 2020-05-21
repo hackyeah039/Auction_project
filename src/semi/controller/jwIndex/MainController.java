@@ -113,7 +113,6 @@ public class MainController extends HttpServlet{
 		req.setAttribute("pageNum", pageNum);
 		req.setAttribute("pageCount", pageCount);
 		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
 		
 		JSONArray jarr = new JSONArray();//JSONArray로 보내기
 		for(MainVo vo : list) {

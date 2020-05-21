@@ -2,7 +2,6 @@
 	//대상 .addEventListener('이벤트종류',할일);
 	//DOMcontentLoaded
 	//할일 == 함수 == function(){실제로할일  }
-	
 document.addEventListener('DOMContentLoaded',function(){
 	//변수 지정
 	
@@ -28,12 +27,12 @@ document.addEventListener('DOMContentLoaded',function(){
 		
 	//슬라이드가 있으면 가로로 배열하기
 	for(var a = 0; a < slideCount; a++){
-		slide[a].style.left =a * 100 + '%';
+		slide[a].style.left =a * 100 + 'px';
 	}
 
 	//슬라이드 이동함수
 	function goToSlide(idx){
-		slideContainer.style.left = -100 * idx + '%';
+		slideContainer.style.left = -100 * idx + 'px';
 		slideContainer.classList.add('animated');
 		currentIndex = idx; 
 	}
