@@ -36,9 +36,6 @@
 	
 </script>
 <body>
-<h1>물품이름 쓰는 곳입니다.</h1>
-<P>*경매종료 후 입찰자에 한해 경매기록을 공개합니다.</P>
-<div id="test">asd</div>
 <select id="numbers" name="numbers" onchange="selectdd()" >
   <option value="10" <c:if test="${numbers=='10' }">selected</c:if>>10</option>
   <option value="20" <c:if test="${numbers=='20' }">selected</c:if>>20</option>

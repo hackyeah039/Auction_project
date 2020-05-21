@@ -4,126 +4,184 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equi="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Insert title here</title>
-	<link rel= "stylesheet" type="text/css" href="css/main.css">
-	<link rel="stylesheet" href="btcss/bootstrap.css">
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="btjs/bootstrap.js"></script>
-	<script>
-		//찜
-		function myFunction(){
-		 	var allwindow= window.open("${cp}/jjim.do?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=500,width=250,height=100");
+  <meta charset="utf-8" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel= "stylesheet" type="text/css" href="css/main.css">
+  <link rel="stylesheet" href="btcss/bootstrap.css">
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="btjs/bootstrap.js"></script>
+  <title>Blog Post - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
+  <!-- Custom styles for this template -->
+  <link href="css/blog-post.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+  <script>
+	//찜
+	function myFunction(){
+	 	var allwindow= window.open("${cp}/jjim.do?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=400,width=330,height=200");
+	}
+	//신고하기
+	function singo(){
+		var allwindow= window.open("${cp}/board/singo.jsp?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=400,height=300");
+	}
+	//경매기록보기
+	function bidlist(){
+		var allwindow= window.open("${cp }/history.do?a_num=${a_num }", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=300,width=600,height=600");
+	}
+	//경매시간
+	var myVar = setInterval(function () {
+		var now = new Date();//현재시간
+		var enddate = new Date(${months}+"/"+${day}+"/"+${years});
+		var distance =enddate.getTime()-now.getTime();
+		
+		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		days
+	  	var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+	  	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+	  	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+	  	
+	  	
+		document.getElementById("result").innerHTML = days + "일 " + hours + "시 "
+		  + minutes + "분 " + seconds + "초 ";
+		
+		if (distance < 0) {
+		    clearInterval(myVar);
+		    document.getElementById("result").innerHTML = "종료된 경매입니다";
 		}
-		//신고하기
-		function singo(){
-			var allwindow= window.open("${cp}/board/singo.jsp?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=400,height=300");
-		}
-		//경매기록보기
-		function bidlist(){
-			var allwindow= window.open("${cp }/history.do?a_num=${a_num }", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=500,height=400");
-		}
-		//경매시간
-		var myVar = setInterval(function () {
-			var now = new Date();//현재시간
-			var enddate = new Date(${months}+"/"+${day}+"/"+${years});
-			var distance =enddate.getTime()-now.getTime();
-			
-			var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-			days
-		  	var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		  	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		  	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-		  	
-		  	
-			document.getElementById("result").innerHTML = days + "일 " + hours + "시 "
-			  + minutes + "분 " + seconds + "초 ";
-			
-			if (distance < 0) {
-			    clearInterval(myVar);
-			    document.getElementById("result").innerHTML = "종료된 경매입니다";
+	}, 1000);
+	
+	//검색
+	var xml= new XMLHttpRequest();	
+	
+	function searchFunction(){
+		xml.open("POST","${cp}/main.do?keyword=" +encodeURIComponent(document.getElementById("keyword").value),true);
+		xml.onreadystatechange = searchProcess;
+		xml.send();
+	}
+	
+	function searchProcess(){
+		var table = document.getElementById("ajaxTable");
+		if(xml.readyState == 4 && xml.status == 200){
+			var result =JSON.parse(xml.responseText);
+			for(var i=0;i<result.length();i++){//오브젝트상태
+				var row = table.insertRow(0);//내용제목
+				var row1 = table.insertRow(1);//내용컨텐트
+				var row2 = table.insertRow(2);//Ask컨텐트
+				
+				var cell1 = row.insertCell(0);//첫번째줄
+				var cell2 = row.insertCell(1);
+				var cell3 = row.insertCell(2);
+				var cell4 = row.insertCell(3);
+				
+				var cell5 = row1.insertCell(0);//두번째줄
+				var cell6 = row1.insertCell(1);
+				
+				var cell7 = row2.insertCell(0);//세번째줄
+				var cell8 = row2.insertCell(1);
+				
+				cell1.innerHTML += result[i].rnum;
+				cell2.innerHTML += result[i].que_title;
+				cell3.innerHTML += result[i].m_num;
+				cell4.innerHTML += result[i].que_regdate;
+				
+				cell5.innerHTML += '<img src="${cp }/image/q.svg" class="img-fluid" alt="Responsive image">';
+				cell6.innerHTML += result[i].que_content;
+				
+				cell7.innetHTML += '<img src="${cp }/image/a.svg" class="img-fluid" alt="Responsive image">';
+				cell8.innerHTML += result[i].b_content;
 			}
-		}, 1000);
-		
-		//검색
-		var xml= new XMLHttpRequest();	
-		
-		function searchFunction(){
-			xml.open("POST","${cp}/main.do?keyword=" +encodeURIComponent(document.getElementById("keyword").value),true);
-			xml.onreadystatechange = searchProcess;
-			xml.send();
 		}
-		
-		function searchProcess(){
-			var table = document.getElementById("ajaxTable");
-			if(xml.readyState == 4 && xml.status == 200){
-				var result =JSON.parse(xml.responseText);
-				for(var i=0;i<result.length();i++){//오브젝트상태
-					var row = table.insertRow(0);//내용제목
-					var row1 = table.insertRow(1);//내용컨텐트
-					var row2 = table.insertRow(2);//Ask컨텐트
-					
-					var cell1 = row.insertCell(0);//첫번째줄
-					var cell2 = row.insertCell(1);
-					var cell3 = row.insertCell(2);
-					var cell4 = row.insertCell(3);
-					
-					var cell5 = row1.insertCell(0);//두번째줄
-					var cell6 = row1.insertCell(1);
-					
-					var cell7 = row2.insertCell(0);//세번째줄
-					var cell8 = row2.insertCell(1);
-					
-					cell1.innerHTML += result[i].rnum;
-					cell2.innerHTML += result[i].que_title;
-					cell3.innerHTML += result[i].m_num;
-					cell4.innerHTML += result[i].que_regdate;
-					
-					cell5.innerHTML += '<img src="${cp }/image/q.svg" class="img-fluid" alt="Responsive image">';
-					cell6.innerHTML += result[i].que_content;
-					
-					cell7.innetHTML += '<img src="${cp }/image/a.svg" class="img-fluid" alt="Responsive image">';
-					cell8.innerHTML += result[i].b_content;
-				}
-			}
-		}
-		
+	}
+	
 	</script>
 	<script src="js/mainjs.js"></script>
 </head>
-<body>
-홈>온라인경매>${cate }<br>
-<br>
-경매 물품 제목 ${info.a_title}<br>
-<br>
-<div class="container">
-	<ul class="slider-container simple-list" id="slider">
-		<c:forEach var="vo" items="${ipath }">
-			<li class ="slide">
-				<img src="${cp}/image/${vo}" width="200" height="300">
-			</li>
-		</c:forEach>
-	</ul>
-	
-	<a href="#" id="prev"></a>
-	<a href="#" id="next"></a>
-</div>
-<br>
- 경매기간 ${info.a_startdate } ~~ ${info.a_enddate }<br> 
- 경매 남은시간 <div id="result"></div>
-물품번호 ${info.a_num }<br>
-시작가 ${info.a_startbid }<br>
-입찰단위 ${info.a_bidunit }<br>
-입찰방식 : 비공개<br>
-입찰수  : ${bidnum }<br>
-<a href="" onclick="bidlist()">경매기록보기</a> <br>
-배송방법 ${ship.s_way }<br>
-배송비용 ${ship.s_price }<br>
-판매자 ID : <a href="" onclick="singo()">${seller }</a><br>
-<a href="">입찰하기</a><br>
-<a href="" onclick="myFunction()">관심물품 찜하기</a><br>
 
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">메인페이지
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Services</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h1 class="mt-4">경매 물품 제목 ${info.a_title}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          4조
+          <a href="#">김정욱</a>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>경매 남은시간 <div id="result" style="width:100%; height:20px"></div></p>
+        <hr>
+
+		
+		<div class="container">
+		<ul class="slider-container simple-list" id="slider">
+			<c:forEach var="vo" items="${ipath }">
+				<li class ="slide">
+					<img src="${cp}/image/${vo}" width="600" height="50">
+				</li>
+			</c:forEach>
+		</ul>
+	
+		<a href="#" id="prev"></a>
+		<a href="#" id="next"></a>
+</div>
+		
+		
+        <hr>
+
+        <!-- Post Content -->
+        <p class="lead"> 물품의 세부사항목록을 여기다가 작성할겁니다아아아ㅏ아아앙남ㅇ머나오마너와ㅓㅁ노아ㅓㅁ노어ㅏㅁ노어ㅏㅁ노아ㅓㅁ노어ㅏ모나어</p>
+
+        <p> 물품의 두번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
+
+        <p> 물품의 세번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
+
+        <p> 물품의 네번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
+
+        <p> 물품의 다섯번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
+
+
+
+<!-- 문의하기 게시판 정보 -->
 <table class="table table-condensed" style="text-align: center; border: 1px soli #dddddd; border-collapse:collapse">
 	<thead>
 		<tr>
@@ -205,21 +263,78 @@
 		이후
 	</c:otherwise>
 </c:choose>
+		
+		
+        <!-- 문의하기 폼 -->
+        <div class="card my-4">
+          <h5 class="card-header">문의하기</h5>
+          <div class="card-body">
+            <form>
+              <div class="form-group">
+                <textarea class="form-control" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">등록</button>
+            </form>
+          </div>
+        </div>
+      </div>
 
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">카테고리</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <ul class="list-unstyled mb-0">
+                  <ol class="breadcrumb">
+  					<li class="breadcrumb-item"><a href="#">홈</a></li>
+  					<li class="breadcrumb-item"><a href="#">온라인경매</a></li>
+  					<li class="breadcrumb-item active">${cate }</li>
+				  </ol>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
 
-<div class="container">
-		<div class="col-xs-2">
-			<button class="btn btn-primary" type="button">문의하기</button>
-		</div>
-	<div class ="form-group row pull-right"><!-- 폼그룹 오른쪽정렬 -->
-		<div class="col-xs-8">
-			<input class="form-control" type="text" size="20" id="keyword" name="keyword" value="${keyword }" onkeyup="searchFunction()">
-		</div>
-		<div class="col-xs-2">
-			<button class="btn btn-primary" type="button" onclick ="searchFunction()">검색</button>
-		</div>
-	</div>
-</div>
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">${info.a_startdate } 부터 ${info.a_enddate } 까지</h5>
+          <h5 class="card-header">입찰수  : ${bidnum }</h5>
+          <h5 class="card-header"><a href="" onclick="bidlist()">경매기록보기</a></h5>
+          <h5 class="card-header">물품번호 ${info.a_num }</h5>
+          <h5 class="card-header">시작가 ${info.a_startbid }</h5>
+          <h5 class="card-header">입찰단위 ${info.a_bidunit }</h5>
+          <h5 class="card-header">입찰방식 : 비공개</h5>
+          <h5 class="card-header">배송방법 ${ship.s_way } </h5>
+          <h5 class="card-header">배송비용 : ${ship.s_price }원 </h5>
+          <h5 class="card-header">판매자 ID : <a href="" onclick="singo()">${seller }</a> </h5>
+          <h5 class="card-header"><a href="">입찰하기</a> </h5>
+          <h5 class="card-header"><a href="" onclick="myFunction()">관심물품 찜하기</a> </h5>
+        </div>
+		
+      </div>
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">4조 &copy; 김정욱</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>

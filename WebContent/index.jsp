@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>index.jsp</title>
-<link rel="stylesheet" type="text/css" href="${cp }/css/main.css">
+<link rel="stylesheet" type="text/css" href="${cp }/css/index.css">
 </head>
 <body>
 <div id="wrap">

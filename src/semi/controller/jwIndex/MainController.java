@@ -83,10 +83,7 @@ public class MainController extends HttpServlet{
 		req.setAttribute("endPage", endPage);
 		req.setAttribute("list", list);//문의게시판정보 저장
 		
-		
 	
-	
-		
 		req.getServletContext().setAttribute("cp", req.getContextPath());
 		req.getRequestDispatcher("/board/mainview.jsp").forward(req, resp);
 	}

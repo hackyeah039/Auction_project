@@ -18,7 +18,7 @@ public class HomeController extends HttpServlet{
 			top="/header.jsp";
 		}
 		if(content==null) {
-			content="/main.do";
+			content="/home.jsp";
 		}
 		if(footer==null) {
 			footer="/footer.jsp";
