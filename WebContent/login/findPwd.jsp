@@ -44,14 +44,14 @@
 	var phonebool=false;
 	var xhr=null;
 	function findPwd() {
-		var m_name=document.getElementsByName("m_name")[0].value;
+		var m_id=document.getElementsByName("m_id")[0].value;
 		var m_phone=document.getElementsByName("m_phone")[0].value;
 		var m_name=document.getElementsByName("m_name")[0].value;
 		xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=findok;
 		xhr.open('post','${cp}/login/findPwd.jh',true);
 		xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-		xhr.send('m_name='+m_name+'&m_phone='+m_phone+'&m_name'+m_name);
+		xhr.send('m_id='+m_id+'&m_phone='+m_phone+'&m_name='+m_name);
 	}
 	function findok() {
 		if(xhr.readyState==4 && xhr.status==200){

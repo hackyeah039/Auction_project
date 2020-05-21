@@ -20,8 +20,14 @@ public class FindPwdController extends HttpServlet{
 		String m_id=req.getParameter("m_id");
 		String m_name=req.getParameter("m_name");
 		String m_phone=req.getParameter("m_phone");
+		System.out.println("컨트롤러아디:"+m_id);
+		System.out.println("컨트롤러이름:"+m_name);
+		System.out.println("컨트롤러폰:"+m_phone);
+		
+		
 		LoginDao dao=LoginDao.getLoginDao();
-		String pwd=dao.findPwd(m_id, m_name, Integer.parseInt(m_phone));
+		String pwd=dao.findPwd(m_id, m_name, m_phone);
+		System.out.println("비밀번호:"+pwd);
 		resp.setContentType("text/plain;charset=utf-8");
 		JSONObject json=new JSONObject();
 		if(pwd!=null) {//비밀번호가 있을 경우

@@ -92,19 +92,22 @@ public class LoginDao {
 	}
 	
 	//비밀번호 찾기
-		public String findPwd(String id,String name, int phone) {
+		public String findPwd(String id,String name, String phone) {
+			System.out.println("dao로 받아온 아이디"+id);
+			System.out.println("dao로 받아온 네임"+name);
+			System.out.println("dao로 받아온 폰"+phone);
 			Connection con=null;
 			PreparedStatement pstmt=null;
 			ResultSet rs=null;
-			String m_pwd=null;
 			try {
 				con=ConnectionPool.getCon();
 				String sql="select * from members where m_id=? and m_name=? and m_phone=?";
 				pstmt=con.prepareStatement(sql);
 				pstmt.setString(1, id);
 				pstmt.setString(2, name);
-				pstmt.setInt(3, phone);
+				pstmt.setString(3, phone);
 				rs=pstmt.executeQuery();
+				String m_pwd=null;
 				if(rs.next()) {
 					m_pwd=rs.getString("m_pwd");
 				}
