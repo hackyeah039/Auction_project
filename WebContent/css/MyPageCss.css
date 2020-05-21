@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+#myTrust h1{
+	text-align: center;
+}
+
+#myTrust ul li{
+	display  : inline-block;
+	width : 300px;
+	border: 1px;
+}
+
+#buyDiv table{
+	width : 800px;
+	height : 150px;
+}
+
+#buyDiv a{
+	display : inline-block;
+	margin-left: 650px; 
+}
+
+#sellDiv table{
+	width : 800px;
+	height : 150px;
+}
+
+#sellDiv a{
+	display : inline-block;
+	margin-left: 650px; 
+}
+
+#simpleList table{
+	width : 800px;
+	height : 150px;
+}
+
+#simpleList td{
+	text-align: center;
+}
+
+#LeftMenu{
+	float : left;
+	width : 200px;
+	height : 800px;
+	margin-top : 50px
+}
+
+#rightContent table{
+	float : left;
+	width : 600px;
+	height : 50px;
+	margin-top : 50px;
+	margin-left : 30px;
+}

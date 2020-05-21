@@ -1,0 +1,19 @@
+--board테이블
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'문의합니다~1','어쩌구저쩌구 웅애우웅애',0,1,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'문의합니다~2','물건웅',0,1,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'문의합니다~3','물건',0,2,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'문의합니다~4','하하',0,2,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'문의합니다~5','test',0,2,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'궁금합니다~6','test1',0,3,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'궁금합니다~7','test2',0,4,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'궁금합니다~8','내용2',0,5,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'궁금합니다~9','내용3',0,21,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~10','내용4',0,29,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~11','경매1',0,29,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~12','경매2',0,30,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~13','경매3',0,33,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~14','경매4',0,35,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~15','경매5',0,36,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~16','경매6',0,37,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~17','경매7',0,1,sysdate);
+insert into board VALUES(SEQ_BOARD_B_NUM.nextval,'관리자님~18','경매8',0,1,sysdate);

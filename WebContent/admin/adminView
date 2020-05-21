@@ -1,0 +1,22 @@
+--뷰 만들기 권한 주기
+1)system으로 접속 
+2)semi에 뷰 만드는 권한주기
+grant create view to semi;
+
+--뷰 만들기(1)
+create view singo_view
+as
+select s.*, m.m_id singojaId
+from singo s, members m
+where s.m_num=m.m_num
+order by s.singo_num desc
+with read only;
+
+
+--뷰 만들기(2)
+create view selid_view
+as
+select DISTINCT se.sel_number sel_number, m.m_num 대상회원번호, m.m_id sinid
+from singo s,seller se, members m
+where s.sel_number=se.sel_number and se.m_num=m.m_num
+with read only;

@@ -49,18 +49,36 @@
 		String head = "/main_sh/headerTest.jsp";
 		String hair = "/main_sh/hairTest.jsp";
 	%>
-	<div class="card  bg-secondary  text-white" id="topCard"></div>
+	
+	<!-- 
+		<div class="card  bg-secondary  text-white" id="topCard">
+		</div>
+	 -->
+<nav class="navbar bg-secondary navbar-dark text-white ">
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
+	</ul>	
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
+	</ul>	
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>
+	</ul>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>
+	</ul>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="#">내정보</a></li>
+	</ul>
+</nav>
+
 
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
  	<a class="navbar-brand" href="#">Logo(누르면 Home으로 가게)</a>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
-	</ul>	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
-	</ul>
-	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/adminmain/main.jh">관리자페이지</a></li>
 	</ul>
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="#">물품등록</a></li>
