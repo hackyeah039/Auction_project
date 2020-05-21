@@ -51,16 +51,16 @@
 	<tr>
 		<th>주소</th>
 		<td>
-		<input type = "text" id = "addr1" name = "zipcode" placeholder="우편번호" readonly="readonly">
-		<input type = "button" value = "주소찾기">
+		<input type = "text" id = "addr1" name = "zip" placeholder="우편번호" readonly="readonly">
+		<input type = "button" onclick ="openZipSearch()" value = "주소찾기">
 		<br>
-		<input type = "text" name = "roadname" readonly="readonly" id = "addr2"><br>
-		<input type = "text" name = "detailaddr" placeholder="상세주소" readonly="readonly" id = "addr3"><br>		
+		<input type = "text" name = "addr1" readonly="readonly" id = "addr2"><br>
+		<input type = "text" name = "addr2" placeholder="상세주소" id = "addr3"><br>		
 		</td>	
 	</tr>
 	<tr>
 		<th>휴대전화</th>	
-		<td><input type = "text" id = "phone" value = ${memberInfo.m_phone }></td>			
+		<td><input type = "text" name = "phone" id = "phone" value = ${memberInfo.m_phone }></td>			
 	</tr>
 </table>
 <h1>총 결제 금액</h1>
@@ -116,6 +116,8 @@
 <input type = "submit" value = "결제하기">
 </form>
 
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script type="text/javascript">
 	
 	function bankbookClick(){
@@ -154,6 +156,16 @@
 		}
 		
 		return true;
+	}
+	
+	function openZipSearch() {
+		new daum.Postcode({
+			oncomplete: function(data) {
+				$('[name=zip]').val(data.zonecode); // 우편번호 (5자리)
+				$('[name=addr1]').val(data.address);
+				$('[name=addr2]').val(data.buildingName);
+			}
+		}).open();
 	}
 	
 </script>

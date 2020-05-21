@@ -16,6 +16,5 @@ public class TestController extends HttpServlet{
 		ServletContext application=req.getServletContext();
 		application.setAttribute("cp", contextPath);
 		resp.sendRedirect(req.getContextPath()+"/main_sh/layoutTest.jsp");
-		//test
 	}
 }

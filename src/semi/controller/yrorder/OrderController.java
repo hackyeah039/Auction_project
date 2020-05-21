@@ -39,6 +39,7 @@ public class OrderController extends HttpServlet {
 		
 		String[] spaynum = req.getParameterValues("checkbox");
 		String message = req.getParameter("message");
+		
 		// 0 : num, 1:title, 2:price
 		String[] messages = message.split(":");
 

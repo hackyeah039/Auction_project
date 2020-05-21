@@ -21,9 +21,9 @@ public class PaymentController extends HttpServlet {
 		
 		String[] spaynumList = req.getParameterValues("paynumList");
 		String buyerName = req.getParameter("buyerName");
-		String zipcode = req.getParameter("zipcode");
-		String rodename = req.getParameter("rodename");
-		String detailaddr = req.getParameter("detailaddr");
+		String zipcode = req.getParameter("zip");
+		String rodename = req.getParameter("addr1");
+		String detailaddr = req.getParameter("addr2");
 		String phone = req.getParameter("phone");
 		
 		ArrayList<Integer> paynumList = new ArrayList<Integer>();
@@ -53,10 +53,12 @@ public class PaymentController extends HttpServlet {
 		
 		if(n>0) {
 			req.setAttribute("result", "success");
-			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);
+		    req.getRequestDispatcher("/main_sh/layoutTest.jsp?/order/resultOrder.jsp").forward(req, resp);
+
+//			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);
 		}else {
 			req.setAttribute("result", "false");
-			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);			
+			req.getRequestDispatcher("/main_sh/layoutTest.jsp?/order/resultOrder.jsp").forward(req, resp);
 		}
 	}
 }

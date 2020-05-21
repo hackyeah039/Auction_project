@@ -38,22 +38,37 @@ public class SimpleListController extends HttpServlet{
 		BiddingDao dao = new BiddingDao();
 		ArrayList<Integer>bidlist =  dao.buyerBidinglist(mnum);
 		
+		int bidlistSize = 0;
+
+		if(bidlist == null) {
+			bidlistSize = 0;
+		}else {
+			bidlistSize = bidlist.size();
+		}
+		
+		
 //		입금요청(입찰 완료인데 자신의 회원번호가 일등인것) 
 		TransactDao tddao = new TransactDao();
 		ArrayList<Integer> anumlist = tddao.getTransactList(mnum);
-		ArrayList<BidVo> tranBidList = tddao.getTranBidList(anumlist, mnum);
-		int reqPayCount = 0;
-		for (BidVo bidVo : tranBidList) {
-			PaymentVo payvo = tddao.getPaymentInfo(bidVo.getBid_num());
-			if(payvo.getPay_status() == 0) {
-				reqPayCount++;
+		int reqPayCount=0;
+		
+		if(anumlist != null) {
+			ArrayList<BidVo> tranBidList = tddao.getTranBidList(anumlist, mnum);
+			for (BidVo bidVo : tranBidList) {
+				PaymentVo payvo = tddao.getPaymentInfo(bidVo.getBid_num());
+				if(payvo.getPay_status() == 0) {
+					reqPayCount++;
+				}
 			}
 		}
+		
 
 //		판매중(입찰하기 전이거나, 입찰 중인 auction 물품)
 		ArrayList<Integer> selList = tddao.getSelnum(mnum);
 		
 		ArrayList<Integer> forSellerTranList = tddao.getForSellerTran(selList,1);
+		
+		
 		
 //		배송요청(입찰 완료)  paystatus = 1, auction bidstatus = 2;
 		TranCompletedDao tcdao = new TranCompletedDao();
@@ -74,7 +89,7 @@ public class SimpleListController extends HttpServlet{
 		}
 		
 		
-		req.setAttribute("bidCount", bidlist.size());		
+		req.setAttribute("bidCount", bidlistSize);		
         req.setAttribute("reqPayCount", reqPayCount);		
         req.setAttribute("saleCount", forSellerTranList.size());		
         req.setAttribute("shipReqCount", shipReqCount);
