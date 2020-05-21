@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import db.JDBCUtil;
+import db.ConnectionPool;
 
 public class CheckUpDao {
 	public int checkup(int a_num) {
@@ -13,7 +13,7 @@ public class CheckUpDao {
 		PreparedStatement pstmt=null;
 		try {
 			String sql="update auction set a_check=a_check+1  where a_num=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, a_num);
 			n=pstmt.executeUpdate();
@@ -22,7 +22,7 @@ public class CheckUpDao {
 			se.printStackTrace();
 			return -1;
 		}finally {
-			JDBCUtil.close(null, pstmt, con);
+			ConnectionPool.close(null, pstmt, con);
 		}
 	}
 }

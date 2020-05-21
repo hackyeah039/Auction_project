@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import db.JDBCUtil;
+import db.ConnectionPool;
 import semi.controller.shvo.SHAuctionVo;
 
 public class MainListDao {
@@ -20,7 +20,7 @@ public class MainListDao {
 			String sql="select * from(select aa.*,rownum rnum from(\r\n" + 
 					"select * from auction order by a_num asc , rownum asc) aa)\r\n" + 
 					"where rnum>=? and rnum<=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
 			pstmt.setInt(2, endrow);
@@ -53,7 +53,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//인기글 불러오는 메소드(조회수 높은 순)
@@ -63,7 +63,7 @@ public class MainListDao {
 		ResultSet rs=null;
 		try {
 			String sql="select * from(select aa.*,rownum rnum from(select * from auction where (a_enddate-sysdate)>0 order by a_check desc , rownum asc) aa)where rnum>=? and rnum<=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
 			pstmt.setInt(2, endrow);
@@ -96,7 +96,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//추천글 불러오는 메소드(찜 수 높은 순)
@@ -106,7 +106,7 @@ public class MainListDao {
 		ResultSet rs=null;
 		try {
 			String sql="select * from(select aa.*,rownum rnum from(select * from auction where (a_enddate-sysdate)>0 order by a_jjim desc , rownum asc) aa)where rnum>=? and rnum<=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
 			pstmt.setInt(2, endrow);
@@ -139,7 +139,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//마감임박글 불러오는 메소드(찜 수 높은 순)
@@ -149,7 +149,7 @@ public class MainListDao {
 		ResultSet rs=null;
 		try {
 			String sql="select * from(select aa.*,rownum rnum from(select * from auction where (a_enddate-sysdate)>0 order by (a_enddate-sysdate) asc , rownum asc) aa)where rnum>=? and rnum<=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
 			pstmt.setInt(2, endrow);
@@ -182,7 +182,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//최고 입찰가격 가져오는 메소드
@@ -193,7 +193,7 @@ public class MainListDao {
 		int price=0;
 		try {
 			String sql="select NVL(max(BID_PRICE),0) price FROM BID WHERE A_NUM=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
@@ -205,7 +205,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return 0;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//시작가격 가져오는 메소드
@@ -216,7 +216,7 @@ public class MainListDao {
 		int price=0;
 		try {
 			String sql="select a_startbid FROM auction WHERE A_NUM=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
@@ -228,7 +228,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return 0;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//전체글 수 가져오는 메소드
@@ -239,7 +239,7 @@ public class MainListDao {
 		int cnt=0;
 		try {
 			String sql="select NVL(count(a_num),0) cnt FROM auction";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
@@ -250,7 +250,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return -1;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//판매자 아이디 가져오는 메소드
@@ -261,7 +261,7 @@ public class MainListDao {
 		String id="";
 		try {
 			String sql="select m_id from members where m_num=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
@@ -273,7 +273,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//각 판매글의 입찰횟수 가져오는 메소드
@@ -284,7 +284,7 @@ public class MainListDao {
 		ResultSet rs=null;
 		try {
 			String sql="select count(*) cnt from bid where a_num=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, a_num);
 			rs=pstmt.executeQuery();
@@ -296,7 +296,7 @@ public class MainListDao {
 			se.printStackTrace();
 			return -1;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//날짜와 시간 가져오는 메소드
@@ -307,7 +307,7 @@ public class MainListDao {
 		String time="";
 		try {
 			String sql="select to_char(a_enddate,'YYYYMMDDHH24MISS') time from auction where a_num=?";
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, a_num);
 			rs=pstmt.executeQuery();
@@ -319,7 +319,7 @@ public class MainListDao {
 			se.printStackTrace();
 			return null;
 		}finally {
-			JDBCUtil.close(rs, pstmt, con);
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 	//마감시간이 되면 거래진행중 상태로 바꾸는 메소드
@@ -329,7 +329,7 @@ public class MainListDao {
 		PreparedStatement pstmt=null;
 		try {
 			String sql="update auction set BIDSTATUS=2 where (a_enddate-sysdate)<=0 and BIDSTATUS=0"; 
-			con=JDBCUtil.getConn();
+			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			n=pstmt.executeUpdate();
 			return n;
@@ -337,7 +337,7 @@ public class MainListDao {
 			System.out.println(se.getMessage());
 			return 0;
 		}finally {
-			JDBCUtil.close(null, pstmt, con);
+			ConnectionPool.close(null, pstmt, con);
 		}
 	}
 }

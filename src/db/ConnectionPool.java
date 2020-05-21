@@ -10,7 +10,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ConnectionPool2 {
+public class ConnectionPool{
 	static DataSource ds=null;
 	static {//static멤버를 초기화할 때는 static 블록을 사용한다.
 		try {
@@ -22,7 +22,7 @@ public class ConnectionPool2 {
 		}
 	}
 	
-	public static Connection getCon() throws SQLException{
+	public static Connection getConn() throws SQLException{
 		Connection con=ds.getConnection();
 		return con;
 	}

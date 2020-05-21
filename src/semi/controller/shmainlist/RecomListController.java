@@ -16,7 +16,6 @@ import semi.controller.shvo.SHAuctionVo;
 public class RecomListController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("recomList 컨트롤러 접속");
 		int endrow=4;
 		int startrow=1;
 		int price=0;
@@ -25,7 +24,6 @@ public class RecomListController extends HttpServlet{
 		ArrayList<SHAuctionVo> JjimList=dao.JjimList(startrow, endrow);
 		ArrayList<SHAuctionVo> EndList=dao.EndList(startrow, endrow);
 		//추천목록 클릭시 (인기순(조회수)은 1번 , 추천순(찜 수)은 2번, 마감임박순은 3번)
-		System.out.println("dao들 실행 후");	
 		resp.setContentType("text/xml;charset=utf-8");
 		PrintWriter pw=resp.getWriter();
 		pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
