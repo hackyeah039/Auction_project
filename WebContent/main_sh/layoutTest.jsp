@@ -68,7 +68,7 @@
 		<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">내정보</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
 	</ul>
 </nav>
 
