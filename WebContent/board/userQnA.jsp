@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<table border="1" id="boardtable">
+<table border="1" id="boardtable" style="cursor:pointer;">
 	<tr>
 		<th>구분</th>
 		<th>제목</th>
