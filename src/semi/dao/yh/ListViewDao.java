@@ -24,6 +24,7 @@ public class ListViewDao {
 		ResultSet rs = null;
 		try {
 			con = ConnectionPool.getConn();
+			//상훈 - mainList에 sql구문만 바꿔서 주면 될듯 
 			String sql = null;
 			//field 검색조건 비어있을 경우
 			if(field == null || field.equals("")) {
@@ -36,7 +37,7 @@ public class ListViewDao {
 			pstmt.setInt(2, endRow);
 			rs = pstmt.executeQuery();
 			ArrayList<AuctionVo> list = new ArrayList<AuctionVo>();
-			//인서트시에는 달력에서 String 타입으로 받아옴. DB에 넣을때 todate사용해서 넣음. 꺼낼때는 그냥 꺼냄?  
+			//그냥 꺼냄  
 			while(rs.next()) {
 				AuctionVo vo = new AuctionVo();
 				list.add(vo);
