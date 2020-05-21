@@ -56,9 +56,7 @@ public class PaymentController extends HttpServlet {
 			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);
 		}else {
 			req.setAttribute("result", "false");
-			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);
-			
+			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);			
 		}
-		
 	}
 }

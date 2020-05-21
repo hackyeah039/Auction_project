@@ -27,9 +27,11 @@ public class UserQnAInsertController extends HttpServlet {
 		// test
 		req.setAttribute("id", id);
 
-		req.setAttribute("header", "header.jsp");
-		req.setAttribute("content", "/board/userQnAInsert.jsp");
-		req.getRequestDispatcher("/index.jsp").forward(req, resp);
+//		req.setAttribute("header", "header.jsp");
+//		req.setAttribute("content", "/board/userQnAInsert.jsp");
+//		req.getRequestDispatcher("/index.jsp").forward(req, resp);
+	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/board/userQnAInsert.jsp").forward(req, resp);
+
 	}
 
 	@Override
@@ -48,9 +50,9 @@ public class UserQnAInsertController extends HttpServlet {
 		BoardVo vo = new BoardVo(0, b_title, b_content, 0, mnum, null, null);
 		int n = dao.insertBoard(vo);
 
-		resp.setCharacterEncoding("utf-8");
 		PrintWriter out = resp.getWriter();
-		out.println("<script type='text/javascript'>");
+		resp.setCharacterEncoding("utf-8");
+		out.println("<script>");
 		String cp = req.getContextPath();
 		if (n > 0) {
 			out.println("alert('등록하였습니다.');");

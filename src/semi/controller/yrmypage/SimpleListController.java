@@ -78,9 +78,9 @@ public class SimpleListController extends HttpServlet{
         req.setAttribute("reqPayCount", reqPayCount);		
         req.setAttribute("saleCount", forSellerTranList.size());		
         req.setAttribute("shipReqCount", shipReqCount);
-        req.setAttribute("header", "header.jsp");
-        req.setAttribute("content", "/mypage/mypagefirst.jsp");
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+//        req.setAttribute("header", "main_sh/layoutTest.jsp");
+//        req.setAttribute("content", "/mypage/mypagefirst.jsp");
+        req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypagefirst.jsp").forward(req, resp);
 	
 	}
 }

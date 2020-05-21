@@ -77,7 +77,7 @@
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
  	<a class="navbar-brand" href="#">Logo(누르면 Home으로 가게)</a>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/mypage/simplelist.do">마이페이지</a></li>
 		<li class="nav-item"><a class="nav-link" href="${cp }/adminmain/main.jh">관리자페이지</a></li>
 	</ul>
 	<ul class="navbar-nav">

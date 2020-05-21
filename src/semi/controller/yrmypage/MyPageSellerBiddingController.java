@@ -48,9 +48,10 @@ public class MyPageSellerBiddingController extends HttpServlet {
         req.setAttribute("BidCountList", getBidCountList);		
         req.setAttribute("currPriceList", getCurrPrice);
         req.setAttribute("BiddingInfoList", BiddingInfoList);
-        req.setAttribute("header", "header.jsp");
-        req.setAttribute("content", "/mypage/mypageSellerBidding.jsp");
-        req.getRequestDispatcher("/index.jsp").forward(req, resp);
-        
+//        req.setAttribute("header", "header.jsp");
+//        req.setAttribute("content", "/mypage/mypageSellerBidding.jsp");
+//        req.getRequestDispatcher("/index.jsp").forward(req, resp);
+        req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageSellerBidding.jsp").forward(req, resp);
+    	
 	}	
 }
