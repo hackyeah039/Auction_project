@@ -18,6 +18,35 @@ public class BiddingDao {
 	
 	
 	// 회원번호 가져오기
+	public int getMnumTrust(int mnum) {
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = ConnectionPool.getCon();
+			String sql = "select * from members where m_num = ? ";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, mnum);
+			
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				// 회원번호 출력
+				int trust = rs.getInt("trust");
+				return trust;
+			} else {
+				return -1;
+			}
+			
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		} finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	// 회원번호 가져오기
 	public int getMnum(String id) {
 
 		Connection con = null;
@@ -123,10 +152,6 @@ public class BiddingDao {
 	}
 
 	// 입찰등록한 수
-	// select count(bid.a_num) count, auction.a_num from bid, auction
-	// where bid.a_num = auction.a_num and m_num = 1 and bidstatus = 1 group by
-	// auction.a_num
-
 	public HashMap<Integer, Integer> getBidCount(ArrayList<Integer> anumlist) {
 
 		HashMap<Integer, Integer> bidCountList = new HashMap<Integer, Integer>();

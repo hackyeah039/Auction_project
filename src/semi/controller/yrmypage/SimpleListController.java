@@ -34,8 +34,13 @@ public class SimpleListController extends HttpServlet{
 //		HttpSession session = req.getSession();
 //		int mnum = (Integer)session.getAttribute("m_num"); 
 		
-//		입찰중(입찰중인데, bid에 자신의 번호가 들어가있는것)
 		BiddingDao dao = new BiddingDao();
+
+		//신뢰도 가져오기
+		int trust = dao.getMnumTrust(mnum);
+		
+		
+//		입찰중(입찰중인데, bid에 자신의 번호가 들어가있는것)
 		ArrayList<Integer>bidlist =  dao.buyerBidinglist(mnum);
 		
 		int bidlistSize = 0;
@@ -89,6 +94,8 @@ public class SimpleListController extends HttpServlet{
 		}
 		
 		
+		
+		req.setAttribute("trust", trust);		
 		req.setAttribute("bidCount", bidlistSize);		
         req.setAttribute("reqPayCount", reqPayCount);		
         req.setAttribute("saleCount", forSellerTranList.size());		
