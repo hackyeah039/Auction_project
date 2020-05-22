@@ -18,6 +18,7 @@
 	</tr>
 
 	<c:forEach var="anum" items="${orderanumList }">
+		<input type = "hidden" id = "name" value = "${fn:length(orderanumList) }개의 상품 주문">
 		<tr>
 			<!-- 물품명 -->
 			<c:forEach var="titleList" items="${titleList}">
@@ -83,14 +84,17 @@
 		<td>${shipPrice}</td>
 
 		<!-- 총 금액 -->
+		<!-- 
+		<td id="amount">${productPrice+shipPrice}</td>				
+		 -->
 		<td id="amount">${productPrice+shipPrice}</td>		
 	</tr>
 </table>
 <h1>결제 수단 선택</h1>
 <div style="border: 1px solid black">
-	<input type = "radio" name = "paytype" value = "card" id = "r1">
+	<input type = "radio" name = "paytype" value = "card" id = "r1" onchange = "bankbookClick(event)">
 	<label for="r1">카드</label>
-	<input type = "radio" name = "paytype" value = "bankbook" id ="r2" onclick = " bankbookClick()">
+	<input type = "radio" name = "paytype" value = "bankbook" id ="r2" onchange = "bankbookClick(event)">
 	<label for="r2">무통장입금</label>
 </div>
 
@@ -117,17 +121,18 @@
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
-<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 
 <script type="text/javascript">
-	
-	function bankbookClick(){
-		var bankbookInfo = document.getElementById("bankbookInfo");
-		bankbookInfo.style.display = "block";
+
+	function bankbookClick(e){
+		var bankbookInfo = document.getElementById("bankbookInfo")
+		console.log("t"+e.target.value);
+		if(e.target.value == 'bankbook'){
+			bankbookInfo.style.display = "block";			
+		}else{
+			bankbookInfo.style.display = "none";						
+		}
 	}
-	
-	
 	
 	function submitClick(){
 		var ra = document.getElementsByName("paytype");
@@ -139,7 +144,6 @@
 			}
 		}
 		
-		var name= ${fn:length(orderanumList) }+"개의 상품 주문";
 		var amount = document.getElementById("amount").innerText;
 		var buyerName = document.getElementById("buyerName").value;
 		var phone = document.getElementById("phone").value;
@@ -163,10 +167,11 @@
 		}
 		
 		if(raval == "card"){
-			var result = payCard(name, amount, buyerName, phone, addr2, addr1);
+			window.open('${cp}/order/paymentPopup.jsp','결제창','width=800, height=800, resizable = no');
+			return false;
 		}
 		
-		return result;	
+		return true;	
 	}
 	
 	function openZipSearch() {
@@ -178,38 +183,5 @@
 			}
 		}).open();
 	}
-	
-	
-	function payCard(name, amount, buyer_name, buyer_tel, buyer_addr, buyer_postcode){
-		var IMP = window.IMP;
-		IMP.init('imp47317782');
-		IMP.request_pay({
-		    pg : 'html5_inicis',
-		    pay_method : 'card',
-		    merchant_uid : 'merchant_' + new Date().getTime(),
-		    name : name,
-		    amount : amount ,
-		    buyer_name : buyer_name,
-		    buyer_tel : buyer_tel,
-		    buyer_addr : buyer_addr,
-		    buyer_postcode : buyer_postcode 
-		}, function(rsp) {
-		    if ( rsp.success ) {
-		        var msg = '결제가 완료되었습니다.';
-		        msg += '고유ID : ' + rsp.imp_uid;
-		        msg += '상점 거래ID : ' + rsp.merchant_uid;
-		        msg += '결제 금액 : ' + rsp.paid_amount;
-		        msg += '카드 승인번호 : ' + rsp.apply_num;
-			    alert(msg);
-		    } else {
-		        var msg = '결제에 실패하였습니다.';
-		        msg += '에러내용 : ' + rsp.error_msg;
-		        alert(msg);
-		    }
-
-		});
-		
-	}
-
 
 </script>
