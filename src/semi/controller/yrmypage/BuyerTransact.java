@@ -50,6 +50,7 @@ public class BuyerTransact extends HttpServlet {
 
 			// 물품이름
 			HashMap<Integer, String> auctionTitleList = dao.getAuctionTitle(tranBidList);
+			
 //			for (Integer key : auctionTitleList.keySet()) {
 //				System.out.println(String.format("키 : %s, 값 : %s", key, auctionTitleList.get(key)));
 //			}
@@ -77,7 +78,8 @@ public class BuyerTransact extends HttpServlet {
 
 		} catch (NullPointerException e) {
 			// TODO: handle exception
-			req.setAttribute("getListSize", 0);			
+			System.out.println("null...");
+			req.setAttribute("getListSize", 0);
 		}
 		
 //		req.setAttribute("header", "header.jsp");
