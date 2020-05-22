@@ -12,6 +12,7 @@
     String spageNum=request.getParameter("pageNum");
     
 		int pageNum = 1;
+		int price=0;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
@@ -35,8 +36,15 @@
 		pw.println("<result>");
 		for(SHAuctionVo vo:list) {
 			pw.println("<data>");
+			if(mdao.getPrice(vo.getA_num())==0) {
+				price=mdao.getStartBid(vo.getA_num());
+			}else {
+				price=mdao.getPrice(vo.getA_num());
+			}
+			pw.println("<price>" + price + "</price>");
 			pw.println("<pageNum>" + pageNum + "</pageNum>");
 			pw.println("<pageCnt>" + pageCnt + "</pageCnt>");
+			pw.println("<i_path>"+mdao.getImgPath(vo.getA_num())+"</i_path>");
 			pw.println("<startPageNum>" + startPageNum + "</startPageNum>");
 			pw.println("<endPageNum>" + endPageNum + "</endPageNum>");
 			pw.println("<a_num>" + vo.getA_num() + "</a_num>");

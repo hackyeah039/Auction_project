@@ -392,6 +392,29 @@ public class MainListDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
+	//이미지 패스 가져오는 메소드
+	public String getImgPath(int a_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String path="";
+		try {
+			String sql="select i_path from img where a_num=?";
+			con=ConnectionPool.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, a_num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				path=rs.getString("i_path");
+			}
+			return path;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
 	//마감시간이 되면 거래진행중 상태로 바꾸는 메소드
 	public int updateBidStatus() {
 		int n=0;

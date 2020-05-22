@@ -55,10 +55,12 @@ public class MainListController extends HttpServlet{
 			pw.println("<pageNum>" + pageNum + "</pageNum>");
 			pw.println("<pageCnt>" + pageCnt + "</pageCnt>");
 			pw.println("<startPageNum>" + startPageNum + "</startPageNum>");
+			pw.println("<i_path>"+dao.getImgPath(vo.getA_num())+"</i_path>");
 			pw.println("<endPageNum>" + endPageNum + "</endPageNum>");
 			pw.println("<a_num>" + vo.getA_num() + "</a_num>");
 			pw.println("<price>"+dao.getPrice(vo.getA_num())+"</price>");
 			pw.println("<id>"+dao.getId(vo.getSel_number())+"</id>");
+			System.out.println("id : " + dao.getId(vo.getSel_number()));
 			pw.println("<bidcnt>"+dao.getBidCnt(vo.getA_num())+"</bidcnt>");
 			pw.println("<a_title>" + vo.getA_title() + "</a_title>");
 			pw.println("<a_content>" + vo.getA_content() + "</a_content>");

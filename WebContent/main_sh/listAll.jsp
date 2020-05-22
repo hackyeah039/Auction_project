@@ -16,9 +16,6 @@
 	#mid{width: 100%; height: 60px; margin-top: 15px; margin-bottom: 15px; text-align: center;}
 	#head{width: 100%; height: 200px; margin-top: 15px;}
 	#start{border:1px solid black;}
-	.auc{width: 300px;height: 400px;
-		border:1px solid black;
-		}
 	#topCard {
 		height: 40px;
 		margin: auto;
@@ -196,6 +193,7 @@
 					let a_check=data[i].getElementsByTagName("a_check")[0].firstChild.nodeValue;
 					let endDate=data[i].getElementsByTagName("a_enddate")[0].firstChild.nodeValue;
 					let bidCnt=data[i].getElementsByTagName("bidcnt")[0].firstChild.nodeValue;
+					let i_path=data[i].getElementsByTagName("i_path")[0].firstChild.nodeValue;
 					<%--까지 xml데이터 가져오기 --%>
 					<%-- 마감시간 가져와서 인트형태로 형변환 부분 --%>
 					let endYear=endDate.substring(0, 4);
@@ -218,8 +216,8 @@
 					let div=document.createElement("div");
 					div.style.textAlign="center";
 					let timeDiv=document.createElement("div");
-					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "#" +"'\">"+
-					"<img class='card-img-top' src='.../100px180/' alt='Card image cap'>"+
+					div.innerHTML="<div class='card' style='width: 320px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "#" +"'\">"+
+					"<img class='card-img-top'  src='${cp}/img/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
 					"<div class='card-body'>"+
 					"<h4 class='card-title'>" + title + "</h4>"+
 					"<h3 class='card-text text-primary'>" + price + "원</h3>"+

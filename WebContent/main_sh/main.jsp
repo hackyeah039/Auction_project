@@ -15,6 +15,7 @@
 				let jjimAuc=document.getElementById("jjimAuc");
 				let endAuc=document.getElementById("endAuc");
 				
+				
 				for(let i=0; i<CheckData.length; i++){
 					let a_num=CheckData[i].getElementsByTagName("a_num")[0].firstChild.nodeValue;
 					let title=CheckData[i].getElementsByTagName("a_title")[0].firstChild.nodeValue;
@@ -23,7 +24,7 @@
 					let a_check=CheckData[i].getElementsByTagName("a_check")[0].firstChild.nodeValue;
 					let endDate=CheckData[i].getElementsByTagName("a_enddate")[0].firstChild.nodeValue;
 					let bidCnt=CheckData[i].getElementsByTagName("bidcnt")[0].firstChild.nodeValue;
-					console.log(endDate);
+					let i_path=CheckData[i].getElementsByTagName("i_path")[0].firstChild.nodeValue;
 					
 					let endYear=endDate.substring(0, 4);
 					let endMonth=endDate.substring(4, 6);
@@ -45,7 +46,7 @@
 					let timeDiv=document.createElement("div");
 					timeDiv.id="div1" + i;
 					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "#" +"'\">"+
-					"<img class='card-img-top' src='.../100px180/' alt='Card image cap'>"+
+					"<img class='card-img-top' src='${cp}/img/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
 					"<div class='card-body'>"+
 					"<h4 class='card-title'>" + title + "</h4>"+
 					"<h3 class='card-text text-primary'>" + price + "원</h3>"+
@@ -81,6 +82,7 @@
 				}
 				for(let i=0; i<JjimData.length; i++){
 					let a_num=JjimData[i].getElementsByTagName("a_num")[0].firstChild.nodeValue;
+					let i_path=JjimData[i].getElementsByTagName("i_path")[0].firstChild.nodeValue;
 					let title=JjimData[i].getElementsByTagName("a_title")[0].firstChild.nodeValue;
 					let price=JjimData[i].getElementsByTagName("price")[0].firstChild.nodeValue;
 					let id=JjimData[i].getElementsByTagName("id")[0].firstChild.nodeValue;
@@ -108,7 +110,7 @@
 					let timeDiv=document.createElement("div");
 					timeDiv.id="div2" + i;
 					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "#" +"'\">"+
-					"<img class='card-img-top' src='.../100px180/' alt='Card image cap'>"+
+					"<img class='card-img-top' src='${cp}/img/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
 					"<div class='card-body'>"+
 					"<h4 class='card-title'>" + title + "</h4>"+
 					"<h3 class='card-text text-primary'>" + price + "원</h3>"+
@@ -150,6 +152,7 @@
 					let a_check=EndData[i].getElementsByTagName("a_check")[0].firstChild.nodeValue;
 					let endDate=EndData[i].getElementsByTagName("a_enddate")[0].firstChild.nodeValue;
 					let bidCnt=EndData[i].getElementsByTagName("bidcnt")[0].firstChild.nodeValue;
+					let i_path=EndData[i].getElementsByTagName("i_path")[0].firstChild.nodeValue;
 				
 					let endYear=endDate.substring(0, 4);
 					let endMonth=endDate.substring(4, 6);
@@ -171,7 +174,7 @@
 					let timeDiv=document.createElement("div");
 					timeDiv.id="div3" + i;
 					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "#" +"'\">"+
-					"<img class='card-img-top' src='.../100px180/' alt='Card image cap'>"+
+					"<img class='card-img-top' src='${cp}/img/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
 					"<div class='card-body'>"+
 						"<h4 class='card-title'>" + title + "</h4>"+
 						"<h3 class='card-text text-primary'>" + price + "원</h3>"+

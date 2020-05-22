@@ -57,7 +57,7 @@
 		<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">물품등록</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/InsertAuction.do">물품등록</a></li>
 	</ul>
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="#">전체물품</a></li>

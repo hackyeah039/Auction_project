@@ -45,6 +45,7 @@
 					let a_check=Data[i].getElementsByTagName("a_check")[0].firstChild.nodeValue;
 					let endDate=Data[i].getElementsByTagName("a_enddate")[0].firstChild.nodeValue;
 					let bidCnt=Data[i].getElementsByTagName("bidcnt")[0].firstChild.nodeValue;
+					let i_path=Data[i].getElementsByTagName("i_path")[0].firstChild.nodeValue;
 					
 					let endYear=endDate.substring(0, 4);
 					let endMonth=endDate.substring(4, 6);
@@ -66,7 +67,7 @@
 					let timeDiv=document.createElement("div");
 					timeDiv.id="div1" + i;
 					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "#" +"'\">"+
-					"<img class='card-img-top' src='.../100px180/' alt='Card image cap'>"+
+					"<img class='card-img-top' src='${cp}/img/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
 					"<div class='card-body'>"+
 					"<h4 class='card-title'>" + title + "</h4>"+
 					"<h3 class='card-text text-primary'>" + price + "원</h3>"+
@@ -108,8 +109,6 @@
 				if(5<startPageNum){
 					pageDiv.innerHTML+="<a href='javascript:searchList("+ (startPageNum-1) +");'>[이전]</a>";
 				}
-				console.log(endPageNum);
-				console.log("pagecnt : " + pageCnt);
 				for(let i=startPageNum; i<=endPageNum; i++){
 					if(i==pageNum){
 						pageDiv.innerHTML+="<a href='javascript:searchList("+ i +");'><span style='color:red'>["+ i +"]</span></a>";
