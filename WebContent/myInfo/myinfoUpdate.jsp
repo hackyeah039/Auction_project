@@ -13,129 +13,65 @@
 </style>	
 <div id="form">
 <c:forEach var="vo" items="${list }">
+<!-- action="${cp }/myinfo/update.jh" -->
+<form method="post" onsubmit="return clicksubmit();">
 	<table border="1" width="500">
 		<tr>
 			<th>아이디</th>
 			<td><input type="text" name="m_id" class="form-control" id="inputPassword" 
 			value="${vo.m_id }" readonly="readonly">
 			</td>
-			<td></td>
 		</tr>
 		<tr>
 			<th>이름</th>
 			<td><input type="text" name="m_name" class="form-control" id="inputPassword" 
-			value="${vo.m_name }" onkeyup="nameCk()" readonly="readonly">
-			<span id="nameckmsg" style="color:red; font-size:15"></span></td>
-	  		<td><button type="button" id="namebt" class="btn btn-secondary btn-lg" 
-	  		onclick="nameupdate()">수정</button></td>
-		</tr>
-		<tr>
-			<th>이메일</th>
-			<td><input type="text" name="m_email" class="form-control" id="inputPassword" 
-			value="${vo.m_email }" onkeyup="emailCk()">
-			<span id="emailckmsg" style="color:red; font-size:15"></span></td>
+			value="${vo.m_name }" >
 		</tr>
 		<tr>
 			<th>주소</th>
 			<td><input type="text" name="m_addr" class="form-control" id="inputPassword" 
-			value="${vo.m_addr }" onkeyup="addrCk()">
-			<span id="addrckmsg" style="color:red; font-size:15"></span></td>
+			value="${vo.m_addr }" >
 		</tr>
 		<tr>
 			<th>연락처</th>
 			<td><input type="text" name="m_phone" class="form-control" id="inputPassword" 
-			value="${vo.m_phone }" onkeyup="phoneCk()">
-			<span id="phoneckmsg" style="color:red; font-size:10"></span></td>
+			value="${vo.m_phone }" >
 		</tr>
 	</table>
 	<br>
-	<a href="${cp }/main_sh/layoutTest.jsp"><button type="button" id="btn" class="btn btn-secondary btn-lg">취소</button></a>
-	<button type="submit" id="findBt" class="btn btn-secondary btn-lg" disabled="disabled">
+	<button type="submit" id="findBt" class="btn btn-secondary btn-lg">
 	  	수정완료</button>
+</form>
 </c:forEach>
 </div>
 <script>
-	var namebool=false;
-	var pwdbool=false;
-	var emailbool=false;
-	var addrbool=false;
-	var phonebool=false;
-	
-	/*이름수정버튼*/
-	function nameupdate() {
-		var namebt=document.getElementById("namebt");
-		var m_name=document.getElementById("m_name").readOnly=false;
-		namebt.innerHTML="완료";
-		
-	}
-	
+
 	function nameCk() { 
 		var name=document.getElementsByName("m_name")[0].value;
 		var nameckmsg=document.getElementById("nameckmsg");
 		var nameck= /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
-		console.log("이름사이즈"+name.length);
 		/*이름에 한글외 문자 입력시 x*/
 		if(nameck.test(name)){
-			nameckmsg.innerHTML="이름은 한글만 입력해주세요.";
-			namebool=false;	
+			alert("이름은 한글만 입력해주세요.");
+			return false;
+		}else if(name.length>4){
+			alert("이름은 4자 이하로 입력해주세요.");
+			return false;
 		}else{
-			nameckmsg.innerHTML="";
-			namebool=true;
+			return true;
 		}
-		if(name.length>4){  /*이름 4자 이상이면x*/
-			nameckmsg.innerHTML="이름은 4자 이하로 입력해주세요.";
-			namebool=false;			
-		}else{
-			nameckmsg.innerHTML="";
-			namebool=true;
-		}
-		bt();
+		
 	}
 	//주소입력검사
 	function addrCk() { 
 		var addr=document.getElementsByName("m_addr")[0].value;
 		var addrckmsg=document.getElementById("addrckmsg");
 		if(addr.length<1){  
-			addrckmsg.innerHTML="주소를 입력해주세요.";
-			addrbool=false;			
+			alert("주소를 입력해주세요.");
+			return false;	
 		}else{
-			addrckmsg.innerHTML="";
-			addrbool=true;
+			return true;
 		}
-		bt();
-	}
-	/*이메일 중복검사*/
-	var xhremail=null;
-	function emailCk() {
-		var email=document.getElementsByName("m_email")[0].value;
-		xhremail=new XMLHttpRequest();
-		xhremail.onreadystatechange=emailckOk;
-		xhremail.open('post','${cp}/join/emailck.jh',true);
-		xhremail.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-		xhremail.send('email='+email);
-	}
-	
-	function emailCk() {
-		var emailckmsg=document.getElementById("emailckmsg");
-		var email=document.getElementById("email").value;
-		if(xhremail.readyState==4 && xhremail.status==200){
-			var msg=xhremail.responseText;
-			var json=JSON.parse(msg);
-			if(json.msg=='error'){
-				emailckmsg.innerHTML="사용중인 이메일 입니다.";
-				emailbool=false;
-			}else if(email==''){
-				emailckmsg.innerHTML="이메일을 입력해주세요.";
-				emailbool=false;
-			}else if(email.indexOf('@')==-1){
-				emailckmsg.innerHTML="올바르지 않은 이메일 형식입니다.";
-				emailbool=false;
-			}else{
-				emailckmsg.innerHTML="";
-				emailbool=true;
-			}
-		}
-		bt();
 	}
 	
 	function phoneCk() {
@@ -143,32 +79,55 @@
 		var phoneckmsg=document.getElementById("phoneckmsg");
 		var phoneck=/^[0-9]+$/; 
 		if(phone.length>13){
-			phoneckmsg.innerHTML="번호는 13자리 이하로 입력해주세요.";
-			phonebool=false;
+			alert("번호는 13자리 이하로 입력해주세요.");
+			return false;
 		}else if(phone.length<1){
-			phoneckmsg.innerHTML="번호를 입력해주세요";
-			phonebool=false;
+			alert("번호를 입력해주세요");
+			return false;
 		}else if(!(phoneck.test(phone))){
-			phoneckmsg.innerHTML="번호는 숫자만 입력해주세요.";
-			phonebool=false;
+			alert("번호는 숫자만 입력해주세요.");
+			return false;
 		}else{
-			phoneckmsg.innerHTML="";
-			phonebool=true;
-		}
-			bt();
-	}
-	
-	var btn = document.getElementById("findBt");
-	
-	function bt() {
-		if(phonebool==true && namebool==true && emailbool==true && addrbool==true){
-			btn.disabled=false;
-		}else{
-			btn.disabled=true;
+			return true;
 		}
 	}
-
-
-
+	
+	
+	var xhr=null;
+	function  clicksubmit() {
+		if(!nameCk()){
+			return false;			
+		}else if(!addrCk()){
+			return false;	
+		}else if(!phoneCk()){
+			return false;	
+		}else{
+			var m_id=document.getElementsByName("m_id")[0].value;
+			var m_name=document.getElementsByName("m_name")[0].value;
+			var m_addr=document.getElementsByName("m_addr")[0].value;
+			var m_phone=document.getElementsByName("m_phone")[0].value;
+			xhr=new XMLHttpRequest();
+			xhr.onreadystatechange=submitok;
+			xhr.open('post','${cp }/myinfo/update.jh',true);
+			xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+			xhr.send('m_id='+m_id+'&m_name='+m_name+'&m_addr='+m_addr+'&m_phone='+m_phone);
+		}
+	}
+	function submitok() {
+		if(xhr.readyState==4 && xhr.status==200){
+			var msg=xhr.responseText;
+			var json=JSON.parse(msg);
+			if(json.msg=='ok'){
+				alert("정보 수정이 완료되었습니다.");
+			}else{
+				alert("정보 수정이 실패되었습니다.");	
+			}
+		}		
+	}
+	
+	
+	
+	
+	
 
 </script>

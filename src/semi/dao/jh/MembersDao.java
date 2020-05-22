@@ -454,5 +454,66 @@ public class MembersDao {
 			}
 		}
 		
+		//회원정보 변경하기
+		public int updateInfo(String id,String name,String addr, String phone) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="update members set m_name=?, m_addr=?, m_phone=? where m_id=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, name);
+				pstmt.setString(2, addr);
+				pstmt.setString(3, phone);
+				pstmt.setString(4, id);
+				int n=pstmt.executeUpdate();
+				return n;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return -1;
+			}finally {
+				try {
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+		//========================내정보 회원탈퇴==============================//
+		public ArrayList<Integer> getMembersOut(int num){
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select * from auction a, "
+						+ "(select sel_number from seller where m_num=?) s "
+						+ "where a.sel_number=s.sel_number and a.bidstatus BETWEEN 1 and 2";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				rs=pstmt.executeQuery();
+				ArrayList<Integer> list=new ArrayList<Integer>();
+				while(rs.next()) {
+					int sel_number=rs.getInt("sel_number");
+					list.add(sel_number);
+				}
+				return list;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return null;
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+			
+			
+		}
+		
 		
 }
