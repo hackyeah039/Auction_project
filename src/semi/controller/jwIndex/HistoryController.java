@@ -92,7 +92,12 @@ public class HistoryController extends HttpServlet{
 			throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		int field=Integer.parseInt(req.getParameter("field"));
-		int pageNum =Integer.parseInt(req.getParameter("pageNum")); //넘어옴
+		String spageNum = req.getParameter("pageNum");
+		int pageNum = 1;
+		if(spageNum != null) {
+			pageNum =Integer.parseInt(spageNum); //넘어옴			
+		}
+		
 		int a_num=Integer.parseInt(req.getParameter("a_num")); 
 		System.out.println(field +"필드값입니다," +pageNum +"현재 보고있는 페이지숫자입니다." + 18 +"경매물품번호입니다.");
 		int startRow=(pageNum-1)*field +1;
@@ -107,14 +112,14 @@ public class HistoryController extends HttpServlet{
 		ArrayList<BidVo> list =dao.postlist(startRow, endRow, 18); //18은 a_num입니다.
 		System.out.println("paging값입니다. " +paging +",startrow " +startRow +",endRow " +endRow +",field " +field +",startPage " +startPage +",endPage " +endPage);
 		
-		req.setAttribute("paging", paging);
-		req.setAttribute("startrow", startRow);
-		req.setAttribute("endRow", endRow);
-		req.setAttribute("field", field);
-		req.setAttribute("startPage", startPage);
-		req.setAttribute("endPage", endPage);
-		req.setAttribute("list", list);
-		req.setAttribute("pageNum", pageNum);
+//		req.setAttribute("paging", paging);
+//		req.setAttribute("startrow", startRow);
+//		req.setAttribute("endRow", endRow);
+//		req.setAttribute("field", field);
+//		req.setAttribute("startPage", startPage);
+//		req.setAttribute("endPage", endPage);
+//		req.setAttribute("list", list);
+//		req.setAttribute("pageNum", pageNum);
 		
 	    JSONArray jarr=new JSONArray();
 	    
@@ -126,11 +131,18 @@ public class HistoryController extends HttpServlet{
 	    	json.put("price",vo.getBid_price());
 //	    	System.out.println(vo.getM_num()+" vo.getM_num()");
 	    	json.put("mnum", vo.getM_num());
+	    	json.put("paging", paging);
+	    	json.put("startRow", startRow);
+	    	json.put("endRow", endRow);
+	    	json.put("field", field);
+	    	json.put("startPage", startPage);
+	    	json.put("endPage", endPage);
+	    	json.put("startPage", startPage);
+	    	json.put("pageNum", pageNum);
 	    	jarr.put(json);
 	    }
-	    resp.setContentType("text/plain;charset=utf-8");
-	    PrintWriter pw=resp.getWriter();
-	    pw.print(jarr);
+	    PrintWriter pr = resp.getWriter();
+	    pr.print(jarr);
 	}
 	
 }

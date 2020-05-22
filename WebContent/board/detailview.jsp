@@ -13,30 +13,31 @@
 	%>
 	var xhr=null;
 	
-	function selectdd(){
-		var div = document.getElementById("result");
+	function selectdd(i){
+		var result = document.getElementById("result");
+		var pagecal = document.getElementById("pagecal");
 		var selectone = document.getElementById("numbers");
 		var selectValue =selectone.options[selectone.selectedIndex].value;
-		console.log(selectValue +"선택한 값입니다.");
-		document.getElementById("textA").value=selectValue;
 		xhr = new XMLHttpRequest();
 		xhr.onreadystatechange = function (){
 			if(this.readyState == 4 && this.status == 200){
-				div.innerHTML = "";
+				result.innerHTML = "";
 				var data=JSON.parse(xhr.responseText);
 				for(var i=0;i<data.length;i++){
-					div.innerHTML += "<tr><td>"+"입찰일시 : "+data[i].date+"</td><td>"+"  회원번호 : "+data[i].mnum+"</td><td>"+" 가격  : "+data[i].price+"</td></tr><br>";
+					result.innerHTML += "<tr><td>"+"입찰일시 : "+data[i].date+"</td><td>"+"  회원번호 : "+data[i].mnum+"</td><td>"+" 가격  : "+data[i].price+"</td></tr><br>";
 				}
+				pagecal="";
+				pagecal.innerHTML ="if(data[0].startPage>5){<a href='history.do?pageNum="+data[0].startPage-1+"&a_num=<%=a_num%>'>[pre]</a>}else{이전}for(int i=0; i>"+data[0].startPage+"; i<"+data[0].endPage+"){if(i=="+data[0].pageNum+"){<a onclick ='selectdd(${i})'><span style='color :red'>[${i }]</span></a>}else{<a onclick ='selectdd(${i})'><span style='color :smokewhite'>[${i }]</span></a>	}}if("+data[0].endPage+"<"+data[0].paging+"){<a href='history.do?pageNum="+data[0].endPage+"+1&a_num=<%=a_num%>'>[next]</a>}else{이후}"
 			}
 		}
 		xhr.open('post' , 'history.do' , true);
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xhr.send("field="+selectValue+"&pageNum=${pageNum}&a_num=${a_num}");
+		console.log(i);
+		xhr.send("field="+selectValue+"&pageNum="+i+"&a_num=${a_num}");
 	}
-	
 </script>
 <body>
-<select id="numbers" onchange="selectdd()" >
+<select id="numbers" onchange="selectdd(1)" >
   <option value="10" <c:if test="${field==10 }">selected</c:if>>10</option>
   <option value="20" <c:if test="${field==20 }">selected</c:if>>20</option>
   <option value="30" <c:if test="${field==30 }">selected</c:if>>30</option>
@@ -56,7 +57,7 @@
 	</table>
 </div>
 
-<div>
+<div id="pagecal">
 	<c:choose>
 		<c:when test="${startPage>5}">
 			<a href="history.do?pageNum=${startPage-1 }&a_num=<%=a_num%>">[pre]</a>
@@ -67,15 +68,15 @@
 	</c:choose>
 	
 	<c:forEach var="i" begin="${startPage }" end="${endPage }" > 
-		<input type="hidden" id="textA">
+		<!-- <input type="hidden" id="textA">  -->
 		<c:choose>
 			<c:when test="${i==pageNum }">
-				<a onclick ="selectdd()">
+				<a onclick ="selectdd(${i})">
 				<span style='color :red'>[${i }]</span></a>
 			</c:when>
 			
 			<c:otherwise>
-				<a onclick ="selectdd()">
+				<a onclick ="selectdd(${i})">
 				<span style='color :smokewhite'>[${i }]</span></a>
 			</c:otherwise>	
 		</c:choose>

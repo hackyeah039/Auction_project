@@ -16,7 +16,7 @@
   <title>Blog Post - Start Bootstrap Template</title>
   <!-- Custom styles for this template -->
   <link href="css/blog-post.css" rel="stylesheet">
-  <link rel= "stylesheet" type="text/css" href="css/main.css">
+  <!-- <link rel= "stylesheet" type="text/css" href="css/main.css"> -->
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	
@@ -33,7 +33,7 @@
 	}
 	//경매기록보기
 	function bidlist(){
-		var allwindow= window.open("${cp }/history.do?a_num=${a_num }", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=300,width=600,height=600");
+		var allwindow= window.open("${cp }/history.do?&a_num=${a_num }", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=300,width=600,height=600");
 	}
 	//경매시간
 	var myVar = setInterval(function () {
@@ -65,7 +65,6 @@
 		xml.onreadystatechange = searchProcess;
 		xml.send();
 	}
-	
 	function searchProcess(){
 		var table = document.getElementById("ajaxTable");
 		if(xml.readyState == 4 && xml.status == 200){
@@ -97,6 +96,15 @@
 				cell7.innetHTML += '<img src="${cp }/image/a.svg" class="img-fluid" alt="Responsive image">';
 				cell8.innerHTML += result[i].b_content;
 			}
+		}
+	}
+	
+	function change(){
+		var reply=document.getElementsByClassName("reply")[0];
+		if(reply.style.visibility!='hidden'){
+			reply.style.visibility='visible';
+		}else if(reply.style.visibility!='visible'){
+			reply.style.visibility='hidden'
 		}
 	}
 	
@@ -147,19 +155,74 @@
         </p>
 
         <hr>
-
-		<div class="container">
-		<ul class="slider-container simple-list" id="slider">
-			<c:forEach var="vo" items="${ipath }">
-				<li class ="slide">
-					<img src="${cp}/image/${vo}" width="600">
-				</li>
-			</c:forEach>
-		</ul>
 	
-		<a href="#" id="prev"></a>
-		<a href="#" id="next"></a>
-</div>
+		
+		<div id="carouselExampleControls" class="carousel slide"
+			data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img class="d-block w-100" src="${cp}/image/1.jpg" alt="First slide">
+				</div>
+				 <c:forEach var="vo" items="${ipath }"  varStatus="loop">
+					<div class="carousel-item">
+						<img class="d-block w-100" src="${cp}/image/${loop.count}.jpg" alt="Second slide">
+					</div>
+				 </c:forEach>
+			</div>
+			<a class="carousel-control-prev" href="#carouselExampleControls"
+				role="button" data-slide="prev"> <span
+				class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+				class="sr-only">Previous</span>
+			</a> <a class="carousel-control-next" href="#carouselExampleControls"
+				role="button" data-slide="next"> <span
+				class="carousel-control-next-icon" aria-hidden="true"></span> <span
+				class="sr-only">Next</span>
+			</a>
+		</div>
+
+		</div>
+		
+		
+		
+		
+      <!-- Sidebar Widgets Column -->
+      <div class="col-md-4">
+        <!-- Categories Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">카테고리</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-12">
+                <ul class="list-unstyled mb-0">
+                  <ol class="breadcrumb">
+  					<li class="breadcrumb-item"><a href="#">홈</a></li>
+  					<li class="breadcrumb-item"><a href="#">온라인경매</a></li>
+  					<li class="breadcrumb-item active">${cate }</li>
+				  </ol>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4">
+          <h5 class="card-header">경매 남은시간 <div id="result" style="width:100%; height:20px"></div></h5>
+          <h5 class="card-header">${info.a_startdate } 부터 ${info.a_enddate } 까지</h5>
+          <h5 class="card-header">입찰수  : ${bidnum }</h5>
+          <h5 class="card-header"><a href="" onclick="bidlist()">경매기록보기</a></h5>
+          <h5 class="card-header">물품번호 ${info.a_num }</h5>
+          <h5 class="card-header">시작가 ${info.a_startbid }</h5>
+          <h5 class="card-header">입찰단위 ${info.a_bidunit }</h5>
+          <h5 class="card-header">입찰방식 : 비공개</h5>
+          <h5 class="card-header">배송방법 ${ship.s_way } </h5>
+          <h5 class="card-header">배송비용 : ${ship.s_price }원 </h5>
+          <h5 class="card-header">판매자 ID : <a href="" onclick="singo()">${seller }</a> </h5>
+          <h5 class="card-header"><a href="">입찰하기</a> </h5>
+          <h5 class="card-header"><a href="" onclick="myFunction()">관심물품 찜하기</a> </h5>
+        </div>
+		
+      </div>
 		
 		
         <hr>
@@ -176,7 +239,8 @@
         <p> 물품의 다섯번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
 
 
-
+<input type="button" value="답변하기" style="visibility: visible;" onclick="change()" class="reply">
+<input type="button" value="답변하기2321" style="visibility: hidden;" onclick="change()" class="reply">
 <!-- 문의하기 게시판 정보 -->
 <table class="table table-condensed" style="text-align: center; border: 1px soli #dddddd; border-collapse:collapse">
 	<thead>
@@ -260,7 +324,10 @@
 	</c:otherwise>
 </c:choose>
 		
-		
+
+    </div>
+    <!-- /.row -->
+<div>		
         <!-- 문의하기 폼 -->
         <div class="card my-4">
           <h5 class="card-header">문의하기</h5>
@@ -274,48 +341,7 @@
           </div>
         </div>
       </div>
-
-      <!-- Sidebar Widgets Column -->
-      <div class="col-md-4">
-        <!-- Categories Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">카테고리</h5>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-lg-12">
-                <ul class="list-unstyled mb-0">
-                  <ol class="breadcrumb">
-  					<li class="breadcrumb-item"><a href="#">홈</a></li>
-  					<li class="breadcrumb-item"><a href="#">온라인경매</a></li>
-  					<li class="breadcrumb-item active">${cate }</li>
-				  </ol>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Side Widget -->
-        <div class="card my-4">
-          <h5 class="card-header">경매 남은시간 <div id="result" style="width:100%; height:20px"></div></h5>
-          <h5 class="card-header">${info.a_startdate } 부터 ${info.a_enddate } 까지</h5>
-          <h5 class="card-header">입찰수  : ${bidnum }</h5>
-          <h5 class="card-header"><a href="" onclick="bidlist()">경매기록보기</a></h5>
-          <h5 class="card-header">물품번호 ${info.a_num }</h5>
-          <h5 class="card-header">시작가 ${info.a_startbid }</h5>
-          <h5 class="card-header">입찰단위 ${info.a_bidunit }</h5>
-          <h5 class="card-header">입찰방식 : 비공개</h5>
-          <h5 class="card-header">배송방법 ${ship.s_way } </h5>
-          <h5 class="card-header">배송비용 : ${ship.s_price }원 </h5>
-          <h5 class="card-header">판매자 ID : <a href="" onclick="singo()">${seller }</a> </h5>
-          <h5 class="card-header"><a href="">입찰하기</a> </h5>
-          <h5 class="card-header"><a href="" onclick="myFunction()">관심물품 찜하기</a> </h5>
-        </div>
-		
-      </div>
-
-    </div>
-    <!-- /.row -->
+</div>
 
   </div>
   <!-- /.container -->
@@ -332,7 +358,7 @@
 <script type="text/javascript">
   window.onload=function(){
 	  var a=document.getElementById("a");
-	  a.style.height="1400px";
+	  a.style.height="1600px";
   }
 </script>
 

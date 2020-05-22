@@ -17,7 +17,6 @@ public class JjimController extends HttpServlet{
 		String mnum=req.getParameter("m_num");//회원번호
 		
 		int mnum2 = 0;
-		
 		MainDao dao = MainDao.getInstance();
 		
 		if(mnum!=null && !mnum.equals("") ) {//찜 실행
