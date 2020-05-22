@@ -1,4 +1,4 @@
-package semi.controller.jhlogin;
+package semi.controller.jhmyinfo;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,30 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
-import semi.dao.jh.LoginDao;
-@WebServlet("/login/findPwd.jh")
-public class FindPwdController extends HttpServlet{
+import semi.dao.jh.MembersDao;
+@WebServlet("/myinfo/pwdChange.jh")
+public class ChargePwdController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		String m_id=req.getParameter("m_id");
-		String m_name=req.getParameter("m_name");
-		String m_phone=req.getParameter("m_phone");
-		
-		LoginDao dao=LoginDao.getLoginDao();
-		String pwd=dao.findPwd(m_id, m_name, m_phone);
-		System.out.println("비밀번호:"+pwd);
+		String pwd=req.getParameter("newpwd");
+		int m_num=Integer.parseInt(req.getParameter("m_num"));
+		MembersDao dao=MembersDao.getMembersDao();
+		int n=dao.changePWd(pwd, m_num);
 		resp.setContentType("text/plain;charset=utf-8");
 		JSONObject json=new JSONObject();
-		if(pwd!=null) {//비밀번호가 있을 경우
+		System.out.println("결과:"+n);
+		if(n>1) {
 			json.put("msg", "ok");
-			json.put("pwd", pwd);
 		}else {
-			json.put("msg", "no");
+			json.put("msg", "error");
 		}
 		PrintWriter pw=resp.getWriter();
 		pw.print(json);
-	
-	
 	}
 }

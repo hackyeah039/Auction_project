@@ -397,6 +397,62 @@ public class MembersDao {
 					System.out.println(s.getMessage());
 				}
 			}
-			
 		}
+		
+		//내정보_비밀번호 변경(현재 비밀번호와 체크)
+		public String getPwd(int num) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			ResultSet rs=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="select m_pwd from members where m_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				rs=pstmt.executeQuery();
+				String m_pwd=null;
+				if(rs.next()) {
+					m_pwd=rs.getString("m_pwd");
+				}
+				return m_pwd;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return null;
+			}finally {
+				try {
+					if(rs!=null) rs.close();
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+		
+		//새로운 비밀번호로 변경하기
+		public int changePWd(String pwd, int num) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="update members set m_pwd=? where m_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, pwd);
+				pstmt.setInt(2, num);
+				int n=pstmt.executeUpdate();
+				return n;
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return -1;
+			}finally {
+				try {
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
+		}
+		
+		
 }

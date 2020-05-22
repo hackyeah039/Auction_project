@@ -23,8 +23,9 @@
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 		    <div class="navbar-nav">
+		      <a class="nav-item nav-link" href="${cp }/main_sh/layoutTest.jsp">메인으로 가기</a>
 		      <a class="nav-item nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">정보수정하기</a>
-		      <a class="nav-item nav-link" href="${cp }/myInfo/myinfoMain.jsp?file=pwdUpdate.jsp">비밀번호 변경</a>
+		      <a class="nav-item nav-link" href="${cp }/myInfo/myinfoMain.jsp?file=pwdUpdate.jsp?m_num=${m_num}">비밀번호 변경</a>
 		      <a class="nav-item nav-link" href="${cp }/myInfo/myinfoMain.jsp?file=findPwd.jsp">탈퇴하기</a>
 		    </div>
 		  </div>
