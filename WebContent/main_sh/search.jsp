@@ -1,3 +1,4 @@
+<%@page import="java.io.Console"%>
 <%@page import="java.io.PrintWriter"%>
 <%@page import="semi.controller.shvo.SHAuctionVo"%>
 <%@page import="java.util.ArrayList"%>
@@ -5,9 +6,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+	request.setCharacterEncoding("utf-8");
 	String field=request.getParameter("field");
 	String keyword=request.getParameter("keyword");
     String spageNum=request.getParameter("pageNum");
+    
 		int pageNum = 1;
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
@@ -18,7 +21,8 @@
 		MainListDao mdao = new MainListDao();
 		ArrayList<SHAuctionVo> list = mdao.SearchList(startrow, endrow, field, keyword);
 		
-		int pageCnt=(int)Math.ceil(mdao.getAllCnt()/12.0);
+		int pageCnt=(int)Math.ceil(mdao.getSerchCnt(keyword, field)/12.0);
+		System.out.print(pageCnt);
 		int startPageNum=((pageNum-1)/5)*5+1;
 		int endPageNum=startPageNum+4;
 		if(pageCnt<endPageNum) {

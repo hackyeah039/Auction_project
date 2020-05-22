@@ -22,8 +22,6 @@ public class SearchController extends HttpServlet{
 		String field=req.getParameter("field");
 		String keyword=req.getParameter("keyword");
 		
-		
-		
 		req.setAttribute("field", field);
 		req.setAttribute("keyword", keyword);
 		req.setAttribute("file", "/main_sh/getSearch.jsp");

@@ -64,13 +64,11 @@ public class MainListDao {
 		String sql = null;
 		try {
 			con=ConnectionPool.getConn();
-			if(keyword == null || keyword.equals("")) {
-				sql = "select a.*, m.m_id from auction a, seller s, members m where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 order by a_num desc";
-			} else {
-				sql =  "select * from (select aa.*, rownum rnum from("
-						+" select a.*, m.m_id from auction a, seller s, members m"
-						+ " where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 and "+field+" like '%" +keyword+ "%' ORDER BY a_num desc) aa)where rnum>=? and rnum <=?";
-			}
+				
+			sql =  "select * from (select aa.*, rownum rnum from("
+					+" select a.*, m.m_id from auction a, seller s, members m"
+					+ " where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 and "+field+" like '%" +keyword+ "%' ORDER BY a_num desc) aa)where rnum>=? and rnum <=?";
+
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
 			pstmt.setInt(2, endrow);
@@ -289,6 +287,28 @@ public class MainListDao {
 		int cnt=0;
 		try {
 			String sql="select NVL(count(a_num),0) cnt FROM auction";
+			con=ConnectionPool.getConn();
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				cnt=rs.getInt("cnt");
+			}
+			return cnt;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	
+	public int getSerchCnt(String keyword, String field) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int cnt=0;
+		try {
+			String sql="select NVL(count(a_num),0) cnt from( select a.*, m.m_id from auction a, seller s, members m where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 and " + field + " like '%" + keyword + "%' ORDER BY a_num desc)";	
 			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();

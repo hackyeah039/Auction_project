@@ -5,30 +5,123 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>listAll.jsp</title>
+<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script> 
 <style type="text/css">
-	#ontop{width: 950px; border:1px solid black;}
 	#wrap{width: 1300px;}
-	#mid{width: 100%; height: 60px;border:1px solid black; margin-top: 15px; margin-bottom: 15px; text-align: center;}
-	#head{width: 100%; height: 200px;border: 1px solid blue; margin-top: 15px;}
+	#mid{width: 100%; height: 60px; margin-top: 15px; margin-bottom: 15px; text-align: center;}
+	#head{width: 100%; height: 200px; margin-top: 15px;}
 	#start{border:1px solid black;}
 	.auc{width: 300px;height: 400px;
-		border:1px solid black;margin-bottom: 5px;
-		margin-left: 20px; margin-top: 10px;}
+		border:1px solid black;
+		}
+	#topCard {
+		height: 40px;
+		margin: auto;
+		width: 100%;
+	}
+	.sticky-top {
+		width: 100%;
+		height: 100px;
+	}
+	#main {
+		width: 1300px;
+		align-content: center;
+		align-items: center;
+		align-self: center;
+		margin: auto;
+	}
 </style>
 </head>
 <body onload="allList(1,0,0)">
-<div id="wrap">
-	<div id="top">
-		<div id="ontop" style="float: left"></div>
-		<div id="righttop">
-			<div id="login" style="float: left; margin-left: 40px;">로그인</div>
-			<div id="join" style="float: left; margin-left: 40px; margin-right: 40px">회원가입</div>
-			<div id="mypage" style="">마이페이지</div>
-		</div>
+<div class="card  bg-secondary  text-white" id="topCard"></div>
+
+<!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
+<nav class="navbar bg-dark navbar-dark sticky-top text-white">
+ 	<a class="navbar-brand" href="#">Logo(누르면 Home으로 가게)</a>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
+	</ul>	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
+	</ul>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+	</ul>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="#">물품등록</a></li>
+	</ul>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="#">전체물품</a></li>
+	</ul>
+<!-- 검색 조건 드랍박스 (영호영 검색기능 넣는 곳) -->	
+<form class="form-inline" method="post" action="${cp }/sh/search.do">
+	  <div class="btn-group">
+			  <select class="btn outline-secondary mr-sm-2 bg-secondary" name="field">
+			  	<option value="a_title">제목</option>
+			  	<option value="m_id">작성자</option>
+			  	<option value="a_content">내용</option>
+			  </select>
 	</div>
-<div id="head"><h2>이벤트 배너</h2></div>
+    <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search" name="keyword" value=${keyword }>
+    <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
+</form>
+<!-- 까지 검색조건 -->  
+</nav>
+<!-- 까지 고정되어 따라다니는 네비게이션 바 -->
+<div id="main">
+	<script> $('.carousel').carousel({ interval: 2000}) </script>
+		<div class="container">
+		</div>
+		<div id="demo" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<!-- 슬라이드 쇼 -->
+				<div class="carousel-item active">
+					<!--가로-->
+					<img class="d-block w-100"
+						src="${cp }/main_sh/banner1.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
+						alt="First slide">
+					<div class="carousel-caption d-none d-md-block">
+					</div>
+				</div>
+				<div class="carousel-item">
+					<img class="d-block w-100"
+						src="${cp }/main_sh/banner2.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+						alt="Second slide">
+				</div>
+				<div class="carousel-item">
+					<img class="d-block w-100"
+						src="${cp }/main_sh/banner3.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
+						alt="Third slide">
+				</div>
+				<!-- / 슬라이드 쇼 끝 -->
+				<!-- 왼쪽 오른쪽 화살표 버튼 -->
+				<a class="carousel-control-prev" href="#demo" data-slide="prev">
+					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					<!-- <span>Previous</span> -->
+				</a> <a class="carousel-control-next" href="#demo" data-slide="next">
+					<span class="carousel-control-next-icon" aria-hidden="true"></span>
+					<!-- <span>Next</span> -->
+				</a>
+				<!-- / 화살표 버튼 끝 -->
+				<!-- 인디케이터 -->
+				<ul class="carousel-indicators">
+					<li data-target="#demo" data-slide-to="0" class="active"></li>
+					<!--0번부터시작-->
+					<li data-target="#demo" data-slide-to="1"></li>
+					<li data-target="#demo" data-slide-to="2"></li>
+				</ul>
+				<!-- 인디케이터 끝 -->
+			</div>
+</div>
+<div id="wrap" align="center">
+	<div id="top">
+	</div>
 	<div id="mid">
-		<div id="banner">
+		<div class="bg-secondary" id="banner">
 			<table width="100%" height="60px" border="1">
 				<tr>
 					<td><a href="javascript:allList(0,0,1);">인기순</a></td>
@@ -59,7 +152,7 @@
 		var sec=time.getSeconds();
 		var nowTime="현재시간 : " + year + "년" + month + "월"+ date + "일" + hour + "시" +
 		min + "분" + sec + "초";
-		document.getElementById("ontop").innerHTML=nowTime;
+		document.getElementById("topCard").innerHTML=nowTime;
 	}, 1000)
 	<%-- 까지 최상단 시간 출력  --%>
 
@@ -125,12 +218,20 @@
 					let div=document.createElement("div");
 					div.style.textAlign="center";
 					let timeDiv=document.createElement("div");
-					div.innerHTML="<a href='${cp}/sh/checkup.do?a_num="+ a_num +"' style='text-decoration: none; color: black;'>"+
-					"제목 : " + title + "<br>" +
-					"가격 : " + price + "<br>"+
-					"작성자 : " + id + "<br>"+
-					"조회수 : " + a_check + "<br>" +
-					"입찰수 : " + bidCnt + "<br>" +"</a>";
+					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "#" +"'\">"+
+					"<img class='card-img-top' src='.../100px180/' alt='Card image cap'>"+
+					"<div class='card-body'>"+
+					"<h4 class='card-title'>" + title + "</h4>"+
+					"<h3 class='card-text text-primary'>" + price + "원</h3>"+
+					"</div>"+
+						"<table class='table table-bordered'>"+
+						"<tr>"+
+							"<td><h5>입찰 수</h5><h5>"+bidCnt +"</h5></td>"+
+							"<td><h5>조회 수</h5><h5>"+a_check +"</h5></td>"+
+						"</tr>"+
+					"</table>"+
+					"<div class='card-footer bg-dark text-white'>" + "시간 넣는 곳" + "</div>"+
+					"</div>";
 					div.style.float="left";
 					//let timer(i);
 					<%--timer(i)=--%>setInterval(function() {
@@ -150,7 +251,7 @@
 							timeDiv.innerHTML=nowTime;
 						}
 					}, 1000)
-					div.className="auc";
+					div.className="auc card";
 					div.appendChild(timeDiv);
 					allauc.appendChild(div);
 				}
@@ -175,7 +276,6 @@
 					page.style.float="bottom";
 			};
 			<%-- 까지 페이징 출력 --%>
-			
 		}
 		xhrList.open('get','${cp}/sh/mainlist.do?pageNum='+pageN+"&cateNum="+cateN+"&recomNum="+recomN,true);
 		xhrList.send();

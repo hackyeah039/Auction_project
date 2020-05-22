@@ -26,10 +26,6 @@
 		height: 100px;
 	}
 	
-	#topCard {
-		width: 100%;
-	}
-	
 	#main {
 		width: 1300px;
 		align-content: center;
@@ -40,13 +36,14 @@
 	#topCard {
 		height: 40px;
 		margin: auto;
+		width: 100%;
 	}
 </style>
 	<%
 		String head = "/main_sh/headerTest.jsp";
 		String hair = "/main_sh/hairTest.jsp";
 	%>
-	<div class="card  bg-secondary  text-white" id="topCard"></div>
+<div class="card  bg-secondary  text-white" id="topCard"></div>
 
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
