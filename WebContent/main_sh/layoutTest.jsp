@@ -46,25 +46,41 @@
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
 	</ul>	
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
-	</ul>	
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>
-	</ul>
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>
-	</ul>
+	
+	<c:choose>
+		<c:when test="${sessionScope.id != null }">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
+			</ul>
+		</c:when>
+		<c:otherwise>
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
+			</ul>					
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>		
+			</ul>					
+		</c:otherwise>
+	</c:choose>
+
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
 	</ul>
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
- 	<a class="navbar-brand" href="#">Logo(누르면 Home으로 가게)</a>
+ 	<a class="navbar-brand" href="${cp }/sh/testMain.do">Logo(누르면 Home으로 가게)</a>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/mypage/simplelist.do">마이페이지</a></li>
-		<li class="nav-item"><a class="nav-link" href="${cp }/adminmain/main.jh">관리자페이지</a></li>
+		
+		<c:choose>
+			<c:when test="${sessionScope.adminId =='admin' }" >
+				<li class="nav-item"><a class="nav-link" href="${cp }/adminmain/main.jh">관리자페이지</a></li>		
+			</c:when>
+			<c:otherwise>
+				<li class="nav-item"><a class="nav-link" href="${cp }/mypage/simplelist.do">마이페이지</a></li>		
+			</c:otherwise>
+					
+		</c:choose>
 	</ul>
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="${cp }/InsertAuction.do">물품등록</a></li>
