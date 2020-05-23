@@ -21,6 +21,14 @@
  		align-self: center;
  		margin: auto;
  	}
+ 	p{
+ 		width: 160px;
+ 		height: 40px;
+ 		border-radius: 10px;
+ 		text-align: center;
+ 		padding-top: 5px;
+ 	}
+
  </style>
  <!-- 0513 이미지 프리뷰 스크립트 -->
  <script type="text/javascript">
@@ -180,7 +188,9 @@
 <!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
 <div class="card bg-white outline-white">
 	<form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data" onsubmit="return chkValues()">
-	<h2 class="card bg-light mt-3 mb-3"> 카테고리 선택 </h2>
+	<div>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>카테고리 선택</strong> </p>
+	</div>
 	 <table>
 	 	<c:forEach var="vo" items="${clist }" varStatus="vs">
 	 		<c:choose>
@@ -198,7 +208,7 @@
 	 		</c:choose>
 	 	</c:forEach>
 	 </table>
-	<h1 class="card bg-light mt-3 mb-3"> 경매 물품 정보 </h1>
+	 <p class="h4 text-white bg-primary mt-3 mb-3"> <strong>경매물품 정보</strong> </p>
 	<table>
 	<tr>
 		<td>
@@ -233,7 +243,7 @@
 		</td>
 	</tr>
 	</table>
-	<h1 class="card bg-light mt-3 mb-3"> 경매 설정 </h1>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>경매 설정</strong> </p>
 	<table>
 	<tr>
 		<td>
@@ -335,7 +345,7 @@
 		</td>
 	</tr>
 	</table>
-	<h1 class="card bg-light mt-3 mb-3">배송설정</h1>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>배송 설정</strong> </p>
 	<table>
 		<tr>
 			<td>배송 방법</td>
@@ -354,7 +364,7 @@
 			</td>
 		</tr>
 	</table>
-	<h1 class="card bg-light mt-3 mb-3">계좌번호 입력</h1>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>계좌번호 입력</strong> </p>
 	<table>
 		<tr>
 			<td>계좌번호</td>

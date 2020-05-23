@@ -70,6 +70,7 @@ public class InsertAuction extends HttpServlet {
 
 		// 파일 업로드 저장소 위치, 나중에 cp + 폴더명 하면 될듯
 		File currentPath = new File("C:\\Users\\JHTA\\git\\semiproject_auctionsite\\WebContent\\img");
+		//C:\Users\Jaeeun\git\semiproject_auctionsite\WebContent\img
 		if(currentPath.mkdir()) {
 			System.out.println("해당디렉토리가 생성되었습니다.");			
 		} else {
