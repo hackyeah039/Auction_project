@@ -19,6 +19,7 @@ public class ShipDao {
 		try {
 			con = ConnectionPool.getCon();
 			String sql = "select * from payment where pay_num = ?";
+			System.out.println("paynum : "+paynum);
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, paynum);
 			rs = pstmt.executeQuery();
@@ -27,9 +28,11 @@ public class ShipDao {
 				String pay_addr = rs.getString("pay_addr");
 				int pay_status = rs.getInt("pay_status");
 				int bid_number = rs.getInt("bid_number");
+				String pay_name = rs.getString("pay_name");
+				String pay_phone = rs.getString("pay_phone");
 				Date pay_deadline = rs.getDate("pay_deadline");
 				
-				return new PaymentVo(pay_num, pay_addr, pay_status, bid_number, pay_deadline);
+				return new PaymentVo(pay_num, pay_addr, pay_status, bid_number, pay_deadline,pay_name,pay_phone);
 			}
 			else return null;
 			

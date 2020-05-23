@@ -2,39 +2,45 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<div id = "page-wrapper">
 <div id="leftMenu">
-	<jsp:include page="LeftMenu.jsp"></jsp:include>
+	<jsp:include page="newLeftMenu.jsp"></jsp:include>
 </div>
-<div id="rightContent">
-	<ul>
-		<li><a href="#">전체</a></li>
-		<li><a href="#">미입금</a></li>
-		<li><a href="#">입금완료</a></li>
-	</ul>
+
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+      <h1>거래 중인 리스트</h1>
+    </div>
+	
 	<form action="${cp }/order/order.do" method="get"
 		onsubmit="return submitClick()" >
 		<!-- onsubmit="return submitClick()" -->
-		<table border="1" id = "table">		
+	<table  class="table table-bordered" border=1 style="text-align: center; 
+		margin-top: 40px">
+		<thead class = "thead">
+		 
 			<tr>
-				<th>NO</th>
-				<th>물품명</th>
-				<th>구매가격</th>
-				<th>낙찰/구매일</th>
-				<th>판매자</th>
-				<th>입금기한</th>
-				<th>거래상태</th>
-				<th><input type="checkbox" onclick = "allClick()"></th>
+				<th scope="col">NO</th>
+				<th scope="col">물품명</th>
+				<th scope="col">구매가격</th>
+				<th scope="col">낙찰/구매일</th>
+				<th scope="col">판매자</th>
+				<th scope="col">입금기한</th>
+				<th scope="col">거래상태</th>
+				<th scope="col"><input type="checkbox" onclick = "allClick()"></th>
 			</tr>
 
 			<c:if test="${getListSize == 0  }">
 				<tr>
-					<td colspan="8">정보가 존재하지 않습니다.</td>
+					<td colspan="8" scope="row">정보가 존재하지 않습니다.</td>
 				</tr>
 			</c:if>
+	
+			<c:set var="i" value="0"/>
 			<c:forEach var="anum" items="${tranBidList}">
+				<c:set var="i" value = "${i+1 }"/>
 				<tr>
-					<td>${anum.a_num }</td>
+					<td scope="row">${i}</td>
 
 					<!-- 물품명 -->
 					<c:forEach var="titleList" items="${auctionTitleList}">
@@ -82,11 +88,10 @@
 		</table>
 		<br> 
 		<input type="hidden" id="message" name = "message">
-		<input type="submit" value="입금하기" id="sbtn">
+		<input type="submit" class="btn btn-secondary btn-lg" value="입금하기" id="sbtn">
 	</form>
-
 </div>
-
+</div>
 <script type="text/javascript">
 	function submitClick(){
 		

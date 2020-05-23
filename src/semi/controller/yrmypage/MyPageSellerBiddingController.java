@@ -23,6 +23,8 @@ public class MyPageSellerBiddingController extends HttpServlet {
 //		회원 번호 session으로 가져오기
 //		int m_num= (int)req.getSession().getAttribute("m_num");
 		
+		try {
+			
 		BiddingDao auctiondao  = new BiddingDao();
 		
 		//판매자 번호
@@ -44,10 +46,18 @@ public class MyPageSellerBiddingController extends HttpServlet {
         HashMap<Integer, BiddingVo> BiddingInfoList = auctiondao.sellergetBiddingInfo(anumList);
 		
         
+        
+        req.setAttribute("getListSize", anumList.size());
         req.setAttribute("anumList", anumList);		
         req.setAttribute("BidCountList", getBidCountList);		
         req.setAttribute("currPriceList", getCurrPrice);
         req.setAttribute("BiddingInfoList", BiddingInfoList);
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			req.setAttribute("getListSize", 0);
+		}
+
 //        req.setAttribute("header", "header.jsp");
 //        req.setAttribute("content", "/mypage/mypageSellerBidding.jsp");
 //        req.getRequestDispatcher("/index.jsp").forward(req, resp);

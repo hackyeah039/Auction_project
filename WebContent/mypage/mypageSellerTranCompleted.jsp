@@ -1,22 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<div id = "page-wrapper">
 <div id="leftMenu">
-	<jsp:include page="LeftMenu.jsp"></jsp:include>
+	<jsp:include page="newLeftMenu.jsp"></jsp:include>
 </div>
-<div id="rightContent">
 
-	<table border="1">
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+      <h1>거래 완료 리스트</h1>
+    </div>
+
+<table  class="table table-bordered" border=1 style="text-align: center; 
+		margin-top: 40px">
+		<thead class = "thead">
 		<tr>
-			<th>NO</th>
-			<th>물품명</th>
-			<th>조회</th>
-			<th>시작일</th>
-			<th>마감일</th>
-			<th>입찰</th>
-			<th>낙찰가격</th>
-			<th>구매자</th>
-			<th>입찰결과</th>
+			<th scope="col">NO</th>
+			<th scope="col">물품명</th>
+			<th scope="col">조회</th>
+			<th scope="col">시작일</th>
+			<th scope="col">마감일</th>
+			<th scope="col">입찰</th>
+			<th scope="col">낙찰가격</th>
+			<th scope="col">구매자</th>
+			<th scope="col">입찰결과</th>
 		</tr>
 
 		<c:if test="${getListSize == 0  }">
@@ -24,9 +31,12 @@
 				<td colspan="9">정보가 존재하지 않습니다.</td>
 			</tr>
 		</c:if>
+
+		<c:set var="i" value="0"/>
 		<c:forEach var="anum" items="${completedTranList}">
+			<c:set var="i" value = "${i+1 }"/>
 			<tr>
-				<td>${anum.a_num }</td>
+				<td scope="row">${i}</td>
 
 				<!-- 물품명, 조회, 시작일,마감일 -->
 				<td>${anum.a_title}</td>

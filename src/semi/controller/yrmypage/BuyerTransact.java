@@ -70,7 +70,7 @@ public class BuyerTransact extends HttpServlet {
 //				System.out.println(String.format("키 : %s, 값 : %s", key, paymentList.get(key)));
 //			}
 
-			req.setAttribute("getListSize", tranBidList.size() );
+			req.setAttribute("getListSize", tranBidList.size());
 			req.setAttribute("tranBidList", tranBidList);
 			req.setAttribute("auctionTitleList", auctionTitleList);
 			req.setAttribute("sellerIdList", sellerIdList);
