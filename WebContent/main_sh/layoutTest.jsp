@@ -39,12 +39,6 @@
 		width: 100%;
 	}
 </style>
-	<%
-		String file = request.getParameter("file");
-		if (file == null) {
-			file = "/main_sh/main.jsp";
-	}
-	%>
 <!-- 
 <div class="card  bg-secondary  text-white" id="topCard"></div>
  -->

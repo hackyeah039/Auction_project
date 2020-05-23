@@ -85,9 +85,9 @@ public class BuyerTranCompletedController extends HttpServlet {
 		}
 
 //		req.setAttribute("header", "header.jsp");
-//		req.setAttribute("content", "/mypage/mypageBuyerTranCompleted.jsp");
-//		req.getRequestDispatcher("/index.jsp").forward(req, resp);
-	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageBuyerTranCompleted.jsp").forward(req, resp);
+		req.setAttribute("file", "/mypage/mypageBuyerTranCompleted.jsp");
+		req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageBuyerTranCompleted.jsp").forward(req, resp);
 
 	}
 }

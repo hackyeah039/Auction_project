@@ -84,9 +84,9 @@ public class BuyerTransact extends HttpServlet {
 		}
 		
 //		req.setAttribute("header", "header.jsp");
-//		req.setAttribute("content", "/mypage/mypageBuyerTransact.jsp");
-//		req.getRequestDispatcher("/index.jsp").forward(req, resp);
-	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageBuyerTransact.jsp").forward(req, resp);
+		req.setAttribute("file", "/mypage/mypageBuyerTransact.jsp");
+		req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageBuyerTransact.jsp").forward(req, resp);
 
 	}
 }

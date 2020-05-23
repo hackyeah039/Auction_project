@@ -90,9 +90,9 @@ public class SellerTransact extends HttpServlet{
 			req.setAttribute("getListSize", 0);
 		}
 //		req.setAttribute("header", "header.jsp");
-//		req.setAttribute("content", "/mypage/mypageSellerTransact.jsp");
-//		req.getRequestDispatcher("/index.jsp").forward(req, resp);
-	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageSellerTransact.jsp").forward(req, resp);
+		req.setAttribute("file", "/mypage/mypageSellerTransact.jsp");
+		req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageSellerTransact.jsp").forward(req, resp);
 			
 	}
 }

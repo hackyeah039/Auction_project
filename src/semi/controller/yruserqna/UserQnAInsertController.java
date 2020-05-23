@@ -28,9 +28,9 @@ public class UserQnAInsertController extends HttpServlet {
 		req.setAttribute("id", id);
 
 //		req.setAttribute("header", "header.jsp");
-//		req.setAttribute("content", "/board/userQnAInsert.jsp");
-//		req.getRequestDispatcher("/index.jsp").forward(req, resp);
-	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/board/userQnAInsert.jsp").forward(req, resp);
+		req.setAttribute("file", "/board/userQnAInsert.jsp");
+		req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/board/userQnAInsert.jsp").forward(req, resp);
 
 	}
 

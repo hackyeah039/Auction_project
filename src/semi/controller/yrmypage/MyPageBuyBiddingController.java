@@ -68,9 +68,9 @@ public class MyPageBuyBiddingController extends HttpServlet {
 		}
 		
 //        req.setAttribute("header", "header.jsp");
-//        req.setAttribute("content", "/mypage/mypageBuyBidding.jsp");
-//        req.getRequestDispatcher("/index.jsp").forward(req, resp);
-        req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageBuyBidding.jsp").forward(req, resp);
+        req.setAttribute("file", "/mypage/mypageBuyBidding.jsp");
+        req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//        req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/mypage/mypageBuyBidding.jsp").forward(req, resp);
     	
 	}
 }

@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-
-
 <div class="card border-secondary mb-3" style="width: 100%;">
   <div class="card-header">
 		<h3 style="text-align: center">당신의 신용도는 ${trust }입니다.</h3>

@@ -12,7 +12,9 @@
   }
   
   #sidebar-wrapper {
+/*
     position: fixed;
+*/
     width: 250px;
     height: 100%;
     margin-left: -250px;

@@ -100,9 +100,9 @@ public class OrderController extends HttpServlet {
 		req.setAttribute("memberInfo", vo);
 		req.setAttribute("priceList", priceList);
 //		req.setAttribute("header", "header.jsp");
-//		req.setAttribute("content", "/order/orderSheet.jsp");
-//		req.getRequestDispatcher("/index.jsp").forward(req, resp);
-	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/order/orderSheet.jsp").forward(req, resp);
+		req.setAttribute("file", "/order/orderSheet.jsp");
+		req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/order/orderSheet.jsp").forward(req, resp);
 
 	}
 }

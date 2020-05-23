@@ -40,9 +40,9 @@ public class UserQnAController extends HttpServlet{
 		req.setAttribute("BoardListSize", list.size());
 		req.setAttribute("BoardList", list);
 //		req.setAttribute("header", "header.jsp");
-//		req.setAttribute("content", "/board/userQnA.jsp");
-//		req.getRequestDispatcher("/index.jsp").forward(req, resp);
-	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/board/userQnA.jsp").forward(req, resp);
+		req.setAttribute("file", "/board/userQnA.jsp");
+		req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/board/userQnA.jsp").forward(req, resp);
 
 	}
 	

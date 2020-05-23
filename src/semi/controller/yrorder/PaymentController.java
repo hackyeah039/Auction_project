@@ -53,12 +53,17 @@ public class PaymentController extends HttpServlet {
 		
 		if(n>0) {
 			req.setAttribute("result", "success");
-		    req.getRequestDispatcher("/main_sh/layoutTest.jsp?/order/resultOrder.jsp").forward(req, resp);
-
+			req.setAttribute("file", "/order/resultOrder.jsp");
+			
+	        req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
 //			req.getRequestDispatcher("/order/resultOrder.jsp").forward(req, resp);
+//		    req.getRequestDispatcher("/main_sh/layoutTest.jsp?/order/resultOrder.jsp").forward(req, resp);
 		}else {
 			req.setAttribute("result", "false");
-			req.getRequestDispatcher("/main_sh/layoutTest.jsp?/order/resultOrder.jsp").forward(req, resp);
+
+			req.setAttribute("file", "/order/resultOrder.jsp");
+	        req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//			req.getRequestDispatcher("/main_sh/layoutTest.jsp?/order/resultOrder.jsp").forward(req, resp);
 		}
 	}
 }
