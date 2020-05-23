@@ -132,7 +132,7 @@ public class AuctionDao {
 				pstmtAuction.executeUpdate();
 			}
 			
-			String sqlShip = "insert into Ship values(seq_ship_s_num.nextval, ?, ?, seq_auction_a_num.currval)";
+			String sqlShip = "insert into Ship values(seq_ship_s_num.nextval, ?, ?, seq_auction_a_num.currval,null,null)";
 			pstmtShip = con.prepareStatement(sqlShip);
 			pstmtShip.setString(1, shvo.getS_way());
 			pstmtShip.setInt(2, shvo.getS_price());

@@ -8,9 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.ws.RespectBindingFeature;
-
-import com.sun.java.swing.plaf.windows.resources.windows;
 
 import semi.dao.yh.AuctionDao;
 import semi.dao.yh.BiddingDao;
@@ -21,14 +18,11 @@ import semi.vo.yh.BiddingVo;
 public class BiddingController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 //		회원번호 받아오기
-//		int m_num =  (int)req.getAttribute("m_num");
-		int m_num = 1; // 테스트 용
+		int m_num =  Integer.parseInt(req.getParameter("m_num"));//회원번호
 
 //		경매번호 받아오기(파라미터로 넘겼음)
-//		int a_num = Integer.parseInt(req.getParameter("a_num"));		
-		int a_num = 3; // 테스트 용
+		int a_num = Integer.parseInt(req.getParameter("a_num"));//경매번호		
 
 //		입찰단위 가져오기 
 		AuctionDao adao = AuctionDao.getInstance();

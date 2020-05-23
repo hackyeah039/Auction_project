@@ -132,6 +132,7 @@ public class MainListDao {
 				int bidstatus=rs.getInt("bidstatus");
 				int a_startbid=rs.getInt("a_startbid");
 				int a_bidunit=rs.getInt("a_bidunit");
+				
 				SHAuctionVo vo=new SHAuctionVo(
 						a_num, a_title, a_content,
 						a_condition, a_regdate, a_startdate,

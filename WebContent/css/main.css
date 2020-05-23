@@ -1,0 +1,122 @@
+@charset "UTF-8";
+
+
+* {	
+	box-sizing: border-box;
+    -webkit-font-smoothing: antialised;
+}
+
+body {
+    margin-top: 5em;
+    font: 20px/1.5 "Helvetica", Arial, sans-serif;
+}
+
+.bg-gradient-4 {
+   						background: #007991;
+					    background: -webkit-linear-gradient(to right, #007991, #78ffd6);
+					    background: linear-gradient(to right, #007991, #78ffd6);
+					   }
+
+
+.table tr {
+    cursor: pointer;
+}
+.table{
+	background-color: #fff !important;
+}
+.hedding h1{
+	color:#fff;
+	font-size:25px;
+}
+.main-section{
+	margin-top: 120px;
+}
+.hiddenRow {
+    padding: 0 4px !important;
+    background-color: #eeeeee;
+    font-size: 13px;
+}
+.accordian-body span{
+	color:#a2a2a2 !important;
+}
+
+.container {
+    position: relative;
+    width: 100%;	
+	overflow: hidden;
+}
+
+.slider-container {
+	
+	width:100%;
+}
+
+.slide {
+	position: absolute;
+	width: 100%;
+	padding:0 10%;
+	box-sizing:border-box;
+	top: 50%;
+	transform: translateY(-50%);
+	text-align: center;
+	overflow: hidden;
+}
+
+.slider-container.animated {
+	-webkit-transition: left .3s ease-in;
+	transition: left .3s ease-in;
+}
+
+blockquote {
+    color: #636363;
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 1.5em;
+}
+
+cite {
+    font-size: .75em;
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+
+
+/* Utility */
+.simple-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+/* Nav */
+#prev,
+#next {
+    position: absolute;
+    top: 50%;
+	left:50%;
+    transform: translateY(-50%);
+    z-index: 999999;
+    display: inline-block;
+    height: 5em;
+    width: 5em;
+    border-radius: 50%;
+    background-position: center center;
+    background-repeat: no-repeat;
+    -webkit-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+}
+
+#prev.disabled, #next.disabled { display:none;}
+
+#prev { background-image: url("../image/arrow-left-out.svg"); margin-left:-280px;}
+
+#prev:hover { background-image: url("../image/arrow-left-over.svg"); }
+
+#next {
+    margin-left:250px;
+    background-image: url("../image/arrow-right-out.svg");
+	
+}
+
+#next:hover { background-image: url("../image/arrow-right-over.svg"); }

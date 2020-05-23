@@ -61,12 +61,14 @@
 					endSec*=1;
 					let endTime=new Date(endYear,(endMonth-1),endDay,endHour,endMin,endSec).getTime();
 					
+					
+					console.log("${cp}/img/"+ i_path);
 					<%-- 각 경매글 div 만들고 출력하는 부분 --%>
 					let div=document.createElement("div");
 					div.style.textAlign="center";
 					let timeDiv=document.createElement("div");
 					timeDiv.id="div1" + i;
-					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "#" +"'\">"+
+					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "${cp}/main.do?a_num="+a_num+"'\">"+
 					"<img class='card-img-top' src='${cp}/img/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
 					"<div class='card-body'>"+
 					"<h4 class='card-title'>" + title + "</h4>"+

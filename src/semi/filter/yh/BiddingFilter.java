@@ -30,32 +30,33 @@ public class BiddingFilter implements Filter{
 //		ServletRequest가 상위이므로 HttpServletRequest로 강제 형변환 하여 session 값을 받아옴
 		HttpServletRequest hp = (HttpServletRequest)request;
 		HttpSession session = hp.getSession();
-
-		int m_num = 0;
-
-	
 		
+		
+		System.out.println("ggggggggggg");
+		int m_num = 0;
+		int trust  = 0;
 		//로그인 안했을 때 입찰 못하도록
 //		세션에 값이 담겨있는지 먼저 if문으로 체크(예외처리)
 		if(session != null) {
-			if(session.getAttribute("m_num") != null) {
+			if((Integer)session.getAttribute("m_num") != 0 ) {
 				m_num = (int)session.getAttribute("m_num");
 				InsertBidding = true;
+				MembersDao mdao = MembersDao.getInstance();
+				trust = mdao.ShowTrust(m_num);
 			}else {
 				InsertBidding = false;
 			}
 		}
+		System.out.println("m_num session : "+ m_num);
 		
-		m_num = 2; //테스트 
+//		m_num = 2; //테스트 
 		//신뢰도 구하기
-		MembersDao mdao = MembersDao.getInstance();
-		int trust = mdao.ShowTrust(m_num);
 		
 		// 신뢰도가 3이상인경우만 입찰 가능 
 		if(trust >= 3) {
 			InsertBidding = true;
 		}
-		
+		System.out.println("insertBidding " + InsertBidding);
 		// 입찰 가능여부가 true일때 실행
 		if(InsertBidding) {
 			chain.doFilter(request, response);
@@ -63,7 +64,7 @@ public class BiddingFilter implements Filter{
 			HttpServletResponse hr = (HttpServletResponse)response;
 			hr.setContentType("text/html; charset=utf-8");
 			PrintWriter pw = hr.getWriter();
-			pw.println("<script>alert('입찰이 불가능합니다.'); window.open('about:blank', '_self').close(); </script>");
+			pw.println("<script>alert('입찰이 불가능합니다.'); window.open('about:blank', '_self', \"toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=300,width=500,height=200\").close(); </script>");
 		}
 	}
 	
