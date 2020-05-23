@@ -1,6 +1,6 @@
 package semi.filter.yh;
 
-import java.io.IOException;
+import java.io.IOException;	
 import java.io.PrintWriter;
 
 import javax.servlet.Filter;
@@ -33,13 +33,19 @@ public class BiddingFilter implements Filter{
 
 		int m_num = 0;
 
-/*		세션에 값이 담겨있는지 먼저 if문으로 체크(예외처리)
+	
+		
+		//로그인 안했을 때 입찰 못하도록
+//		세션에 값이 담겨있는지 먼저 if문으로 체크(예외처리)
 		if(session != null) {
 			if(session.getAttribute("m_num") != null) {
 				m_num = (int)session.getAttribute("m_num");
+				InsertBidding = true;
+			}else {
+				InsertBidding = false;
 			}
 		}
-*/		
+		
 		m_num = 2; //테스트 
 		//신뢰도 구하기
 		MembersDao mdao = MembersDao.getInstance();
