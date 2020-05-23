@@ -20,7 +20,6 @@ public class AuctionDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs= null;
 		String sql="select a_enddate from auction where a_num=?";
-		//String sql="select to_char(hiredate,'YYYY-MM-DD HH24:MI:SS') date1 from emp where empno=?";
 		try{
 			con= ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);

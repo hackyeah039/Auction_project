@@ -57,8 +57,7 @@ public class MainDao {
 			rs=pstmt2.executeQuery();
 			ArrayList<String> path =new ArrayList<String>();
 			while(rs.next()) {
-				System.out.println("jpg이름입니다."+rs.getString(1).substring(59));
-				path.add(rs.getString(1).substring(59));
+				path.add(rs.getString(1));
 			}
 			return path;
 		}catch(SQLException se) {

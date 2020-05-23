@@ -25,7 +25,7 @@
   <script>
 	//찜
 	function myFunction(){
-	 	var allwindow= window.open("${cp}/jjim.do?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=400,width=330,height=200");
+	 	var allwindow= window.open("${cp}/jjim.do?m_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=400,width=330,height=200");
 	}
 	//신고하기
 	function singo(){

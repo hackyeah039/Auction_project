@@ -22,10 +22,8 @@ public class MainController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//회원번호, 경매번호 받아오기
-//		int a_num=Integer.parseInt(req.getParameter("a_num"));
-		int a_num=18;
-//		int m_num=Integer.parseInt(req.getParameter("m_num"));
-		req.setAttribute("a_num", 18);
+		int a_num=Integer.parseInt(req.getParameter("a_num"));
+		req.setAttribute("a_num", a_num);
 		MainDao dao = MainDao.getInstance();
 		
 		
@@ -55,7 +53,7 @@ public class MainController extends HttpServlet{
 		
 		
 		AuctionDao dao2 = AuctionDao.getInstance();//현재시간
-		Date enddate=dao2.enddate(18);
+		Date enddate=dao2.enddate(a_num);
 		String years=enddate.toString().substring(0,4);
 		String months=enddate.toString().substring(5,7);
 		String day=enddate.toString().substring(8,10);
