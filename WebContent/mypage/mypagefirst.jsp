@@ -11,9 +11,6 @@
 				<a class="nav-link active" href="${cp }/interest/interest.do">관심상품 리스트</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">최근 상품 리스트</a>
-			</li>
-			<li class="nav-item">
 				<a class="nav-link" href="${cp }/board/userQnA.do">1:1 문의 하기</a>
 			</li>
 		</ul>
@@ -33,7 +30,7 @@
 	  </thead>
 	  <tbody>
 	    <tr>
-	      <th scope="row">${bidCount }</th>
+	      <td>${bidCount }</td>
 	      <td>${reqPayCount }</td>
 	      <td><a href="#">배송조회</a></td>
 	      <td>${saleCount }</td>
@@ -46,7 +43,8 @@
  </div>
 <button type="button" class="btn btn-primary btn-lg"
 	onClick="location.href='${cp }/mypage/buyerBidding.do'">구매관리바로가기</button>
-<button type="button" class="btn btn-secondary btn-lg" onClick="location.href='${cp }/mypage/buyerBidding.do'">판매관리바로가기</button>
+<button type="button" class="btn btn-secondary btn-lg" 
+onClick="location.href='${cp }/mypage/sellerBidding.do'">판매관리바로가기</button>
 
 <!-- 
 <a href = "${cp }/mypage/buyerBidding.do"><input type="button" id = "btn1" value = "구매관리 바로가기" ></a>

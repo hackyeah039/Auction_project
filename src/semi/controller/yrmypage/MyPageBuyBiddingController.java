@@ -21,7 +21,8 @@ public class MyPageBuyBiddingController extends HttpServlet {
 		//회원 번호 가져오기
 		int mnum = 1;
 		
-		
+		try {
+
 //		HttpSession session = req.getSession();
 //		int mnum = (Integer)session.getAttribute("m_num"); 
 		
@@ -60,6 +61,12 @@ public class MyPageBuyBiddingController extends HttpServlet {
         req.setAttribute("getBidCountList", getBidCountList);
         req.setAttribute("getBidRankList", getBidRankList);
         req.setAttribute("BiddingInfoList", BiddingInfoList);
+		}catch (NullPointerException e) {
+			// TODO: handle exception
+			System.out.println(e.getMessage());
+			req.setAttribute("getListSize", 0);
+		}
+		
 //        req.setAttribute("header", "header.jsp");
 //        req.setAttribute("content", "/mypage/mypageBuyBidding.jsp");
 //        req.getRequestDispatcher("/index.jsp").forward(req, resp);

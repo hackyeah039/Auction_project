@@ -2,35 +2,42 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<div id = "page-wrapper">
 <div id="leftMenu">
-	<jsp:include page="LeftMenu.jsp"></jsp:include>
+	<jsp:include page="newLeftMenu.jsp"></jsp:include>
 </div>
-<div id="rightContent">
-	<ul>
-		<li><a href="#">전체</a></li>
-		<li><a href="#">입금확인중</a></li>
-		<li><a href="#">배송요청</a></li>
-	</ul>
 
-	<table border="1">
+<div id="page-content-wrapper">
+    <div class="container-fluid">
+      <h1>거래 중인 리스트</h1>
+    </div>
+
+	<table  class="table table-bordered" border=1 style="text-align: center; 
+		margin-top: 40px">
+		<thead class = "thead">
+
 		<tr>
-			<th>NO</th>
-			<th>물품명</th>
-			<th>구매가격</th>
-			<th>낙찰/구매일</th>
-			<th>구매자</th>
-			<th>거래상태</th><!-- 입금확인중, 입금완료,배송요청 -->
-			<th>입금기한</th>
+			<th scope="col">NO</th>
+			<th scope="col">물품명</th>
+			<th scope="col">구매가격</th>
+			<th scope="col">낙찰/구매일</th>
+			<th scope="col">구매자</th>
+			<th scope="col">거래상태</th><!-- 입금확인중, 입금완료,배송요청 -->
+			<th scope="col">입금기한</th>
 		</tr>
 
 		<c:if test="${getListSize == 0  }">
 			<tr> 
-				<td colspan="7">정보가 존재하지 않습니다.</td>
+				<td colspan="7" scope="row">정보가 존재하지 않습니다.</td>
 			</tr>
 		</c:if>
+		
+		<c:set var="i" value="0"/>
 		<c:forEach var="anum" items="${forSellerTranList}">
+			
+			<c:set var="i" value = "${i+1 }"/>
 			<tr>
-				<td>${anum }</td>
+				<td scope="row">${i}</td>
 
 				<!-- 물품명 -->
 				<c:forEach var="titleList" items="${auctiontitleList}">
@@ -60,7 +67,7 @@
 					<c:if test="${ payVo.key == anum }">
 						<c:choose>
 							<c:when test="${payVo.value.pay_status == 0 }"><td>입금확인중</td></c:when>
-							<c:when test="${payVo.value.pay_status == 1 }"><td><a href ="#" onclick="showPopup(${payVo.value.pay_num}, ${anum })">배송요청</a></td></c:when>
+							<c:when test="${payVo.value.pay_status == 1 }"><td><button id="popbutton">배송요청</button></td></c:when>
 						</c:choose>
 						<td>${payVo.value.pay_deadline}</td>
 					</c:if>
@@ -70,8 +77,22 @@
 	</table>
 </div>
 <script type="text/javascript">
- function showPopup(paynum,anum){
+
+/*
+function showPopup(paynum,anum){
 	 window.open("${cp}/popup/reqShipPopup.do?paynum="+paynum+"&anum="+anum, "배송요청", 
 			 "width=400, height=300, left=100, top=50");
  }
+ 
+*/ 
+ 
+ $(function(){
+	    $("#popbutton").click(function(){
+	        $('div.modal').modal({
+	                      remote : '${cp}/popup/reqShipPopup.do'
+	                      
+	                });
+	    })
+	})
+
 </script>

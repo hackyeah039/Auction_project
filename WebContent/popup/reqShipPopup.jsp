@@ -1,3 +1,4 @@
+<%@page import="semi.vo.yr.PaymentVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -7,17 +8,35 @@
 <meta charset="UTF-8">
 <title>배송요청</title>
 </head>
+
+<%
+	PaymentVo vo = (PaymentVo)request.getAttribute("buyerInfo");
+	String[] addr= vo.getPay_addr().split(":");
+%>
+
 <body>
-	<h1>구매자 정보</h1>
+<div class = "modal-header" id = "div-modal">
+	<button type = "button" class = "close" data-dismiss="modal">x</button>
+	<h4>구매자 정보</h4>
+</div>
+	<div class = "modal-body">
 	<table id = "buyerInfo" border = "1">
 		<tr>
 			<th>이름</th>
+			<td>${buyerInfo.pay_name }</td>
+		</tr>
+
+		<tr>
 			<th>전화번호</th>
-			<th>배송지</th>			
+			<td>${buyerInfo.pay_phone }</td>
 		</tr>
 		
 		<tr>
-			
+			<th>배송지</th>					
+			<td>
+			우편 번호 : <%= addr[0] %> <br>
+			주소 : <%= addr[1] %> <%= addr[2] %>  
+			</td>
 		</tr>
 	</table>
 	
@@ -36,6 +55,7 @@
 	<input type = "hidden" value = "${anum }" name = "anum">	
 	<input type = "button" value = "등록하기" onclick = "clicksub()">
 	</form>
+	</div>
 </body>
 <script type="text/javascript">
 

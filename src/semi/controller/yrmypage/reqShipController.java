@@ -20,7 +20,7 @@ public class reqShipController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//주문자 정보
+		//판매자 정보
 		String spaynum = req.getParameter("paynum");
 		String sanum = req.getParameter("anum");
 //		System.out.println("paynum"+spaynum);
