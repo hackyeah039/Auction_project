@@ -89,7 +89,7 @@
 		<li class="nav-item"><a class="nav-link" href="${cp }/InsertAuction.do">물품등록</a></li>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">전체물품</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/main_sh/listAll.jsp">전체물품</a></li>
 	</ul>
 <!-- 검색 조건 드랍박스 (영호영 검색기능 넣는 곳) -->	
 <form class="form-inline" method="post" action="${cp }/sh/search.do">

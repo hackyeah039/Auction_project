@@ -118,13 +118,13 @@
 	<div id="top">
 	</div>
 	<div id="mid">
-		<div class="bg-secondary" id="banner">
-			<table width="100%" height="60px" border="1">
+		<div class="card bg-secondary text-white" id="banner">
+			<table width="100%" height="60px">
 				<tr>
-					<td><a href="javascript:allList(0,0,1);">인기순</a></td>
-					<td><a href="javascript:allList(0,0,2);">추천경매</a></td>
-					<td><a href="javascript:allList(0,0,3);">마감경매</a></td>
-					<td><a href="javascript:allList(1,0,0);">전체 글</a></td>
+					<td><a href="javascript:allList(0,0,1);" class="text-white font-weight-bold ">인기순</a></td>
+					<td><a href="javascript:allList(0,0,2);" class="text-white font-weight-bold">추천경매</a></td>
+					<td><a href="javascript:allList(0,0,3);" class="text-white font-weight-bold">마감경매</a></td>
+					<td><a href="javascript:allList(1,0,0);" class="text-white font-weight-bold">전체 글</a></td>
 				</tr>
 			</table>
 		</div>
@@ -152,7 +152,7 @@
 		document.getElementById("topCard").innerHTML=nowTime;
 	}, 1000)
 	<%-- 까지 최상단 시간 출력  --%>
-
+	
 	<%-- 전체글 뽑아오는 함수 --%>
 	function allList(num1,num2,num3) {
 		let pageN=num1;
@@ -228,7 +228,7 @@
 							"<td><h5>조회 수</h5><h5>"+a_check +"</h5></td>"+
 						"</tr>"+
 					"</table>"+
-					"<div class='card-footer bg-dark text-white'>" + "시간 넣는 곳" + "</div>"+
+					//"<div class='card-footer bg-dark text-white'>" + "시간 넣는 곳" + "</div>"+
 					"</div>";
 					div.style.float="left";
 					//let timer(i);
@@ -246,10 +246,12 @@
 							//updateBid();
 							//clearInterval(timer);
 						}else{
-							timeDiv.innerHTML=nowTime;
+							timeDiv.innerHTML="<div class='mt-2 h-auto card bg-dark text-white' >" + nowTime + "</div>";
 						}
 					}, 1000)
 					div.className="auc card";
+					timeDiv.style="height:45px";
+					timeDiv.className="card bg-dark text-white";
 					div.appendChild(timeDiv);
 					allauc.appendChild(div);
 				}
