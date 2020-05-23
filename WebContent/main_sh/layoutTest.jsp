@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,10 +26,6 @@
 		height: 100px;
 	}
 	
-	#topCard {
-		width: 100%;
-	}
-	
 	#main {
 		width: 1300px;
 		align-content: center;
@@ -39,67 +36,42 @@
 	#topCard {
 		height: 40px;
 		margin: auto;
+		width: 100%;
 	}
 </style>
 	<%
-		String file = request.getParameter("file");
-		if (file == null) {
-			file = "/main_sh/main.jsp";
-		}
 		String head = "/main_sh/headerTest.jsp";
 		String hair = "/main_sh/hairTest.jsp";
 	%>
-	
-	<!-- 
-		<div class="card  bg-secondary  text-white" id="topCard">
-		</div>
-	 -->
-<nav class="navbar bg-secondary navbar-dark text-white ">
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
-	</ul>	
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
-	</ul>	
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>
-	</ul>
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>
-	</ul>
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
-	</ul>
-</nav>
-
+<div class="card  bg-secondary  text-white" id="topCard"></div>
 
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
  	<a class="navbar-brand" href="#">Logo(누르면 Home으로 가게)</a>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/mypage/simplelist.do">마이페이지</a></li>
-		<li class="nav-item"><a class="nav-link" href="${cp }/adminmain/main.jh">관리자페이지</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
+	</ul>	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">물품등록</a></li>
+		<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+	</ul>
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" href="${cp }/InsertAuction.do">물품등록</a></li>
 	</ul>
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="#">전체물품</a></li>
 	</ul>
 <!-- 검색 조건 드랍박스 (영호영 검색기능 넣는 곳) -->	
-<form class="form-inline">
+<form class="form-inline" method="post" action="${cp }/sh/search.do">
 	  <div class="btn-group">
-	  <button type="button" class="btn btn-secondary">제목</button>
-	  <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    <span class="sr-only">Toggle Dropdown</span>
-		  </button>
-			  <div class="dropdown-menu">
-			    <a class="dropdown-item" href="#">제목</a>
-			    <a class="dropdown-item" href="#">작성자</a>
-			    <a class="dropdown-item" href="#">내용</a>
-			  </div>
+			  <select class="btn outline-secondary mr-sm-2 bg-secondary" name="field">
+			  	<option value="a_title">제목</option>
+			  	<option value="m_id">작성자</option>
+			  	<option value="a_content">내용</option>
+			  </select>
 	</div>
-    <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search">
+    <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="Search" name="keyword" value=${keyword }>
     <button class="btn btn-secondary my-2 my-sm-0" type="submit">검색</button>
 </form>
 <!-- 까지 검색조건 -->  
@@ -115,19 +87,19 @@
 				<div class="carousel-item active">
 					<!--가로-->
 					<img class="d-block w-100"
-						src="banner1.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
+						src="${cp }/main_sh/banner1.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
 						alt="First slide">
 					<div class="carousel-caption d-none d-md-block">
 					</div>
 				</div>
 				<div class="carousel-item">
 					<img class="d-block w-100"
-						src="banner2.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+						src="${cp }/main_sh/banner2.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
 						alt="Second slide">
 				</div>
 				<div class="carousel-item">
 					<img class="d-block w-100"
-						src="banner3.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
+						src="${cp }/main_sh/banner3.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
 						alt="Third slide">
 				</div>
 				<!-- / 슬라이드 쇼 끝 -->
@@ -151,7 +123,14 @@
 			</div>
 	<div id="main">
 		<div>
-			<jsp:include page="<%=file %>"></jsp:include>
+			<c:choose>
+				<c:when test="${not empty file }">
+					<jsp:include page="${file }"/>
+				</c:when>
+				<c:otherwise>
+					<jsp:include page="/main_sh/main.jsp"/>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 			<div class="jumbotron jumbotron-fluid">

@@ -18,9 +18,57 @@ public class MainListDao {
 		ResultSet rs=null;
 		try {
 			String sql="select * from(select aa.*,rownum rnum from(\r\n" + 
-					"select * from auction order by a_num asc , rownum asc) aa)\r\n" + 
+					"select * from auction order by a_num desc , rownum asc) aa)\r\n" + 
 					"where rnum>=? and rnum<=?";
 			con=ConnectionPool.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, startrow);
+			pstmt.setInt(2, endrow);
+			rs=pstmt.executeQuery();
+			ArrayList<SHAuctionVo> list=new ArrayList<SHAuctionVo>();
+			while(rs.next()) {
+				int a_num=rs.getInt("a_num");
+				String a_title=rs.getString("a_title");
+				String a_content=rs.getString("a_content");
+				int a_condition=rs.getInt("a_condition");
+				Date a_regdate=rs.getDate("a_regdate");
+				Date a_startdate=rs.getDate("a_startdate");
+				Date a_enddate=rs.getDate("a_enddate");
+				int a_check=rs.getInt("a_check");
+				int c_num=rs.getInt("c_num");
+				int a_jjim=rs.getInt("a_jjim");
+				int sel_number=rs.getInt("sel_number");
+				int bidstatus=rs.getInt("bidstatus");
+				int a_startbid=rs.getInt("a_startbid");
+				int a_bidunit=rs.getInt("a_bidunit");
+				SHAuctionVo vo=new SHAuctionVo(
+						a_num, a_title, a_content,
+						a_condition, a_regdate, a_startdate,
+						a_enddate, a_check, c_num, a_jjim,
+						sel_number, bidstatus, a_startbid, a_bidunit);
+				list.add(vo);
+			}
+			return list;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return null;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	//검색결과 불러오는 메소드
+	public ArrayList<SHAuctionVo> SearchList(int startrow,int endrow,String field,String keyword){
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String sql = null;
+		try {
+			con=ConnectionPool.getConn();
+				
+			sql =  "select * from (select aa.*, rownum rnum from("
+					+" select a.*, m.m_id from auction a, seller s, members m"
+					+ " where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 and "+field+" like '%" +keyword+ "%' ORDER BY a_num desc) aa)where rnum>=? and rnum <=?";
+
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
 			pstmt.setInt(2, endrow);
@@ -253,6 +301,28 @@ public class MainListDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
+	
+	public int getSerchCnt(String keyword, String field) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		int cnt=0;
+		try {
+			String sql="select NVL(count(a_num),0) cnt from( select a.*, m.m_id from auction a, seller s, members m where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 and " + field + " like '%" + keyword + "%' ORDER BY a_num desc)";	
+			con=ConnectionPool.getConn();
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				cnt=rs.getInt("cnt");
+			}
+			return cnt;
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+			return -1;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
 	//판매자 아이디 가져오는 메소드
 	public String getId(int num) {
 		Connection con=null;
@@ -315,6 +385,29 @@ public class MainListDao {
 				time=rs.getString("time");
 			}
 			return time;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return null;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	//이미지 패스 가져오는 메소드
+	public String getImgPath(int a_num) {
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		ResultSet rs=null;
+		String path="";
+		try {
+			String sql="select i_path from img where a_num=?";
+			con=ConnectionPool.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, a_num);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				path=rs.getString("i_path");
+			}
+			return path;
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return null;

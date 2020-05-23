@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import semi.controller.shdao.MainListDao;
 @WebServlet("/sh/testMain.do")
 public class TestController extends HttpServlet{
 	@Override
@@ -15,6 +17,9 @@ public class TestController extends HttpServlet{
 		String contextPath=req.getContextPath();
 		ServletContext application=req.getServletContext();
 		application.setAttribute("cp", contextPath);
+		MainListDao dao=new MainListDao();
+		dao.updateBidStatus();
+		
 		resp.sendRedirect(req.getContextPath()+"/main_sh/layoutTest.jsp");
 	}
 }

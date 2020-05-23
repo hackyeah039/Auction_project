@@ -38,6 +38,8 @@ public class RecomListController extends HttpServlet{
 			}
 			pw.println("<price>" + price + "</price>");
 			pw.println("<id>"+dao.getId(vo.getSel_number())+"</id>");
+			pw.println("<i_path>"+dao.getImgPath(vo.getA_num())+"</i_path>");
+			System.out.println(dao.getImgPath(vo.getA_num()));
 			pw.println("<bidcnt>"+dao.getBidCnt(vo.getA_num())+"</bidcnt>");
 			pw.println("<a_title>" + vo.getA_title() + "</a_title>");
 			pw.println("<a_content>" + vo.getA_content() + "</a_content>");
@@ -64,6 +66,7 @@ public class RecomListController extends HttpServlet{
 			}
 			pw.println("<price>" + price + "</price>");
 			pw.println("<id>"+dao.getId(vo.getSel_number())+"</id>");
+			pw.println("<i_path>"+dao.getImgPath(vo.getA_num())+"</i_path>");
 			pw.println("<bidcnt>"+dao.getBidCnt(vo.getA_num())+"</bidcnt>");
 			pw.println("<a_title>" + vo.getA_title() + "</a_title>");
 			pw.println("<a_content>" + vo.getA_content() + "</a_content>");
@@ -90,6 +93,7 @@ public class RecomListController extends HttpServlet{
 			}
 			pw.println("<price>" + price + "</price>");
 			pw.println("<id>"+dao.getId(vo.getSel_number())+"</id>");
+			pw.println("<i_path>"+dao.getImgPath(vo.getA_num())+"</i_path>");
 			pw.println("<bidcnt>"+dao.getBidCnt(vo.getA_num())+"</bidcnt>");
 			pw.println("<a_title>" + vo.getA_title() + "</a_title>");
 			pw.println("<a_content>" + vo.getA_content() + "</a_content>");
