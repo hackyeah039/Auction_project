@@ -77,6 +77,7 @@
         <br>
         <a href="${cp }/login/findMain.jsp">아이디찾기</a>
         <a href="${cp }/login/findMain.jsp?file=findPwd.jsp">/비밀번호 찾기</a>
+        &nbsp;&nbsp;&nbsp;<a href="${cp }/sh/testMain.do">메인으로</a>
       </form>
       
 		</div>

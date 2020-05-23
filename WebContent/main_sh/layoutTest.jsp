@@ -48,10 +48,15 @@
 	</ul>	
 	
 	<c:choose>
-		<c:when test="${sessionScope.id != null }">
+		<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
 			</ul>
+			<c:if test="${sessionScope.adminId==null }">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
+				</ul>
+			</c:if>
 		</c:when>
 		<c:otherwise>
 			<ul class="navbar-nav">
@@ -63,9 +68,7 @@
 		</c:otherwise>
 	</c:choose>
 
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
-	</ul>
+	
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
