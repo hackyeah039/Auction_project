@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<h1>관리자 메인페이지</h1>
-<table border="1">
+<h3>To-do</h3>
+<br><br>
+<table border="1" class="table">
 	<tr>
 		<th rowspan="2">처리현황</th>
 		<th>신고검토중</th>

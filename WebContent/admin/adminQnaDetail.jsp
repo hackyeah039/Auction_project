@@ -3,9 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<h1>QnA세부내용</h1>
+<h3>QnA세부내용</h3>
+<br><br>
 <c:forEach var="vo" items="${list }">
-	<table border="1">
+	<table border="1" >
 		<tr>
 			<th>글번호</th>
 			<td>${vo.b_num }</td>

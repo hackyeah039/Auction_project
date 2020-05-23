@@ -1,10 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
-<h1>신고세부</h1>
+<h3>신고세부</h3>
+<br><br>
+
 <c:forEach var="vo" items="${list }">
-<table border="1">
+<table border="1" >
 	<tr>
 		<th>신고자: </th>
 		<td>${id }</td>

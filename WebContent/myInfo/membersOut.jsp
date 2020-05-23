@@ -1,12 +1,16 @@
+<%@page import="com.sun.java.swing.plaf.windows.resources.windows"%>
+<%@page import="javax.websocket.SendResult"%>
+<%@page import="org.apache.catalina.ha.backend.Sender"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	.main{margin-top: 600px}
+	
 </style>    
     
     
 <div id="main">
-<br><br><br><br><br>
+
 <span>비밀번호 입력 후 버튼을 눌러주세요.</span><br>
 <span>입찰중인 상품이 있는 경우 탈퇴 처리가 불가능 합니다. </span><br>
 <span style="color:red">탈퇴 처리 후 취소는 불가합니다.</span>
@@ -63,45 +67,14 @@
 				var json=JSON.parse(msg);
 				if(json.msg=='ok'){
 					alert("탈퇴요청 처리가 완료되었습니다!");
+				<%
+					session.invalidate();//세션종료
+				%>
+					/*탈퇴처리 완료 후 메인으로 바로 페이지 이동*/	
+					window.location.replace('${cp}/main_sh/layoutTest.jsp');	
 				}else{
 					alert("입찰중인 상품이 있을 경우 탈퇴 처리 불가능 합니다!");	
 				}
 			}		
 		}
-		
-		
-		/*
-		var xhr=null;
-		function pwdupdate() {
-			var newpwd=document.getElementsByName("newpwd")[0].value;
-			xhr=new XMLHttpRequest();
-			xhr.onreadystatechange=pwdok;
-			xhr.open('post','action="${cp }/myinfo/out.jh',true);
-			xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-			xhr.send('m_num='+m_num);
-		}
-		function pwdok() {
-			if(xhr.readyState==4 && xhr.status==200){
-				var msg=xhrpwd.responseText;
-				var json=JSON.parse(msg);
-				if(json.msg=='ok'){
-					alert("탈퇴요청 처리가 완료되었습니다!");
-				}else{
-					alert("입찰중인 상품이 있을 경우 탈퇴 처리 불가능 합니다!");	
-				}
-			}		
-		}
-		*/
-		
-		
-		/*var btn = document.getElementById("findBt");
-		function bt() {
-			if(nowpwdbool==true){
-				btn.disabled=false;
-			}else{
-				btn.disabled=true;
-			}
-		}*/
-		
-		
 </script>  

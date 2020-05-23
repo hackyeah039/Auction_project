@@ -29,9 +29,13 @@ public class OutMembersController extends HttpServlet{
 		if(list.size()>0) {
 			json.put("msg", "no");
 		}else {
-			json.put("msg","ok");
+			int n=dao.updateOut(m_num);
+			if(n>0) {
+				json.put("msg","ok");
+			}else {
+				json.put("msg", "error");
+			}
 		}
-		
 		PrintWriter pw=resp.getWriter();
 		pw.print(json);
 	}

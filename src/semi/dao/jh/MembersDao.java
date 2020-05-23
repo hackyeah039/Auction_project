@@ -481,6 +481,7 @@ public class MembersDao {
 			}
 		}
 		//========================내정보 회원탈퇴==============================//
+		//회원번호로 입찰중인 글 있는지 확인
 		public ArrayList<Integer> getMembersOut(int num){
 			Connection con=null;
 			PreparedStatement pstmt=null;
@@ -511,8 +512,28 @@ public class MembersDao {
 					System.out.println(s.getMessage());
 				}
 			}
-			
-			
+		}
+		
+		public int updateOut(int num) {
+			Connection con=null;
+			PreparedStatement pstmt=null;
+			try {
+				con=ConnectionPool.getCon();
+				String sql="update members set m_type=1, m_pwd='null' where m_num=?";
+				pstmt=con.prepareStatement(sql);
+				pstmt.setInt(1, num);
+				return pstmt.executeUpdate();
+			}catch(SQLException se) {
+				System.out.println(se.getMessage());
+				return -1;
+			}finally {
+				try {
+					if(pstmt!=null) pstmt.close();
+					if(con!=null) con.close();
+				}catch(SQLException s) {
+					System.out.println(s.getMessage());
+				}
+			}
 		}
 		
 		

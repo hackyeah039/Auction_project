@@ -13,7 +13,7 @@
 	}
 %>
 <style>
-	#content{width: 700px; margin: auto;}
+	#content{width: 700px; margin: auto; margin-top: 200px}
 </style>
 
 <!-- 네비바 -->

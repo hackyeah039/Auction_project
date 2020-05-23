@@ -1,15 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<h1>¹®ÀÇ±Û ¸®½ºÆ®</h1>
-<table border="1">
+<h3>ë¬¸ì˜ê¸€ ë¦¬ìŠ¤íŠ¸</h3>
+<br><br>
+<table border="1" class="table table-hover">
 	<tr>
 		<th>NO</th>
-		<th>¹®ÀÇ±Û Á¦¸ñ</th>
-		<th>ÀÛ¼ºÀÚ</th>
-		<th>´äº¯»óÅÂ</th>
-		<th>µî·ÏÀÏ</th>
+		<th>ë¬¸ì˜ê¸€ ì œëª©</th>
+		<th>ìž‘ì„±ìž</th>
+		<th>ë‹µë³€ìƒíƒœ</th>
+		<th>ë“±ë¡ì¼</th>
 	</tr>
 	<c:forEach var="vo" items="${list }">
 		<tr>
@@ -27,7 +28,7 @@
 	<c:choose>
 		<c:when test="${startPage>3}">
 				<a href="${cp}/board/qnadoing.jh?pageNum=${startPage-3}&field=${field}
-				&keyword=${keyword}&type=${type}">[ÀÌÀü]</a>
+				&keyword=${keyword}&type=${type}">[ì´ì „]</a>
 		</c:when>
 	</c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
@@ -44,24 +45,24 @@
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
-	<!-- ´ÙÀ½¹öÆ° -->
+	<!-- ë‹¤ìŒë²„íŠ¼ -->
 		<c:choose>
 		<c:when test="${endPage<pageCount }">
 			<a href="${cp}/board/qnadoing.jh?pageNum=${endPage+1}&field=${field}
-			&keyword=${keyword}&type=${type}">[´ÙÀ½]</a>
+			&keyword=${keyword}&type=${type}">[ë‹¤ìŒ]</a>
 		</c:when>
 	</c:choose>
 </div>
 <br>
-<!-- °Ë»ö±â´É -->
+<!-- ê²€ìƒ‰ê¸°ëŠ¥ -->
 <div>
 	<form method="post" action="${cp }/board/qnadoing.jh?type=${type}">
 		<select name="field">
-			<option value="id" <c:if test="${field=='id' }">selected</c:if>>ÀÛ¼ºÀÚ</option>
-			<option value="b_title" <c:if test="${field=='b_title' }">selected</c:if>>±ÛÁ¦¸ñ</option>
-			<option value="b_content" <c:if test="${field=='b_contnent' }">selected</c:if>>³»¿ë</option>
+			<option value="id" <c:if test="${field=='id' }">selected</c:if>>ìž‘ì„±ìž</option>
+			<option value="b_title" <c:if test="${field=='b_title' }">selected</c:if>>ê¸€ì œëª©</option>
+			<option value="b_content" <c:if test="${field=='b_contnent' }">selected</c:if>>ë‚´ìš©</option>
 		</select>
 		<input type="text" name="keyword" value="${keyword }">
-		<input type="submit" value="°Ë»ö">
+		<input type="submit" value="ê²€ìƒ‰">
 	</form>
 </div>

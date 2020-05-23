@@ -8,7 +8,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script> 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>   
 
+
 <!-- 아이디찾기 -->
+<div id="idmain">
 <form method="post" onSubmit="findID();return false">
   <div class="form-group row">
     <label for="inputPassword" class="col-sm-3 col-form-label">이름 : </label>
@@ -32,6 +34,7 @@
 	  <button type="button" class="btn btn-secondary btn-lg">로그인하러가기</button></a>
 	</div>
 </form>
+</div>
 <span style="color:red" id="noFindMsg"></span>
 <span id="okFindMsg"></span>
 <script>
