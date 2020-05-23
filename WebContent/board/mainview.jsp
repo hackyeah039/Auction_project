@@ -25,15 +25,19 @@
   <script>
 	//찜
 	function myFunction(){
-	 	var allwindow= window.open("${cp}/jjim.do?m_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=400,width=330,height=200");
+	 	var allwindow= window.open("${cp}/jjim.do?m_number=${m_number}&a_num=${a_num}&m_num=${m_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=400,width=330,height=200");
 	}
 	//신고하기
 	function singo(){
-		var allwindow= window.open("${cp}/board/singo.jsp?sel_number=${seller}&a_num=${a_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=400,height=300");
+		var allwindow= window.open("${cp}/board/singo.jsp?sel_number=${seller}&a_num=${a_num}&m_num=${m_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=450,height=350");
 	}
 	//경매기록보기
 	function bidlist(){
-		var allwindow= window.open("${cp }/history.do?&a_num=${a_num }", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=300,width=600,height=600");
+		var allwindow= window.open("${cp}/history.do?&a_num=${a_num }", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=300,width=600,height=600");
+	}
+	//입찰하기
+	function bidding(){
+		var allwindow= window.open("${cp}/Bidding.do?a_num=${a_num }&m_num=${m_num}", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=200,left=300,width=200,height=100");
 	}
 	//경매시간
 	var myVar = setInterval(function () {
@@ -42,7 +46,6 @@
 		var distance =enddate.getTime()-now.getTime();
 		
 		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-		days
 	  	var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
 	  	var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
 	  	var seconds = Math.floor((distance % (1000 * 60)) / 1000);
@@ -218,7 +221,7 @@
           <h5 class="card-header">배송방법 ${ship.s_way } </h5>
           <h5 class="card-header">배송비용 : ${ship.s_price }원 </h5>
           <h5 class="card-header">판매자 ID : <a href="" onclick="singo()">${seller }</a> </h5>
-          <h5 class="card-header"><a href="">입찰하기</a> </h5>
+          <h5 class="card-header"><a href="" onclick="bidding()">입찰하기</a> </h5>
           <h5 class="card-header"><a href="" onclick="myFunction()">관심물품 찜하기</a> </h5>
         </div>
 		
