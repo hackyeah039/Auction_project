@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,14 +28,14 @@ public class ItemOfInterestController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		//경로..나중에 지워야함..
-		req.getServletContext().setAttribute("cp", req.getContextPath());
+//		req.getServletContext().setAttribute("cp", req.getContextPath());
 
 		
 		//회원번호 가져오기
-		int mnum = 2;
+//		int mnum = 2;
 		
-//		HttpSession session = req.getSession();
-//		String id = (String)session.getAttribute("id"); 
+		HttpSession session = req.getSession();
+		int mnum = (Integer)session.getAttribute("m_num"); 
 		
 		InterproductDao dao = new InterproductDao();
 		TranCompletedDao td = new TranCompletedDao();

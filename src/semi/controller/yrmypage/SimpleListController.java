@@ -1,7 +1,6 @@
 package semi.controller.yrmypage;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -9,8 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONObject;
+import javax.servlet.http.HttpSession;
 
 import semi.dao.yr.BiddingDao;
 import semi.dao.yr.TranCompletedDao;
@@ -24,14 +22,14 @@ public class SimpleListController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		//회원 번호 가져오기
-		int mnum = 4;
+//		int mnum = 4;
 		
 		//경로
-		req.getServletContext().setAttribute("cp", req.getContextPath());
+//		req.getServletContext().setAttribute("cp", req.getContextPath());
 
 	
-//		HttpSession session = req.getSession();
-//		int mnum = (Integer)session.getAttribute("m_num"); 
+		HttpSession session = req.getSession();
+		int mnum = (Integer)session.getAttribute("m_num"); 
 		
 		BiddingDao dao = new BiddingDao();
 

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import semi.dao.yr.TransactDao;
 import semi.vo.yr.BidVo;
@@ -28,10 +29,10 @@ public class SellerTransact extends HttpServlet{
 		
 
 		//회원번호 가져오기
-//		HttpSession session = req.getSession();
-//		int mnum = (int)session.getAttribute("mnum");
+		HttpSession session = req.getSession();
+		int mnum = (int)session.getAttribute("m_num");
 
-		int mnum = 5;
+//		int mnum = 5;
 		
 		
 		try {

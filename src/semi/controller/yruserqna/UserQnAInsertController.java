@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import semi.dao.yr.BoardDao;
 import semi.vo.yr.BoardVo;
@@ -18,11 +19,11 @@ public class UserQnAInsertController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		// id가져오기
-		String id = "gogo";
+//		String id = "gogo";
 
-//		HttpSession session = req.getSession();
-//		int mnum = (Integer)session.getAttribute("m_num"); 
-//		String mid = (Integer)session.getAttribute("m_id"); 
+		HttpSession session = req.getSession();
+		int mnum = (Integer)session.getAttribute("m_num"); 
+		String id = (String)session.getAttribute("id"); 
 
 		// test
 		req.setAttribute("id", id);
@@ -38,11 +39,11 @@ public class UserQnAInsertController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		// 회원번호 가져오기
-		int mnum = 1;
+//		int mnum = 1;
 		req.setCharacterEncoding("utf-8");
 		
-//		HttpSession session = req.getSession();
-//		int mnum = (Integer)session.getAttribute("m_num"); 
+		HttpSession session = req.getSession();
+		int mnum = (Integer)session.getAttribute("m_num"); 
 		String b_title = req.getParameter("bTitle");
 		String b_content = req.getParameter("bContent");
 

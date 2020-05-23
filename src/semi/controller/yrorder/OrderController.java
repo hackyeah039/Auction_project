@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import semi.dao.yr.OrderDao;
 import semi.vo.yr.MembersVo;
@@ -29,11 +30,11 @@ public class OrderController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		//회원 번호 가져오기
-		int mnum = 1;
+//		int mnum = 1;
 		
 		// 회원번호 가져오기
-//		HttpSession session = req.getSession();
-//		int mnum = (int)session.getAttribute("mnum");
+		HttpSession session = req.getSession();
+		int mnum = (int)session.getAttribute("m_num");
 
 
 		
