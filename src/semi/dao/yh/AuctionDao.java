@@ -131,8 +131,8 @@ public class AuctionDao {
 				pstmtAuction.setInt(10, avo.getA_bidunit());
 				pstmtAuction.executeUpdate();
 			}
-			
-			String sqlShip = "insert into Ship values(seq_ship_s_num.nextval, ?, ?, seq_auction_a_num.currval,null,null)";
+			//0525 수정 - invoicenum 숫자로 변경
+			String sqlShip = "insert into Ship values(seq_ship_s_num.nextval, ?, ?, seq_auction_a_num.currval,null,0)";
 			pstmtShip = con.prepareStatement(sqlShip);
 			pstmtShip.setString(1, shvo.getS_way());
 			pstmtShip.setInt(2, shvo.getS_price());

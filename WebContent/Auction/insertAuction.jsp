@@ -197,7 +197,8 @@
 </head>
 <body>
 <!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
-<div class="card bg-white outline-white" id="insert">
+<div class="card bg-white outline-white" id="insert" style="margin-top: 50px;">
+	<h2 class="text-left mt-3 mb-3" style="margin-top: 10px"><strong>물품등록</strong></h2>
 	<form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data" onsubmit="return chkValues()">
 	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>카테고리 선택</strong> </p>
 	 <table>

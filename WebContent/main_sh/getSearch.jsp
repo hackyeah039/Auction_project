@@ -2,9 +2,12 @@
     pageEncoding="UTF-8"%>
 <script>
 	window.onload=searchList(1);
-		
+	var ck=0;	
 	var t = [];
 	function searchList(n) {
+//		if(n==1 && ck!=0){
+//			t.forEach(clearInterval);
+//		}
 		if(n >= 2){
 			t.forEach(clearInterval);
 		}
@@ -109,17 +112,17 @@
 				//시작
 				let pageDiv=document.createElement("div");
 				if(5<startPageNum){
-					pageDiv.innerHTML+="<a href='javascript:searchList("+ (startPageNum-1) +");'>[이전]</a>";
+					pageDiv.innerHTML+="<a href='javascript:searchList("+ (startPageNum-1) +");' class='btn btn-outline-secondary'>이전</a>";
 				}
 				for(let i=startPageNum; i<=endPageNum; i++){
 					if(i==pageNum){
-						pageDiv.innerHTML+="<a href='javascript:searchList("+ i +");'><span style='color:red'>["+ i +"]</span></a>";
+						pageDiv.innerHTML+="<a href='javascript:searchList("+ i +");' class='btn btn-secondary btn-lg active' role='button' aria-pressed='false'>" + i + "</a>";
 					}else{
-						pageDiv.innerHTML+="<a href='javascript:searchList("+ i +");'><span style='color:blue'>["+ i +"]</span></a>";
+						pageDiv.innerHTML+="<a href='javascript:searchList("+ i +");' class='btn btn-outline-secondary'>" + i + "</a>";
 					}
 				}
 				if(pageCnt>endPageNum){
-					pageDiv.innerHTML+="<a href='javascript:searchList("+ (endPageNum+1) +");'>[다음]</a>";
+					pageDiv.innerHTML+="<a href='javascript:searchList("+ (endPageNum+1) +");' class='btn btn-outline-secondary'>다음</a>";
 				}
 					page.appendChild(pageDiv);
 					page.style.float="bottom";
@@ -127,6 +130,7 @@
 		}
 		xhrList.open('get','${cp}/main_sh/search.jsp?field=${field}&keyword=${keyword}&pageNum='+pageN,true);
 		xhrList.send();
+		ck=1;
 	}
 	function delAuc() {
 		var SearchAuc=document.getElementById("SearchAuc");
