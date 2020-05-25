@@ -118,13 +118,13 @@
 	<div id="top">
 	</div>
 	<div id="mid">
-		<div class="bg-secondary" id="banner">
-			<table width="100%" height="60px" border="1">
+		<div class="card bg-secondary text-white" id="banner">
+			<table width="100%" height="60px">
 				<tr>
-					<td><a href="javascript:allList(0,0,1);">인기순</a></td>
-					<td><a href="javascript:allList(0,0,2);">추천경매</a></td>
-					<td><a href="javascript:allList(0,0,3);">마감경매</a></td>
-					<td><a href="javascript:allList(1,0,0);">전체 글</a></td>
+					<td><a href="javascript:allList(0,0,1);" class="text-white font-weight-bold ">인기순</a></td>
+					<td><a href="javascript:allList(0,0,2);" class="text-white font-weight-bold">추천경매</a></td>
+					<td><a href="javascript:allList(0,0,3);" class="text-white font-weight-bold">마감경매</a></td>
+					<td><a href="javascript:allList(1,0,0);" class="text-white font-weight-bold">전체 글</a></td>
 				</tr>
 			</table>
 		</div>
@@ -132,7 +132,7 @@
 	<div id="bottom">
 		<div id="allauc"></div>
 	</div>
-	<div id="bottom2" style=fol>
+	<div id="bottom2">
 		<div id="page" align="center"></div>
 	</div>	
 </div>
@@ -152,7 +152,7 @@
 		document.getElementById("topCard").innerHTML=nowTime;
 	}, 1000)
 	<%-- 까지 최상단 시간 출력  --%>
-
+	
 	<%-- 전체글 뽑아오는 함수 --%>
 	function allList(num1,num2,num3) {
 		let pageN=num1;
@@ -228,7 +228,7 @@
 							"<td><h5>조회 수</h5><h5>"+a_check +"</h5></td>"+
 						"</tr>"+
 					"</table>"+
-					"<div class='card-footer bg-dark text-white'>" + "시간 넣는 곳" + "</div>"+
+					//"<div class='card-footer bg-dark text-white'>" + "시간 넣는 곳" + "</div>"+
 					"</div>";
 					div.style.float="left";
 					//let timer(i);
@@ -242,14 +242,16 @@
 						nowTime="마감시간 : " + days + "일" + hours + "시간" +
 								minutes + "분" + seconds + "초";
 						if(days<0){
-							div.innerHTML="<img src='${cp}/img/0.png'>"+"<input type='hidden' value=>";
+							div.innerHTML="<img style='width: 323px; height: 495px' src='${cp}/img/0.png'>"+"<input type='hidden' value=>";
 							//updateBid();
 							//clearInterval(timer);
 						}else{
-							timeDiv.innerHTML=nowTime;
+							timeDiv.innerHTML="<div class='mt-2 h-auto card bg-dark text-white' >" + nowTime + "</div>";
 						}
 					}, 1000)
 					div.className="auc card";
+					timeDiv.style="height:45px";
+					timeDiv.className="card bg-dark text-white";
 					div.appendChild(timeDiv);
 					allauc.appendChild(div);
 				}
@@ -257,17 +259,19 @@
 				<%-- 까지 각 경매글 div 만들고 출력 --%>
 				<%-- 페이징 출력 부분 --%>
 				if(5<startPageNum){
-					pageDiv.innerHTML+="<a href='javascript:allList("+ (startPageNum-1) +",0,0);'>[이전]</a>";
+					pageDiv.innerHTML+="<a href='javascript:allList("+ (startPageNum-1) +",0,0);' class='btn btn-outline-secondary'>이전</a>";
 				}
 				for(let i=startPageNum; i<=endPageNum; i++){
 					if(i==pageNum){
-						pageDiv.innerHTML+="<a href='javascript:allList("+ i +",0,0);'><span style='color:red'>["+ i +"]</span></a>";
+						//pageDiv.innerHTML+="<a href='javascript:allList("+ i +",0,0);' ><span style='color:red'>["+ i +"]</span></a>";
+						pageDiv.innerHTML+="<a href='javascript:allList("+ i +",0,0);' class='btn btn-secondary btn-lg active' role='button' aria-pressed='false'>" + i + "</a>"
 					}else{
-						pageDiv.innerHTML+="<a href='javascript:allList("+ i +",0,0);'><span style='color:blue'>["+ i +"]</span></a>";
+						//pageDiv.innerHTML+="<a href='javascript:allList("+ i +",0,0);' class='btn btn-outline-whilte btn-white btn-lg active' role='button' aria-pressed='true'>" + i + "</a>"
+						pageDiv.innerHTML+="<a href='javascript:allList("+ i +",0,0);' class='btn btn-outline-secondary'>" + i + "</a>"
 					}
 				}
 				if(pageCnt>endPageNum){
-					pageDiv.innerHTML+="<a href='javascript:allList("+ (endPageNum+1) +",0,0);'>[다음]</a>";
+					pageDiv.innerHTML+="<a href='javascript:allList("+ (endPageNum+1) +",0,0);' class='btn btn-outline-secondary'>다음</a>";
 				}
 		
 					page.appendChild(pageDiv);
