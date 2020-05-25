@@ -131,20 +131,17 @@
 			if(xxml.readyState == 4 && xxml.status == 200){
 				var xxml2=xxml.responseXML;
 				var msg = xxml2.getElementsByTagName("result")[0].firstChild.nodeValue;
-				aler(msg);
 			}
 		};
 		xxml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		xxml.send("context="+ encodeURIComponent(document.getElementById("context").value)+"&a_num=${a_num}&mnum=<%=m_num%>&title="+ encodeURIComponent(document.getElementById("title").value));
 	}
 	
-	//답변하기 AJAX
-	function answer2(quenum ){
-		console.log(quenum);
+	//답변하기
+	function answer2(quenum){
 		var allwindow= window.open("${cp}/board/answer.jsp?que_num="+quenum, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=450,height=550");
 	}
 	</script>
-	<script src="js/mainjs.js"></script>
 </head>
 
 <body>
@@ -195,14 +192,14 @@
 		<div id="carouselExampleControls" class="carousel slide"
 			data-ride="carousel">
 			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<img class="d-block w-100" src="${cp}/image/1.jpg" alt="First slide">
-				</div>
-				 <c:forEach var="vo" items="${ipath }"  varStatus="loop">
+				 <c:forEach var="vo" items="${ipath}" varStatus="loop">
 					<div class="carousel-item">
-						<img class="d-block w-100" src="${cp}/image/${loop.count}.jpg" alt="Second slide">
+						<img class="d-block w-100" src="/images/${vo}" alt="Second slide">
 					</div>
 				 </c:forEach>
+				 <div class="carousel-item active">
+					 <img class="d-block w-100" src="${cp}/image/1.jpg" alt="First slide">
+				 </div>
 			</div>
 			<a class="carousel-control-prev" href="#carouselExampleControls"
 				role="button" data-slide="prev"> <span
@@ -287,7 +284,7 @@
         <tbody>
           <c:forEach var="vo" items="${list }" varStatus="status">
             <tr class="clickable table-dark" data-toggle="collapse" id="${status.count}" data-target=".${status.count}collapsed">
-                <td>${vo.rnum }</td>
+                <td>${vo.rnum}</td>
 				<td>${vo.que_title}</td>
 				<td>${vo.m_num}</td>
 				<td>${vo.que_regdate }</td>

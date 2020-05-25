@@ -69,7 +69,7 @@
 					let timeDiv=document.createElement("div");
 					timeDiv.id="div1" + i;
 					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "${cp}/main.do?a_num="+a_num+"'\">"+
-					"<img class='card-img-top' src='/images/"+ i_path +"' alt='Card image cap' style='width: 321px; height: 180px; align='center'>"+
+					"<img class='card-img-top' src='/images/"+ i_path +"' alt='Card image cap' style='width: 320px; height: 180px; align='center'>"+
 					"<div class='card-body'>"+
 					"<h4 class='card-title'>" + title + "</h4>"+
 					"<h3 class='card-text text-primary'>" + price + "원</h3>"+

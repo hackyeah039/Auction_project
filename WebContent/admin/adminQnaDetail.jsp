@@ -6,7 +6,7 @@
 <h3>QnA세부내용</h3>
 <br><br>
 <c:forEach var="vo" items="${list }">
-	<table border="1" >
+	<table border="1" class="table table-striped">
 		<tr>
 			<th>글번호</th>
 			<td>${vo.b_num }</td>
@@ -35,17 +35,23 @@
 	<c:when test="${vo.b_status == 0}"><!-- 답글이 없는 경우-->
 		<div id="inputDap">  
 		<input type="hidden" name="b_num" value="${vo.b_num}" id="b_num"><!-- 문의게시글 번호 -->
-		<textarea rows="5" cols="50" name="b_dap" id="b_dap"></textarea>
-		<input type="button" value="등록" onclick="insertDap()">
+		<textarea rows="5" cols="50" name="b_dap" id="b_dap" class="form-control" rows="3"></textarea>
+		<br>
+		<input type="button" value="등록" onclick="insertDap()" >
 		</div>
 	</c:when>
 	<c:when test="${vo.b_status==1 }"><!-- 답글이 있는 경우 -->
 		<c:forEach var="vo2" items="${list2 }">
-			<div id="dap2">
-				답변 : ${vo2.b_dap } 
-				<br>
-				답변일자 : ${vo2.answerdate }
-			</div>
+			<table border="1" class="table table-striped">
+				<tr>
+					<th>답변</th>
+					<th>${vo2.b_dap }</th>
+				</tr>
+				<tr>
+					<th>답변일자</th>
+					<th>${vo2.answerdate }</th>
+				</tr>
+			</table>
 		</c:forEach>
 	</c:when>
 </c:choose>
@@ -95,8 +101,15 @@
 			if(typeof json.b_dap == "undefined" || json.b_dap ==null || json.b_dap ==""){
 				dap.innerHTML="";
 			}
+			/*
 			div.innerHTML="답변내용:"+json.b_dap+"<br>"+
-							"답변날짜:"+json.answerdate+"<br>";
+							"답변날짜:"+json.answerdate+"<br>";*/
+							
+			div.innerHTML="<table border='1' class='table table-striped'>"
+						+"<tr><th>답변</th><th>"+json.b_dap+"</th></tr>"
+						+"<tr><th>답변일자</th><th>"+json.answerdate+
+						"</th></tr></table>";
+							
 			div.className="comm";
 			dap.appendChild(div);
 			inputDap.innerHTML="";

@@ -13,6 +13,7 @@
 	#divleft {background-color: white; width: 400px; height: 800px;float:left}
 	#divright {background-color: white; width: 900px; height: 800px;float:left;}
 	#divr{margin-left: 50px; margin-top: 50px; margin-right: 50px}
+	#paging{margin: auto;}
 </style>
 <%
 	
@@ -23,7 +24,8 @@
 %>
 <div id="main">
 	<div id="top" class="jumbotron">
-		<h1><a href="${cp }/main_sh/layoutTest.jsp">home</a></h1>
+		<h1><a href="${cp }/main_sh/layoutTest.jsp">
+		<img src="${cp }/img/4logo.png"></a></h1>
 	</div>
 	
 	<div id="content">

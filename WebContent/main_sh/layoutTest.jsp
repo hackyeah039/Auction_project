@@ -69,7 +69,8 @@
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
- 	<a class="navbar-brand" href="${cp }/sh/testMain.do">Logo(누르면 Home으로 가게)</a>
+ 	<!--  <a class="navbar-brand" href="${cp }/sh/testMain.do">Logo(누르면 Home으로 가게)</a> -->
+ 	<a class="navbar-brand" href="${cp }/sh/testMain.do" target="_blank"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 80px;" alt=""></a>
 	<ul class="navbar-nav">
 		
 		<c:choose>
@@ -86,7 +87,7 @@
 		<li class="nav-item"><a class="nav-link" href="${cp }/InsertAuction.do">물품등록</a></li>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">전체물품</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/main_sh/listAll.jsp">전체물품</a></li>
 	</ul>
 <!-- 검색 조건 드랍박스 (영호영 검색기능 넣는 곳) -->	
 <form class="form-inline" method="post" action="${cp }/sh/search.do">
@@ -104,49 +105,9 @@
 </nav>
 <!-- 까지 고정되어 따라다니는 네비게이션 바 -->
 
-<script> $('.carousel').carousel({ interval: 2000}) </script>
-		<div class="container">
-		</div>
-		<div id="demo" class="carousel slide" data-ride="carousel">
-			<div class="carousel-inner">
-				<!-- 슬라이드 쇼 -->
-				<div class="carousel-item active">
-					<!--가로-->
-					<img class="d-block w-100"
-						src="${cp }/main_sh/banner1.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
-						alt="First slide">
-					<div class="carousel-caption d-none d-md-block">
-					</div>
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100"
-						src="${cp }/main_sh/banner2.jpg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-						alt="Second slide">
-				</div>
-				<div class="carousel-item">
-					<img class="d-block w-100"
-						src="${cp }/main_sh/banner3.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
-						alt="Third slide">
-				</div>
-				<!-- / 슬라이드 쇼 끝 -->
-				<!-- 왼쪽 오른쪽 화살표 버튼 -->
-				<a class="carousel-control-prev" href="#demo" data-slide="prev">
-					<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-					<!-- <span>Previous</span> -->
-				</a> <a class="carousel-control-next" href="#demo" data-slide="next">
-					<span class="carousel-control-next-icon" aria-hidden="true"></span>
-					<!-- <span>Next</span> -->
-				</a>
-				<!-- / 화살표 버튼 끝 -->
-				<!-- 인디케이터 -->
-				<ul class="carousel-indicators">
-					<li data-target="#demo" data-slide-to="0" class="active"></li>
-					<!--0번부터시작-->
-					<li data-target="#demo" data-slide-to="1"></li>
-					<li data-target="#demo" data-slide-to="2"></li>
-				</ul>
-				<!-- 인디케이터 끝 -->
-			</div>
+<c:if test="${empty file }">
+			<jsp:include page="/main_sh/slideImg.jsp"/>
+	</c:if>
 	<div id="main">
 		<div>
 			<c:choose>
