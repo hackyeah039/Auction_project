@@ -32,7 +32,6 @@
 </head>
 <body>
 <div id="div">
- <h1>경매물품 <%=request.getParameter("a_num")%></h1>
  <h1>판매자 번호 : <%=request.getParameter("sel_number")%></h1>
  <textarea name="textareas" rows="10" cols="50" placeholder="신고내용을 적어주시면 됩니다."></textarea>
  <input type="submit" id="inputt" onclick="errMsg()" value="등록">
