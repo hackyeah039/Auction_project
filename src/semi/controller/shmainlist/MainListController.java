@@ -20,6 +20,7 @@ public class MainListController extends HttpServlet{
 		int cateNum=Integer.parseInt(req.getParameter("cateNum"));
 		int recomNum=Integer.parseInt(req.getParameter("recomNum"));
 		int pageNum=1;
+		int price=0;
 		if(spageNum>pageNum) {
 			pageNum=spageNum;
 		}
@@ -58,7 +59,12 @@ public class MainListController extends HttpServlet{
 			pw.println("<i_path>"+dao.getImgPath(vo.getA_num())+"</i_path>");
 			pw.println("<endPageNum>" + endPageNum + "</endPageNum>");
 			pw.println("<a_num>" + vo.getA_num() + "</a_num>");
-			pw.println("<price>"+dao.getPrice(vo.getA_num())+"</price>");
+			if(dao.getPrice(vo.getA_num())==0) {
+				price=dao.getStartBid(vo.getA_num());
+			}else {
+				price=dao.getPrice(vo.getA_num());
+			}
+			pw.println("<price>"+ price +"</price>");
 			pw.println("<id>"+dao.getId(vo.getSel_number())+"</id>");
 			System.out.println("id : " + dao.getId(vo.getSel_number()));
 			pw.println("<bidcnt>"+dao.getBidCnt(vo.getA_num())+"</bidcnt>");
