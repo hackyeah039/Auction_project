@@ -37,7 +37,7 @@
 		<input type="hidden" name="b_num" value="${vo.b_num}" id="b_num"><!-- 문의게시글 번호 -->
 		<textarea rows="5" cols="50" name="b_dap" id="b_dap" class="form-control" rows="3"></textarea>
 		<br>
-		<input type="button" value="등록" onclick="insertDap()" class="btn btn-primary btn-lg">
+		<input type="button" value="등록" onclick="insertDap()" >
 		</div>
 	</c:when>
 	<c:when test="${vo.b_status==1 }"><!-- 답글이 있는 경우 -->
@@ -101,13 +101,12 @@
 			if(typeof json.b_dap == "undefined" || json.b_dap ==null || json.b_dap ==""){
 				dap.innerHTML="";
 			}
-			
 			/*
-			
 			div.innerHTML="답변내용:"+json.b_dap+"<br>"+
 							"답변날짜:"+json.answerdate+"<br>";*/
-			div.innerHTML="<table border='1' class='table table-striped'>
-						+"<tr><th>답변</th><th>"+json.b_dap+"</th></tr>
+							
+			div.innerHTML="<table border='1' class='table table-striped'>"
+						+"<tr><th>답변</th><th>"+json.b_dap+"</th></tr>"
 						+"<tr><th>답변일자</th><th>"+json.answerdate+
 						"</th></tr></table>";
 							
