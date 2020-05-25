@@ -18,10 +18,11 @@
 */
     width: 250px;
     height: 100%;
-    margin-left: -250px;
+    margin-left: -350px;
     background: #000;
     overflow-x: hidden;
     overflow-y: auto;
+    float: left;
   }
   
   #page-content-wrapper {
@@ -35,6 +36,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+   
   }
   
   .sidebar-nav li {
@@ -61,7 +63,7 @@
 </style>
 
   <!-- 사이드바 -->
-  <div id="sidebar-wrapper" style="float: left">
+  <div id="sidebar-wrapper" style="float: left;  margin-bottom : 100px; ">
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
         <a href="#">구매관리</a>

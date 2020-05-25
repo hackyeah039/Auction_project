@@ -32,7 +32,7 @@ public class SimpleListController extends HttpServlet{
 		HttpSession session = req.getSession();
 		int mnum = (Integer)session.getAttribute("m_num"); 
 		
-		System.out.println("mnum" + mnum);
+//		System.out.println("mnum" + mnum);
 		
 		BiddingDao dao = new BiddingDao();
 

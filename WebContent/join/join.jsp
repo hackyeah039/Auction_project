@@ -11,6 +11,7 @@
 <style>
 	#insert{width: 500px;margin: auto;}
 	#footer{margin-left: 200px; }
+	#msg{margin: auto; width: 400px}
 </style>
 	<div class="jumbotron">
 		<div id="msg">

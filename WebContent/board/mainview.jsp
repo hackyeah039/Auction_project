@@ -157,7 +157,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="${cp }/sh/testMain.do"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 20px;">
+              <a class="nav-link" href="${cp }/sh/testMain.do"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 20px;">
               <span class="sr-only">(current)</span>
             </a>
           </li>

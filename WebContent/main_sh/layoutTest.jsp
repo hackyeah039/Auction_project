@@ -27,6 +27,7 @@
 	}
 	
 	#main {
+		height : 100$;
 		width: 1300px;
 		align-content: center;
 		align-items: center;
@@ -38,34 +39,43 @@
 		margin: auto;
 		width: 100%;
 	}
+		/* footer */
+    footer {
+   		 margin-top : 100px;
+    	 clear : both;
+	     background-color: #555;
+	     color: white;
+	     padding: 15px;
+	   	 left: 0;
+	   	 bottom: 0;
+	   	 width: 100%;
+    }
 </style>
 <!-- 
 <div class="card  bg-secondary  text-white" id="topCard"></div>
  -->
-<nav class="navbar bg-secondary navbar-dark text-white ">
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
-	</ul>	
-	<c:choose>
-		<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+	<div class = "collapse navbar-collapse flex-grow-1 text-left">
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
+		</ul>
+	</div>
+	<div class = "collapse navbar-collapse flex-grow-1 text-right">	
+			<ul class="navbar-nav ml-auto flex-nowrap">
+				<c:choose>
+					<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
+							<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
+						<c:if test="${sessionScope.adminId==null }">
+							<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+							<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
+							<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>		
+					</c:otherwise>
+				</c:choose>
 			</ul>
-			<c:if test="${sessionScope.adminId==null }">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
-				</ul>
-			</c:if>
-		</c:when>
-		<c:otherwise>
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
-			</ul>					
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>		
-			</ul>					
-		</c:otherwise>
-	</c:choose>
+	</div>
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
@@ -105,10 +115,13 @@
 </nav>
 <!-- 까지 고정되어 따라다니는 네비게이션 바 -->
 
-<c:if test="${empty file }">
-			<jsp:include page="/main_sh/slideImg.jsp"/>
+	<c:if test="${empty file }">
+		<div>
+			<jsp:include page="/main_sh/slideImg.jsp"/>		
+		</div>
 	</c:if>
-	<div id="main">
+	
+	<div id="main" style="margin-bottom: 20px">
 		<div>
 			<c:choose>
 				<c:when test="${not empty file }">
@@ -120,13 +133,15 @@
 			</c:choose>
 		</div>
 	</div>
-			<div class="jumbotron jumbotron-fluid">
-				<div class="container">
-					<h1 class="display-4" style="align-content: center;">제작자</h1>
-					<p class="lead">이상훈</p>
-				</div>
-			</div>
-		</div>
+	<footer class="page-footer font-small blue">
+
+	  <!-- Copyright -->
+	  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+	    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+	  </div>
+	  <!-- Copyright -->
+
+	</footer>
 </body>
 <script type="text/javascript">
 	<%-- 최상단 시간 출력 부분 --%>

@@ -14,7 +14,7 @@
 		var text = document.getElementsByName("textareas")[0].value;
 		xml = new XMLHttpRequest();
 		xml.onreadystatechange = react
-		xml.open('get','${cp }/singo.do?a_num=<%=request.getParameter("a_num")%>&sel_number=<%=request.getParameter("sel_number")%>&m_num=<%=request.getParameter("m_num")%>&textareas="+text+"',true);
+		xml.open('get','${cp }/singo.do?a_num=<%=request.getParameter("a_num")%>&sel_number=<%=request.getParameter("sel_number")%>&m_num=<%=request.getParameter("m_num")%>&textareas='+text+'',true);
 		xml.send();
 	}
 	function react(){
