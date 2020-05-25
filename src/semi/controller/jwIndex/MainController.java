@@ -65,13 +65,19 @@ public class MainController extends HttpServlet{
 		
 		
 		AuctionDao dao2 = AuctionDao.getInstance();//현재시간
-		Date enddate=dao2.enddate(a_num);
-		String years=enddate.toString().substring(0,4);
-		String months=enddate.toString().substring(5,7);
-		String day=enddate.toString().substring(8,10);
+		String enddate=dao2.enddate(a_num);
+		String years=enddate.substring(7,11);
+		String months=enddate.substring(0,1);
+		String day=enddate.substring(4,6);
+		String hour=enddate.substring(12,14);
+		String min=enddate.substring(15,17);
+		String sec=enddate.substring(18,20);
 		req.setAttribute("years", years);
 		req.setAttribute("months", months);
 		req.setAttribute("day", day);
+		req.setAttribute("hour", hour);
+		req.setAttribute("min", min);
+		req.setAttribute("sec", sec);
 		
 		
 		String keyword=req.getParameter("keyword");//페이징처리

@@ -53,7 +53,7 @@
 	//경매시간
 	var myVar = setInterval(function () {
 		var now = new Date();//현재시간
-		var enddate = new Date(${months}+"/"+${day}+"/"+${years});
+		var enddate = new Date(${years},${months-1},${day},${hour},${min},${sec});
 		var distance =enddate.getTime()-now.getTime();
 		
 		var days = Math.floor(distance / (1000 * 60 * 60 * 24));

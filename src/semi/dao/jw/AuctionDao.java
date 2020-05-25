@@ -15,20 +15,20 @@ public class AuctionDao {
 	public static AuctionDao getInstance() {
 		return instance;
 	}
-	public Date enddate(int num) {
+	public String enddate(int num) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs= null;
-		String sql="select a_enddate from auction where a_num=?";
+		String sql="select to_char(a_enddate,'MONTH DD,YYYY,HH24:MI:SS') from auction where a_num=?";
 		try{
 			con= ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, num);
 			rs=pstmt.executeQuery();
-			Date enddate =null;
+			String enddate =null;
 			if(rs.next()) {
-				enddate=rs.getDate(1);
-				System.out.println(enddate);
+				enddate=rs.getString(1);
+				System.out.println(enddate+"날짜입니다.");
 			}
 			return enddate;
 		}catch(SQLException se) {
