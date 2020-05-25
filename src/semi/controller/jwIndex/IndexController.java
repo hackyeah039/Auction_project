@@ -18,7 +18,7 @@ public class IndexController extends HttpServlet{
 		//detailView에서 경매상품에 대한 num를 req.getparameter()로 받아오기
 		
 		AuctionDao dao = AuctionDao.getInstance();
-		Date enddate=dao.enddate(18);
+		String enddate=dao.enddate(18);
 		String years=enddate.toString().substring(0,4);
 		String months=enddate.toString().substring(5,7);
 		String day=enddate.toString().substring(8,10);
