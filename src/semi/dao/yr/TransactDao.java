@@ -303,7 +303,6 @@ public class TransactDao {
 					do {
 						int an= rs.getInt("a_num");
 						forSellerTranList.add(an);
-						System.out.println("a : "+an);
 					} while (rs.next());
 				}
 			
@@ -342,6 +341,8 @@ public class TransactDao {
 			if (rs.next()) {
 				count = rs.getInt("count");
 			}
+			
+			System.out.println(anum + " : " + count);
 			return count;
 
 		} catch (SQLException e) {

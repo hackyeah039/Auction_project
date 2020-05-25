@@ -86,10 +86,10 @@ public class SimpleListController extends HttpServlet{
 		ArrayList<BidVo> bidvolist = new ArrayList<BidVo>();
 		
 		try {
-			ArrayList<Integer> selList = tddao.getSelnum(mnum);			
-			forSellerTranList = tddao.getForSellerTran(selList,1);	
+			ArrayList<Integer> selList = tddao.getSelnum(mnum);	//판매자 번호 가져오기	
+			forSellerTranList = tddao.getForSellerTran(selList,1);	//anum
 			saleCount = forSellerTranList.size();
-			for (Integer anum : selList) {
+			for (int anum : forSellerTranList) {
 				quesCount += tddao.getCountQues(anum);
 			}
 			
