@@ -2,14 +2,28 @@ package semi.controller.jwIndex;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.security.Principal;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.CloseReason;
+import javax.websocket.Extension;
+import javax.websocket.MessageHandler;
+import javax.websocket.Session;
+import javax.websocket.WebSocketContainer;
+import javax.websocket.MessageHandler.Partial;
+import javax.websocket.MessageHandler.Whole;
+import javax.websocket.RemoteEndpoint.Async;
+import javax.websocket.RemoteEndpoint.Basic;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -21,12 +35,7 @@ import semi.vo.jw.MainVo;
 public class MainController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		//회원번호, 경매번호 받아오기
-		int a_num=Integer.parseInt(req.getParameter("a_num"));
-//		int m_num=Integer.parseInt(req.getParameter("m_num"));
-		int m_num=1;
-		req.setAttribute("a_num", a_num);
-//		req.setAttribute("m_num", m_num);
+		int a_num=Integer.parseInt(req.getParameter("a_num"));//경매번호
 		MainDao dao = MainDao.getInstance();
 		
 		

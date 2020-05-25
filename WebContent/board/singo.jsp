@@ -6,21 +6,26 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script>
+
 	var xml = null;
 	
 	function errMsg(){
+		
+		var text = document.getElementsByName("textareas")[0].value;
 		xml = new XMLHttpRequest();
 		xml.onreadystatechange = react
-		xml.open('get','${cp }/singo.do?a_num=<%=request.getParameter("a_num")%>',true);
+		xml.open('get','${cp }/singo.do?a_num=<%=request.getParameter("a_num")%>&sel_number=<%=request.getParameter("sel_number")%>&m_num=<%=request.getParameter("m_num")%>&textareas="+text+"',true);
 		xml.send();
 	}
 	function react(){
 		var div = document.getElementById("div");//div
+		if(xml.readyState ==4 & xml.status ==200){
 		var data = xml.responseXML;
-		var errMsg = data.getElementsByTagName("errMsg")[0].firstChild.nodeValue;
-		if(errMsg!=null){
-			div.innerHTML="";
-			div.innerHTML=errMsg;
+		var Msg = data.getElementsByTagName("Msg")[0].firstChild.nodeValue;
+			if(Msg!=null){
+				div.innerHTML="";
+				div.innerHTML=Msg;
+			}
 		}
 	}
 </script>

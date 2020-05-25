@@ -27,7 +27,27 @@
 					result.innerHTML += "<tr><td>"+"입찰일시 : "+data[i].date+"</td><td>"+"  회원번호 : "+data[i].mnum+"</td><td>"+" 가격  : "+data[i].price+"</td></tr><br>";
 				}
 				pagecal="";
-				pagecal.innerHTML ="if(data[0].startPage>5){<a href='history.do?pageNum="+data[0].startPage-1+"&a_num=<%=a_num%>'>[pre]</a>}else{이전}for(int i=0; i>"+data[0].startPage+"; i<"+data[0].endPage+"){if(i=="+data[0].pageNum+"){<a onclick ='selectdd(${i})'><span style='color :red'>[${i }]</span></a>}else{<a onclick ='selectdd(${i})'><span style='color :smokewhite'>[${i }]</span></a>	}}if("+data[0].endPage+"<"+data[0].paging+"){<a href='history.do?pageNum="+data[0].endPage+"+1&a_num=<%=a_num%>'>[next]</a>}else{이후}"
+				pagecal.innerHTML =
+
+					"if('+data[0].startPage+'>5){
+						<a href='history.do?pageNum='+data[0].startPage-1+'&a_num=<%=a_num%>'>[pre]</a>
+					}else{
+						이전
+					}
+					for(int i=0; i>'+data[0].startPage+'; i<'+data[0].endPage+'){
+						
+						if(i=='+data[0].pageNum+'){
+							<a onclick ='selectdd(${i})'><span style='color :red'>[${i }]</span></a>
+						}else{
+							<a onclick ='selectdd(${i})'><span style='color :smokewhite'>[${i }]</span></a>	}
+						}
+					}	
+					if('+data[0].endPage+'<'+data[0].paging+'){
+						<a href='history.do?pageNum="+data[0].endPage+"+1&a_num=<%=a_num%>'>[next]</a>
+					}
+					else{
+						이후
+					}"
 			}
 		}
 		xhr.open('post' , 'history.do' , true);

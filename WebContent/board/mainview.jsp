@@ -28,6 +28,8 @@
   	}else{
   		session.setAttribute("m_num", 0);
   	}
+  	
+  	System.out.println("mainview" + m_num);
   %>
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
@@ -38,7 +40,7 @@
 	}
 	//신고하기
 	function singo(){
-		var allwindow= window.open("${cp}/board/singo.jsp?sel_number=${seller}&a_num=${a_num}&m_num=<%=m_num%>", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=450,height=350");
+		var allwindow= window.open("${cp}/board/singo.jsp?sel_number=${seller}&m_num=<%=m_num%>", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=450,height=350");
 	}
 	//경매기록보기
 	function bidlist(){
@@ -258,18 +260,7 @@
 		
 		
         <hr>
-
-        <!-- Post Content -->
-        <p class="lead"> 물품의 세부사항목록을 여기다가 작성할겁니다아아아ㅏ아아앙남ㅇ머나오마너와ㅓㅁ노아ㅓㅁ노어ㅏㅁ노어ㅏㅁ노아ㅓㅁ노어ㅏ모나어</p>
-
-        <p> 물품의 두번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
-
-        <p> 물품의 세번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
-
-        <p> 물품의 네번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
-
-        <p> 물품의 다섯번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
-
+      <p></p>
 <div class="container">
 	<div class="table-responsive">
     <table class="table table-hover">
