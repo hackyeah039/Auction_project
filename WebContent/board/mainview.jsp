@@ -20,9 +20,6 @@
   <!-- Bootstrap core CSS -->
   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	
-  
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
-  
   <%
   	int m_num = 0;
   	
@@ -33,9 +30,7 @@
   	}
   %>
   
-  <!-- 로직 처리 바꾸기 (비회원은 m_num = 0일때 안되게) -->
-  
-  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
   <script>
 	//찜
 	function myFunction(){
@@ -125,6 +120,29 @@
 		}
 	}
 	
+	
+	//문의하기 등록
+	var xxml= null;
+	
+	function register(){
+		var xxml = new XMLHttpRequest();
+		xxml.open("post","${cp}/register.do",true);
+		xxml.onreadystatechange = function(){
+			if(xxml.readyState == 4 && xxml.status == 200){
+				var xxml2=xxml.responseXML;
+				var msg = xxml2.getElementsByTagName("result")[0].firstChild.nodeValue;
+				aler(msg);
+			}
+		};
+		xxml.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xxml.send("context="+ encodeURIComponent(document.getElementById("context").value)+"&a_num=${a_num}&mnum=<%=m_num%>&title="+ encodeURIComponent(document.getElementById("title").value));
+	}
+	
+	//답변하기 AJAX
+	function answer2(quenum ){
+		console.log(quenum);
+		var allwindow= window.open("${cp}/board/answer.jsp?que_num="+quenum, "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=400,left=600,width=450,height=550");
+	}
 	</script>
 	<script src="js/mainjs.js"></script>
 </head>
@@ -255,55 +273,51 @@
 
         <p> 물품의 다섯번째 세부사항목록을 여기다가 작성할 겁니당ㄴ머오마노아ㅓ미노아ㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅣㅓㅁ노아ㅓㅣ몬아ㅣㅓ몬아ㅓ몬아ㅣㅓ</p>
 
+<div class="container">
+	<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="thead-light">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>등록자</th>
+                <th>등록일</th>
+            </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="vo" items="${list }" varStatus="status">
+            <tr class="clickable table-dark" data-toggle="collapse" id="${status.count}" data-target=".${status.count}collapsed">
+                <td>${vo.rnum }</td>
+				<td>${vo.que_title}</td>
+				<td>${vo.m_num}</td>
+				<td>${vo.que_regdate }</td>
+            </tr>
+            <tr class="collapse out budgets ${status.count}collapsed">
+                <td><i class="material-icons md-36">contact_support</i></td>
+				<td>${vo.que_content }</td>
+				<td></td>
+				<td>${vo.que_regdate } </td>
+            </tr>
+            <tr class="collapse out budgets ${status.count}collapsed">
+                <td><i class="material-icons md-36">done</i></td>
+				<td>${vo.b_content }</td>
+				<td></td>
+				<c:choose>
+					<c:when test="${seller != 0 }">
+						<td>${vo.ans_regdate} <button type="button" class="btn btn-primary pull-right" onclick="answer2(${vo.que_num})">답변하기</button></td>					
+					</c:when>
+					<c:otherwise>
+						<td>${vo.ans_regdate}</td>
+					</c:otherwise>
+				</c:choose>
+				
+            </tr>
+           </c:forEach>
+        </tbody>
+    </table>
+    </div>
+</div>
 
-<input type="button" value="답변하기" style="visibility: visible;" onclick="change()" class="reply">
-<input type="button" value="답변하기2321" style="visibility: hidden;" onclick="change()" class="reply">
-<!-- 문의하기 게시판 정보 -->
-<table class="table table-condensed" style="text-align: center; border: 1px soli #dddddd; border-collapse:collapse">
-	<thead>
-		<tr>
-			<th style="background-color: #fafafa; text-align: center;">번호</th>
-			<th style="background-color: #fafafa; text-align: center;">제목</th>
-			<th style="background-color: #fafafa; text-align: center;">등록자</th>
-			<th style="background-color: #fafafa; text-align: center;">등록일</th>
-		</tr>
-	</thead>
-	<tbody id="ajaxTable">
-		<c:forEach var="vo" items="${list }">
-			<tr data-toggle="collapse" data-target=".demo${vo.rnum }" class="accordion-toggle"><!-- 문의라인 -->
-					<td>${vo.rnum }</td>
-					<td>${vo.que_title }</td>
-					<td>${vo.m_num }</td>
-					<td>${vo.que_regdate }</td>
-			</tr>
-			<tr><!-- 문의내용라인 -->
-				 	<td colspan="6" class="hiddenRow">
-					<div class="accordian-body collapse p-3" class="demo${vo.rnum }">
-						<img src="${cp }/image/q.svg" class="img-fluid" alt="Responsive image">
-					</div>
-					</td>
-				 	<td colspan="6" class="hiddenRow">
-					<div class="accordian-body collapse p-3" class="demo${vo.rnum }">
-						${vo.que_content }
-					</div>
-					</td>
-				</div>
-			</tr>
-			<tr><!--답변라인 -->
-					<td colspan="6" class="hiddenRow">
-					<div class="accordian-body collapse p-3" class="demo${vo.rnum }">
-						<img src="${cp }/image/a.svg" class="img-fluid" alt="Responsive image">
-					</div>
-					</td>
-				 	<td colspan="6" class="hiddenRow">
-					<div class="accordian-body collapse p-3" class="demo${vo.rnum }">
-						${vo.b_content }
-					</div>
-					</td>
-			</tr>
-		</c:forEach>
-	</tbody>
-</table>
 
 <!-- 이전 -->
 <c:choose>
@@ -320,11 +334,11 @@
 	<c:forEach var="i" begin="${startPage }" end="${endPage}">
 		<c:choose>
 			<c:when test="${i==pageNum }">
-				<a href="${cp }/main.do?pageNum=${i}&keyword">
+				<a href="${cp }/main.do?pageNum=${i}&keyword=${keyword}&a_num=${a_num}">
 				<span style='color:blue'>[${i }]</span></a>			
 			</c:when>
 			<c:otherwise>
-				<a href="${cp }/main.do?pageNum=${i}&keyword=${keyword}">
+				<a href="${cp }/main.do?pageNum=${i}&keyword=${keyword}&a_num=${a_num}">
 				<span style='color:#999'>[${i }]</span></a>
 			</c:otherwise>
 		</c:choose>
@@ -351,9 +365,12 @@
           <div class="card-body">
             <form>
               <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control" rows="1" id="title" placeholder="제목을 입력해주세요"></textarea>
               </div>
-              <button type="submit" class="btn btn-primary pull-right">등록</button>
+              <div class="form-group">
+                <textarea class="form-control" rows="5" id="context" placeholder="내용을 입력해주세요"></textarea>
+              </div>
+              <button type="button" class="btn btn-primary pull-right" onclick="register()">등록</button>
             </form>
           </div>
         </div>

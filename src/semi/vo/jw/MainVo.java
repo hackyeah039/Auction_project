@@ -22,6 +22,14 @@ public class MainVo {
 	private int s_num;
 	private String s_way;
 	private int s_price;
+	private Date ans_regdate;
+	
+	public Date getAns_regdate() {
+		return ans_regdate;
+	}
+	public void setAns_regdate(Date ans_regdate) {
+		this.ans_regdate = ans_regdate;
+	}
 	int que_num;
 	String que_title;
 	String que_content;
@@ -121,7 +129,7 @@ public class MainVo {
 	
 	
 	//문의게시판
-	public MainVo(int que_num,String que_title,String que_content,int m_num,int que_status,Date que_regdate,String b_content,int rnum) {
+	public MainVo(int que_num,String que_title,String que_content,int m_num,int que_status,Date que_regdate,String b_content,int rnum,Date ans_regdate) {
 		this.que_num=que_num;
 		this.que_title=que_title;
 		this.que_content=que_content;
@@ -130,6 +138,7 @@ public class MainVo {
 		this.que_regdate=que_regdate;
 		this.b_content=b_content;
 		this.rnum=rnum;
+		this.ans_regdate =ans_regdate;
 	};
 	public int getS_num() {
 		return s_num;

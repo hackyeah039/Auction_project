@@ -23,7 +23,9 @@
 		ArrayList<SHAuctionVo> list = mdao.SearchList(startrow, endrow, field, keyword);
 		
 		int pageCnt=(int)Math.ceil(mdao.getSerchCnt(keyword, field)/12.0);
-		System.out.print(pageCnt);
+		System.out.print(pageCnt + "페이지 카운트 ");
+		System.out.print(keyword + "키워드 확인 ");
+		System.out.print(field + "필드확인  ");
 		int startPageNum=((pageNum-1)/5)*5+1;
 		int endPageNum=startPageNum+4;
 		if(pageCnt<endPageNum) {
@@ -66,6 +68,8 @@
 			pw.println("<a_startbid>" + vo.getA_startbid() + "</a_startbid>");
 			pw.println("<a_bidunit>" + vo.getA_bidunit() + "</a_bidunit>");
 			pw.println("</data>");
+			
+			System.out.println("sssss"+mdao.getImgPath(vo.getA_num()));
 		}
 		pw.println("</result>");
 		

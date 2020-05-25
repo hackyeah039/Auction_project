@@ -3,16 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div id = "page-wrapper">
-<div id="leftMenu">
-	<jsp:include page="newLeftMenu.jsp"></jsp:include>
-</div>
+
+<jsp:include page="newLeftMenu.jsp"></jsp:include>
 
 <div id="page-content-wrapper">
     <div class="container-fluid">
-      <h1>입찰 중 리스트</h1>
+      <h3>입찰 중 리스트</h3>
     </div>
 	
-	<table  class="table table-bordered" border=1 style="text-align: center; 
+	<table  class="table table-bordered table-hover" border=1 style="text-align: center; 
 		margin-top: 40px"> 
 		<thead class = "thead">
 			<tr>
@@ -42,7 +41,7 @@
 				<!-- 경매 정보-->
 				<c:forEach var = "bidinfo" items = "${BiddingInfoList}">
 					<c:if test="${ bidinfo.key == anum }">
-						<td>${bidinfo.value.a_title}</td>
+						<td><a href = '${cp}/main.do?a_num=${anum}'>${bidinfo.value.a_title}</a></td>
 						<td>${bidinfo.value.sel_Id}</td>
 						<td>${bidinfo.value.a_enddate}</td>
 						<td>${bidinfo.value.a_check}</td>

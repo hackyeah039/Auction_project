@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <script>
-
 	window.onload=searchList(1);
 		
 	var t = [];
@@ -46,6 +45,7 @@
 					let endDate=Data[i].getElementsByTagName("a_enddate")[0].firstChild.nodeValue;
 					let bidCnt=Data[i].getElementsByTagName("bidcnt")[0].firstChild.nodeValue;
 					let i_path=Data[i].getElementsByTagName("i_path")[0].firstChild.nodeValue;
+					console.log("/images/"+ i_path);
 					
 					let endYear=endDate.substring(0, 4);
 					let endMonth=endDate.substring(4, 6);
@@ -62,14 +62,14 @@
 					let endTime=new Date(endYear,(endMonth-1),endDay,endHour,endMin,endSec).getTime();
 					
 					
-					console.log("${cp}/img/"+ i_path);
+					
 					<%-- 각 경매글 div 만들고 출력하는 부분 --%>
 					let div=document.createElement("div");
 					div.style.textAlign="center";
 					let timeDiv=document.createElement("div");
 					timeDiv.id="div1" + i;
 					div.innerHTML="<div class='card' style='width: 325px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "${cp}/main.do?a_num="+a_num+"'\">"+
-					"<img class='card-img-top' src='${cp}/img/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
+					"<img class='card-img-top' src='/images/"+ i_path +"' alt='Card image cap' style='width: 321px; height: 180px; align='center'>"+
 					"<div class='card-body'>"+
 					"<h4 class='card-title'>" + title + "</h4>"+
 					"<h3 class='card-text text-primary'>" + price + "원</h3>"+

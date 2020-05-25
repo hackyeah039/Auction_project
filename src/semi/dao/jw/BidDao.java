@@ -118,7 +118,7 @@ public class BidDao {
 						"                        (\r\n" + 
 						"                        select aa.*, rownum rnum from \r\n" + 
 						"						( \r\n" + 
-						"							select m_num,bid_price, to_char(bid_date, 'YYYY/MM/DD HH24:MI:SS') realdate from bid where a_num=? order by bid_price asc\r\n" + 
+						"							select m_num,bid_price, to_char(BID_DATE, 'MONTH DD, YYYY, HH24:MI:SS') realdate from bid where a_num=? order by bid_price asc\r\n" + 
 						"						 )aa\r\n" + 
 						"						 ) where rnum>=? and rnum<=?";
 			

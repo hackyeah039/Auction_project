@@ -2,6 +2,7 @@ package semi.controller.yrmypage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,6 +31,8 @@ public class SimpleListController extends HttpServlet{
 	
 		HttpSession session = req.getSession();
 		int mnum = (Integer)session.getAttribute("m_num"); 
+		
+		System.out.println("mnum" + mnum);
 		
 		BiddingDao dao = new BiddingDao();
 
@@ -66,7 +69,7 @@ public class SimpleListController extends HttpServlet{
 			}
 		}catch (NullPointerException e) {
 			// TODO: handle exception
-			System.out.println(e.getMessage());
+			System.out.println("입금요청 : "+e.getMessage());
 			reqPayCount = 0;
 		}
 		
@@ -75,6 +78,8 @@ public class SimpleListController extends HttpServlet{
 //		판매중(입찰하기 전이거나, 입찰 중인 auction 물품)
 		int saleCount = 0;
 		int shipReqCount = 0;
+//		미답변 갯수
+		int quesCount = 0;
 
 		TranCompletedDao tcdao = new TranCompletedDao();
 		ArrayList<Integer> forSellerTranList  = new ArrayList<Integer>();
@@ -82,26 +87,40 @@ public class SimpleListController extends HttpServlet{
 		
 		try {
 			ArrayList<Integer> selList = tddao.getSelnum(mnum);			
-			forSellerTranList = tddao.getForSellerTran(selList,1);
+			forSellerTranList = tddao.getForSellerTran(selList,1);	
 			saleCount = forSellerTranList.size();
-			
-//		배송요청(입찰 완료)  paystatus = 1, auction bidstatus = 2;
-			for (Integer anum : forSellerTranList) {
-				BidVo vo= tcdao.getBidVo(anum);
-				bidvolist.add(vo);
-				PaymentVo pvo= tddao.getPaymentInfo(vo.getBid_num());				
-				if(pvo.getPay_status() == 1) {
-					shipReqCount++;
-				}			
+			for (Integer anum : selList) {
+				quesCount += tddao.getCountQues(anum);
 			}
+			
 			
 		}catch (NullPointerException e) {
 			// TODO: handle exception
 			System.out.println(e.getMessage());
 			saleCount = 0;
 			shipReqCount = 0;
+			quesCount = 0;
 		}
 		
+		System.out.println("sc1 "+ quesCount);
+		
+//		배송요청(입찰 완료)  paystatus = 1, auction bidstatus = 2;
+
+		for (Integer anum : forSellerTranList) {
+			BidVo vo= tcdao.getBidVo(anum);
+			if(vo == null) {
+				continue;
+			}else {
+				bidvolist.add(vo);
+				PaymentVo pvo= tddao.getPaymentInfo(vo.getBid_num());
+				if(pvo != null) {
+					if(pvo.getPay_status() == 1) {
+						shipReqCount++;
+					}								
+				}				
+			}
+		}
+	
 		
 
 		
@@ -110,6 +129,7 @@ public class SimpleListController extends HttpServlet{
         req.setAttribute("reqPayCount", reqPayCount);//입금요청	
         req.setAttribute("saleCount", saleCount); //판매중		
         req.setAttribute("shipReqCount", shipReqCount); //배송요청
+        req.setAttribute("quesCount", quesCount); //미답변
 //        req.setAttribute("header", "main_sh/layoutTest.jsp");
         req.setAttribute("file", "/mypage/mypagefirst.jsp");
         req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);

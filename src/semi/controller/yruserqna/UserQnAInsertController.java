@@ -51,8 +51,9 @@ public class UserQnAInsertController extends HttpServlet {
 		BoardVo vo = new BoardVo(0, b_title, b_content, 0, mnum, null, null);
 		int n = dao.insertBoard(vo);
 
-		PrintWriter out = resp.getWriter();
 		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/html;charset=UTF-8");
+		PrintWriter out = resp.getWriter();
 		out.println("<script>");
 		String cp = req.getContextPath();
 		if (n > 0) {

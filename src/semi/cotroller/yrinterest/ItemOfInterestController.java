@@ -83,9 +83,9 @@ public class ItemOfInterestController extends HttpServlet{
         req.setAttribute("bidCountList", bidCount);
         req.setAttribute("sellerIdList", sellerIdList);
 //        req.setAttribute("header", "header.jsp");
-//        req.setAttribute("content", "/interest/itemOfInterest.jsp");
-//        req.getRequestDispatcher("/index.jsp").forward(req, resp);
-	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/interest/itemOfInterest.jsp").forward(req, resp);
+        req.setAttribute("file", "/interest/itemOfInterest.jsp");
+        req.getRequestDispatcher("/main_sh/layoutTest.jsp").forward(req, resp);
+//	    req.getRequestDispatcher("/main_sh/layoutTest.jsp?file=/interest/itemOfInterest.jsp").forward(req, resp);
 
 	}
 	
