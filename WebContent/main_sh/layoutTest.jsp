@@ -13,6 +13,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script> 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script> 
 </head>
+<body>
+	<script> $('.carousel').carousel({ interval: 2000 }) </script>
 <style>
 	#wrap {
 		width: 100%;
@@ -37,8 +39,7 @@
 		margin: auto;
 		width: 100%;
 	}
-	
-	/* footer */
+		/* footer */
     footer {
    		 margin-top : 100px;
     	 clear : both;
@@ -49,43 +50,37 @@
 	   	 bottom: 0;
 	   	 width: 100%;
     }
-
 </style>
-<body>
-	<script> $('.carousel').carousel({ interval: 2000 }) </script>
-
 <!-- 
 <div class="card  bg-secondary  text-white" id="topCard"></div>
  -->
-<nav class="navbar bg-secondary navbar-dark text-white ">
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
-	</ul>	
-	<c:choose>
-		<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+	<div class = "collapse navbar-collapse flex-grow-1 text-left">
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
+		</ul>
+	</div>
+	<div class = "collapse navbar-collapse flex-grow-1 text-right">	
+			<ul class="navbar-nav ml-auto flex-nowrap">
+				<c:choose>
+					<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
+							<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
+						<c:if test="${sessionScope.adminId==null }">
+							<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+							<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
+							<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>		
+					</c:otherwise>
+				</c:choose>
 			</ul>
-			<c:if test="${sessionScope.adminId==null }">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
-				</ul>
-			</c:if>
-		</c:when>
-		<c:otherwise>
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
-			</ul>					
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>		
-			</ul>					
-		</c:otherwise>
-	</c:choose>
+	</div>
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
  	<!--  <a class="navbar-brand" href="${cp }/sh/testMain.do">Logo(누르면 Home으로 가게)</a> -->
- 	<a class="navbar-brand" href="${cp }/sh/testMain.do" target="_blank"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 80px;" alt=""></a>
+ 	<a class="navbar-brand" href="${cp }/sh/testMain.do" ><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 80px;"></a>
 	<ul class="navbar-nav">
 		
 		<c:choose>
@@ -125,7 +120,9 @@
 			<jsp:include page="/main_sh/slideImg.jsp"/>		
 		</div>
 	</c:if>
+	
 	<div id="main" style="margin-bottom: 20px">
+		<div>
 			<c:choose>
 				<c:when test="${not empty file }">
 					<jsp:include page="${file }"/>
@@ -134,17 +131,17 @@
 					<jsp:include page="/main_sh/main.jsp"/>
 				</c:otherwise>
 			</c:choose>
+		</div>
 	</div>
-	
-<footer class="page-footer font-small blue">
+	<footer class="page-footer font-small blue">
 
-  <!-- Copyright -->
-  <div class="footer-copyright text-center py-3">© 2020 Copyright:
-    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
-  </div>
-  <!-- Copyright -->
+	  <!-- Copyright -->
+	  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+	    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+	  </div>
+	  <!-- Copyright -->
 
-</footer>
+	</footer>
 </body>
 <script type="text/javascript">
 	<%-- 최상단 시간 출력 부분 --%>

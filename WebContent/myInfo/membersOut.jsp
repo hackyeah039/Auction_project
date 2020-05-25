@@ -67,9 +67,6 @@
 				var json=JSON.parse(msg);
 				if(json.msg=='ok'){
 					alert("탈퇴요청 처리가 완료되었습니다!");
-				<%
-					session.invalidate();//세션종료
-				%>
 					/*탈퇴처리 완료 후 메인으로 바로 페이지 이동*/	
 					window.location.replace('${cp}/main_sh/layoutTest.jsp');	
 				}else{

@@ -32,6 +32,7 @@ public class OutMembersController extends HttpServlet{
 			int n=dao.updateOut(m_num);
 			if(n>0) {
 				json.put("msg","ok");
+				req.getSession().invalidate();
 			}else {
 				json.put("msg", "error");
 			}

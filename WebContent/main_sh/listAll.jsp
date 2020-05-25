@@ -65,8 +65,7 @@
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
- 	<!--  <a class="navbar-brand" href="${cp }/sh/testMain.do">Logo(누르면 Home으로 가게)</a> -->
- 	<a class="navbar-brand" href="${cp }/sh/testMain.do" target="_blank"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 80px;" alt=""></a>
+ 	<a class="navbar-brand" href="${cp }/sh/testMain.do"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 80px;" ></a>
 	<ul class="navbar-nav">
 		
 		<c:choose>
@@ -148,7 +147,7 @@
 				<!-- 인디케이터 끝 -->
 			</div>
 </div>
-<div id="wrap" align="center">
+<div id="wrap" align="center" style="float: left;">
 	<div id="top">
 	</div>
 	<div id="mid">
@@ -166,10 +165,9 @@
 	<div id="bottom">
 		<div id="allauc"></div>
 	</div>
-	<div id="bottom2">
-		<div id="page" align="center"></div>
-	</div>	
 </div>
+	<div id="page" align="center" style=""></div>
+</div>		
 </body>
 <script type="text/javascript">
 	<%-- 최상단 시간 출력 부분 --%>

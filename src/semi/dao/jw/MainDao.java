@@ -215,11 +215,11 @@ public class MainDao {
 			String sql="update auction set a_jjim = (select a_jjim from auction where a_num=?)+1 where a_num=?";
 			String sql2="insert into interproduct values(?,?) ";
 			pstmt2=con.prepareStatement(sql);
-			pstmt3=con.prepareStatement(sql);
+			pstmt3=con.prepareStatement(sql2);
 			pstmt2.setInt(1, a_num);
 			pstmt2.setInt(2, a_num);
 			pstmt3.setInt(1, m_num);
-			pstmt3.setInt(1, a_num);
+			pstmt3.setInt(2, a_num);
 			rs=pstmt2.executeQuery();
 			rs2=pstmt3.executeQuery();
 		}catch(SQLException se) {
@@ -288,15 +288,6 @@ public class MainDao {
 			rs=pstmt.executeQuery();
 			ArrayList<MainVo> list=new ArrayList<MainVo>();
 			while(rs.next()) {
-				System.out.println("바뀐값입니다!"+rs.getInt(1));
-				System.out.println("바뀐값입니다!"+rs.getString(2));
-				System.out.println("바뀐값입니다!"+rs.getString(3));
-				System.out.println("바뀐값입니다!"+rs.getInt(4));
-				System.out.println("바뀐값입니다!"+rs.getInt(5));
-				System.out.println("바뀐값입니다!"+rs.getDate(6));
-				System.out.println("바뀐값입니다!"+rs.getString(7));
-				System.out.println("바뀐값입니다!"+rs.getInt(8));
-				System.out.println("바뀐값입니다!"+rs.getDate(9));
 				MainVo vo=new MainVo(rs.getInt("a"),rs.getString("b"),rs.getString("c"),rs.getInt("d"),rs.getInt("e"),rs.getDate("f"),rs.getString("g"),rs.getInt("h"),rs.getDate("i"));
 				list.add(vo);
 			}
