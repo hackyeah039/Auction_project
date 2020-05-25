@@ -23,15 +23,13 @@ public class HistoryController extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 //		System.out.println(req.getParameter("check"));
-//		System.out.println(req.getParameter("a_num"));
 		req.setCharacterEncoding("utf-8");
 		int pageNum=1; // pageNum==현재 내가보는 페이지
 		String spageNum =req.getParameter("pageNum");
 		if(spageNum!=null) {
 			pageNum=Integer.parseInt(spageNum);
 		}
-		
-		int a_num=Integer.parseInt(req.getParameter("a_num")); // 경매물품번호
+		int a_num=Integer.parseInt(req.getParameter("a_num")); 
 		int field =10;
 		
 		int startRow=(pageNum-1)*10 +1;
@@ -42,10 +40,9 @@ public class HistoryController extends HttpServlet{
 		
 		BidDao dao= BidDao.getInstance(); //싱글톤dao
 		
-		ArrayList<BidVo> list2 =dao.postlist(startRow, endRow,a_num ); //18은 a_num
-		int paging =(int)Math.ceil(dao.getCount(field,a_num));//18은 a_num
+		ArrayList<BidVo> list2 =dao.postlist(startRow, endRow, a_num);
+		int paging =(int)Math.ceil(dao.getCount(field,a_num));
 		if(endPage>paging) {endPage = paging;}
-		System.out.println(endPage +"페이징넘버입니다.");
 		
 		
 		JSONArray jarr=new JSONArray();
@@ -100,17 +97,17 @@ public class HistoryController extends HttpServlet{
 		}
 		
 		int a_num=Integer.parseInt(req.getParameter("a_num")); 
-//		System.out.println(field +"필드값입니다," +pageNum +"현재 보고있는 페이지숫자입니다." + anum +"경매물품번호입니다.");
+		System.out.println(field +"필드값입니다," +pageNum +"현재 보고있는 페이지숫자입니다." + 18 +"경매물품번호입니다.");
 		int startRow=(pageNum-1)*field +1;
 		int endRow =(startRow-1)+field;
 		int startPage =(pageNum-1)/5*5+1; 
 		int endPage =startPage+4;
 		
 		BidDao dao= BidDao.getInstance();
-		int paging =(int)Math.ceil(dao.getCount(field,a_num)); //18은 a_num입니다.
+		int paging =(int)Math.ceil(dao.getCount(field,a_num));
 		if(endPage>paging) {endPage = paging;}
 
-		ArrayList<BidVo> list =dao.postlist(startRow, endRow, a_num); //18은 a_num입니다.
+		ArrayList<BidVo> list =dao.postlist(startRow, endRow, a_num);
 		System.out.println("paging값입니다. " +paging +",startrow " +startRow +",endRow " +endRow +",field " +field +",startPage " +startPage +",endPage " +endPage);
 		
 //		req.setAttribute("paging", paging);

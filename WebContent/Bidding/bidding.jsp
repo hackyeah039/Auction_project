@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 // 최대값 사용을 위해 변수에 담음.
-var maxBid="<c:out value='${maxBid}'/>";
+const maxBid="<c:out value='${maxBid}'/>";
 //onsubmit 함수 필요 유효성 체크
 function chkBidPrice() {
 	//최대 가격 체크

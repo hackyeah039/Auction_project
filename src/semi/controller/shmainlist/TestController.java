@@ -19,6 +19,7 @@ public class TestController extends HttpServlet{
 		application.setAttribute("cp", contextPath);
 		MainListDao dao=new MainListDao();
 		dao.updateBidStatus();
+		dao.getStartAuction();
 		
 		resp.sendRedirect(req.getContextPath()+"/main_sh/layoutTest.jsp");
 	}

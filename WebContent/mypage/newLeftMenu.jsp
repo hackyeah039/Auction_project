@@ -9,6 +9,7 @@
   
   #page-wrapper {
     padding-left: 250px;
+    padding-top: 50px;
   }
   
   #sidebar-wrapper {
@@ -60,7 +61,7 @@
 </style>
 
   <!-- 사이드바 -->
-  <div id="sidebar-wrapper">
+  <div id="sidebar-wrapper" style="float: left">
     <ul class="sidebar-nav">
       <li class="sidebar-brand">
         <a href="#">구매관리</a>
@@ -71,7 +72,8 @@
       <li class="sidebar-brand">
         <a href="#">판매관리</a>
       </li>
-      <li><a href="${cp }/mypage/sellerBidding.do">입찰중</a></li>
+      <li><a href="${cp }/mypage/sellerBidding.do?type=1">입찰전</a></li>
+      <li><a href="${cp }/mypage/sellerBidding.do?type=2">입찰중</a></li>
       <li><a href="${cp }/mypage/sellerTranCompleted.do">구매종료</a></li>
       <li><a href="${cp }/mypage/sellerTransact.do">거래진행중</a></li>
     </ul>

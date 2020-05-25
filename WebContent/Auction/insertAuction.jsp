@@ -15,11 +15,30 @@
  		width: 100px;
  		height: 100px;
  	}
- 	.card{
+ 	#insert{
  		align-content: center;
  		align-items: center;
  		align-self: center;
  		margin: auto;
+ 	}
+ 	p{
+ 		width: 160px;
+ 		height: 40px;
+ 		border-radius: 10px;
+ 		text-align: center;
+ 		padding-top: 5px;
+ 	}
+ 	.tts{
+ 		width: 100px;
+ 		text-align: center;
+ 		
+ 	}
+ 	table{
+ 		border-collapse: separate;
+ 		border-spacing:  0 10px;
+ 	}
+ 	#clist{
+ 		width: 130px;
  	}
  </style>
  <!-- 0513 이미지 프리뷰 스크립트 -->
@@ -56,7 +75,7 @@
 	}
 	//팝업 창 - 계좌 번호 조회
  	function showList() {
-		window.open("${cp}/ShowAccount.do", "_blank", "top=200,left=500,height = 150, width = 280");
+		window.open("${cp}/ShowAccount.do", '_blank', 'top=20, left=50, height=100, width=330');
 	}
 	
 	//예외처리  
@@ -178,47 +197,47 @@
 </head>
 <body>
 <!-- 0513 변수명 db 컬럼값과 동일하게 수정 완료-->
-<div class="card bg-white outline-white">
+<div class="card bg-white outline-white" id="insert">
 	<form method="post" action="${cp }/InsertAuction.do" enctype="multipart/form-data" onsubmit="return chkValues()">
-	<h2 class="card bg-light mt-3 mb-3"> 카테고리 선택 </h2>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>카테고리 선택</strong> </p>
 	 <table>
 	 	<c:forEach var="vo" items="${clist }" varStatus="vs">
 	 		<c:choose>
 	 			<c:when test="${vs.index%6 == 0}">
 	 			<tr>
-	 				<td>
+	 				<td id="clist">
 	 				<input type="radio" name="c_num" value="${vo.c_num }">${vo.c_des }
 	 				</td>
 	 			</c:when>
 	 			<c:otherwise>
-	 				<td>
+	 				<td id="clist">
 	 				<input type="radio" name="c_num" value="${vo.c_num }">${vo.c_des }
 	 				</td>
 	 			</c:otherwise>
 	 		</c:choose>
 	 	</c:forEach>
 	 </table>
-	<h1 class="card bg-light mt-3 mb-3"> 경매 물품 정보 </h1>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>경매물품 정보</strong> </p>
 	<table>
 	<tr>
-		<td>
+		<td class="tts">
 			제목
 		</td>
 		<td>
-			<input type="text" name="a_title" size="49">
+			<input type="text" name="a_title" size="47">
 		</td>
 	</tr>
 	<tr>
-		<td>
-			물품설명 
+		<td class="tts">
+			물품<br>설명 
 		</td>
 		<td>
 			<textarea rows="10" cols="50" name="a_content" maxlength="333"></textarea>
 		</td>
 	</tr>
 	<tr>
-		<td>
-			이미지등록
+		<td class="tts">
+			이미지<br>등록 
 		</td>
 		<td>
 			<!-- accept 속성으로 이미지파일만 올릴수 있도록 제한, multiple 다중 파일 업로드 가능 
@@ -233,10 +252,10 @@
 		</td>
 	</tr>
 	</table>
-	<h1 class="card bg-light mt-3 mb-3"> 경매 설정 </h1>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>경매 설정</strong> </p>
 	<table>
 	<tr>
-		<td>
+		<td class="tts">
 			시작가격
 		</td>
 		<td>
@@ -244,7 +263,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="tts">
 			입찰단위
 		</td>
 		<td>
@@ -252,7 +271,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="tts">
 			상품상태
 		</td>
 		<td>
@@ -263,7 +282,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td class="tts">
 			경매기간
 		</td>
 		<td>
@@ -275,21 +294,6 @@
 			<!-- 캘린더 시작일 클릭 지정 후 종료일 지정시 종료일 기본 선택값이 캘린더 시작일 다음날이 되도록 수정 -->
 			<script type="text/javascript">
 			// 참고 페이지 https://xdsoft.net/jqplugins/datetimepicker/
-			/*
-			$(document).ready(function(){
-				 $('#startdate').datetimepicker({
-					//형식 수정 완
-					format:'Y/m/d H:i:s',
-					// 오늘 일자
-					minDate:0 
-				 });
-				 $('#enddate').datetimepicker({
-				  format:'Y/m/d H:i:s',
-				  // startdate에서 받아와 기본값이 다음날이 되도록 
-				  minDate: '+1970/01/02'// 내일 
-				 });
-			});
-			*/
 	
 			$(document).ready(function() {
 			    // 선택한 날의 다음날 부터 선택하도록 체크
@@ -313,11 +317,10 @@
 			    				maxDate:$('#enddate').val()?$('#enddate').val():false,
 			    				//오늘 이전 날짜는 클릭 불가능
 			    				minDate:0,
-			    				minTime:0,
-			    				defaultTime: true
+			    				minTime:0
 			    			})
 			    		},
-			    		timepicker:true,
+			    		timepicker:true
 			    	});
 			    	
 			    	$('#enddate').datetimepicker({
@@ -335,10 +338,10 @@
 		</td>
 	</tr>
 	</table>
-	<h1 class="card bg-light mt-3 mb-3">배송설정</h1>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>배송 설정</strong> </p>
 	<table>
 		<tr>
-			<td>배송 방법</td>
+			<td class="tts">배송 방법</td>
 			<td>
 				<input type="radio" name="s_way" value="택배">택배
 				<input type="radio" name="s_way" value="우편">우편
@@ -346,7 +349,7 @@
 			<td>
 		</tr>
 		<tr>
-			<td>
+			<td class="tts">
 				비용 부담
 			</td>
 			<td>
@@ -354,10 +357,10 @@
 			</td>
 		</tr>
 	</table>
-	<h1 class="card bg-light mt-3 mb-3">계좌번호 입력</h1>
+	<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>배송 설정</strong> </p>
 	<table>
 		<tr>
-			<td>계좌번호</td>
+			<td class="tts">계좌번호</td>
 			<td>
 				<!-- controller 거쳐서 popup 으로 변경완료 -->
 				<input type="text" name="account" id="account">
@@ -371,6 +374,7 @@
 	</form>
 </div>
 </body>
-<link rel = "stylesheet" type="text/css" href="${cp }/Auction/jquery.datetimepicker.min.css"/>
-<script src="${cp }/Auction/jquery.datetimepicker.full.js"></script>
+<!-- 0524 00시 - startdate 시간 출력이 안되서 변경 full.js => full.min.js / min.css => .css-->
+<link rel = "stylesheet" type="text/css" href="${cp }/Auction/jquery.datetimepicker.css"/>
+<script src="${cp }/Auction/jquery.datetimepicker.full.min.js"></script>
 </html>

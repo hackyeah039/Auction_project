@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import semi.dao.yh.SellerDao;
 import semi.vo.yh.SellerVo;
@@ -16,8 +17,10 @@ public class ShowAccount extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
-		//int m_num =  (int)req.getAttribute("m_num");
-		int m_num = 1;
+		HttpSession session = req.getSession();
+		int m_num = (Integer)session.getAttribute("m_num"); 
+		
+//		int m_num = 1;
 		SellerDao sdao = SellerDao.getInstance();
 		ArrayList<SellerVo> list = sdao.listAccount(m_num);
 		req.setAttribute("list", list);
