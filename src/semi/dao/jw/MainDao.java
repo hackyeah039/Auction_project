@@ -215,11 +215,11 @@ public class MainDao {
 			String sql="update auction set a_jjim = (select a_jjim from auction where a_num=?)+1 where a_num=?";
 			String sql2="insert into interproduct values(?,?) ";
 			pstmt2=con.prepareStatement(sql);
-			pstmt3=con.prepareStatement(sql);
+			pstmt3=con.prepareStatement(sql2);
 			pstmt2.setInt(1, a_num);
 			pstmt2.setInt(2, a_num);
 			pstmt3.setInt(1, m_num);
-			pstmt3.setInt(1, a_num);
+			pstmt3.setInt(2, a_num);
 			rs=pstmt2.executeQuery();
 			rs2=pstmt3.executeQuery();
 		}catch(SQLException se) {
