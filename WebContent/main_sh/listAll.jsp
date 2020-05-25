@@ -35,24 +35,55 @@
 </style>
 </head>
 <body onload="allList(1,0,0)">
-<div class="card  bg-secondary  text-white" id="topCard"></div>
 
+<!--   <div class="card  bg-secondary  text-white" id="topCard"></div>  -->
+
+<nav class="navbar bg-secondary navbar-dark text-white ">
+	<ul class="navbar-nav">
+		<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
+	</ul>	
+	<c:choose>
+		<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
+			</ul>
+			<c:if test="${sessionScope.adminId==null }">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
+				</ul>
+			</c:if>
+		</c:when>
+		<c:otherwise>
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
+			</ul>					
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>		
+			</ul>					
+		</c:otherwise>
+	</c:choose>
+</nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
- 	<a class="navbar-brand" href="#">Logo(누르면 Home으로 가게)</a>
+ 	<!--  <a class="navbar-brand" href="${cp }/sh/testMain.do">Logo(누르면 Home으로 가게)</a> -->
+ 	<a class="navbar-brand" href="${cp }/sh/testMain.do" target="_blank"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 80px;" alt=""></a>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">회원가입</a></li>
-	</ul>	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
+		
+		<c:choose>
+			<c:when test="${sessionScope.adminId =='admin' }" >
+				<li class="nav-item"><a class="nav-link" href="${cp }/adminmain/main.jh">관리자페이지</a></li>		
+			</c:when>
+			<c:otherwise>
+				<li class="nav-item"><a class="nav-link" href="${cp }/mypage/simplelist.do">마이페이지</a></li>		
+			</c:otherwise>
+					
+		</c:choose>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">마이페이지</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/InsertAuction.do">물품등록</a></li>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">물품등록</a></li>
-	</ul>
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">전체물품</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/main_sh/listAll.jsp">전체물품</a></li>
 	</ul>
 <!-- 검색 조건 드랍박스 (영호영 검색기능 넣는 곳) -->	
 <form class="form-inline" method="post" action="${cp }/sh/search.do">
@@ -69,6 +100,9 @@
 <!-- 까지 검색조건 -->  
 </nav>
 <!-- 까지 고정되어 따라다니는 네비게이션 바 -->
+
+
+
 <div id="main">
 	<script> $('.carousel').carousel({ interval: 2000}) </script>
 		<div class="container">
@@ -217,7 +251,7 @@
 					div.style.textAlign="center";
 					let timeDiv=document.createElement("div");
 					div.innerHTML="<div class='card' style='width: 320px; height: 450px; cursor:pointer;' OnClick=\"location.href ='" + "${cp}/main.do?a_num="+a_num+"'\">"+
-					"<img class='card-img-top'  src='${cp}/img/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
+					"<img class='card-img-top'  src='/images/"+ i_path +"' alt='Card image cap' style='width: 323px; height: 200px; align='center'>"+
 					"<div class='card-body'>"+
 					"<h4 class='card-title'>" + title + "</h4>"+
 					"<h3 class='card-text text-primary'>" + price + "원</h3>"+
