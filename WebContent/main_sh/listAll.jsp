@@ -148,7 +148,7 @@
 				<!-- 인디케이터 끝 -->
 			</div>
 </div>
-<div id="wrap" align="center">
+<div id="wrap" align="center" style="float: left;">
 	<div id="top">
 	</div>
 	<div id="mid">
@@ -166,10 +166,9 @@
 	<div id="bottom">
 		<div id="allauc"></div>
 	</div>
-	<div id="bottom2">
-		<div id="page" align="center"></div>
-	</div>	
 </div>
+	<div id="page" align="center" style=""></div>
+</div>		
 </body>
 <script type="text/javascript">
 	<%-- 최상단 시간 출력 부분 --%>
