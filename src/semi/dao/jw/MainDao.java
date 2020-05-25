@@ -331,7 +331,7 @@ public class MainDao {
 		return a;
 	}
 	
-	public void singo(int a_num,int mnum,String textarea) {
+	public int singo(int selnumber,int mnum,String textarea) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -340,10 +340,14 @@ public class MainDao {
 		try {
 			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
-			rs=pstmt.executeQuery();
-			
+			pstmt.setInt(1, selnumber);
+			pstmt.setInt(2, mnum);
+			pstmt.setString(3, textarea);
+			int n=pstmt.executeUpdate();
+			return n;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
+			return -1;
 		}finally {
 			ConnectionPool.close(rs, pstmt, con);
 		}

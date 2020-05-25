@@ -20,7 +20,7 @@ public class AdminDao {
 		ResultSet rs=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select nvl(count(*),0) count from singo where singo_status=1";
+			String sql="select nvl(count(*),0) count from singo where singo_status=0";
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
 			int count=0;

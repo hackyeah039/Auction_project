@@ -18,9 +18,12 @@ public class FindIdController extends HttpServlet{
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		String m_name=req.getParameter("m_name");
-		String m_phone=req.getParameter("m_phone");
+		String m_email=req.getParameter("m_email");
+		System.out.println("1이름:"+m_name);
+		System.out.println("1이메일:"+m_email);
+		
 		LoginDao dao=LoginDao.getLoginDao();
-		String id=dao.findId(m_name, Integer.parseInt(m_phone));
+		String id=dao.findId(m_name, m_email);
 		resp.setContentType("text/plain;charset=utf-8");
 		JSONObject json=new JSONObject();
 		if(id!=null) {//아이디가 있을 경우
