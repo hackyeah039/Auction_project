@@ -69,7 +69,8 @@
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">
- 	<a class="navbar-brand" href="${cp }/sh/testMain.do">Logo(누르면 Home으로 가게)</a>
+ 	<!--  <a class="navbar-brand" href="${cp }/sh/testMain.do">Logo(누르면 Home으로 가게)</a> -->
+ 	<a class="navbar-brand" href="${cp }/sh/testMain.do" target="_blank"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 80px;" alt=""></a>
 	<ul class="navbar-nav">
 		
 		<c:choose>
@@ -86,7 +87,7 @@
 		<li class="nav-item"><a class="nav-link" href="${cp }/InsertAuction.do">물품등록</a></li>
 	</ul>
 	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" href="#">전체물품</a></li>
+		<li class="nav-item"><a class="nav-link" href="${cp }/main_sh/listAll.jsp">전체물품</a></li>
 	</ul>
 <!-- 검색 조건 드랍박스 (영호영 검색기능 넣는 곳) -->	
 <form class="form-inline" method="post" action="${cp }/sh/search.do">
