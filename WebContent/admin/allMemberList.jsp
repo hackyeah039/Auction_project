@@ -27,36 +27,51 @@
 	</c:forEach>
 </table>
 <br>
-<div>
+<div id="paging">
+	<nav aria-label="Page navigation example">
+	<ul class="pagination">
 	<c:choose>
 		<c:when test="${startPage>3 }">
+			<li class="page-item">
 			<a href="${cp}/members/list.jh?pageNum=${startPage-3}&field=${field}
-			&keyword=${keyword}">[이전]</a>
+			&keyword=${keyword}" class="page-link" aria-label="Previous">
+			<span aria-hidden="true">&laquo;</span>
+       		<span class="sr-only">Previous</span></a>
+			</li>
 		</c:when>
 	</c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${i==pageNum }">
-				<a href="${cp}/members/list.jh?pageNum=${i}&field=${field}&keyword=${keyword}">
-				<span style='color:blue;'>[${i}]</span></a>
+				<li class="page-item">
+				<a href="${cp}/members/list.jh?pageNum=${i}&field=${field}&keyword=${keyword}" class="page-link">
+				${i}</a>
+				</li>
 			</c:when>
 			<c:otherwise>
-				<a href="${cp}/members/list.jh?pageNum=${i}&field=${field}&keyword=${keyword}">
-				<span>[${i}]</span></a>
+				<li class="page-item">
+				<a href="${cp}/members/list.jh?pageNum=${i}&field=${field}&keyword=${keyword}" class="page-link">
+				${i}</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 	<c:choose>
-		<c:when test="${endPage<PageCount }">
+		<c:when test="${endPage<pageCount }">
+			<li class="page-item">
 			<a href="${cp}/members/list.jh?pageNum=${endPage+1}&field=${field}
-			&keyword=${keyword}">[다음]</a>
+			&keyword=${keyword}" class="page-link" aria-label="Next">
+			<span aria-hidden="true">&raquo;</span>
+        	<span class="sr-only">Next</span></a>
+			</li>
 		</c:when>
 	</c:choose>
+	</ul>
+	</nav>
 </div>
 <br>
 <div>
 	<form method="post" action="${cp }/members/list.jh?">
-		<select name="field">
+		<select name="field" class="custom-select">
 			<option value="m_id" <c:if test="${field=='m_id'}">selected</c:if>>회원 아이디</option>	
 			<option value="m_name" <c:if test="${field=='m_name'}">selected</c:if>>회원 이름</option>	
 			<option value="m_email" <c:if test="${field=='m_email'}">selected</c:if>>회원 이메일</option>	
@@ -64,6 +79,6 @@
 			<option value="m_addr" <c:if test="${field=='m_addr'}">selected</c:if>>주소</option>	
 		</select>
 		<input type="text" name="keyword" value=${keyword }>
-		<input type="submit" value="검색">	
+		<input type="submit" value="검색" class="btn btn-outline-success my-2 my-sm-0">	
 	</form>
 </div>

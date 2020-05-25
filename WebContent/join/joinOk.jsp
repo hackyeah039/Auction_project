@@ -9,16 +9,25 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
 <style>
-	
+	.card{margin: auto; margin-top: 200px}
 </style>
-<div id="main" class="jumbotron">
+<div class="card w-75">
+<div id="main" class="card-body">
 	<c:choose>
 		<c:when test="${code=='success' }">
-			<h1>환영합니다!</h1><br>
+			<h5 class="card-title">환영합니다!</h5>
+	 	   <p class="card-text">로그인 하러 가려면 아래 버튼을 눌러주세요.</p>
+	 	   <a href="${cp }/login/login.jsp" class="btn btn-primary">로그인</a>
+
+			<br><br>
+	 	   <a href="${cp }/sh/testMain.do">메인으로 가기</a>
 		</c:when>
 		<c:otherwise>
 			<h1>회원가입 실패!</h1><br>
+			<a href="${cp }/sh/testMain.do">메인으로 가기</a>
 		</c:otherwise>
 	</c:choose>
-	<a href="${cp }/sh/testMain.do">메인으로 가기</a>
 </div>
+</div>
+
+

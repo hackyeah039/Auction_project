@@ -24,45 +24,58 @@
 	</c:forEach>
 </table>
 <br>
-<div>
+<div id="paging">
+	<nav aria-label="Page navigation example">
+	<ul class="pagination">
 	<c:choose>
 		<c:when test="${startPage>3}">
-				<a href="${cp}/board/qnadoing.jh?pageNum=${startPage-3}&field=${field}
-				&keyword=${keyword}&type=${type}">[이전]</a>
+			<li class="page-item">
+			<a href="${cp}/board/qnadoing.jh?pageNum=${startPage-3}&field=${field}
+			&keyword=${keyword}&type=${type}" class="page-link" aria-label="Previous">
+			<span aria-hidden="true">&laquo;</span>
+       		<span class="sr-only">Previous</span></a>
+       		</li>
 		</c:when>
 	</c:choose>
 	<c:forEach var="i" begin="${startPage }" end="${endPage }">
 		<c:choose>
 			<c:when test="${pageNum==i }">
-				<span><a href="${cp}/board/qnadoing.jh?pageNum=${i}&field=${field}
-				&keyword=${keyword}&type=${type}">
-				[${i}]</a></span>
+				<li class="page-item">
+				<a href="${cp}/board/qnadoing.jh?pageNum=${i}&field=${field}
+				&keyword=${keyword}&type=${type}" class="page-link">
+				${i}</a></li>
 			</c:when>
 			<c:otherwise>
-				<span><a href="${cp}/board/qnadoing.jh?pageNum=${i}&field=${field}
-				&keyword=${keyword}&type=${type}">
-				[${i}]</a></span>
+				<li class="page-item">
+				<a href="${cp}/board/qnadoing.jh?pageNum=${i}&field=${field}
+				&keyword=${keyword}&type=${type}" class="page-link">
+				${i}</a></li>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
 	<!-- 다음버튼 -->
 		<c:choose>
 		<c:when test="${endPage<pageCount }">
+			<li class="page-item">
 			<a href="${cp}/board/qnadoing.jh?pageNum=${endPage+1}&field=${field}
-			&keyword=${keyword}&type=${type}">[다음]</a>
+			&keyword=${keyword}&type=${type}" class="page-link" aria-label="Next">
+			<span aria-hidden="true">&raquo;</span>
+        	<span class="sr-only">Next</span></a></li>
 		</c:when>
 	</c:choose>
+	</ul>
+	</nav>
 </div>
 <br>
 <!-- 검색기능 -->
 <div>
 	<form method="post" action="${cp }/board/qnadoing.jh?type=${type}">
-		<select name="field">
+		<select name="field" class="custom-select">
 			<option value="id" <c:if test="${field=='id' }">selected</c:if>>작성자</option>
 			<option value="b_title" <c:if test="${field=='b_title' }">selected</c:if>>글제목</option>
 			<option value="b_content" <c:if test="${field=='b_contnent' }">selected</c:if>>내용</option>
 		</select>
 		<input type="text" name="keyword" value="${keyword }">
-		<input type="submit" value="검색">
+		<input type="submit" value="검색" class="btn btn-outline-success my-2 my-sm-0">
 	</form>
 </div>
