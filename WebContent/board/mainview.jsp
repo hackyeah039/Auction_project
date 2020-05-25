@@ -157,7 +157,7 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">메인페이지
+            <a class="nav-link" href="${cp }/sh/testMain.do"><img src="${cp}/img/logo.png"  style="max-width: 100%; height: 20px;">
               <span class="sr-only">(current)</span>
             </a>
           </li>
@@ -229,7 +229,7 @@
               <div class="col-lg-12">
                 <ul class="list-unstyled mb-0">
                   <ol class="breadcrumb">
-  					<li class="breadcrumb-item"><a href="#">홈</a></li>
+  					<li class="breadcrumb-item"><a href="${cp }/sh/testMain.do">홈</a></li>
   					<li class="breadcrumb-item"><a href="#">온라인경매</a></li>
   					<li class="breadcrumb-item active">${cate }</li>
 				  </ol>
