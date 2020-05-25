@@ -61,17 +61,17 @@ public class LoginDao {
 		}
 	}
 	//아이디찾기
-	public String findId(String name, int phone) {
+	public String findId(String name, String email) {
 		Connection con=null;
 		PreparedStatement pstmt=null;
 		ResultSet rs=null;
 		String m_id=null;
 		try {
 			con=ConnectionPool.getCon();
-			String sql="select * from members where m_name=? and m_phone=?";
+			String sql="select * from members where m_name=? and m_email=?";
 			pstmt=con.prepareStatement(sql);
 			pstmt.setString(1, name);
-			pstmt.setInt(2, phone);
+			pstmt.setString(2, email);
 			rs=pstmt.executeQuery();
 			if(rs.next()) {
 				m_id=rs.getString("m_id");

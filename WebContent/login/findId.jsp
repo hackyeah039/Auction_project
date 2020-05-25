@@ -19,12 +19,12 @@
     </div>
   </div>
   <div class="form-group row">
-    <label for="inputPassword" class="col-sm-3 col-form-label">전화번호 : </label>
+    <label for="inputPassword" class="col-sm-3 col-form-label">이메일 : </label>
     <div class="col-sm-10">
-      <input type="text" name="m_phone" class="form-control" id="inputPassword" 
-      placeholder="Phone" onkeyup="phoneCk()">
+      <input type="text" name="m_email" class="form-control" id="inputPassword" 
+      placeholder="Phone" onkeyup="emailck()">
       <br>
-    	<span id="phoneckmsg" style="color:red; font-size:15"></span>
+    	<span id="emailckmsg" style="color:red; font-size:15"></span>
     </div>
   </div>
   <div id="btn">
@@ -38,16 +38,16 @@
 <span style="color:red" id="noFindMsg"></span>
 <span id="okFindMsg"></span>
 <script>
-	var phonebool=false;
+	var emailbool=false;
 	var xhr=null;
 	function findID() {
 		var m_name=document.getElementsByName("m_name")[0].value;
-		var m_phone=document.getElementsByName("m_phone")[0].value;
+		var m_email=document.getElementsByName("m_email")[0].value;
 		xhr=new XMLHttpRequest();
 		xhr.onreadystatechange=findok;
 		xhr.open('post','${cp}/login/findId.jh',true);
 		xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
-		xhr.send('m_name='+m_name+'&m_phone='+m_phone);
+		xhr.send('m_name='+m_name+'&m_email='+m_email);
 	}
 	function findok() {
 		if(xhr.readyState==4 && xhr.status==200){
@@ -70,27 +70,23 @@
 	/*전화번호 숫자만 입력하도록 하는것*/
 	var findBt = document.getElementById("findBt");
 
-	function phoneCk() {
-		var phone=document.getElementsByName("m_phone")[0].value;
-		var phoneckmsg=document.getElementById("phoneckmsg");
-		var phoneck=/^[0-9]+$/; 
-		if(phone.length>13){
-			phoneckmsg.innerHTML="번호는 13자리 이하로 입력해주세요.";
-			phonebool=false;
-		}else if(phone.length<1){
-			phoneckmsg.innerHTML="번호를 입력해주세요";
-			phonebool=false;
-		}else if(!(phoneck.test(phone))){
-			phoneckmsg.innerHTML="번호는 숫자만 입력해주세요.";
-			phonebool=false;
+	function emailck() {
+		var email=document.getElementsByName("m_email")[0].value;
+		var emailckmsg=document.getElementById("emailckmsg");
+		if(email==''){
+			emailckmsg.innerHTML="이메일을 입력해주세요.";
+			emailbool=false;
+		}else if(email.indexOf('@')==-1){
+			emailckmsg.innerHTML="올바르지 않은 이메일 형식입니다.";
+			emailbool=false;
 		}else{
-			phoneckmsg.innerHTML="";
-			phonebool=true;
+			emailckmsg.innerHTML="";
+			emailbool=true;
 		}
 			bt();
 	}
 	function bt() {
-		if(phonebool==true){
+		if(emailbool==true){
 			findBt.disabled=false;
 		}else{
 			findBt.disabled=true;
