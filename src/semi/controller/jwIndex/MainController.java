@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -23,12 +22,9 @@ public class MainController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		//회원번호, 경매번호 받아오기
-		
-		
-		
 		int a_num=Integer.parseInt(req.getParameter("a_num"));
 //		int m_num=Integer.parseInt(req.getParameter("m_num"));
-//		int m_num=1;
+		int m_num=1;
 		req.setAttribute("a_num", a_num);
 //		req.setAttribute("m_num", m_num);
 		MainDao dao = MainDao.getInstance();

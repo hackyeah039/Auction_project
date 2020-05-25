@@ -3,19 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div id = "page-wrapper">
-<div id="leftMenu">
-	<jsp:include page="newLeftMenu.jsp"></jsp:include>
-</div>
+<jsp:include page="newLeftMenu.jsp"></jsp:include>
 
 <div id="page-content-wrapper">
     <div class="container-fluid">
-      <h1>거래 중인 리스트</h1>
+      <h3>거래 중인 리스트</h3>
     </div>
 	
 	<form action="${cp }/order/order.do" method="get"
 		onsubmit="return submitClick()" >
 		<!-- onsubmit="return submitClick()" -->
-	<table  class="table table-bordered" border=1 style="text-align: center; 
+	<table  class="table table-bordered table-hover" border=1 style="text-align: center; 
 		margin-top: 40px">
 		<thead class = "thead">
 		 
@@ -45,7 +43,7 @@
 					<!-- 물품명 -->
 					<c:forEach var="titleList" items="${auctionTitleList}">
 						<c:if test="${ titleList.key == anum.a_num }">
-							<td>${titleList.value}</td>
+							<td><a href='${cp}/main.do?a_num=${anum.a_num}'>${titleList.value}</a></td>
 						</c:if>
 					</c:forEach>
 

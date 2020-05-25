@@ -235,6 +235,7 @@ public class TransactDao {
 				Date payDeadline = rs.getDate("pay_deadline");
 				return new PaymentVo(payNum, payAddr, payStatus, bidNumber, payDeadline);
 			} else {
+//				System.out.println("null이라네");
 				return null;
 			}
 
@@ -292,7 +293,7 @@ public class TransactDao {
 				if(type == 0) {
 					sql = "select distinct * from auction where sel_number = ? and bidstatus = 2";					
 				}else{
-					sql = "select * from auction where sel_number = ? and bidstatus BETWEEN 0 and 2";										
+					sql = "select * from auction where sel_number = ? and bidstatus BETWEEN 0 and 2";
 				}
 				
 				pstmt = con.prepareStatement(sql);
@@ -300,15 +301,52 @@ public class TransactDao {
 				rs = pstmt.executeQuery();
 				if (rs.next()) {
 					do {
-						forSellerTranList.add(rs.getInt("a_num"));
+						int an= rs.getInt("a_num");
+						forSellerTranList.add(an);
+						System.out.println("a : "+an);
 					} while (rs.next());
 				}
+			
 			}
+			
+//			for (Integer integer : forSellerTranList) {
+//				System.out.println("거래 중 물품 : "+ integer);				
+//			}
+
+			
 			return forSellerTranList;
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 			return null;
+		} finally {
+			ConnectionPool.close(rs, pstmt, con);
+		}
+	}
+	
+	
+	// 질문있는지 확인
+	public int getCountQues(int anum) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+
+		try {
+			con = ConnectionPool.getCon();
+			String sql = "select nvl(count(que_status),0) count from question where a_num = ? and que_status = 0";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setInt(1, anum);
+			rs = pstmt.executeQuery();
+			if (rs.next()) {
+				count = rs.getInt("count");
+			}
+			return count;
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
 		} finally {
 			ConnectionPool.close(rs, pstmt, con);
 		}

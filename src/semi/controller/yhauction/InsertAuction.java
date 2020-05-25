@@ -14,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -47,10 +48,11 @@ public class InsertAuction extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String encoding = "utf-8";
 		req.setCharacterEncoding(encoding);
-		System.out.println(req.getSession().getServletContext().getRealPath("/img") + " 실제 저장 경로");
-		// 세션에 저장된 m_num값 가져오기
-		//int m_num = Integer.parseInt((String)req.getAttribute("m_num"));
-		int m_num = 1;
+//		System.out.println(req.getSession().getServletContext().getRealPath("/img") + " 실제 저장 경로");
+//		 세션에 저장된 m_num값 가져오기
+		HttpSession session = req.getSession();
+		int m_num = (Integer)session.getAttribute("m_num"); 
+//		int m_num = 1;
 		//변수
 		int c_num = 0;
 		String a_title = null;
@@ -70,7 +72,7 @@ public class InsertAuction extends HttpServlet {
 		int n = 0; // 데이터 입력이 잘 되었는지 확인하기 위한 변수 
 
 		// 파일 업로드 저장소 위치, 나중에 cp + 폴더명 하면 될듯
-		File currentPath = new File("C:\\Users\\yurae\\git\\semiproject_auctionsite\\WebContent\\img");
+		File currentPath = new File("C:\\images");
 		if(currentPath.mkdir()) {
 			System.out.println("해당디렉토리가 생성되었습니다.");			
 		} else {

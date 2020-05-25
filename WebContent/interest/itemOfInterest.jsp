@@ -6,33 +6,41 @@
 <!-- 
 <form action="${cp}/interest/interest.do" method="post" onsubmit="return submitClick()">
  -->
+ <div id = "page-wrapper">
+ <div id="page-content-wrapper">
+    <div class="container-fluid" style="margin-top: 50px">
 	<h1>관심물품</h1>
-	<table border = "1" id = "interesttable">
-		<tr>
-			<th>no</th>
-			<th>제목</th>
-			<th>현재가</th>
-			<th>입찰</th>
-			<th>조회</th>
-			<th>마감일</th>
-			<th>판매자</th>
-			<th>구분</th>
-			<th><input type="checkbox" onclick = "allClick()"></th>
-		</tr>
+		<table  class="table table-bordered table-hover" border=1 style="text-align: center; 
+		margin-top: 40px"> 
+		<thead class = "thead">
+			<tr>
+				<th scope="col">no</th>
+				<th scope="col">제목</th>
+				<th scope="col">현재가</th>
+				<th scope="col">입찰</th>
+				<th scope="col">조회</th>
+				<th scope="col">마감일</th>
+				<th scope="col">판매자</th>
+				<th scope="col">구분</th>
+				<th scope="col"><input type="checkbox" onclick = "allClick()"></th>
+			</tr>
+		</thead>
 		
 		<c:if test="${getListSize == 0  }">
 			<tr>
-				<td colspan="9">정보가 존재하지 않습니다.</td>
+				<td colspan="9" scope="row">정보가 존재하지 않습니다.</td>
 			</tr>
 		</c:if>
 		
+		<c:set var="i" value="0"/>
 		<c:forEach var="anum" items="${interProductList}">
+			<c:set var="i" value = "${i+1 }"/>
 			<tr>
-				<!--물품번호  -->
-				<td>${anum.a_num }</td> 
+				
+				<td scope="row">${i}</td>
 				
 				<!--물품제목  -->
-				<td>${anum.a_title } </td>
+				<td><a href="${cp }/main.do?anum=${anum.a_num}">${anum.a_title }</a></td>
 				
 				<!--현재가  -->
 				<c:forEach var = "bidvo" items="${bidInfoList }">
@@ -77,7 +85,16 @@
 			</tr>	
 		</c:forEach>
 	</table>
-	<input type = "button" value = "삭제하기" onclick = "deleteClick()" >
+	<div>
+		<input type = "button" value = "삭제하기" onclick = "deleteClick()"class="btn btn-secondary" >
+	<div>
+	</div>
+</div>
+</div>
+</div>
+</div>
+
+	
 <!-- 
 </form>
  -->

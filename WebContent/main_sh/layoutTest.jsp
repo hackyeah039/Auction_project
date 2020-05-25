@@ -46,7 +46,6 @@
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
 	</ul>	
-	
 	<c:choose>
 		<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
 			<ul class="navbar-nav">
@@ -67,8 +66,6 @@
 			</ul>					
 		</c:otherwise>
 	</c:choose>
-
-	
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">

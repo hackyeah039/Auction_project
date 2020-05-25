@@ -64,10 +64,15 @@ public class MainListDao {
 		String sql = null;
 		try {
 			con=ConnectionPool.getConn();
-				
-			sql =  "select * from (select aa.*, rownum rnum from("
-					+" select a.*, m.m_id from auction a, seller s, members m"
-					+ " where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 and "+field+" like '%" +keyword+ "%' ORDER BY a_num desc) aa)where rnum>=? and rnum <=?";
+			if(keyword == "" || keyword.equals("")) {
+				sql =  "select * from (select aa.*, rownum rnum from("
+						+" select a.*, m.m_id from auction a, seller s, members m"
+						+ " where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 ORDER BY a_num desc) aa)where rnum>=? and rnum <=?";								
+			} else {
+				sql =  "select * from (select aa.*, rownum rnum from("
+						+" select a.*, m.m_id from auction a, seller s, members m"
+						+ " where a.sel_number = s.sel_number and s.m_num = m.m_num and (a_enddate - sysdate) > 0 and "+field+" like '%" +keyword+ "%' ORDER BY a_num desc) aa)where rnum>=? and rnum <=?";				
+			}
 
 			pstmt=con.prepareStatement(sql);
 			pstmt.setInt(1, startrow);
@@ -416,22 +421,100 @@ public class MainListDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
+	
 	//마감시간이 되면 거래진행중 상태로 바꾸는 메소드
 	public int updateBidStatus() {
 		int n=0;
 		Connection con=null;
 		PreparedStatement pstmt=null;
+		PreparedStatement pstmt2=null;
+		PreparedStatement pstmt3=null;
+		PreparedStatement pstmt4=null;
+		PreparedStatement pstmt5=null;
+		ResultSet rs = null;
+		ResultSet rs2 = null;
+		ResultSet rs3 = null;
+		
 		try {
-			String sql="update auction set BIDSTATUS=2 where (a_enddate-sysdate)<=0 and BIDSTATUS=0"; 
 			con=ConnectionPool.getConn();
-			pstmt=con.prepareStatement(sql);
-			n=pstmt.executeUpdate();
+			String sql = "select * from auction where (a_enddate-sysdate)<=0 and bidstatus = 1";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				do {
+					int a_num = rs.getInt("a_num");
+					String sql1 =  "select nvl(count(*),0) count from bid where a_num = ?";
+					pstmt2 = con.prepareStatement(sql1);
+					pstmt2.setInt(1, a_num);
+					rs2 = pstmt2.executeQuery();
+					if(rs2.next()) {
+						int count = rs2.getInt("count");
+						if(count == 0) {
+							String sql3 =  "update auction set bidstatus = 3 where a_num =?";
+							pstmt3 = con.prepareStatement(sql3);
+							pstmt3.setInt(1, a_num);
+							n = pstmt3.executeUpdate();
+						}else {
+							String sql3 =  "update auction set bidstatus = 2 where a_num =?";
+							pstmt3 = con.prepareStatement(sql3);
+							pstmt3.setInt(1, a_num);
+							int m = pstmt3.executeUpdate();
+							if(m>0) {
+								String sql4 =  "select bid_number from (select max(bid_price) max,a_num from bid group by a_num having a_num = ?) aa, bid" + 
+										"where aa.a_num = bid.a_num and bid_price = aa.max";
+								pstmt4 = con.prepareStatement(sql4);
+								pstmt4.setInt(1, a_num);
+								rs3 = pstmt4.executeQuery();
+								if(rs3.next()) {
+									int bid_number = rs3.getInt("bid_number");
+									String sql5 = "insert payment values(SEQ_PAYMENT_PAY_NUM.nextval,null,0,?,null,null,null)";
+									pstmt5 = con.prepareStatement(sql5);
+									pstmt5.setInt(1, bid_number);
+									n = pstmt5.executeUpdate();
+								}
+							}else {
+								return 0;
+							}
+						}
+					}
+				}while(rs.next());
+			}
+			
 			return n;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
 			return 0;
 		}finally {
 			ConnectionPool.close(null, pstmt, con);
+		}
+	}
+	
+	//입찰 할 시간이 되면 1이되도록
+	public int getStartAuction() {
+		int n=0;
+		Connection con=null;
+		PreparedStatement pstmt=null;
+		PreparedStatement pstmt2=null;
+		ResultSet rs=null;
+		try {
+			String sql="select * from auction where a_startdate <= sysdate";
+			con=ConnectionPool.getConn();
+			pstmt=con.prepareStatement(sql);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				int anum= rs.getInt("a_num");
+				String sql2 = "update auction set bidstatus = 1 where a_num = ? and bidstatus = 0";
+				pstmt2 = con.prepareStatement(sql2);
+				pstmt2.setInt(1, anum);
+				n = pstmt2.executeUpdate();
+				return n;
+			}
+			return -1;
+		}catch(SQLException se) {
+			se.printStackTrace();
+			return -1;
+		}finally {
+			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
 }

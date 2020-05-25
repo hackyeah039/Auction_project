@@ -90,7 +90,7 @@ public class BiddingDao {
 		try {
 			con = ConnectionPool.getCon();
 			String sql = "select distinct bid.a_num from bid, auction "
-					+ "where bid.a_num = auction.a_num and m_num = ? and bidstatus = 1";
+						+ "where bid.a_num = auction.a_num and m_num = ? and bidstatus = 1";
 			pstmt = con.prepareStatement(sql);
 			pstmt.setInt(1, mnum);
 			rs = pstmt.executeQuery();
@@ -120,19 +120,35 @@ public class BiddingDao {
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
+		ResultSet rs2 = null;
+		
 
 		try {
 
 			for (int anum : anumlist) {
 				con = ConnectionPool.getCon();
-				String sql = "select max(bid_price) currprice from bid where a_num = ?";
+				String sql = "select nvl(max(bid_price),0) currprice from bid where a_num = ?";
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, anum);
 				rs = pstmt.executeQuery();
 				if (rs.next()) {
 					do {
-						currPriceList.put(anum, rs.getInt("currprice"));
+						int currprice = rs.getInt("currprice");
+						if(currprice == 0) {
+							String sql2 = "select * from auction where a_num = ?";
+							pstmt2 = con.prepareStatement(sql2);
+							pstmt2.setInt(1, anum);
+							rs2 = pstmt2.executeQuery();
+							if(rs2.next()) {
+								currprice = rs2.getInt("a_startbid");
+								currPriceList.put(anum, currprice);								
+							}
+						}else {
+							currPriceList.put(anum, currprice);							
+						}
+						
 					} while (rs.next());
 
 				} else {
@@ -341,7 +357,7 @@ public class BiddingDao {
 	}
 
 	// aution테이블에서 판매자가 팔고 있는 물품중 현재 입찰중인 (bidstatus = 1)인 것리스트 가져오기
-	public ArrayList<Integer> sellerBidinglist(ArrayList<Integer> selNumlist) {
+	public ArrayList<Integer> sellerBidinglist(ArrayList<Integer> selNumlist, int type) {
 
 		ArrayList<Integer> bidlist = new ArrayList<Integer>();
 
@@ -352,15 +368,19 @@ public class BiddingDao {
 		try {
 			for (int selnum : selNumlist) {
 				con = ConnectionPool.getCon();
-				String sql = "select a_num from auction where sel_number=? and bidstatus=1";
+				String sql = "";
+				if(type == 1) {
+					sql = "select a_num from auction where sel_number=? and bidstatus=0";					
+				}else{
+					sql = "select a_num from auction where sel_number=? and bidstatus=1";					
+				}
 				pstmt = con.prepareStatement(sql);
 				pstmt.setInt(1, selnum);
 				rs = pstmt.executeQuery();
-				System.out.println(selnum);
 				if (rs.next()) {
 					do {
 						int anum = rs.getInt("a_num");
-						System.out.println("anum" + anum);
+//						System.out.println("anum : " + anum);
 						bidlist.add(anum);
 					}while(rs.next());
 				} 
@@ -402,9 +422,8 @@ public class BiddingDao {
 						int check = rs.getInt("a_check");
 						Date startDate = rs.getDate("a_startdate");
 						Date endDate = rs.getDate("a_enddate");
-						String remaintDate = rs.getString("remainDate");
-
-						biddingInfoList.put(anum, new BiddingVo(title, check, startDate, endDate, remaintDate));
+						String remainDate = rs.getString("remainDate");
+						biddingInfoList.put(anum, new BiddingVo(title, check, startDate, endDate, remainDate));
 
 					} while (rs.next());
 

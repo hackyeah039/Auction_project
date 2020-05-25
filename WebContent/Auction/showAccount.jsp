@@ -8,7 +8,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="${cp }/Auction/jquery.js"></script>
 <title>Insert title here</title>
+<style>
+	p{
+ 		width: 100px;
+ 		height: 30px;
+ 		border-radius: 10px;
+ 		text-align: center;
+ 		padding-top: 8px;
+ 	}
+</style>
 <script type="text/javascript">
 	function sendData() {
 		if(document.getElementById("useAccount").value != ""){
@@ -23,12 +33,16 @@
 		}
 	}
 </script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<script src="js/bootstrap.min.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<h2>등록된 계좌번호</h2>
+<p class="h4 text-white bg-primary mt-3 mb-3"> <strong>계좌 확인</strong></p>
 <table>
 	<tr>
-		<td>
+		<td style="width: 100px; text-align: center;">
 			계좌번호
 		</td>
 		<td>
@@ -44,7 +58,7 @@
 			</c:otherwise>
 			</c:choose>
 			</select>
-			<input type="button" value="전달" onclick="sendData()">
+			<input type="button" value="전달" onclick="sendData()" class="btn btn-outline-Dark">
 		</td>
 	</tr>
 </table>

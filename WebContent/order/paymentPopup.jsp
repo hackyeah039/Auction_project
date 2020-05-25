@@ -14,7 +14,16 @@
 		var buyer_postcode = opener.document.getElementById("addr1").value;
 		var buyer_addr = opener.document.getElementById("addr2").value;
 		var buyer_addr2 = opener.document.getElementById("addr3").value;
+		var paynumlist = opener.document.getElementsByName("paynumList");
 	
+		var msg = "buyerName="+buyer_name+"&price="+amount+"&zip="+buyer_postcode+"&addr1="+buyer_addr+"&addr2="+buyer_addr2+"&phone="+buyer_tel
+		for (var i = 0; i < paynumlist.length; i++) {
+			msg += "&paynumList="+paynumlist[i].value;
+		}
+		
+		msg += "&card=1";
+		
+		console.log(msg);
 		
 		
 		var IMP = window.IMP;
@@ -36,7 +45,7 @@
 		        msg += '상점 거래ID : ' + rsp.merchant_uid;
 		        msg += '결제 금액 : ' + rsp.paid_amount;
 		        msg += '카드 승인번호 : ' + rsp.apply_num;
-		    	
+				ajfun();
 		    } else {
 		        var msg = '결제에 실패하였습니다.';
 		        msg += '에러내용 : ' + rsp.error_msg;
@@ -45,10 +54,28 @@
 
 		});
 		
+		var xhr2 = "";
+		
+		function ajfun (){
+			xhr2 = new XMLHttpRequest;
+			xhr2.open('post','${cp}/order/payment.do',true)
+			xhr2.onreadystatechange = ajfuncall;
+			xhr2.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			xhr2.send(msg);
+		}
+
+		function ajfuncall(){
+			if(xhr2.readyState == 4 && xhr2.status == 200){
+				var data = xhr2.responseText;
+				var json = JSON.parse(data);
+				
+			    if(json.result == "success"){
+					alert("등록에 성공하였습니다.");
+					history.go(-1);
+			    }else{
+			    	alert("등록에 실패하였습니다. 다시입력해주세요");
+			    }	
+			}
+		}
+		
 </script>
-<form action = "${cp }/order/payment.do" method = "post"">
-	<input type = "hidden" name = "buyername">
-	<input type = "hidden" name = "buyertel">
-	<input type = "hidden" name = "buyer">
-	<input type = "hidden" name = "addr">
-</form>

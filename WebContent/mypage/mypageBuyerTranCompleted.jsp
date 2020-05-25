@@ -3,16 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id = "page-wrapper">
-<div id="leftMenu">
-	<jsp:include page="newLeftMenu.jsp"></jsp:include>
-</div>
+<jsp:include page="newLeftMenu.jsp"></jsp:include>
 
 <div id="page-content-wrapper">
     <div class="container-fluid">
-      <h1>구매종료 리스트</h1>
+      <h3>구매종료 리스트</h3>
     </div>
 	
-	<table  class="table table-bordered" border=1 style="text-align: center; 
+	<table  class="table table-bordered table-hover" border=1 style="text-align: center; 
 		margin-top: 40px"> 
 		<thead class = "thead">
 		<tr>
@@ -39,7 +37,7 @@
 				<td scope="row">${i}</td>
 
 				<!-- 물품명, 조회, 마감일 -->
-				<td>${anum.a_title}</td>
+				<td><a href="${cp}/main.do?a_num=${anum.a_num}">${anum.a_title}</a></td>
 				<td>${anum.a_check}</td>
 				<td>${anum.a_enddate}</td>
 

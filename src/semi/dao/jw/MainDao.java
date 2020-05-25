@@ -170,7 +170,6 @@ public class MainDao {
 			int seller = 0;
 			if(rs.next()) {
 				seller=rs.getInt("hi");
-				System.out.println(seller+"셀러의 인트값입니다.");
 			}
 			return seller;
 		}catch(SQLException se) {
@@ -269,7 +268,7 @@ public class MainDao {
 						"    (" + 
 						"        select aa.*,rownum rnum from" + 
 						"        (" + 
-						"            select q.que_num a,que_title b,que_content c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q left join answer x on x.que_num =q.que_num and q.a_num=? order by q.que_num asc "+ 
+						"            select q.que_num a,que_title b,que_content c,m_num d, que_status e,que_regdate f,b_content g ,rownum h,ans_regdate i  from question q left join answer x on x.que_num =q.que_num and q.a_num=? order by q.que_num desc "+ 
 						"        )aa" + 
 						")where rnum>=? and  rnum<=?";
 	
@@ -278,7 +277,7 @@ public class MainDao {
 						"						(\r\n" + 
 						"						select aa.*,rownum rnum from\r\n" + 
 						"						(\r\n" + 
-						" select q.que_num a,que_title b,que_content c,m_num d, que_status e,que_regdate f,b_content g ,rownum h  from question q,answer x where  que_title  like '%\"+keyword+\"%' and x.que_num =q.que_num and q.a_num=? order by q.que_num asc\r\n" + 
+						" 			select q.que_num a,que_title b,que_content c,m_num d, que_status e,que_regdate f,b_content g ,rownum h,ans_regdate i  from question q,answer x where  que_title  like '%\"+keyword+\"%' and x.que_num =q.que_num and q.a_num=? order by q.que_num asc\r\n" + 
 						"                     )aa \r\n" + 
 						"						)where rnum>=? and  rnum<=?";
 			}
@@ -297,7 +296,8 @@ public class MainDao {
 				System.out.println("바뀐값입니다!"+rs.getDate(6));
 				System.out.println("바뀐값입니다!"+rs.getString(7));
 				System.out.println("바뀐값입니다!"+rs.getInt(8));
-				MainVo vo=new MainVo(rs.getInt("a"),rs.getString("b"),rs.getString("c"),rs.getInt("d"),rs.getInt("e"),rs.getDate("f"),rs.getString("g"),rs.getInt("h"));
+				System.out.println("바뀐값입니다!"+rs.getDate(9));
+				MainVo vo=new MainVo(rs.getInt("a"),rs.getString("b"),rs.getString("c"),rs.getInt("d"),rs.getInt("e"),rs.getDate("f"),rs.getString("g"),rs.getInt("h"),rs.getDate("i"));
 				list.add(vo);
 			}
 			return list;
@@ -348,4 +348,44 @@ public class MainDao {
 			ConnectionPool.close(rs, pstmt, con);
 		}
 	}
+	
+	public void register(String title,int mnum,String content,int anum) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql="insert into question values(SEQ_QUESTION_QUE_NUM.nextval,?,?,?,?,0,sysdate)";
+		try {
+			con=ConnectionPool.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, mnum);
+			pstmt.setInt(4, anum);
+			rs=pstmt.executeQuery();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+		}finally {
+			ConnectionPool.close(con, pstmt, rs);
+		}
+	}
+	//답변 추가
+	public void answer(int que_num,String textarea) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql="insert into answer values(?,?,sysdate)";
+		try {
+			con=ConnectionPool.getConn();
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, que_num);
+			pstmt.setString(2, textarea);
+			rs=pstmt.executeQuery();
+			
+		}catch(SQLException se) {
+			System.out.println(se.getMessage());
+		}finally {
+			ConnectionPool.close(con, pstmt, rs);
+		}
+	} 
 }

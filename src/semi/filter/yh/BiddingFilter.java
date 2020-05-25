@@ -32,7 +32,7 @@ public class BiddingFilter implements Filter{
 		HttpSession session = hp.getSession();
 		
 		
-		System.out.println("ggggggggggg");
+//		초기 값 
 		int m_num = 0;
 		int trust  = 0;
 		//로그인 안했을 때 입찰 못하도록
@@ -40,23 +40,17 @@ public class BiddingFilter implements Filter{
 		if(session != null) {
 			if((Integer)session.getAttribute("m_num") != 0 ) {
 				m_num = (int)session.getAttribute("m_num");
-				InsertBidding = true;
 				MembersDao mdao = MembersDao.getInstance();
 				trust = mdao.ShowTrust(m_num);
+//		신뢰도가 3이상인경우만 입찰 가능 
+				if(trust >= 3) {
+					InsertBidding = true;
+				}
 			}else {
 				InsertBidding = false;
 			}
 		}
-		System.out.println("m_num session : "+ m_num);
 		
-//		m_num = 2; //테스트 
-		//신뢰도 구하기
-		
-		// 신뢰도가 3이상인경우만 입찰 가능 
-		if(trust >= 3) {
-			InsertBidding = true;
-		}
-		System.out.println("insertBidding " + InsertBidding);
 		// 입찰 가능여부가 true일때 실행
 		if(InsertBidding) {
 			chain.doFilter(request, response);

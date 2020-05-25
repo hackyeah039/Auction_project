@@ -26,23 +26,21 @@ public class MyPageBuyBiddingController extends HttpServlet {
 
 			HttpSession session = req.getSession();
 			int mnum = (Integer)session.getAttribute("m_num"); 
-			
+	
+			System.out.println("mnum :" + mnum);
 			
 			//아이디 가져오기
 	//		String id = "gogo";
 			
-			//경로
-			req.getServletContext().setAttribute("cp", req.getContextPath());
-	
 			
 	//		HttpSession session = req.getSession();
 	//		int mnum = (Integer)session.getAttribute("m_num"); 
 			
 			BiddingDao auctiondao = new BiddingDao();
-			
+				
 			//입찰중경매리스트 얻어오기
-			ArrayList<Integer> bidlist =  auctiondao.buyerBidinglist(1);
-		
+			ArrayList<Integer> bidlist =  auctiondao.buyerBidinglist(mnum);
+			
 			//입찰한 경매리스트 현재가격 얻어오기
 			HashMap<Integer, Integer> currPriceList = auctiondao.getCurrPrice(bidlist);
 			

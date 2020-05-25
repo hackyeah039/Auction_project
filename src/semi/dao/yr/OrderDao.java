@@ -62,7 +62,7 @@ public class OrderDao {
 
 			for (int paynum : paynumlist) {
 				String sql = "update payment set pay_addr = ?, pay_name = ?,"
-						+ "pay_phone = ?, pay_status = 1 where pay_num = ?";
+						+ "pay_phone = ?, pay_deadline = sysdate + 7,  pay_status = 1 where pay_num = ?";
 
 				pstmt = con.prepareStatement(sql);
 				pstmt.setString(1, vo.getPay_addr());

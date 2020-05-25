@@ -25,22 +25,33 @@ public class PaymentController extends HttpServlet {
 		String rodename = req.getParameter("addr1");
 		String detailaddr = req.getParameter("addr2");
 		String phone = req.getParameter("phone");
+		String price = req.getParameter("price");
+		String bank = req.getParameter("bank");
+		String card = req.getParameter("card");
 		
 		ArrayList<Integer> paynumList = new ArrayList<Integer>();
 		
 		OrderDao dao = new OrderDao();
 		
-		
 		//전달받은 paynum을 int형으로 바꿈
 		for (String spaynum : spaynumList) {
 			paynumList.add(Integer.parseInt(spaynum));
 		}
-		
 		//해당 paynum에 입력받은 수령인, 주소, 전화번호로 update, pay_status 입금완료 1로 업데이트 dao 실행	
 		PaymentVo vo = new PaymentVo(0, zipcode+":"+rodename+":"+detailaddr,
 				buyerName, phone);
 		int n = dao.updatePayInfo(vo, paynumList);
 		
+		if(bank != null) {
+			//은행
+			if(bank.equals("1")) {
+				bank = "국민은행";
+			}else if (bank.equals("2")) {
+				bank = "신한은행";			
+			}else if (bank.equals("3")) {
+				bank = "우리은행";			
+			}
+		}
 		
 //		for (String string : paynumList) {
 //			System.out.println("paynum : " + string);			
@@ -51,7 +62,13 @@ public class PaymentController extends HttpServlet {
 //		System.out.println("detailaddr : " + detailaddr);
 //		System.out.println("phone : " + phone);
 		
+		System.out.println("bank"+bank);
+		
 		if(n>0) {
+			
+			req.setAttribute("buyerName", buyerName);
+			req.setAttribute("price", price);
+			req.setAttribute("bank", bank);
 			req.setAttribute("result", "success");
 			req.setAttribute("file", "/order/resultOrder.jsp");
 			

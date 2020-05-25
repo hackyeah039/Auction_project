@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import semi.dao.yr.BiddingDao;
 import semi.dao.yr.TranCompletedDao;
@@ -22,11 +23,9 @@ public class SellerTranCompletedController extends HttpServlet{
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		//경로..나중에 지워야함..
-		req.getServletContext().setAttribute("cp", req.getContextPath());
-
-		int mnum = 1;
-
+		HttpSession session = req.getSession();
+		int mnum = (Integer)session.getAttribute("m_num"); 
+		
 		try {
 			//판매자 num 가져오기
 			TransactDao td = new TransactDao();
