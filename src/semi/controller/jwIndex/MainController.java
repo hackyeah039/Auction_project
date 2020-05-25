@@ -39,6 +39,7 @@ public class MainController extends HttpServlet{
 		MainDao dao = MainDao.getInstance();
 		
 		req.setAttribute("a_num", a_num);
+		
 //		ArrayList<MainVo> ipath=dao.ipath(a_num); //이미지
 		ArrayList<String> ipath=dao.ipath2(a_num);
 		req.setAttribute("ipath", ipath);

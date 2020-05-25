@@ -25,6 +25,7 @@ public class BiddingController extends HttpServlet {
 		int m_num = (Integer)session.getAttribute("m_num"); 
 		
 //		경매번호 받아오기(파라미터로 넘겼음)
+		System.out.println(req.getParameter("a_num") +  "입찰하기 번호 확인");
 		int a_num = Integer.parseInt(req.getParameter("a_num"));//경매번호		
 
 //		입찰단위 가져오기 
