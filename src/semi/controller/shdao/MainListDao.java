@@ -443,12 +443,15 @@ public class MainListDao {
 			if(rs.next()) {
 				do {
 					int a_num = rs.getInt("a_num");
+					
+					//bid수가 0이면 3, 아니면 2
 					String sql1 =  "select nvl(count(*),0) count from bid where a_num = ?";
 					pstmt2 = con.prepareStatement(sql1);
 					pstmt2.setInt(1, a_num);
 					rs2 = pstmt2.executeQuery();
 					if(rs2.next()) {
 						int count = rs2.getInt("count");
+						System.out.println("count" + count);
 						if(count == 0) {
 							String sql3 =  "update auction set bidstatus = 3 where a_num =?";
 							pstmt3 = con.prepareStatement(sql3);
@@ -460,17 +463,19 @@ public class MainListDao {
 							pstmt3.setInt(1, a_num);
 							int m = pstmt3.executeUpdate();
 							if(m>0) {
+								
+								//bid에서 낙찰된 가격에 해당하는 bidnumber insert
 								String sql4 =  "select bid_number from (select max(bid_price) max,a_num from bid group by a_num having a_num = ?) aa, bid" + 
-										"where aa.a_num = bid.a_num and bid_price = aa.max";
+										" where aa.a_num = bid.a_num and bid_price = aa.max";
 								pstmt4 = con.prepareStatement(sql4);
 								pstmt4.setInt(1, a_num);
 								rs3 = pstmt4.executeQuery();
 								if(rs3.next()) {
 									int bid_number = rs3.getInt("bid_number");
-									String sql5 = "insert payment values(SEQ_PAYMENT_PAY_NUM.nextval,null,0,?,null,null,null)";
+									String sql5 = "insert into payment values(SEQ_PAYMENT_PAY_NUM.nextval,null,0,?,null,null,null)";
 									pstmt5 = con.prepareStatement(sql5);
 									pstmt5.setInt(1, bid_number);
-									n = pstmt5.executeUpdate();
+									n += pstmt5.executeUpdate();
 								}
 							}else {
 								return 0;
@@ -479,7 +484,7 @@ public class MainListDao {
 					}
 				}while(rs.next());
 			}
-			
+			System.out.println("수정된 행 갯수2 : "+n);
 			return n;
 		}catch(SQLException se) {
 			System.out.println(se.getMessage());
@@ -501,15 +506,18 @@ public class MainListDao {
 			con=ConnectionPool.getConn();
 			pstmt=con.prepareStatement(sql);
 			rs=pstmt.executeQuery();
+			
 			if(rs.next()) {
-				int anum= rs.getInt("a_num");
-				String sql2 = "update auction set bidstatus = 1 where a_num = ? and bidstatus = 0";
-				pstmt2 = con.prepareStatement(sql2);
-				pstmt2.setInt(1, anum);
-				n = pstmt2.executeUpdate();
-				return n;
+				do {
+					int anum= rs.getInt("a_num");
+					String sql2 = "update auction set bidstatus = 1 where a_num = ? and bidstatus = 0";
+					pstmt2 = con.prepareStatement(sql2);
+					pstmt2.setInt(1, anum);
+					System.out.println(anum);
+					n += pstmt2.executeUpdate();
+				}while(rs.next());
 			}
-			return -1;
+			return n;
 		}catch(SQLException se) {
 			se.printStackTrace();
 			return -1;

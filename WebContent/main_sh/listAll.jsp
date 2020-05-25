@@ -38,30 +38,28 @@
 
 <!--   <div class="card  bg-secondary  text-white" id="topCard"></div>  -->
 
-<nav class="navbar bg-secondary navbar-dark text-white ">
-	<ul class="navbar-nav">
-		<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
-	</ul>	
-	<c:choose>
-		<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+	<div class = "collapse navbar-collapse flex-grow-1 text-left">
+		<ul class="navbar-nav">
+			<li class="nav-item"><a class="nav-link" id = "topCard"></a></li>
+		</ul>
+	</div>
+	<div class = "collapse navbar-collapse flex-grow-1 text-right">	
+			<ul class="navbar-nav ml-auto flex-nowrap">
+				<c:choose>
+					<c:when test="${sessionScope.id != null || sessionScope.adminId != null}">
+							<li class="nav-item"><a class="nav-link" href="${cp }/logout.jh">로그아웃</a></li>			
+						<c:if test="${sessionScope.adminId==null }">
+							<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
+						</c:if>
+					</c:when>
+					<c:otherwise>
+							<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
+							<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>		
+					</c:otherwise>
+				</c:choose>
 			</ul>
-			<c:if test="${sessionScope.adminId==null }">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link" href="${cp }/myinfo.jh?m_num=${m_num}">내정보</a></li>
-				</ul>
-			</c:if>
-		</c:when>
-		<c:otherwise>
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/join/join.jsp">회원가입</a></li>
-			</ul>					
-			<ul class="navbar-nav">
-				<li class="nav-item"><a class="nav-link" href="${cp }/login/login.jsp">로그인</a></li>		
-			</ul>					
-		</c:otherwise>
-	</c:choose>
+	</div>
 </nav>
 <!-- 위에 고정되어 따라다니는 네비게이션 바 부분 -->	
 <nav class="navbar bg-dark navbar-dark sticky-top text-white">

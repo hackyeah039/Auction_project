@@ -61,8 +61,10 @@ public class SimpleListController extends HttpServlet{
 			ArrayList<Integer> anumlist = tddao.getTransactList(mnum);
 			ArrayList<BidVo> tranBidList = tddao.getTranBidList(anumlist, mnum);
 			
+			
 			for (BidVo bidVo : tranBidList) {
 				PaymentVo payvo = tddao.getPaymentInfo(bidVo.getBid_num());
+				System.out.println(bidVo);
 				if(payvo.getPay_status() == 0) {
 					reqPayCount++;
 				}
