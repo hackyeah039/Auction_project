@@ -13,8 +13,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script> 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script> 
 </head>
-<body>
-	<script> $('.carousel').carousel({ interval: 2000 }) </script>
 <style>
 	#wrap {
 		width: 100%;
@@ -27,6 +25,7 @@
 	}
 	
 	#main {
+		height : 100$;
 		width: 1300px;
 		align-content: center;
 		align-items: center;
@@ -38,7 +37,23 @@
 		margin: auto;
 		width: 100%;
 	}
+	
+	/* footer */
+    footer {
+   		 margin-top : 100px;
+    	 clear : both;
+	     background-color: #555;
+	     color: white;
+	     padding: 15px;
+	   	 left: 0;
+	   	 bottom: 0;
+	   	 width: 100%;
+    }
+
 </style>
+<body>
+	<script> $('.carousel').carousel({ interval: 2000 }) </script>
+
 <!-- 
 <div class="card  bg-secondary  text-white" id="topCard"></div>
  -->
@@ -105,11 +120,12 @@
 </nav>
 <!-- 까지 고정되어 따라다니는 네비게이션 바 -->
 
-<c:if test="${empty file }">
-			<jsp:include page="/main_sh/slideImg.jsp"/>
-	</c:if>
-	<div id="main">
+	<c:if test="${empty file }">
 		<div>
+			<jsp:include page="/main_sh/slideImg.jsp"/>		
+		</div>
+	</c:if>
+	<div id="main" style="margin-bottom: 20px">
 			<c:choose>
 				<c:when test="${not empty file }">
 					<jsp:include page="${file }"/>
@@ -118,15 +134,17 @@
 					<jsp:include page="/main_sh/main.jsp"/>
 				</c:otherwise>
 			</c:choose>
-		</div>
 	</div>
-			<div class="jumbotron jumbotron-fluid">
-				<div class="container">
-					<h1 class="display-4" style="align-content: center;">제작자</h1>
-					<p class="lead">이상훈</p>
-				</div>
-			</div>
-		</div>
+	
+<footer class="page-footer font-small blue">
+
+  <!-- Copyright -->
+  <div class="footer-copyright text-center py-3">© 2020 Copyright:
+    <a href="https://mdbootstrap.com/"> MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+
+</footer>
 </body>
 <script type="text/javascript">
 	<%-- 최상단 시간 출력 부분 --%>
