@@ -98,7 +98,7 @@
 	
 	/*비밀번호 맞는지 확인하기*/
 	function newPwdCk2() {
-		var pwd=document.getElementsByName("newpwd2")[0].value;
+		var pwd=document.getElementsByName("newpwd")[0].value;
 		var pwdck=document.getElementsByName("newpwd2")[0].value;
 		var newpwdmsg2=document.getElementById("newpwdmsg2");
 		if(!(pwd==pwdck)){
