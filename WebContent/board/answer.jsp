@@ -19,7 +19,7 @@ function react(){
 	var div = document.getElementById("div");//div
 	var data = xml.responseXML;
 	var Msg = data.getElementsByTagName("Msg")[0].firstChild.nodeValue;
-	if(errMsg!=null){
+	if(Msg!=null){
 		div.innerHTML="";
 		div.innerHTML=Msg;
 	}

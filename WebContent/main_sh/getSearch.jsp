@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<h1>검색결과</h1>
+<div class="card-group" id="SearchAuc"></div>
+<div id="page" align="center"></div>
+
 <script>
 	window.onload=searchList(1);
 	var ck=0;	
@@ -135,22 +140,23 @@
 	function delAuc() {
 		var SearchAuc=document.getElementById("SearchAuc");
 		var childs=SearchAuc.childNodes;//전체 자식노드(경매글) 얻어오기
-		var len=childs.length;
-		for(var i=len-1;i>=0;i--){
-			var auctions=childs.item(i); //childs는 item(i)형식으로 배열처럼 데이터를 가져옴
-			SearchAuc.removeChild(auctions);
+		if(childs!=null){
+			var len=childs.length;
+			for(var i=len-1;i>=0;i--){
+				var auctions=childs.item(i); //childs는 item(i)형식으로 배열처럼 데이터를 가져옴
+				SearchAuc.removeChild(auctions);
+			}
 		}
 	}
 	function delPage() {
 		var page=document.getElementById("page");
 		var childs=page.childNodes;
-		var len=childs.length;
-		for(var i=len-1;i>=0;i--){
-			var pages=childs.item(i);
-			page.removeChild(pages);
+		if(childs!=null){
+			var len=childs.length;
+			for(var i=len-1;i>=0;i--){
+				var pages=childs.item(i);
+				page.removeChild(pages);
+			}
 		}
 	}
 </script>
-<h1>검색결과</h1>
-<div class="card-group" id="SearchAuc"></div>
-<div id="page" align="center"></div>
