@@ -18,7 +18,6 @@ public class TestController extends HttpServlet{
 		ServletContext application=req.getServletContext();
 		application.setAttribute("cp", contextPath);
 		MainListDao dao=new MainListDao();
-		System.out.println("실행한다");
 		dao.updateBidStatus();
 		dao.getStartAuction();
 		

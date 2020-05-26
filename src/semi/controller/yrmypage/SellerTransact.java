@@ -65,9 +65,12 @@ public class SellerTransact extends HttpServlet{
 			
 			for (BidVo bidList : tranBidList) {
 				int mnum2 = bidList.getM_num();
+				PaymentVo vo = dao.getPaymentInfo(bidList.getBid_num());
 				buyerId.put(bidList.getA_num(),dao.getMId(mnum2));
-				paymentInfoList.put(bidList.getA_num(),dao.getPaymentInfo(bidList.getBid_num()));
-	//			System.out.println(bidList);
+				paymentInfoList.put(bidList.getA_num(),vo);
+//				System.out.println(bidList);
+//				System.out.println("vo : "+vo);
+				
 			}
 			
 			

@@ -34,7 +34,7 @@
 
 		<c:if test="${getListSize == 0  }">
 			<tr>
-				<td colspan="8" scope="row">>정보가 존재하지 않습니다.</td>
+				<td colspan="9" scope="row">>정보가 존재하지 않습니다.</td>
 			</tr>
 		</c:if>
 		
